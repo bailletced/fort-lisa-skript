@@ -1,0 +1,7 @@
+on player's held item change:
+  set {_p} to event-player
+  set {_item} to tool
+
+  set {_type} to items_get_tag({_item}, "TYPE")
+  if {_type} is "WEAPON":
+    weapons_onEquip({_p}, {_item})

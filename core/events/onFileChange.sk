@@ -1,0 +1,12 @@
+on directory changes at "plugins/Skript/scripts/src/events/":
+   reload script file fileManager_getRelativePath(event-path)
+
+on directory changes at "plugins/Skript/scripts/src/items/":
+   reload script file fileManager_getRelativePath(event-path)
+
+on directory changes at "plugins/Skript/scripts/src/items/weapons/":
+   reload script file fileManager_getRelativePath(event-path)
+
+on directory changes at "plugins/Skript/scripts/src/players/stores/":
+   reload script file fileManager_getRelativePath(event-path)
+

@@ -1,0 +1,86 @@
+#Implement the hot reload on the server
+function fileManager_initializeReload():
+    delete file path "plugins/Skript/scripts/core/events/onFileChange.sk"        
+    wait 1 tick
+    create file path "plugins/Skript/scripts/core/events/onFileChange.sk"        
+    wait 1 tick
+    set {_ignores::*} to "git"
+    set {_directories::*} to fileManager_findDirectoriesRecursive("plugins/Skript/scripts/src", {_ignores::*})
+    loop {_directories::*}:
+        set {_fullPath} to loop-value
+        replace "\" with "/" in {_fullPath}
+        set {_relativePath} to fileManager_getRelativePath({_fullPath})
+        fileManager_addReloadEvent("%{_fullPath}%/", {_relativePath})
+        wait 1 tick
+    execute console command "/sk reload core/events/onFileChange.sk"
+
+#Add a reload event to a destination file
+#Params:
+#   fullPath: text The full path of the file which need the event
+#   relativePath: text The relative path of the file which need the event
+function fileManager_addReloadEvent(fullPath: text, relativePath: text):
+    delete {_content::*}
+    add "on directory changes at ""%{_fullPath}%"":" to {_content::*}
+    add "   reload script file fileManager_getRelativePath(event-path)" to {_content::*}
+    add "" to {_content::*}
+    append {_content::*} to file path "plugins/Skript/scripts/core/events/onFileChange.sk"
+
+
+#Return all directories from a path
+#Params:
+#   path: text
+#   ignores: texts Directories to ignore
+# Returns texts all found directories
+function fileManager_findDirectoriesRecursive(path: text, ignores: texts) :: texts:
+    loop {_ignores::*}:
+        # broadcast "%{_path}%"
+        if {_path} contains loop-value:
+            set {_break} to true
+            stop
+    if {_break} is not set:
+        if size of all files in file path {_path} > 0:
+            add {_path} to {_directories::*}
+        loop all directories of dir path {_path}:
+            add fileManager_findDirectoriesRecursive("%loop-value%", {_ignores::*}) to {_directories::*}
+        return {_directories::*}
+
+
+#Get the relative path from an absolute one
+#Params:
+#   fullPath: text
+# Returns texts The relative path
+function fileManager_getRelativePath(fullPath: object) :: text:
+    broadcast "---- auto reload triggered ----"
+    set {_fullPath} to "%{_fullPath}%" #convert to text
+    replace "\" with "/" in {_fullPath}
+    replace "plugins/Skript/scripts/" with "" in {_fullPath}
+    return {_fullPath}
+
+
+#Get the value of a key in an environment file
+#Params:
+#   key: text
+# Returns text The value associated to the key
+function fileManager_readEnvFile(key: text) :: text:
+    set {_content::*} to content of file path "plugins/Skript/scripts/.env"
+    broadcast "%{_content::*}%"
+    loop {_content::*}:
+        if loop-value contains {_key}:
+            set {_line::*} to loop-value split at "="
+            set {_value} to {_line::2}
+    broadcast "%{_value}%"
+    return {_value}
+
+
+#Get the value associated to a path in a YAML file
+#Params:
+#   path: text
+#   file: text
+# Returns 
+#   object
+function fileManager_readYaml(file: text, path: text) :: object:
+    if {_file} in lower case contains "location":
+        set {_path} to {_path} in upper case
+    else:
+        set {_path} to {_path} in lower case
+    return yaml value "%{_path}%" from {_file}

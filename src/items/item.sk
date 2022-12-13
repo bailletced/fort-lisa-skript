@@ -1,0 +1,138 @@
+#Get a given tag of an item
+#Params:
+#   it : item 
+#   key: text Key of the stat to get
+#Return:
+#   object
+function items_get_tag(it: item, key: text) :: text:
+  set {_nbt} to full nbt compound of {_it}
+  set {_res} to string tag "tag;%{_key}%" of {_nbt}
+  if {_res} is not "":
+    return {_res}
+
+#Set a given stat of an item
+#Params:
+#   it : item 
+#   key: text Key of the stat to get
+#   value: object 
+#Return:
+#   item An item is returned because it is not possible to edit the nbt of an item without regenerating it
+function items_set_tag(it: item, key: text, value: text) :: item:
+  set {_nbt} to full nbt compound of {_it}
+  set string tag "tag;%{_key}%" of {_nbt} to {_value}
+  return item from nbt {_nbt}
+
+#Determine if a given stat is defined for an item
+#Params:
+#   it : item 
+#   key: text
+#Return:
+#   boolean
+function items_isset_tag(it: item, key: text) :: boolean:
+  set {_nbt} to full nbt compound of {_it}
+  set {_res} to string tag "tag;%{_key}%" of {_nbt}
+  if {_res} is not "":
+    return true
+  return false
+
+
+#Set a given stat of an item
+#Params:
+#   it : item 
+#   key: text Key of the stat to get
+#   value: object 
+#Return:
+#   item An item is returned because it is not possible to edit the nbt of an item without regenerating it
+function items_set_stat(it: item, key: text, value: number) :: item:
+  set {_nbt} to full nbt compound of {_it}
+  if {_value} is set:
+    set int tag "tag;%{_key}%" of {_nbt} to {_value}
+  return item from nbt {_nbt}
+
+#Get a given stat of an item
+#Params:
+#   it : item 
+#   key: text Key of the stat to get
+#Return:
+#   object
+function items_get_stat(it: item, key: text) :: number:
+  set {_nbt} to full nbt compound of {_it}
+  set {_res} to int tag "tag;%{_key}%" of {_nbt}
+  return {_res}
+
+#Return all existing stats of an item
+#   it : item 
+#Return:
+#   texts
+function items_get_stats(it: item) :: texts:
+  delete {_res::*}
+  loop {STATS::ALL::*}:
+    set {_stat} to loop-value
+    if items_isset_stat({_it}, {_stat}) is true:
+      add {_stat} to {_res::*}
+  return {_res::*}
+
+#Determine if a given stat is defined for an item
+#Params:
+#   it : item 
+#   key: text
+#Return:
+#   boolean
+function items_isset_stat(it: item, key: text) :: boolean:
+  set {_nbt} to full nbt compound of {_it}
+  set {_res} to tag "tag;%{_key}%" of {_nbt}
+  if {_res} is set:
+    return true
+  return false
+
+#Return all stats of an item superior to a given amount
+#   it : item 
+#   amount: number
+#Return:
+#   texts
+function items_get_stats_superior_to(it: item, amount: number) :: texts:
+  delete {_res::*}
+  loop {STATS::ALL::*}:
+    set {_stat} to loop-value
+    if items_isset_stat({_it}, {_stat}) is true:
+      set {_statItemAmount} to items_get_stat({_it}, {_stat})
+      if {_statItemAmount} > {_amount}:
+        add {_stat} to {_res::*}
+  return {_res::*}
+
+#Return a random existing stat of an item
+#   it : item 
+#   exludedStats: text Stats separated with a ;
+#   greaterThan: number
+#Return:
+#   text
+function items_get_stat_random(it: item, exludedStats: text, greaterThan: number) :: text:
+  set {_exludedStats::*} to {_exludedStats} split at ";"
+  set {_itemStats::*} to items_get_stats_superior_to({_it}, {_greaterThan})
+  set {_res} to random element of {_itemStats::*}
+  while {_exludedStats::*} contains {_res}:
+    if length of {_itemStats::*} is 0:
+      stop loop
+    remove {_res} from {_itemStats::*}
+    set {_res} to random element of {_itemStats::*}
+  return {_res}
+
+#Add an amount of stat from item
+#Params:
+#   it : item 
+#   key: text
+#   amount: number
+#Return:
+#   item
+function items_add_stat(it: item, key: text, amount: number) :: item:
+  if items_isset_stat({_it}, {_key}) is true:
+    set {_currentAmount} to items_get_stat({_it}, {_key})
+    set {_finalAmount} to {_currentAmount} + {_amount}
+    set {_item} to items_set_stat({_it}, {_key}, {_finalAmount})
+  else:
+    set {_item} to items_set_stat({_it}, {_key}, {_amount})
+  return {_item}
+
+function items_generate_id(category: text) :: text:
+  add 1 to {IDS::%{_category}%}
+  return "%{_category}%/%{IDS::%{_category}%}%"

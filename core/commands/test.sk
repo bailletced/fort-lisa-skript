@@ -1,0 +1,7 @@
+command /testplanet:
+    trigger:
+        set {_loc} to location 1 meter above event-location
+        set {_p} to event-player
+        drawPlanet particle1 "redstone", RGB 0, 255, 10, particle2 "redstone", RGB2 0, 10, 255, center {_loc}, id "%{_p}%", radius 0.25, density 150, precision 100, bumpHeight 0.25, visibleRange 30, tps 1, second 2
+        wait 5 seconds
+        stopEffect "%{_p}%"

@@ -1,0 +1,8 @@
+function manager_hotReload():
+  set {_bool} to fileManager_readEnvFile("ENABLE_HOT_RELOAD")
+  if {_bool} is "TRUE":
+    send "§6Initizialization of hot reload" to console
+    fileManager_initializeReload()
+    send "§2Hot reload initialized !" to console
+  else:
+    send "§cENABLE_HOT_RELOAD env var if false. Hot reload not initialized." to console

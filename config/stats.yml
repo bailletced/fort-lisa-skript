@@ -1,0 +1,54 @@
+ALL:
+  ATTACK:
+    ICON: "✲"
+    COLOR: "§6"
+  POWER:
+    ICON: "✲"
+    COLOR: "§d"
+  TRUE_DAMAGE:
+    ICON: "☣"
+    COLOR: "§c"
+  DEFENCE:
+    ICON: "❃"
+    COLOR: "§7"
+  RANGE:
+    ICON: "➝"
+    COLOR: "§e"
+  RADIUS:
+    ICON: "۞"
+    COLOR: "§d"
+  TARGET:
+    ICON: "☠"
+    COLOR: "§b"
+  COOLDOWN:
+    ICON: "◕"
+    COLOR: "§7"
+  COOLDOWN_REDUCTION:
+    ICON: "◕"
+    COLOR: "§d"
+  MANA_MAX:
+    ICON: "☄"
+    COLOR: "§b"
+  MANA_COST:
+    ICON: "☄"
+    COLOR: "§3"
+  MANA_REGEN:
+    ICON: "☄"
+    COLOR: "§b"
+  DURATION:
+    ICON: "۝"
+    COLOR: "§9"
+  HEALTH_MAX:
+    ICON: "۝"
+    COLOR: "§c"
+  HEALTH_REGEN:
+    ICON: "۝"
+    COLOR: "§c"
+
+WEAPONS:
+  - "COOLDOWN"
+  - "ATTACK"
+  - "POWER"
+  - "MANA"
+  - "RADIUS"
+  - "RANGE"

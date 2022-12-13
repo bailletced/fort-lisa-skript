@@ -1,0 +1,147 @@
+function weapons_category_get(category: text) :: text:
+    if {WEAPONS::%{_category}%} is set:
+        return {_category}
+    else:
+        error("WEAPON of category %{_category}% does not exist")
+
+
+#Give a weapon to the player
+function weapons_give(p: player, category: text, id: text):
+    set {_item} to {WEAPONS::%{_category}%::%{_id}%::ITEM}
+    give 1 of {_item} to {_p}
+
+#Called when the player equips the weapon 
+#   p : player
+#   category : text The category of the weapon (staff, fan, claw...)
+#   id: text The id of the weapon
+#   slot: integer
+function weapons_onEquip(p: player, weapon: item):
+    broadcast "I am equiping a weapon"
+    players_store_weapon_equip({_p}, {_weapon})
+
+
+# #Reload the stats of a weapon
+# #   p : player
+# #   category : text The category of the weapon (staff, fan, claw...)
+# #   id: text The id of the weapon
+# #   slot: integer
+# function weapons_stats_reload(p: player, category: text, id: text, slot: integer):
+#     set {_stats::*} to weapons_get_stats({_p}, {_category}, {_id})
+#     players_weapons_stats_affect({_p}, {_slot}, {_stats::*})
+
+# #Called when left clicking with a weapon. 
+# #   p : player
+# #   category : text The category of the weapon (staff, fan, claw...)
+# #   id: text The id of the weapon
+# #   slot: integer
+# function weapons_leftClick(p: player, category: text, name: text, slot: integer):
+#     if {_category} is "staff":
+#         staff_leftClick({_p}, {_name}, {_slot})
+
+
+# #Called when right clicking with a weapon. 
+# #   p : player
+# #   category : text The category of the weapon (staff, fan, claw...)
+# #   id: text The id of the weapon
+# function weapons_rightClick(p: player, category: text, id: text, slot: integer):
+#     if {_category} is "staff":
+#         staff_rightClick({_p}, {_id}, {_slot})
+#     else if {_category} is "claw":
+#         claw_rightClick({_p}, {_id}, {_slot})
+
+
+# #Called when the player hit a block/entity with his weapon
+# #   p : player
+# #   category : text The category of the weapon (staff, fan, claw...)
+# #   id: text The id of the weapon
+# #   slot: integer
+# #   location: location
+# function weapons_hit(p: player, category: text, id: text, slot: integer, victim: object):
+#     if {_category} is "staff":
+#         staff_hit({_p}, {_id}, {_slot}, {_victim})
+#     else if {_category} is "claw":
+#         claw_hit({_p}, {_id}, {_slot}, {_victim})
+
+
+# #Called when a player try to equip a weapon
+# #Params: 
+# #   p : player The player to give the skill
+# #   category : text The category of the weapon (staff, fan, claw...)
+# #   id: text The id of the weapon
+# #Return:
+# #   texts : The stats associated to the weapon
+# function weapons_get_stats(p: player, category: text, id: text) :: texts: 
+#     if {_category} is "staff":
+#         return staff_get_stats({_p}, {_id})
+#     else if {_category} is "claw":
+#         return claw_get_stats({_p}, {_id})
+
+
+# #Get the item associated to a weapon
+# #Params: 
+# #   p : player
+# #   id : text The id of the weapon
+# function weapons_get_item(p: player, id: text) :: item:
+#     set {_category} to weapons_get_category({_id})
+#     set {_lang} to players_settings_get({_p}, "lang")
+#     if yaml "YAML-WEAPONS-%{_category} in upper case%" is loaded:
+#         set {_item} to yaml value "%{_id}%.item" from "YAML-WEAPONS-%{_category} in upper case%" parsed as item
+#         set {_element} to yaml value "%{_id}%.element" from "YAML-WEAPONS-%{_category} in upper case%"
+
+#         set {_name} to i18n_get({_p}, "weaponS.%{_category} in upper case%.%{_id} in upper case%.TITLE")
+#         set {_description} to i18n_get({_p}, "weaponS.%{_category} in upper case%.%{_id} in upper case%.DESCRIPTION")
+
+#         set {_color} to yaml value "%{_element}%.color" from "YAML-ELEMENTS-REPRESENTATION"
+#         if {_color} is not set:
+#             set {_color} to "&f"
+#         set name of {_item} to "%{_color}%%{_name}%"
+
+#         #Set lore of the item
+#         set {_stats::*} to weapons_get_stats({_p}, {_category}, {_id})
+#         if {_description} contains "{_stats::*}":
+#             loop helpers_statsToList({_stats::*}):
+#                 set lore of {_item} to lore of {_item} and loop-value
+#         loop helpers_loreToList({_description}, {_stats::*}):
+#             set lore of {_item} to lore of {_item} and "&f%loop-value%"
+#         loop helpers_conditionsToList({_p}, {_category}, {_id}):
+#             set lore of {_item} to lore of {_item} and loop-value
+        
+#         #Set nbt for the item
+#         set {_nbt} to nbt compound of {_item}
+#         set tag "tag;category" of {_nbt} to {_category}
+#         set tag "tag;id" of {_nbt} to {_id}
+        
+#         return item from nbt {_nbt} with attribute flag hidden
+
+#     else:
+#         send "&cYAML-WEAPONS-%{_category}% doesn't exist" to the console 
+
+# #Manage the cooldown for weapons
+# #Params: 
+# #   p : player 
+# #   category : text The category of the weapon (staff, fan, claw...)
+# #   id : text The id of the staff
+# #   slot : integer The slot of the weapon
+# function weapons_cooldown(p: player, category: text, id: text, slot: integer):
+#     set {_weaponCooldown} to players_weapons_stats_get({_p}, {_slot}, "max-cooldown")
+#     if {_weaponCooldown} is not -999:
+#         while players_weapons_isset({_p}, {_slot}) is true:
+#             set {_currentCooldown} to players_weapons_stats_get({_p}, {_slot}, "cooldown")
+#             if {_currentCooldown} >= {_weaponCooldown}:
+#                 players_weapons_stats_set({_p}, {_slot}, "cast", true)
+#             else:
+#                 players_weapons_stats_set({_p}, {_slot}, "cast", false)
+#             players_weapons_stats_set({_p}, {_slot}, "cooldown", {_currentCooldown} + 10)
+#             wait 10 ticks
+
+# #Get the ctegory of a weapon
+# #Params: 
+# #   id : text The id of the weapon
+# #Return:
+# #   text
+# function weapons_get_category(id: text) :: text:
+#     set {_categories::*} to all yaml nodes of "YAML-WEAPONS-REPRESENTATION"
+#     loop {_categories::*}:
+#         set {_weapons::*} to all yaml nodes of "YAML-WEAPONS-%loop-value in upper case%"
+#         if {_weapons::*} contains {_id}:
+#             return loop-value

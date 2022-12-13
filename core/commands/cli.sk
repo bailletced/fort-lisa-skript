@@ -1,0 +1,27 @@
+command /admin [<text>] [<text>] [<text>] [<text>]:
+  trigger:
+    set {_success} to true
+    if arg-1 is "hmr":
+      if arg-2 is "reset":
+        manager_hotReload()
+
+    else if arg-1 is "init":
+      config_load()
+
+    else if arg-1 is "test":
+      if arg-2 is "items":
+        if arg-3 is set:
+          test_items_main_detail(player, arg-3)
+        else:
+          test_items_main(player)
+
+
+on tab complete of "/admin":
+  set tab completions for position 1 to "init", "hmr" and "test"
+
+  if tab arg-1 is "hmr":
+    set tab completions for position 2 to "reset"
+  else if tab arg-1 is "test":
+    set tab completions for position 2 to "items" and "all"
+    if tab arg-2 is "items":
+      set tab completions for position 3 to "weapons" and "item"

@@ -1,0 +1,3 @@
+function players_store_weapon_equip(p: player, weapon: item):
+  set {_oldWeapon} to {PLAYERS::%{_p}%::WEAPON::EQUIPPED}
+  set {PLAYERS::%{_p}%::WEAPON::EQUIPPED} to {_weapon}
