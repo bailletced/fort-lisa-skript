@@ -1,0 +1,3 @@
+ADMIN:
+  COMMANDS:
+    SUCCESS: "Command executed successfully!"

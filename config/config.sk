@@ -1,9 +1,10 @@
 function config_load():
-  # load yaml "plugins/Skript/scripts/config/weapons.yml" as "YAML-LANG-fr-FR"
+  #LANGS
+  load yaml "plugins/Skript/scripts/fort-lisa/config/langs/fr-FR.yml" as "YAML-LANG-fr-FR"
+  load yaml "plugins/Skript/scripts/fort-lisa/config/langs/en-EN.yml" as "YAML-LANG-en-EN"
 
   #STATS
-  load yaml "plugins/Skript/scripts/config/stats.yml" as "YAML-STATS"
-
+  load yaml "plugins/Skript/scripts/fort-lisa/config/stats.yml" as "YAML-STATS"
   delete {STATS::*}
   set {STATS::EQUIPMENTS::*} to yaml list "EQUIPMENTS" from "YAML-STATS"
   loop yaml node keys "ALL" of "YAML-STATS":
@@ -13,8 +14,7 @@ function config_load():
     set {STATS::%loop-value%::COLOR} to yaml value "ALL.%loop-value%.COLOR" from "YAML-STATS"
 
   #WEAPONS
-  load yaml "plugins/Skript/scripts/config/weapons.yml" as "YAML-WEAPONS"
-
+  load yaml "plugins/Skript/scripts/fort-lisa/config/weapons.yml" as "YAML-WEAPONS"
   delete {WEAPONS::*}
   loop yaml node keys "" of "YAML-WEAPONS":
     set {_category} to loop-value
@@ -30,3 +30,4 @@ function config_load():
   
   #GLOBAL VAR
   set {LORE_LENGTH_MAX} to 30
+  set {LANG_FALLBACK} to "fr-FR"

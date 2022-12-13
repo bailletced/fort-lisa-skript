@@ -1,0 +1,7 @@
+ADMIN:
+  COMMANDS:
+    SUCCESS: "Commande exécutée avec succès !"
+WEAPONS:
+  LIMB-OF-WISDOM:
+    TITLE: "L'Abattis de Sagesse"
+    DESCRIPTION: "Projette une boule d'énergie destructrice"

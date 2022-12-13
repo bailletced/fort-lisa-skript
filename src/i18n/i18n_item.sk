@@ -1,0 +1,58 @@
+#Return item with name as i18n given key
+#params:
+#   p : player
+#   item : item
+#   pathI18nName : text
+#Return:
+#   item
+function i18n_item_name(p: player, type: text, category: text, id: text) :: item:
+    set {_lang} to players_settings_get({_p}, "lang")
+    set name of {_item} to i18n({_p}, {_pathI18nName})
+    return {_item}
+
+
+#Add a i18n description to the lore of item
+#params:
+#   p : player
+#   item : item
+#   pathI18nLore : text
+#Return:
+#   item
+function i18n_item_lore(p: player, item: item, pathI18nLore: text) :: item:
+    set {_lore} to i18n_get({_p}, {_pathI18nLore})
+    set {_lores::*} to {_lore} split at " "
+
+    set {_it} to 0
+    set {_line} to {COLORS::WHITE}
+    loop {_lores::*}:
+        set {_text} to loop-value
+        set {_it} to {_it} + length of {_text}
+        set {_line} to "%{_line}%%{_text}% "
+        if {_it} > {LORE_LENGTH_MAX}:
+            add {_line} to lore of {_item}
+            set {_it} to 0
+            set {_line} to {COLORS::WHITE}
+    if {_line} is not "":
+        add {_line} to lore of {_item}
+    return {_item}
+
+#Return a localized item
+#   p : player
+#   category : text <- utilities|weapons
+#   itemKey : text
+#   color? : text The color to add before the text
+#Return:
+#   item
+function i18n_item(p: player, type: text, category: text, id: text) :: item:
+    set {_lang} to players_settings_get({_p}, "lang")
+    set {_item} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-%{_type} in upper case%" parsed as item
+    set {_namePath} to yaml value "%{_itemKey}%.NAME" from "YAML-ITEMS-%{_category} in upper case%"
+    set {_lorePath} to yaml value "%{_itemKey}%.LORE" from "YAML-ITEMS-%{_category} in upper case%"
+
+    set {_rawLoreItem} to i18n_get({_p}, {_lorePath})
+    set {_loreItem::*} to helpers_loreToList({_rawLoreItem})
+
+    set name of {_item} to i18n_get({_p}, {_namePath})
+    set lore of {_item} to {_loreItem::*}
+
+    return {_item}

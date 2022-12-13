@@ -9,11 +9,15 @@ command /admin [<text>] [<text>] [<text>] [<text>]:
       config_load()
 
     else if arg-1 is "test":
-      if arg-2 is "items":
+      if arg-2 is "all":
+        test_main(player)
+      else if arg-2 is "items":
         if arg-3 is set:
           test_items_main_detail(player, arg-3)
         else:
           test_items_main(player)
+      else if arg-2 is "i18n":
+        test_i18n_main(player)
 
 
 on tab complete of "/admin":
@@ -22,6 +26,6 @@ on tab complete of "/admin":
   if tab arg-1 is "hmr":
     set tab completions for position 2 to "reset"
   else if tab arg-1 is "test":
-    set tab completions for position 2 to "items" and "all"
+    set tab completions for position 2 to "items", "i18n" and "all"
     if tab arg-2 is "items":
       set tab completions for position 3 to "weapons" and "item"

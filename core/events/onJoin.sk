@@ -1,0 +1,5 @@
+on join:
+  set {_p} to event-player
+  set {_lang} to players_settings_get({_p}, "lang")
+    if {_lang} is not set:
+      players_settings_set({_p}, "lang", {LANG_FALLBACK})

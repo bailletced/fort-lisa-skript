@@ -1,18 +1,18 @@
 #Implement the hot reload on the server
 function fileManager_initializeReload():
-    delete file path "plugins/Skript/scripts/core/events/onFileChange.sk"        
+    delete file path "plugins/Skript/scripts/fort-lisa/core/events/onFileChange.sk"        
     wait 1 tick
-    create file path "plugins/Skript/scripts/core/events/onFileChange.sk"        
+    create file path "plugins/Skript/scripts/fort-lisa/core/events/onFileChange.sk"        
     wait 1 tick
     set {_ignores::*} to "git"
-    set {_directories::*} to fileManager_findDirectoriesRecursive("plugins/Skript/scripts/src", {_ignores::*})
+    set {_directories::*} to fileManager_findDirectoriesRecursive("plugins/Skript/scripts/fort-lisa/src", {_ignores::*})
     loop {_directories::*}:
         set {_fullPath} to loop-value
         replace "\" with "/" in {_fullPath}
         set {_relativePath} to fileManager_getRelativePath({_fullPath})
         fileManager_addReloadEvent("%{_fullPath}%/", {_relativePath})
         wait 1 tick
-    execute console command "/sk reload core/events/onFileChange.sk"
+    execute console command "/sk reload fort-lisa/core/events/onFileChange.sk"
 
 #Add a reload event to a destination file
 #Params:
@@ -23,7 +23,7 @@ function fileManager_addReloadEvent(fullPath: text, relativePath: text):
     add "on directory changes at ""%{_fullPath}%"":" to {_content::*}
     add "   reload script file fileManager_getRelativePath(event-path)" to {_content::*}
     add "" to {_content::*}
-    append {_content::*} to file path "plugins/Skript/scripts/core/events/onFileChange.sk"
+    append {_content::*} to file path "plugins/Skript/scripts/fort-lisa/core/events/onFileChange.sk"
 
 
 #Return all directories from a path
@@ -53,7 +53,7 @@ function fileManager_getRelativePath(fullPath: object) :: text:
     broadcast "---- auto reload triggered ----"
     set {_fullPath} to "%{_fullPath}%" #convert to text
     replace "\" with "/" in {_fullPath}
-    replace "plugins/Skript/scripts/" with "" in {_fullPath}
+    replace "plugins/Skript/scripts/fort-lisa/" with "" in {_fullPath}
     return {_fullPath}
 
 
@@ -62,7 +62,7 @@ function fileManager_getRelativePath(fullPath: object) :: text:
 #   key: text
 # Returns text The value associated to the key
 function fileManager_readEnvFile(key: text) :: text:
-    set {_content::*} to content of file path "plugins/Skript/scripts/.env"
+    set {_content::*} to content of file path "plugins/Skript/scripts/fort-lisa/.env"
     broadcast "%{_content::*}%"
     loop {_content::*}:
         if loop-value contains {_key}:

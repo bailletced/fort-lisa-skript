@@ -1,0 +1,28 @@
+
+#store menu value to a player (usefull in events)
+function players_settings_set(p: player, key: text, value: object):
+    set {players::%{_p}%.settings::%{_key}%} to {_value}
+
+
+#Get a player's setting
+#Params: 
+#   p : player The player to give the skill
+#   key : text The attribute to get
+#Return
+#   Text : The value associated to the setting key
+function players_settings_get(p: player, key: text) :: object:
+    return {players::%{_p}%.settings::%{_key}%}
+
+
+#Get a player's setting
+#Params: 
+#   p : player The player to give the skill
+#   key : text The attribute to get
+#Return
+#   Text : The value associated to the setting key
+function players_settings_delete(p: player, key: text):
+    delete {players::%{_p}%.settings::%{_key}%}
+  
+
+function players_settings_delete_all(p: player):
+    delete {players::%{_p}%.settings::*}

@@ -1,0 +1,15 @@
+function test_i18n_i18n_main(p: player):
+  send "§5Testing i18n i18n" to the console
+  set {_originLang} to players_settings_get({_p}, "lang")
+  it "Test get translation key":
+    set {_referenceFr} to yaml value "ADMIN.COMMANDS.SUCCESS" from "YAML-LANG-fr-FR"
+    set {_referenceEn} to yaml value "ADMIN.COMMANDS.SUCCESS" from "YAML-LANG-en-EN"
+    players_settings_set({_p}, "lang", "fr-FR")
+    set {_stringFr} to i18n({_p}, "ADMIN.COMMANDS.SUCCESS")
+    players_settings_set({_p}, "lang", "en-EN")
+    set {_stringEn} to i18n({_p}, "ADMIN.COMMANDS.SUCCESS")
+
+    assert if {_referenceFr} is "Commande exécutée avec succès !" with message "fr-FR string should be retrived. Got %{_stringFr}%"
+    assert if {_referenceEn} is "Command executed successfully!" with message "en-EN string should be retrived. Got %{_stringEn}%"
+    
+  players_settings_set({_p}, "lang", {_originLang})

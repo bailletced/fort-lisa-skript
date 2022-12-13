@@ -1,0 +1,5 @@
+function test_main(p: player):
+  send "§3Testing i18n" to the console 
+  test_i18n_i18n_main({_p})
+  send "§3Testing items" to the console 
+  test_items_main({_p})
