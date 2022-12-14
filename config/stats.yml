@@ -45,10 +45,11 @@ ALL:
     ICON: "۝"
     COLOR: "§c"
 
-WEAPONS:
+WEAPON:
   - "COOLDOWN"
   - "ATTACK"
   - "POWER"
+  - "POWER_MULTIPLIER"
   - "MANA"
   - "RADIUS"
   - "RANGE"

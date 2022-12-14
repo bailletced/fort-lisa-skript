@@ -6,7 +6,7 @@ function config_load():
   #STATS
   load yaml "plugins/Skript/scripts/fort-lisa/config/stats.yml" as "YAML-STATS"
   delete {STATS::*}
-  set {STATS::EQUIPMENTS::*} to yaml list "EQUIPMENTS" from "YAML-STATS"
+  set {STATS::WEAPON::*} to yaml list "WEAPON" from "YAML-STATS"
   loop yaml node keys "ALL" of "YAML-STATS":
     add loop-value to {STATS::ALL::*}
     set {_icon} to yaml value "ALL.%loop-value%.ICON" from "YAML-STATS"
@@ -15,18 +15,17 @@ function config_load():
 
   #WEAPONS
   load yaml "plugins/Skript/scripts/fort-lisa/config/weapons.yml" as "YAML-WEAPONS"
-  delete {WEAPONS::*}
+  delete {WEAPON::*}
   loop yaml node keys "" of "YAML-WEAPONS":
     set {_category} to loop-value
-    set {WEAPONS::CATEGORIES::%{_category}%} to {_category}
-    add {_category} to {WEAPONS::CATEGORIES::*}
+    set {WEAPON::CATEGORIES::%{_category}%} to {_category}
+    add {_category} to {WEAPON::CATEGORIES::*}
     loop yaml node keys "%{_category}%" of "YAML-WEAPONS":
       set {_id} to loop-key-2
-      add {_id} to {WEAPONS::STAFF::*}
-      set {WEAPONS::%{_category}%::%{_id}%::ITEM} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-WEAPONS"
+      add {_id} to {WEAPON::STAFF::*}
+      set {WEAPON::%{_category}%::%{_id}%::ITEM} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-WEAPONS" parsed as item
       loop yaml node keys "%{_category}%.%{_id}%.STATS" of "YAML-WEAPONS":
-        set {_toto} to yaml value "%{_category}%.%{_id}%.STATS.%loop-key-3%" from "YAML-WEAPONS"
-        set {WEAPONS::%{_category}%::%{_id}%::%loop-key-3%} to yaml value "%{_category}%.%{_id}%.STATS.%loop-key-3%" from "YAML-WEAPONS"
+        set {WEAPON::%{_category}%::%{_id}%::%loop-key-3%} to yaml value "%{_category}%.%{_id}%.STATS.%loop-key-3%" from "YAML-WEAPONS"
   
   #GLOBAL VAR
   set {LORE_LENGTH_MAX} to 30

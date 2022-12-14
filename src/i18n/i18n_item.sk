@@ -1,15 +1,10 @@
-#Return item with name as i18n given key
-#params:
-#   p : player
-#   item : item
-#   pathI18nName : text
-#Return:
-#   item
-function i18n_item_name(p: player, type: text, category: text, id: text) :: item:
-    set {_lang} to players_settings_get({_p}, "lang")
-    set name of {_item} to i18n({_p}, {_pathI18nName})
-    return {_item}
-
+#Return item attribute
+function i18n_item_attr(p: player, item: item, attr: text) :: text:
+    set {_type} to item_get_tag({_item}, "TYPE")
+    set {_category} to item_get_tag({_item}, "CATEGORY")
+    set {_id} to item_get_tag({_item}, "ID")
+    set {_lang} to player_settings_get({_p}, "lang")
+    return i18n({_p}, "%{_type}%.%{_category}%.%{_id}%.%{_attr}%")
 
 #Add a i18n description to the lore of item
 #params:
@@ -18,41 +13,46 @@ function i18n_item_name(p: player, type: text, category: text, id: text) :: item
 #   pathI18nLore : text
 #Return:
 #   item
-function i18n_item_lore(p: player, item: item, pathI18nLore: text) :: item:
-    set {_lore} to i18n_get({_p}, {_pathI18nLore})
+function i18n_item_lore(p: player, it: item) :: text:
+    set {_type} to item_get_tag({_it}, "TYPE")
+    set {_category} to item_get_tag({_it}, "CATEGORY")
+    set {_id} to item_get_tag({_it}, "ID")
+
+    set {_lore} to i18n_item_attr({_p}, {_it}, "LORE")
+    
+    set {_stats::*} to {STATS::%{_type}%::*}
+    loop {_stats::*}:
+        set {_key} to loop-value
+        set {_value} to item_get_stat({_it}, {_key})
+        set {_color} to {STATS::%{_key}%::COLOR}
+        set {_icon} to {STATS::%{_key}%::ICON}
+        replace "{_%{_key}%}" in {_lore} with "%{_color}%%{_icon}%%{_value}%§f"
+    return {_lore}
+
+
+#transform a lore to list to make sure it will be visible once set to an item
+function i18n_item_lore_to_list(lore: text) :: texts:
     set {_lores::*} to {_lore} split at " "
-
-    set {_it} to 0
-    set {_line} to {COLORS::WHITE}
+    set {_text} to ""
+    delete {_res::*}
     loop {_lores::*}:
-        set {_text} to loop-value
-        set {_it} to {_it} + length of {_text}
-        set {_line} to "%{_line}%%{_text}% "
-        if {_it} > {LORE_LENGTH_MAX}:
-            add {_line} to lore of {_item}
-            set {_it} to 0
-            set {_line} to {COLORS::WHITE}
-    if {_line} is not "":
-        add {_line} to lore of {_item}
-    return {_item}
+        set {_text} to "%{_text}% %loop-value%"
+        if length of {_text} > {LORE_LENGTH_MAX}:
+            add "§f%{_text}%" to {_res::*}
+            set {_text} to ""
+        else if size of {_res::*} is size of {_lores::*}:
+            set {_maxLength} to amount of {_res::*}
+            if length of {_text} + length of {_res::%{_maxLength}%} > {LORE_LENGTH_MAX} + 10:
+                add "§f%{_text}%" to {_res::*}
+            else:
+                set {_res::%{_maxLength}%} to "%{_res::%{_maxLength}%}%%{_text}%"
+    return {_res::*}
 
-#Return a localized item
-#   p : player
-#   category : text <- utilities|weapons
-#   itemKey : text
-#   color? : text The color to add before the text
-#Return:
-#   item
-function i18n_item(p: player, type: text, category: text, id: text) :: item:
-    set {_lang} to players_settings_get({_p}, "lang")
-    set {_item} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-%{_type} in upper case%" parsed as item
-    set {_namePath} to yaml value "%{_itemKey}%.NAME" from "YAML-ITEMS-%{_category} in upper case%"
-    set {_lorePath} to yaml value "%{_itemKey}%.LORE" from "YAML-ITEMS-%{_category} in upper case%"
-
-    set {_rawLoreItem} to i18n_get({_p}, {_lorePath})
-    set {_loreItem::*} to helpers_loreToList({_rawLoreItem})
-
-    set name of {_item} to i18n_get({_p}, {_namePath})
-    set lore of {_item} to {_loreItem::*}
-
-    return {_item}
+# internationalize an item
+function i18n_item(p: player, it: item) :: item:
+    set {_title} to i18n_item_attr({_p}, {_it}, "TITLE")
+    set {_lore} to i18n_item_lore({_p}, {_it})
+    set {_lores::*} to i18n_item_lore_to_list({_lore})
+    set lore of {_it} to {_lores::*}
+    set name of {_it} to {_title}
+    return {_it}

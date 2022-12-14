@@ -4,7 +4,7 @@
 #   key: text Key of the stat to get
 #Return:
 #   object
-function items_get_tag(it: item, key: text) :: text:
+function item_get_tag(it: item, key: text) :: text:
   set {_nbt} to full nbt compound of {_it}
   set {_res} to string tag "tag;%{_key}%" of {_nbt}
   if {_res} is not "":
@@ -17,7 +17,7 @@ function items_get_tag(it: item, key: text) :: text:
 #   value: object 
 #Return:
 #   item An item is returned because it is not possible to edit the nbt of an item without regenerating it
-function items_set_tag(it: item, key: text, value: text) :: item:
+function item_set_tag(it: item, key: text, value: text) :: item:
   set {_nbt} to full nbt compound of {_it}
   set string tag "tag;%{_key}%" of {_nbt} to {_value}
   return item from nbt {_nbt}
@@ -28,7 +28,7 @@ function items_set_tag(it: item, key: text, value: text) :: item:
 #   key: text
 #Return:
 #   boolean
-function items_isset_tag(it: item, key: text) :: boolean:
+function item_isset_tag(it: item, key: text) :: boolean:
   set {_nbt} to full nbt compound of {_it}
   set {_res} to string tag "tag;%{_key}%" of {_nbt}
   if {_res} is not "":
@@ -43,7 +43,7 @@ function items_isset_tag(it: item, key: text) :: boolean:
 #   value: object 
 #Return:
 #   item An item is returned because it is not possible to edit the nbt of an item without regenerating it
-function items_set_stat(it: item, key: text, value: number) :: item:
+function item_set_stat(it: item, key: text, value: number) :: item:
   set {_nbt} to full nbt compound of {_it}
   if {_value} is set:
     set int tag "tag;%{_key}%" of {_nbt} to {_value}
@@ -55,7 +55,7 @@ function items_set_stat(it: item, key: text, value: number) :: item:
 #   key: text Key of the stat to get
 #Return:
 #   object
-function items_get_stat(it: item, key: text) :: number:
+function item_get_stat(it: item, key: text) :: number:
   set {_nbt} to full nbt compound of {_it}
   set {_res} to int tag "tag;%{_key}%" of {_nbt}
   return {_res}
@@ -64,11 +64,11 @@ function items_get_stat(it: item, key: text) :: number:
 #   it : item 
 #Return:
 #   texts
-function items_get_stats(it: item) :: texts:
+function item_get_stats(it: item) :: texts:
   delete {_res::*}
   loop {STATS::ALL::*}:
     set {_stat} to loop-value
-    if items_isset_stat({_it}, {_stat}) is true:
+    if item_isset_stat({_it}, {_stat}) is true:
       add {_stat} to {_res::*}
   return {_res::*}
 
@@ -78,7 +78,7 @@ function items_get_stats(it: item) :: texts:
 #   key: text
 #Return:
 #   boolean
-function items_isset_stat(it: item, key: text) :: boolean:
+function item_isset_stat(it: item, key: text) :: boolean:
   set {_nbt} to full nbt compound of {_it}
   set {_res} to tag "tag;%{_key}%" of {_nbt}
   if {_res} is set:
@@ -90,12 +90,12 @@ function items_isset_stat(it: item, key: text) :: boolean:
 #   amount: number
 #Return:
 #   texts
-function items_get_stats_superior_to(it: item, amount: number) :: texts:
+function item_get_stats_superior_to(it: item, amount: number) :: texts:
   delete {_res::*}
   loop {STATS::ALL::*}:
     set {_stat} to loop-value
-    if items_isset_stat({_it}, {_stat}) is true:
-      set {_statItemAmount} to items_get_stat({_it}, {_stat})
+    if item_isset_stat({_it}, {_stat}) is true:
+      set {_statItemAmount} to item_get_stat({_it}, {_stat})
       if {_statItemAmount} > {_amount}:
         add {_stat} to {_res::*}
   return {_res::*}
@@ -106,9 +106,9 @@ function items_get_stats_superior_to(it: item, amount: number) :: texts:
 #   greaterThan: number
 #Return:
 #   text
-function items_get_stat_random(it: item, exludedStats: text, greaterThan: number) :: text:
+function item_get_stat_random(it: item, exludedStats: text, greaterThan: number) :: text:
   set {_exludedStats::*} to {_exludedStats} split at ";"
-  set {_itemStats::*} to items_get_stats_superior_to({_it}, {_greaterThan})
+  set {_itemStats::*} to item_get_stats_superior_to({_it}, {_greaterThan})
   set {_res} to random element of {_itemStats::*}
   while {_exludedStats::*} contains {_res}:
     if length of {_itemStats::*} is 0:
@@ -124,15 +124,20 @@ function items_get_stat_random(it: item, exludedStats: text, greaterThan: number
 #   amount: number
 #Return:
 #   item
-function items_add_stat(it: item, key: text, amount: number) :: item:
-  if items_isset_stat({_it}, {_key}) is true:
-    set {_currentAmount} to items_get_stat({_it}, {_key})
+function item_add_stat(it: item, key: text, amount: number) :: item:
+  if item_isset_stat({_it}, {_key}) is true:
+    set {_currentAmount} to item_get_stat({_it}, {_key})
     set {_finalAmount} to {_currentAmount} + {_amount}
-    set {_item} to items_set_stat({_it}, {_key}, {_finalAmount})
+    set {_item} to item_set_stat({_it}, {_key}, {_finalAmount})
   else:
-    set {_item} to items_set_stat({_it}, {_key}, {_amount})
+    set {_item} to item_set_stat({_it}, {_key}, {_amount})
   return {_item}
 
-function items_generate_id(category: text) :: text:
+function item_generate_id(category: text) :: text:
   add 1 to {IDS::%{_category}%}
   return "%{_category}%/%{IDS::%{_category}%}%"
+
+
+function item_give(p: player, type: text, category: text, id: text):
+  if {_type} is "WEAPON":
+    weapon_give({_p}, {_category}, {_id})

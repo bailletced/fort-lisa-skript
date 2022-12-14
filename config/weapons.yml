@@ -2,7 +2,8 @@ STAFF:
   LIMB_OF_WISDOM:
     ITEM: carrot on a stick
     STATS:
-      POWER: 10
+      POWER: 5
+      POWER_MULTIPLIER: 0.2
       COOLDOWN: 1.5
       RANGE: 5
       RADIUS: 1

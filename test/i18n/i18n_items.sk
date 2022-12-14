@@ -1,0 +1,51 @@
+function test_i18n_items(p: player):
+  send "§5Testing i18n i18n" to the console
+  set {_originLang} to player_settings_get({_p}, "lang")
+  player_settings_set({_p}, "lang", "fr-FR")
+  
+  it "Test get item title":
+    set {_item} to diamond sword
+    set {_item} to item_set_tag({_item}, "TYPE", "WEAPON")
+    set {_item} to item_set_tag({_item}, "CATEGORY", "STAFF")
+    set {_item} to item_set_tag({_item}, "ID", "TEST")
+
+    set {_titleFr} to i18n_item_attr({_p}, {_item}, "TITLE")
+    set {_referenceFr} to yaml value "WEAPON.STAFF.TEST.TITLE" from "YAML-LANG-fr-FR"
+    assert if {_titleFr} is {_referenceFr} with message "name should be %{_referenceFr}%. Got %{_titleFr}%"
+
+  it "Test get item lore":
+    set {_item} to diamond sword
+    set {_item} to item_set_tag({_item}, "TYPE", "WEAPON")
+    set {_item} to item_set_tag({_item}, "CATEGORY", "STAFF")
+    set {_item} to item_set_tag({_item}, "ID", "TEST")
+    set {_loreFr} to i18n_item_attr({_p}, {_item}, "LORE")
+    set {_referenceFr} to yaml value "WEAPON.STAFF.TEST.LORE" from "YAML-LANG-fr-FR"
+    assert if {_loreFr} is {_referenceFr} with message "name should be %{_referenceFr}%. Got %{_titleFr}%"
+
+  it "Test i18n_item_lore":
+    set {_it} to diamond sword
+    set {_powerStat} to 40
+    set {_rangeStat} to 5
+    set {_it} to item_set_tag({_it}, "TYPE", "WEAPON")
+    set {_it} to item_set_tag({_it}, "CATEGORY", "STAFF")
+    set {_it} to item_set_tag({_it}, "ID", "TEST")
+    set {_it} to item_set_stat({_it}, "POWER", {_powerStat})
+    set {_it} to item_set_stat({_it}, "RANGE", {_rangeStat})
+
+    set {_rangeRefIcon} to {STATS::RANGE::ICON}
+    set {_rangeRefColor} to {STATS::RANGE::COLOR}
+    set {_powerRefIcon} to {STATS::POWER::ICON}
+    set {_powerRefColor} to {STATS::POWER::COLOR}
+
+    set {_loreAfter} to "Projette une boule d'énergie destructrice, de portée %{_rangeRefColor}%%{_rangeRefIcon}% %{_rangeStat}%§f infligeant %{_powerRefColor}%%{_powerRefIcon}% %{_powerStat}%§f."
+
+    set {_lore} to i18n_item_lore({_p}, {_it})
+    assert if {_loreAfter} is {_lore} with message "lore should be %{_loreAfter}% §aGot %{_lore}%"
+
+  it "Test i18n_item_lore_to_list":
+    set {_lore} to "Je suis Cédric Baillet, développeur de Fort Lisa. J'espère de tout coeur que le jeu vous plaira !"
+    set {_res::*} to i18n_item_lore_to_list({_lore})
+    set {_idxes::*} to all indexes of {_res::*}
+    assert if amount of {_idxes::*} is floor(length of {_lore}/{LORE_LENGTH_MAX}) with message "Got %amount of {_idxes::*}%"
+
+  player_settings_set({_p}, "lang", "fr-FR")

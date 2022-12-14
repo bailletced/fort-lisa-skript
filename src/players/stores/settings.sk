@@ -1,6 +1,6 @@
 
 #store menu value to a player (usefull in events)
-function players_settings_set(p: player, key: text, value: object):
+function player_settings_set(p: player, key: text, value: object):
     set {players::%{_p}%.settings::%{_key}%} to {_value}
 
 
@@ -10,7 +10,7 @@ function players_settings_set(p: player, key: text, value: object):
 #   key : text The attribute to get
 #Return
 #   Text : The value associated to the setting key
-function players_settings_get(p: player, key: text) :: object:
+function player_settings_get(p: player, key: text) :: object:
     return {players::%{_p}%.settings::%{_key}%}
 
 
@@ -20,9 +20,9 @@ function players_settings_get(p: player, key: text) :: object:
 #   key : text The attribute to get
 #Return
 #   Text : The value associated to the setting key
-function players_settings_delete(p: player, key: text):
+function player_settings_delete(p: player, key: text):
     delete {players::%{_p}%.settings::%{_key}%}
   
 
-function players_settings_delete_all(p: player):
+function player_settings_delete_all(p: player):
     delete {players::%{_p}%.settings::*}

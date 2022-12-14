@@ -1,23 +1,32 @@
-function weapons_category_get(category: text) :: text:
-    if {WEAPONS::%{_category}%} is set:
+function weapon_category_get(category: text) :: text:
+    if {WEAPON::%{_category}%} is set:
         return {_category}
     else:
         error("WEAPON of category %{_category}% does not exist")
 
-
 #Give a weapon to the player
-function weapons_give(p: player, category: text, id: text):
-    set {_item} to {WEAPONS::%{_category}%::%{_id}%::ITEM}
-    give 1 of {_item} to {_p}
+function weapon_give(p: player, category: text, id: text):
+    set {_weapon} to weapon_create({_p}, {_category}, {_id})    
+    player_store_weapon_give({_p}, {_weapon})
+
+function weapon_create(p: player, category: text, id: text) :: item:
+    set {_weapon} to {WEAPON::%{_category}%::%{_id}%::ITEM}
+    set {_weapon} to item_set_tag({_weapon}, "TYPE", "WEAPON")
+    set {_weapon} to item_set_tag({_weapon}, "CATEGORY", {_category})
+    set {_weapon} to item_set_tag({_weapon}, "ID", {_id})
+    loop {STATS::WEAPON::*}:
+        set {_weapon} to item_set_stat({_weapon}, loop-value, {WEAPON::%{_category}%::%{_id}%::%loop-value%})
+    set {_weapon} to i18n_item({_p}, {_weapon})
+    return {_weapon}
 
 #Called when the player equips the weapon 
 #   p : player
 #   category : text The category of the weapon (staff, fan, claw...)
 #   id: text The id of the weapon
 #   slot: integer
-function weapons_onEquip(p: player, weapon: item):
+function weapon_onEquip(p: player, weapon: item):
     broadcast "I am equiping a weapon"
-    players_store_weapon_equip({_p}, {_weapon})
+    player_store_weapon_equip({_p}, {_weapon})
 
 
 # #Reload the stats of a weapon
@@ -25,16 +34,16 @@ function weapons_onEquip(p: player, weapon: item):
 # #   category : text The category of the weapon (staff, fan, claw...)
 # #   id: text The id of the weapon
 # #   slot: integer
-# function weapons_stats_reload(p: player, category: text, id: text, slot: integer):
-#     set {_stats::*} to weapons_get_stats({_p}, {_category}, {_id})
-#     players_weapons_stats_affect({_p}, {_slot}, {_stats::*})
+# function weapon_stats_reload(p: player, category: text, id: text, slot: integer):
+#     set {_stats::*} to weapon_get_stats({_p}, {_category}, {_id})
+#     player_weapon_stats_affect({_p}, {_slot}, {_stats::*})
 
 # #Called when left clicking with a weapon. 
 # #   p : player
 # #   category : text The category of the weapon (staff, fan, claw...)
 # #   id: text The id of the weapon
 # #   slot: integer
-# function weapons_leftClick(p: player, category: text, name: text, slot: integer):
+# function weapon_leftClick(p: player, category: text, name: text, slot: integer):
 #     if {_category} is "staff":
 #         staff_leftClick({_p}, {_name}, {_slot})
 
@@ -43,7 +52,7 @@ function weapons_onEquip(p: player, weapon: item):
 # #   p : player
 # #   category : text The category of the weapon (staff, fan, claw...)
 # #   id: text The id of the weapon
-# function weapons_rightClick(p: player, category: text, id: text, slot: integer):
+# function weapon_rightClick(p: player, category: text, id: text, slot: integer):
 #     if {_category} is "staff":
 #         staff_rightClick({_p}, {_id}, {_slot})
 #     else if {_category} is "claw":
@@ -56,7 +65,7 @@ function weapons_onEquip(p: player, weapon: item):
 # #   id: text The id of the weapon
 # #   slot: integer
 # #   location: location
-# function weapons_hit(p: player, category: text, id: text, slot: integer, victim: object):
+# function weapon_hit(p: player, category: text, id: text, slot: integer, victim: object):
 #     if {_category} is "staff":
 #         staff_hit({_p}, {_id}, {_slot}, {_victim})
 #     else if {_category} is "claw":
@@ -70,7 +79,7 @@ function weapons_onEquip(p: player, weapon: item):
 # #   id: text The id of the weapon
 # #Return:
 # #   texts : The stats associated to the weapon
-# function weapons_get_stats(p: player, category: text, id: text) :: texts: 
+# function weapon_get_stats(p: player, category: text, id: text) :: texts: 
 #     if {_category} is "staff":
 #         return staff_get_stats({_p}, {_id})
 #     else if {_category} is "claw":
@@ -81,9 +90,9 @@ function weapons_onEquip(p: player, weapon: item):
 # #Params: 
 # #   p : player
 # #   id : text The id of the weapon
-# function weapons_get_item(p: player, id: text) :: item:
-#     set {_category} to weapons_get_category({_id})
-#     set {_lang} to players_settings_get({_p}, "lang")
+# function weapon_get_item(p: player, id: text) :: item:
+#     set {_category} to weapon_get_category({_id})
+#     set {_lang} to player_settings_get({_p}, "lang")
 #     if yaml "YAML-WEAPONS-%{_category} in upper case%" is loaded:
 #         set {_item} to yaml value "%{_id}%.item" from "YAML-WEAPONS-%{_category} in upper case%" parsed as item
 #         set {_element} to yaml value "%{_id}%.element" from "YAML-WEAPONS-%{_category} in upper case%"
@@ -97,7 +106,7 @@ function weapons_onEquip(p: player, weapon: item):
 #         set name of {_item} to "%{_color}%%{_name}%"
 
 #         #Set lore of the item
-#         set {_stats::*} to weapons_get_stats({_p}, {_category}, {_id})
+#         set {_stats::*} to weapon_get_stats({_p}, {_category}, {_id})
 #         if {_description} contains "{_stats::*}":
 #             loop helpers_statsToList({_stats::*}):
 #                 set lore of {_item} to lore of {_item} and loop-value
@@ -122,16 +131,16 @@ function weapons_onEquip(p: player, weapon: item):
 # #   category : text The category of the weapon (staff, fan, claw...)
 # #   id : text The id of the staff
 # #   slot : integer The slot of the weapon
-# function weapons_cooldown(p: player, category: text, id: text, slot: integer):
-#     set {_weaponCooldown} to players_weapons_stats_get({_p}, {_slot}, "max-cooldown")
+# function weapon_cooldown(p: player, category: text, id: text, slot: integer):
+#     set {_weaponCooldown} to player_weapon_stats_get({_p}, {_slot}, "max-cooldown")
 #     if {_weaponCooldown} is not -999:
-#         while players_weapons_isset({_p}, {_slot}) is true:
-#             set {_currentCooldown} to players_weapons_stats_get({_p}, {_slot}, "cooldown")
+#         while player_weapon_isset({_p}, {_slot}) is true:
+#             set {_currentCooldown} to player_weapon_stats_get({_p}, {_slot}, "cooldown")
 #             if {_currentCooldown} >= {_weaponCooldown}:
-#                 players_weapons_stats_set({_p}, {_slot}, "cast", true)
+#                 player_weapon_stats_set({_p}, {_slot}, "cast", true)
 #             else:
-#                 players_weapons_stats_set({_p}, {_slot}, "cast", false)
-#             players_weapons_stats_set({_p}, {_slot}, "cooldown", {_currentCooldown} + 10)
+#                 player_weapon_stats_set({_p}, {_slot}, "cast", false)
+#             player_weapon_stats_set({_p}, {_slot}, "cooldown", {_currentCooldown} + 10)
 #             wait 10 ticks
 
 # #Get the ctegory of a weapon
@@ -139,9 +148,9 @@ function weapons_onEquip(p: player, weapon: item):
 # #   id : text The id of the weapon
 # #Return:
 # #   text
-# function weapons_get_category(id: text) :: text:
+# function weapon_get_category(id: text) :: text:
 #     set {_categories::*} to all yaml nodes of "YAML-WEAPONS-REPRESENTATION"
 #     loop {_categories::*}:
-#         set {_weapons::*} to all yaml nodes of "YAML-WEAPONS-%loop-value in upper case%"
-#         if {_weapons::*} contains {_id}:
+#         set {_WEAPON::*} to all yaml nodes of "YAML-WEAPONS-%loop-value in upper case%"
+#         if {_WEAPON::*} contains {_id}:
 #             return loop-value

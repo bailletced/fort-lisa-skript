@@ -1,9 +1,9 @@
-function test_items_main(p: player):
-  test_items_item_main({_p})
-  # test_items_weapons_main({_p})
+function test_item_main(p: player):
+  test_item_item({_p})
+  test_item_weapon({_p})
 
-function test_items_main_detail(p: player, type: text):
+function test_item_main_detail(p: player, type: text):
   if {_type} is "item":
-    test_items_item_main({_p})
-  # if {_type} is "weapons":
-  #   test_items_weapons_main({_p})
+    test_item_item({_p})
+  if {_type} is "weapon":
+    test_item_weapon({_p})

@@ -1,13 +1,7 @@
-#Return the value associated to a translation key
-#params:
-#   p : player
-#   path : text
-#   color : text The color to add before the text
-#Return:
-#   text
-function i18n(p: player, path: text, color: text = "&f") :: text:
-    set {_lang} to players_settings_get({_p}, "lang")
-    if {_lang} is not set:
-      set {_lang} to {LANG_FALLBACK}
-    set {_text} to yaml value {_path} in upper case from "YAML-LANG-%{_lang}%"
-    return "%{_color}%%{_text}%"
+# get translation
+function i18n(p: player, path: text, color: text = "") :: text:
+  set {_lang} to player_settings_get({_p}, "lang")
+  if {_lang} is not set:
+    set {_lang} to {LANG_FALLBACK}
+  set {_text} to yaml value {_path} in upper case from "YAML-LANG-%{_lang}%"
+  return "%{_color}%%{_text}%"

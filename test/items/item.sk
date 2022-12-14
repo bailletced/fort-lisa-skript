@@ -1,4 +1,4 @@
-function test_items_item_main(p: player):
+function test_item_item(p: player):
   send "§5Testing items item" to the console 
   it "Test item get/set/isset stat":
     set {_equipment} to diamond sword
@@ -11,18 +11,18 @@ function test_items_item_main(p: player):
     set {_cdrRef} to "toto"
     set {_weightRef} to 250
 
-    set {_equipment} to items_set_stat({_equipment}, {_statRef1}, {_attackRef})
-    set {_equipment} to items_set_stat({_equipment}, {_statRef2}, {_cdrRef})
-    set {_equipment} to items_set_stat({_equipment}, {_statRef4}, {_weightRef})
+    set {_equipment} to item_set_stat({_equipment}, {_statRef1}, {_attackRef})
+    set {_equipment} to item_set_stat({_equipment}, {_statRef2}, {_cdrRef})
+    set {_equipment} to item_set_stat({_equipment}, {_statRef4}, {_weightRef})
 
-    set {_attack} to items_get_stat({_equipment}, {_statRef1})
-    set {_cdr} to items_get_stat({_equipment}, {_statRef2})
-    set {_weight} to items_get_stat({_equipment}, {_statRef4})
+    set {_attack} to item_get_stat({_equipment}, {_statRef1})
+    set {_cdr} to item_get_stat({_equipment}, {_statRef2})
+    set {_weight} to item_get_stat({_equipment}, {_statRef4})
 
-    set {_isset1} to items_isset_stat({_equipment}, {_statRef1})
-    set {_isset2} to items_isset_stat({_equipment}, {_statRef2})
-    set {_isset3} to items_isset_stat({_equipment}, {_statRef3})
-    set {_isset4} to items_isset_stat({_equipment}, {_statRef4})
+    set {_isset1} to item_isset_stat({_equipment}, {_statRef1})
+    set {_isset2} to item_isset_stat({_equipment}, {_statRef2})
+    set {_isset3} to item_isset_stat({_equipment}, {_statRef3})
+    set {_isset4} to item_isset_stat({_equipment}, {_statRef4})
 
     assert if {_attack} is {_attackRef} with message "Stat should be %{_attackRef}%. Got %{_attack}%"
     assert if {_weight} is {_weightRef} with message "Stat should be %{_weightRef}%. Got %{_weight}%"
@@ -42,18 +42,18 @@ function test_items_item_main(p: player):
     set {_tagVal2} to "OTHER"
     set {_tagVal3} to 10
 
-    set {_item} to items_set_tag({_item}, {_tagRef1}, {_tagVal1})
-    set {_item} to items_set_tag({_item}, {_tagRef2}, {_tagVal2})
-    set {_item} to items_set_tag({_item}, {_tagRef3}, {_tagVal3})
+    set {_item} to item_set_tag({_item}, {_tagRef1}, {_tagVal1})
+    set {_item} to item_set_tag({_item}, {_tagRef2}, {_tagVal2})
+    set {_item} to item_set_tag({_item}, {_tagRef3}, {_tagVal3})
 
-    set {_getTag1} to items_get_tag({_item}, {_tagRef1})
-    set {_getTag2} to items_get_tag({_item}, {_tagRef2})
-    set {_getTag3} to items_get_tag({_item}, {_tagRef3})
+    set {_getTag1} to item_get_tag({_item}, {_tagRef1})
+    set {_getTag2} to item_get_tag({_item}, {_tagRef2})
+    set {_getTag3} to item_get_tag({_item}, {_tagRef3})
 
-    set {_isset1} to items_isset_tag({_item}, {_tagRef1})
-    set {_isset2} to items_isset_tag({_item}, {_tagRef2})
-    set {_isset3} to items_isset_tag({_item}, {_tagRef3})
-    set {_isset4} to items_isset_tag({_item}, "FAKE")
+    set {_isset1} to item_isset_tag({_item}, {_tagRef1})
+    set {_isset2} to item_isset_tag({_item}, {_tagRef2})
+    set {_isset3} to item_isset_tag({_item}, {_tagRef3})
+    set {_isset4} to item_isset_tag({_item}, "FAKE")
 
     assert if {_getTag1} is {_tagVal1} with message "tag %{_tagRef1}% should be %{_tagVal1}%. Got %{_getTag1}%"
     assert if {_getTag2} is {_tagVal2} with message "tag %{_tagRef2}% should be %{_tagVal2}%. Got %{_getTag2}%"
@@ -75,12 +75,12 @@ function test_items_item_main(p: player):
     set {_statVal3} to 60
     set {_statVal4} to 100
 
-    set {_item} to items_set_stat({_item}, {_statRef1}, {_statVal1})
-    set {_item} to items_set_stat({_item}, {_statRef2}, {_statVal2})
-    set {_item} to items_set_stat({_item}, {_statRef3}, {_statVal3})
-    set {_item} to items_set_stat({_item}, {_statRef4}, {_statVal4})
+    set {_item} to item_set_stat({_item}, {_statRef1}, {_statVal1})
+    set {_item} to item_set_stat({_item}, {_statRef2}, {_statVal2})
+    set {_item} to item_set_stat({_item}, {_statRef3}, {_statVal3})
+    set {_item} to item_set_stat({_item}, {_statRef4}, {_statVal4})
 
-    set {_stats::*} to items_get_stats({_item})
+    set {_stats::*} to item_get_stats({_item})
     assert if {_stats::*} contains {_statRef1} with message "%{_statRef1}% stat should be found. Got %{_stats::*}%"
     assert if {_stats::*} contains {_statRef2} with message "%{_statRef2}% stat should be found. Got %{_stats::*}%"
     assert if {_stats::*} contains {_statRef3} with message "%{_statRef3}% stat should be found. Got %{_stats::*}%"
@@ -98,12 +98,12 @@ function test_items_item_main(p: player):
     set {_statVal3} to 60
     set {_statVal4} to 100
 
-    set {_item} to items_set_stat({_item}, {_statRef1}, {_statVal1})
-    set {_item} to items_set_stat({_item}, {_statRef2}, {_statVal2})
-    set {_item} to items_set_stat({_item}, {_statRef3}, {_statVal3})
-    set {_item} to items_set_stat({_item}, {_statRef4}, {_statVal4})
+    set {_item} to item_set_stat({_item}, {_statRef1}, {_statVal1})
+    set {_item} to item_set_stat({_item}, {_statRef2}, {_statVal2})
+    set {_item} to item_set_stat({_item}, {_statRef3}, {_statVal3})
+    set {_item} to item_set_stat({_item}, {_statRef4}, {_statVal4})
 
-    set {_stats::*} to items_get_stats_superior_to({_item}, 9)
+    set {_stats::*} to item_get_stats_superior_to({_item}, 9)
     assert if {_stats::*} contains {_statRef1} with message "%{_statRef1}% stat should be found. Got %{_stats::*}%"
     assert if {_stats::*} does not contain {_statRef2} with message "%{_statRef2}% stat should not be found. Got %{_stats::*}%"
     assert if {_stats::*} contains {_statRef3} with message "%{_statRef3}% stat should be found. Got %{_stats::*}%"
@@ -115,12 +115,12 @@ function test_items_item_main(p: player):
 
     set {_statVal1} to 10
 
-    set {_item} to items_set_stat({_item}, {_statRef1}, {_statVal1})
-    set {_item} to items_add_stat({_item}, {_statRef1}, 10)
+    set {_item} to item_set_stat({_item}, {_statRef1}, {_statVal1})
+    set {_item} to item_add_stat({_item}, {_statRef1}, 10)
 
-    set {_get1} to items_get_stat({_item}, {_statRef1})
-    set {_item} to items_add_stat({_item}, {_statRef1}, -20)
-    set {_get2} to items_get_stat({_item}, {_statRef1})
+    set {_get1} to item_get_stat({_item}, {_statRef1})
+    set {_item} to item_add_stat({_item}, {_statRef1}, -20)
+    set {_get2} to item_get_stat({_item}, {_statRef1})
 
     assert if {_get1} is 20 with message "stat %{_statRef1}% should be 20. Got %{_get1}%"
     assert if {_get2} is 0 with message "stat %{_statRef1}% should be 0. Got %{_get2}%"

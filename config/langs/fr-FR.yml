@@ -1,7 +1,11 @@
 ADMIN:
   COMMANDS:
     SUCCESS: "Commande exécutée avec succès !"
-WEAPONS:
-  LIMB-OF-WISDOM:
-    TITLE: "L'Abattis de Sagesse"
-    DESCRIPTION: "Projette une boule d'énergie destructrice"
+WEAPON:
+  STAFF:
+    TEST:
+      TITLE: "L'Abattis de Sagesse"
+      LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE} infligeant {_POWER}."
+    LIMB_OF_WISDOM:
+      TITLE: "L'Abattis de Sagesse"
+      LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE} infligeant {_POWER}."

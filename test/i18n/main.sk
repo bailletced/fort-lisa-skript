@@ -1,2 +1,3 @@
 function test_i18n_main(p: player):
-  test_i18n_i18n_main({_p})
+  test_i18n_i18n({_p})
+  test_i18n_items({_p})

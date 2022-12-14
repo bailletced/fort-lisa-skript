@@ -1,0 +1,13 @@
+function test_item_weapon(p: player):
+  send "§5Testing items weapon" to the console 
+  it "Test weapon give":
+    clear inventory of {_p}
+    weapon_give({_p}, "STAFF", "LIMB_OF_WISDOM")
+    set {_weapon} to slot 0 of inventory of {_p}
+    set {_type} to item_get_tag({_weapon}, "TYPE")
+    set {_category} to item_get_tag({_weapon}, "CATEGORY")
+    set {_id} to item_get_tag({_weapon}, "ID")
+
+    assert if {_type} is "WEAPON" with message "item type should be WEAPON. Got %{_type}%"
+    assert if {_category} is "STAFF" with message "weapon category should be STAFF. Got %{_category}%"
+    assert if {_id} is "LIMB_OF_WISDOM" with message "weapon id should be LIMB_OF_WISDOM. Got %{_id}%"
