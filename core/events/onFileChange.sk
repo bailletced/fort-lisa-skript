@@ -4,12 +4,12 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/events/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/i18n/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/stores/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/stores/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/store/":
    reload script file fileManager_getRelativePath(event-path)
 

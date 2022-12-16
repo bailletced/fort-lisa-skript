@@ -1,7 +1,0 @@
-function player_store_weapon_equip(p: player, weapon: item):
-  set {_oldWeapon} to {PLAYERS::%{_p}%::WEAPON::EQUIPPED}
-  set {PLAYERS::%{_p}%::WEAPON::EQUIPPED} to {_weapon}
-
-function player_store_weapon_give(p: player, weapon: item):
-  add {_weapon} to {PLAYERS::%{_p}%::WEAPON::*}
-  give 1 of {_weapon} to {_p}

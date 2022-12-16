@@ -1,0 +1,27 @@
+function test_players_store_stat(p: player):
+    send "§5Testing player store stat" to the console 
+    it "test player stat set/get":
+        player_stat_set({_p}, "ATTACK", 50)
+        set {_test} to player_stat_get({_p}, "ATTACK")
+        set {_fake} to player_stat_get({_p}, "something2")
+        assert if {_test} is 50 with message "ATTACK stat should 50. Got %{_test}%"
+    it "test player stat add":
+        player_stat_set({_p}, "ATTACK", 10)
+        player_stat_add({_p}, "ATTACK", 10)
+        set {_attack} to player_stat_get({_p}, "ATTACK")
+        assert if {_attack} is 20 with message "attack should be 20. Got %{_attack}%"
+    it "test player stat delete":
+        player_stat_set({_p}, "ATTACK", 55)
+        player_stat_delete({_p}, "ATTACK")
+        set {_isset} to player_stat_isset({_p}, "ATTACK")
+        set {_test} to player_stat_get({_p}, "ATTACK")
+        assert if {_isset} is false with message "isset rtesult should be false. Got %{_isset}%"
+        assert if {_test} is not set with message "returned get value should not be set"
+    it "test player stat delete all":
+        player_stat_set({_p}, "ATTACK", 55)
+        player_stat_set({_p}, "DEFENCE", 10)
+        player_stat_delete_all({_p})
+        set {_isset1} to player_stat_isset({_p}, "ATTACK")
+        set {_isset2} to player_stat_isset({_p}, "DEFENCE")
+        assert if {_isset1} is false with message "isset result of ATTACK should be false. Got %{_isset1}%"
+        assert if {_isset2} is false with message "isset result of DEFENCE should be false. Got %{_isset2}%"

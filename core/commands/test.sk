@@ -5,3 +5,9 @@ command /testplanet:
         drawPlanet particle1 "redstone", RGB 0, 255, 10, particle2 "redstone", RGB2 0, 10, 255, center {_loc}, id "%{_p}%", radius 0.25, density 150, precision 100, bumpHeight 0.25, visibleRange 30, tps 1, second 2
         wait 5 seconds
         stopEffect "%{_p}%"
+
+command /testitem:
+    trigger:
+        set {_p} to event-player
+        if inventory of {_p} contains diamond:
+            broadcast slot 0 of {_p}

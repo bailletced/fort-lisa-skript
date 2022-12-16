@@ -46,7 +46,7 @@ function item_isset_tag(it: item, key: text) :: boolean:
 function item_set_stat(it: item, key: text, value: number) :: item:
   set {_nbt} to full nbt compound of {_it}
   if {_value} is set:
-    set int tag "tag;%{_key}%" of {_nbt} to {_value}
+    set float tag "tag;%{_key}%" of {_nbt} to {_value}
   return item from nbt {_nbt}
 
 #Get a given stat of an item
@@ -57,7 +57,7 @@ function item_set_stat(it: item, key: text, value: number) :: item:
 #   object
 function item_get_stat(it: item, key: text) :: number:
   set {_nbt} to full nbt compound of {_it}
-  set {_res} to int tag "tag;%{_key}%" of {_nbt}
+  set {_res} to float tag "tag;%{_key}%" of {_nbt}
   return {_res}
 
 #Return all existing stats of an item
@@ -66,7 +66,7 @@ function item_get_stat(it: item, key: text) :: number:
 #   texts
 function item_get_stats(it: item) :: texts:
   delete {_res::*}
-  loop {STATS::ALL::*}:
+  loop {STAT::ALL::*}:
     set {_stat} to loop-value
     if item_isset_stat({_it}, {_stat}) is true:
       add {_stat} to {_res::*}
@@ -92,7 +92,7 @@ function item_isset_stat(it: item, key: text) :: boolean:
 #   texts
 function item_get_stats_superior_to(it: item, amount: number) :: texts:
   delete {_res::*}
-  loop {STATS::ALL::*}:
+  loop {STAT::ALL::*}:
     set {_stat} to loop-value
     if item_isset_stat({_it}, {_stat}) is true:
       set {_statItemAmount} to item_get_stat({_it}, {_stat})
@@ -131,6 +131,24 @@ function item_add_stat(it: item, key: text, amount: number) :: item:
     set {_item} to item_set_stat({_it}, {_key}, {_finalAmount})
   else:
     set {_item} to item_set_stat({_it}, {_key}, {_amount})
+  return {_item}
+
+
+#Affect stats to item
+function item_stat_initialize(p: player, type: text, item: item) :: item:
+  set {_category} to item_get_tag({_item}, "CATEGORY")
+  set {_id} to item_get_tag({_item}, "ID")
+  loop {STAT::%{_type}%::*}:
+    set {_item} to item_set_stat({_item}, loop-value, {%{_type}%::%{_category}%::%{_id}%::%loop-value%})
+  return {_item}
+
+function item_create(p: player, type: text, category: text, id: text) :: item:
+  set {_item} to {WEAPON::%{_category}%::%{_id}%::ITEM}
+  set {_item} to item_set_tag({_item}, "TYPE", {_type})
+  set {_item} to item_set_tag({_item}, "CATEGORY", {_category})
+  set {_item} to item_set_tag({_item}, "ID", {_id})
+  set {_item} to item_stat_initialize({_p}, "WEAPON", {_item})
+  set {_item} to i18n_item({_p}, {_item})
   return {_item}
 
 function item_generate_id(category: text) :: text:

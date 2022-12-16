@@ -124,3 +124,15 @@ function test_item_item(p: player):
 
     assert if {_get1} is 20 with message "stat %{_statRef1}% should be 20. Got %{_get1}%"
     assert if {_get2} is 0 with message "stat %{_statRef1}% should be 0. Got %{_get2}%"
+
+
+  it "Test item create":
+    player_store_stat_set({_p}, "POWER", 10)
+    set {_item} to item_create({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM")
+    set {_power} to item_get_stat({_item}, "POWER")
+    set {_powerMultiplier} to item_get_stat({_item}, "POWER_MULTIPLIER")
+    set {_finalPower} to {_power} + {_power} * {_powerMultiplier}
+
+    assert if {_power} is {WEAPON::STAFF::LIMB_OF_WISDOM::POWER} with message "power should be %{WEAPON::STAFF::LIMB_OF_WISDOM::POWER}%. Got %{_power}%"
+    assert if "%{_powerMultiplier}%" is "%{WEAPON::STAFF::LIMB_OF_WISDOM::POWER_MULTIPLIER}%" with message "powerMultiplier should be %{WEAPON::STAFF::LIMB_OF_WISDOM::POWER_MULTIPLIER}%. Got %{_powerMultiplier}%"
+    assert if the line 2 of lore of {_item} contains "%{_finalPower}%" with message "lore should contain a final power of %{_finalPower}%. Got %line 2 of lore of {_item}%"

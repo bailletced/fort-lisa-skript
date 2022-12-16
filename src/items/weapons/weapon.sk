@@ -6,18 +6,9 @@ function weapon_category_get(category: text) :: text:
 
 #Give a weapon to the player
 function weapon_give(p: player, category: text, id: text):
-    set {_weapon} to weapon_create({_p}, {_category}, {_id})    
+    set {_weapon} to item_create({_p}, "WEAPON", {_category}, {_id})    
     player_store_weapon_give({_p}, {_weapon})
 
-function weapon_create(p: player, category: text, id: text) :: item:
-    set {_weapon} to {WEAPON::%{_category}%::%{_id}%::ITEM}
-    set {_weapon} to item_set_tag({_weapon}, "TYPE", "WEAPON")
-    set {_weapon} to item_set_tag({_weapon}, "CATEGORY", {_category})
-    set {_weapon} to item_set_tag({_weapon}, "ID", {_id})
-    loop {STATS::WEAPON::*}:
-        set {_weapon} to item_set_stat({_weapon}, loop-value, {WEAPON::%{_category}%::%{_id}%::%loop-value%})
-    set {_weapon} to i18n_item({_p}, {_weapon})
-    return {_weapon}
 
 #Called when the player equips the weapon 
 #   p : player
@@ -27,7 +18,6 @@ function weapon_create(p: player, category: text, id: text) :: item:
 function weapon_onEquip(p: player, weapon: item):
     broadcast "I am equiping a weapon"
     player_store_weapon_equip({_p}, {_weapon})
-
 
 # #Reload the stats of a weapon
 # #   p : player

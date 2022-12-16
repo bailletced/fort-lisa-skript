@@ -1,0 +1,16 @@
+function player_store_weapon_equip(p: player, weapon: item):
+  set {_oldWeapon} to {players::%{_p}%::weapon::equipped}
+  set {players::%{_p}%::weapon::equipped} to {_weapon}
+
+function player_store_weapon_give(p: player, weapon: item):
+  add {_weapon} to {players::%{_p}%::weapon::*}
+  give 1 of {_weapon} to {_p}
+
+function player_store_weapon_reload_all(p: player):
+  loop {HOTBAR_SLOTS::*}:
+    if {players::%{_p}%::weapon::*} contains slot loop-value of {_p}:
+      set {_weapon} to slot loop-value of {_p}
+      # a weapon is in the hotbar slot
+      set {_weapon} to item_stat_initialize({_p}, "WEAPON", {_weapon})
+      broadcast "%{_weapon}%"
+

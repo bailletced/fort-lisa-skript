@@ -1,5 +1,5 @@
 function test_i18n_items(p: player):
-  send "§5Testing i18n i18n" to the console
+  send "§5Testing i18n items" to the console
   set {_originLang} to player_settings_get({_p}, "lang")
   player_settings_set({_p}, "lang", "fr-FR")
   
@@ -32,12 +32,12 @@ function test_i18n_items(p: player):
     set {_it} to item_set_stat({_it}, "POWER", {_powerStat})
     set {_it} to item_set_stat({_it}, "RANGE", {_rangeStat})
 
-    set {_rangeRefIcon} to {STATS::RANGE::ICON}
-    set {_rangeRefColor} to {STATS::RANGE::COLOR}
-    set {_powerRefIcon} to {STATS::POWER::ICON}
-    set {_powerRefColor} to {STATS::POWER::COLOR}
+    set {_rangeRefIcon} to {STAT::RANGE::ICON}
+    set {_rangeRefColor} to {STAT::RANGE::COLOR}
+    set {_powerRefIcon} to {STAT::POWER::ICON}
+    set {_powerRefColor} to {STAT::POWER::COLOR}
 
-    set {_loreAfter} to "Projette une boule d'énergie destructrice, de portée %{_rangeRefColor}%%{_rangeRefIcon}% %{_rangeStat}%§f infligeant %{_powerRefColor}%%{_powerRefIcon}% %{_powerStat}%§f."
+    set {_loreAfter} to "Projette une boule d'énergie destructrice, de portée %{_rangeRefColor}%%{_rangeRefIcon}%%{_rangeStat}%§f infligeant %{_powerRefColor}%%{_powerRefIcon}%%{_powerStat}%§f."
 
     set {_lore} to i18n_item_lore({_p}, {_it})
     assert if {_loreAfter} is {_lore} with message "lore should be %{_loreAfter}% §aGot %{_lore}%"

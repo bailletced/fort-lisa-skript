@@ -26,6 +26,9 @@ ALL:
   COOLDOWN_REDUCTION:
     ICON: "◕"
     COLOR: "§d"
+  MANA:
+    ICON: "☄"
+    COLOR: "§b"
   MANA_MAX:
     ICON: "☄"
     COLOR: "§b"
@@ -41,9 +44,22 @@ ALL:
   HEALTH_MAX:
     ICON: "۝"
     COLOR: "§c"
+  HEALTH:
+    ICON: "۝"
+    COLOR: "§c"
   HEALTH_REGEN:
     ICON: "۝"
     COLOR: "§c"
+
+PLAYER:
+  - "HEALTH"
+  - "HEALTH_MAX"
+  - "MANA"
+  - "MANA_MAX"
+  - "ATTACK"
+  - "POWER"
+  - "DEFENCE"
+  - "MAGIC_RESISTANCE"
 
 WEAPON:
   - "COOLDOWN"

@@ -20,13 +20,17 @@ function i18n_item_lore(p: player, it: item) :: text:
 
     set {_lore} to i18n_item_attr({_p}, {_it}, "LORE")
     
-    set {_stats::*} to {STATS::%{_type}%::*}
+    set {_stats::*} to {STAT::%{_type}%::*}
     loop {_stats::*}:
+        set {_multiplier} to 0
         set {_key} to loop-value
         set {_value} to item_get_stat({_it}, {_key})
-        set {_color} to {STATS::%{_key}%::COLOR}
-        set {_icon} to {STATS::%{_key}%::ICON}
-        replace "{_%{_key}%}" in {_lore} with "%{_color}%%{_icon}%%{_value}%§f"
+        if item_isset_stat({_it}, "%{_key}%_MULTIPLIER") is true:
+            set {_multiplier} to item_get_stat({_it}, "%{_key}%_MULTIPLIER")
+        set {_color} to {STAT::%{_key}%::COLOR}
+        set {_icon} to {STAT::%{_key}%::ICON}
+        set {_valueFinal} to {_value} + {_value} * {_multiplier}
+        replace "{_%{_key}%}" in {_lore} with "%{_color}%%{_icon}%%{_valueFinal}%§f"
     return {_lore}
 
 

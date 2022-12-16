@@ -1,0 +1,2 @@
+function test_player_main(p: player):
+  test_players_store_stat({_p})

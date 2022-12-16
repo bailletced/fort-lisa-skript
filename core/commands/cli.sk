@@ -18,6 +18,8 @@ command /admin [<text>] [<text>] [<text>] [<text>]:
           test_item_main(player)
       else if arg-2 is "i18n":
         test_i18n_main(player)
+      else if arg-2 is "player":
+        test_player_main(player)
 
 
 on tab complete of "/admin":
@@ -26,6 +28,7 @@ on tab complete of "/admin":
   if tab arg-1 is "hmr":
     set tab completions for position 2 to "reset"
   else if tab arg-1 is "test":
-    set tab completions for position 2 to "items", "i18n" and "all"
+    set tab completions for position 2 to "items", "i18n", "player" and "all"
     if tab arg-2 is "items":
       set tab completions for position 3 to "weapon" and "item"
+    else if tab arg-2 is "player":
