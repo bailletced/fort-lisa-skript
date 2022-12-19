@@ -82,7 +82,7 @@ function weapon_onEquip(p: player, weapon: item):
 # #   id : text The id of the weapon
 # function weapon_get_item(p: player, id: text) :: item:
 #     set {_category} to weapon_get_category({_id})
-#     set {_lang} to player_settings_get({_p}, "lang")
+#     set {_lang} to player_store_setting_get({_p}, "lang")
 #     if yaml "YAML-WEAPONS-%{_category} in upper case%" is loaded:
 #         set {_item} to yaml value "%{_id}%.item" from "YAML-WEAPONS-%{_category} in upper case%" parsed as item
 #         set {_element} to yaml value "%{_id}%.element" from "YAML-WEAPONS-%{_category} in upper case%"

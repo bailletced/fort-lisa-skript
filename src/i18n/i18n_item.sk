@@ -3,7 +3,7 @@ function i18n_item_attr(p: player, item: item, attr: text) :: text:
     set {_type} to item_get_tag({_item}, "TYPE")
     set {_category} to item_get_tag({_item}, "CATEGORY")
     set {_id} to item_get_tag({_item}, "ID")
-    set {_lang} to player_settings_get({_p}, "lang")
+    set {_lang} to player_store_setting_get({_p}, "lang")
     return i18n({_p}, "%{_type}%.%{_category}%.%{_id}%.%{_attr}%")
 
 #Add a i18n description to the lore of item
@@ -23,13 +23,16 @@ function i18n_item_lore(p: player, it: item) :: text:
     set {_stats::*} to {STAT::%{_type}%::*}
     loop {_stats::*}:
         set {_multiplier} to 0
+        set {_playerStat} to 0
         set {_key} to loop-value
         set {_value} to item_get_stat({_it}, {_key})
         if item_isset_stat({_it}, "%{_key}%_MULTIPLIER") is true:
-            set {_multiplier} to item_get_stat({_it}, "%{_key}%_MULTIPLIER")
+            if player_store_stat_isset({_p}, {_key}) is true:
+                set {_multiplier} to item_get_stat({_it}, "%{_key}%_MULTIPLIER")
+                set {_playerStat} to player_store_stat_get({_p}, {_key})
         set {_color} to {STAT::%{_key}%::COLOR}
         set {_icon} to {STAT::%{_key}%::ICON}
-        set {_valueFinal} to {_value} + {_value} * {_multiplier}
+        set {_valueFinal} to {_value} + {_playerStat} * {_multiplier}
         replace "{_%{_key}%}" in {_lore} with "%{_color}%%{_icon}%%{_valueFinal}%§f"
     return {_lore}
 

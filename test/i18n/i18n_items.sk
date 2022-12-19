@@ -1,7 +1,7 @@
 function test_i18n_items(p: player):
   send "§5Testing i18n items" to the console
-  set {_originLang} to player_settings_get({_p}, "lang")
-  player_settings_set({_p}, "lang", "fr-FR")
+  set {_originLang} to player_store_setting_get({_p}, "lang")
+  player_store_setting_set({_p}, "lang", "fr-FR")
   
   it "Test get item title":
     set {_item} to diamond sword
@@ -48,4 +48,4 @@ function test_i18n_items(p: player):
     set {_idxes::*} to all indexes of {_res::*}
     assert if amount of {_idxes::*} is floor(length of {_lore}/{LORE_LENGTH_MAX}) with message "Got %amount of {_idxes::*}%"
 
-  player_settings_set({_p}, "lang", "fr-FR")
+  player_store_setting_set({_p}, "lang", "fr-FR")

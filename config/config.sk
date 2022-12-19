@@ -7,6 +7,7 @@ function config_load():
   load yaml "plugins/Skript/scripts/fort-lisa/config/stats.yml" as "YAML-STATS"
   delete {STAT::*}
   set {STAT::WEAPON::*} to yaml list "WEAPON" from "YAML-STATS"
+  set {STAT::PLAYER::*} to yaml list "PLAYER" from "YAML-STATS"
   loop yaml node keys "ALL" of "YAML-STATS":
     add loop-value to {STAT::ALL::*}
     set {_icon} to yaml value "ALL.%loop-value%.ICON" from "YAML-STATS"
@@ -31,3 +32,12 @@ function config_load():
   set {LORE_LENGTH_MAX} to 30
   set {LANG_FALLBACK} to "fr-FR"
   set {HOTBAR_SLOTS::*} to 0,1,2,3,4,5,6,7 and 8
+
+  # Initialize players. TODO : to be triggered when game starts
+  loop all players:
+    set {_p} to loop-value
+    player_store_weapon_delete_all({_p})
+    player_store_setting_set({_p}, "INGAME", false)
+    wait 20 ticks
+    player_store_setting_set({_p}, "INGAME", true)
+    onPeriodTenTicks({_p})

@@ -1,12 +1,24 @@
 command /admin [<text>] [<text>] [<text>] [<text>]:
   trigger:
     set {_success} to true
+    set {_p} to event-player
+
     if arg-1 is "hmr":
       if arg-2 is "reset":
         manager_hotReload()
 
     else if arg-1 is "init":
       config_load()
+    
+    else if arg-1 is "stat":
+      if arg-2 is "set":
+        if arg-4 is not set:
+          error("You must provide a value")
+        else:
+          player_store_stat_set({_p}, arg-3, arg-4 parsed as number)
+      else if arg-2 is "get":
+        set {_stat} to player_store_stat_get({_p}, arg-3)
+        broadcast "%arg-3% %{_stat}%"
 
     else if arg-1 is "test":
       if arg-2 is "all":
@@ -23,7 +35,7 @@ command /admin [<text>] [<text>] [<text>] [<text>]:
 
 
 on tab complete of "/admin":
-  set tab completions for position 1 to "init", "hmr" and "test"
+  set tab completions for position 1 to "init", "hmr", "stat" and "test"
 
   if tab arg-1 is "hmr":
     set tab completions for position 2 to "reset"
@@ -32,3 +44,7 @@ on tab complete of "/admin":
     if tab arg-2 is "items":
       set tab completions for position 3 to "weapon" and "item"
     else if tab arg-2 is "player":
+  else if tab arg-1 is "stat":
+    set tab completions for position 2 to "get" and "set"
+    if tab arg-2 is set:
+      set tab completions for position 3 to {STAT::PLAYER::*}
