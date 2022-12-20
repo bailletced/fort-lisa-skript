@@ -1,0 +1,10 @@
+function entity_get_tag(entity: entity, key: text) :: text:
+  set {_nbt} to nbt compound of {_entity}
+  return tag "custom;%{_key}%" of {_nbt}
+
+function entity_set_tag(entity: entity, key: text, value: text):
+  set {_nbt} to nbt compound of {_entity}
+  set tag "custom;%{_key}%" of {_nbt} to {_value}
+
+function entity_set_tag_native(entity: entity, value: text):
+  add nbt compound of {_value} to nbt compound of {_entity}

@@ -1,0 +1,17 @@
+#Make a player shoot a projectile 
+function players_action_shootProjectile(p: player, origin: item, projectile: entity type, speed: number, gravity: boolean = true):
+  make {_p} shoot {_projectile} at speed {_speed}
+  set {_projectile} to last shot projectile
+
+  set {_type} to item_get_tag({_origin}, "TYPE")
+  set {_category} to item_get_tag({_origin}, "CATEGORY")
+  set {_id} to item_get_tag({_origin}, "ID")
+
+  entity_set_tag({_projectile}, "ATTACKER", name of {_p})
+  entity_set_tag({_projectile}, "ATTACKER_TYPE", "PLAYER")
+  entity_set_tag({_projectile}, "TYPE", {_type})
+  entity_set_tag({_projectile}, "CATEGORY", {_category})
+  entity_set_tag({_projectile}, "ID", {_id})
+
+  if {_gravity} is false:
+    entity_set_tag_native({_projectile}, "{NoGravity:1b}")

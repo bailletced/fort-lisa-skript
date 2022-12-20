@@ -1,0 +1,3 @@
+function zombie_main(level: number):
+  if {_level} is 1:
+    set {_maxHealth} to 20
