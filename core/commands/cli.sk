@@ -43,7 +43,6 @@ on tab complete of "/admin":
     set tab completions for position 2 to "items", "i18n", "player" and "all"
     if tab arg-2 is "items":
       set tab completions for position 3 to "weapon" and "item"
-    else if tab arg-2 is "player":
   else if tab arg-1 is "stat":
     set tab completions for position 2 to "get" and "set"
     if tab arg-2 is set:

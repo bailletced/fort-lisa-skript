@@ -23,7 +23,6 @@ function weapon_onEquip(p: player, weapon: item):
 function weapon_leftClick(p: player, weapon: item):
     set {_category} to item_get_tag({_weapon}, "CATEGORY")
     if {_category} is "STAFF":
-        broadcast "fff"
         staff_leftClick({_p}, {_weapon})
 
 # #Called when right clicking with a weapon. 
@@ -34,14 +33,7 @@ function weapon_leftClick(p: player, weapon: item):
 #         claw_rightClick({_p}, {_id}, {_slot})
 
 
-# #Called when the player hit a block/entity with his weapon
-# #   p : player
-# #   category : text The category of the weapon (staff, fan, claw...)
-# #   id: text The id of the weapon
-# #   slot: integer
-# #   location: location
-# function weapon_hit(p: player, category: text, id: text, slot: integer, victim: object):
-#     if {_category} is "staff":
-#         staff_hit({_p}, {_id}, {_slot}, {_victim})
-#     else if {_category} is "claw":
-#         claw_hit({_p}, {_id}, {_slot}, {_victim})
+#Called when the player hit a block/entity with his weapon
+function weapon_hit(p: player, category: text, id: text, location: location):
+    if {_category} is "STAFF":
+        staff_hit({_p}, {_id}, {_location})

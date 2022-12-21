@@ -1,0 +1,7 @@
+on damage:
+  set {_p} to attacker
+  set {_item} to held item of {_p}
+  set {_type} to item_get_tag({_item}, "TYPE")
+  broadcast "damage %{_item}% %{_type}%"
+  if {_type} is "WEAPON":
+    weapon_leftClick({_p}, {_item})

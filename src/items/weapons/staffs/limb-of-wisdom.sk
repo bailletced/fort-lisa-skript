@@ -1,11 +1,18 @@
 function limb_of_wisdom_cast(p: player, staff: item):
-  # players_weapons_stats_set({_p}, {_slot}, "cooldown", 0)
-  # players_weapons_stats_set({_p}, {_slot}, "cast", false)
+  item_set_stat({_staff}, "CD", {WEAPON::STAFF::LIMB_OF_WISDOM::COOLDOWN})
   players_action_shootProjectile({_p}, {_staff}, snowball, 1, false)
-  # set {_projectile} to last shot projectile
-  # drawDot count 7, particle "smoke", RGB 0.2, 0.2, 0.2, center {_projectile}, visibleRange 152, pulseDelay 0, keepFor 10 ticks
-  # set {_range} to players_weapons_stats_get({_p}, {_slot}, "range")
-  # wait "%(0.14*{_range})% seconds" parsed as timespan
-  # if all entities where [uuid of entity input is uuid of {_projectile}] is set:
-  #     limbOfWisdom_hit({_p}, {_slot}, location of {_projectile})
-  # kill {_projectile}
+  set {_projectile} to last shot projectile
+  drawDot count 7, particle "smoke", RGB 0.2, 0.2, 0.2, center {_projectile}, visibleRange 152, pulseDelay 0, keepFor 10 ticks
+  set {_range} to player_stat_item({_p}, {_staff}, "RANGE")
+  wait "%(0.14*{_range})% seconds" parsed as timespan
+  if {_projectile} is alive:
+    limb_of_wisdom_hit({_p}, location of {_projectile})
+  kill {_projectile}
+
+function limb_of_wisdom_hit(p: player, location: location):
+  drawDot count 10, particle "witchspell", RGB 0.3, 0.3, 0.3, center {_location}, rainbowMode true, visibleRange 32, pulseDelay 0, keepFor 10 ticks
+  set {_power} to player_stat_item_details({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM", "POWER")
+  set {_radius} to player_stat_item_details({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM", "RADIUS")
+  
+  loop all entities in radius {_radius} of {_location}:
+    broadcast "TODO: damage %loop-value%"

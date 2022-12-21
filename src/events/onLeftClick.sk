@@ -1,6 +1,6 @@
 on leftclick:
   set {_item} to held item of player
   set {_type} to item_get_tag({_item}, "TYPE")  
-  
   if {_type} is "WEAPON":
     weapon_leftClick(event-player, {_item})
+    cancel event

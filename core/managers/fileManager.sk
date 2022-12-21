@@ -50,10 +50,10 @@ function fileManager_findDirectoriesRecursive(path: text, ignores: texts) :: tex
 #   fullPath: text
 # Returns texts The relative path
 function fileManager_getRelativePath(fullPath: object) :: text:
-    broadcast "---- auto reload triggered ----"
-    set {_fullPath} to "%{_fullPath}%" #convert to text
+    set {_fullPath} to "%{_fullPath}%/" #convert to text
     replace "\" with "/" in {_fullPath}
-    replace "plugins/Skript/scripts/fort-lisa/" with "" in {_fullPath}
+    replace "plugins/Skript/scripts/" with "" in {_fullPath}
+    broadcast "---- %{_fullPath}% reloaded ----"
     return {_fullPath}
 
 

@@ -11,3 +11,14 @@ command /testitem:
         set {_p} to event-player
         if inventory of {_p} contains diamond:
             broadcast slot 0 of {_p}
+
+command /benchmark:
+    trigger:
+        set {_p} to event-player
+        set {_weapon} to item_create({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM")
+        set {_now} to now
+        loop 100000 times:
+            set {_toto} to item_get_tag({_weapon}, "TYPE")
+        set {_after} to now
+
+        broadcast "%difference between {_now} and {_after}%"
