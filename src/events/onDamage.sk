@@ -1,7 +1,12 @@
 on damage:
-  set {_p} to attacker
-  set {_item} to held item of {_p}
-  set {_type} to item_get_tag({_item}, "TYPE")
-  broadcast "damage %{_item}% %{_type}%"
-  if {_type} is "WEAPON":
-    weapon_leftClick({_p}, {_item})
+  if type of attacker is player:
+    set {_p} to attacker
+    set {_item} to held item of {_p}
+    set {_type} to item_get_tag({_item}, "TYPE")
+    if {_type} is "WEAPON":
+      weapon_leftClick({_p}, {_item})
+  else:
+    set {_type} to entity_get_tag(attacker, "TYPE")
+    if {_type} is "MOB":
+      mob_action_damage(attacker, victim)
+      cancel event

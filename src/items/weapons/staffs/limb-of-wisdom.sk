@@ -13,6 +13,5 @@ function limb_of_wisdom_hit(p: player, location: location):
   drawDot count 10, particle "witchspell", RGB 0.3, 0.3, 0.3, center {_location}, rainbowMode true, visibleRange 32, pulseDelay 0, keepFor 10 ticks
   set {_power} to player_stat_item_details({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM", "POWER")
   set {_radius} to player_stat_item_details({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM", "RADIUS")
-  
   loop all entities in radius {_radius} of {_location}:
-    broadcast "TODO: damage %loop-value%"
+    player_action_damage({_p}, loop-entity, 0, {_power})

@@ -8,3 +8,11 @@ function entity_set_tag(entity: entity, key: text, value: text):
 
 function entity_set_tag_native(entity: entity, value: text):
   add nbt compound of {_value} to nbt compound of {_entity}
+
+function entity_set_stat(entity: entity, key: text, value: number):
+  set {_nbt} to nbt compound of {_entity}
+  set float tag "custom;%{_key}%" of {_nbt} to {_value}
+
+function entity_get_stat(entity: entity, key: text) :: number:
+  set {_res} to float tag "custom;%{_key}%" of nbt compound of {_entity}
+  return {_res}

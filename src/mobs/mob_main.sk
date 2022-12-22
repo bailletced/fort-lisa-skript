@@ -1,0 +1,21 @@
+function mob_set_stats(mob: entity):
+  set {_category} to entity_get_tag({_mob}, "CATEGORY")
+  set {_id} to entity_get_tag({_mob}, "ID")
+  loop {STAT::MOB::*}:
+    set {_key} to loop-value
+    set {_value} to {MOB::%{_category}%::%{_id}%::%{_key}%}
+    if {_value} is set:
+      entity_set_stat({_mob}, {_key}, {_value})
+      if {_key} is "HEALTH":
+        set maximum health of {_mob} to {_value}
+        set health of {_mob} to {_value}
+
+function mob_summon(category: text, id: text, location: location) :: entity:
+  if {_category} is "ZOMBIE":
+    set {_mob} to zombie_summon({_id}, {_location})
+
+  entity_set_tag({_mob}, "TYPE", "MOB")
+  entity_set_tag({_mob}, "CATEGORY", {_category})
+  entity_set_tag({_mob}, "ID", {_id})
+  mob_set_stats({_mob})
+  return {_mob}

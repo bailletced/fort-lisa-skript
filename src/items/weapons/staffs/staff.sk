@@ -1,4 +1,4 @@
-function staff_leftClick(p: player, staff: item):
+function staff_cast_normal(p: player, staff: item):
   set {_id} to item_get_tag({_staff}, "ID")
   if {_id} is "LIMB_OF_WISDOM":
     limb_of_wisdom_cast({_p}, {_staff})

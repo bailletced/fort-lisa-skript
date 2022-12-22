@@ -8,4 +8,4 @@ WEAPON:
       LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE} infligeant {_POWER}."
     LIMB_OF_WISDOM:
       TITLE: "L'Abattis de Sagesse"
-      LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE} infligeant {_POWER}."
+      LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE}, rayon {_RADIUS} et infligeant {_POWER}."

@@ -139,22 +139,28 @@ function item_stat_initialize(p: player, type: text, item: item) :: item:
   set {_category} to item_get_tag({_item}, "CATEGORY")
   set {_id} to item_get_tag({_item}, "ID")
   loop {STAT::%{_type}%::*}:
-    set {_item} to item_set_stat({_item}, loop-value, {%{_type}%::%{_category}%::%{_id}%::%loop-value%})
+    set {_stat} to loop-value
+    set {_value} to {%{_type}%::%{_category}%::%{_id}%::%loop-value%}
+    if {_value} is set:
+      set {_item} to item_set_stat({_item}, {_stat}, {_value})
+  set {_item} to item_set_stat({_item}, "CD_NORMAL", 0)
+  set {_item} to item_set_stat({_item}, "CD_SPECIAL", 0)
   return {_item}
 
 function item_create(p: player, type: text, category: text, id: text) :: item:
+  set {_uuid} to item_generate_uuid({_type}, {_category}, {_id})
   set {_item} to {WEAPON::%{_category}%::%{_id}%::ITEM}
   set {_item} to item_set_tag({_item}, "TYPE", {_type})
   set {_item} to item_set_tag({_item}, "CATEGORY", {_category})
   set {_item} to item_set_tag({_item}, "ID", {_id})
+  set {_item} to item_set_tag({_item}, "UUID", {_uuid})
   set {_item} to item_stat_initialize({_p}, "WEAPON", {_item})
   set {_item} to i18n_item({_p}, {_item})
   return {_item}
 
-function item_generate_id(category: text) :: text:
-  add 1 to {IDS::%{_category}%}
-  return "%{_category}%/%{IDS::%{_category}%}%"
-
+function item_generate_uuid(type: text, category: text, id: text) :: text:
+  add 1 to {IDS::%{_type}%::%{_category}%::%{_id}%}
+  return "%{_type}%/%{_category}%/%{IDS::%{_type}%::%{_category}%::%{_id}%}%"
 
 function item_give(p: player, type: text, category: text, id: text):
   if {_type} is "WEAPON":

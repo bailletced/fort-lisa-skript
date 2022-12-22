@@ -1,4 +1,4 @@
-function config_load():
+function config_load(world: world):
   #LANGS
   load yaml "plugins/Skript/scripts/fort-lisa/config/langs/fr-FR.yml" as "YAML-LANG-fr-FR"
   load yaml "plugins/Skript/scripts/fort-lisa/config/langs/en-EN.yml" as "YAML-LANG-en-EN"
@@ -8,11 +8,13 @@ function config_load():
   delete {STAT::*}
   set {STAT::WEAPON::*} to yaml list "WEAPON" from "YAML-STATS"
   set {STAT::PLAYER::*} to yaml list "PLAYER" from "YAML-STATS"
+  set {STAT::MOB::*} to yaml list "MOB" from "YAML-STATS"
   loop yaml node keys "ALL" of "YAML-STATS":
     add loop-value to {STAT::ALL::*}
     set {_icon} to yaml value "ALL.%loop-value%.ICON" from "YAML-STATS"
     set {STAT::%loop-value%::ICON} to yaml value "ALL.%loop-value%.ICON" from "YAML-STATS"
     set {STAT::%loop-value%::COLOR} to yaml value "ALL.%loop-value%.COLOR" from "YAML-STATS"
+  unload yaml "YAML-STATS"
 
   #WEAPONS
   load yaml "plugins/Skript/scripts/fort-lisa/config/weapons.yml" as "YAML-WEAPONS"
@@ -27,7 +29,44 @@ function config_load():
       set {WEAPON::%{_category}%::%{_id}%::ITEM} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-WEAPONS" parsed as item
       loop yaml node keys "%{_category}%.%{_id}%.STATS" of "YAML-WEAPONS":
         set {WEAPON::%{_category}%::%{_id}%::%loop-key-3%} to yaml value "%{_category}%.%{_id}%.STATS.%loop-key-3%" from "YAML-WEAPONS"
+  unload yaml "YAML-WEAPONS"
+
+  #MOBS
+  load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/mobs.yml" as "YAML-MOB"
+  load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/zombies.yml" as "YAML-MOB-ZOMBIE"
+  delete {MOB::*}
+  loop yaml list "CATEGORIES" from "YAML-MOB":
+    set {_category} to loop-value
+    loop node keys "" of "YAML-MOB-%{_category}%":
+      set {_id} to loop-value-2
+      loop yaml node keys {_id} of "YAML-MOB-%{_category}%":
+        set {_stat} to loop-key-3
+        set {_value} to yaml value "%{_id}%.%{_stat}%" from "YAML-MOB-%{_category}%"
+        set {MOB::%{_category}%::%{_id}%::%{_stat}%} to {_value}
+  unload yaml "YAML-MOB"
+  unload yaml "YAML-MOB-ZOMBIE"
+
+  #LOCATIONS
+  load yaml "plugins/Skript/scripts/fort-lisa/config/locations/map-castle.yml" as "YAML-LOCATION-MAP-CASTLE"
+  delete {LOCATION::*}
+  set {LOCATION::LISA::CASTLE:THRONE} to location_text2Loc(yaml value "CASTLE.THRONE" from "YAML-LOCATION-MAP-CASTLE", {_world})
   
+  set {_spawnsFar::*} to yaml list "SPAWNS.FAR" from "YAML-LOCATION-MAP-CASTLE"
+  loop {_spawnsFar::*}:
+    set {_location} to location_text2Loc(loop-value, {_world})
+    add {_location} to {LOCATION::SPAWN::FAR::*}
+
+  set {_spawnsMedium::*} to yaml list "SPAWNS.MEDIUM" from "YAML-LOCATION-MAP-CASTLE"
+  loop {_spawnsMedium::*}:
+    set {_location} to location_text2Loc(loop-value, {_world})
+    add {_location} to {LOCATION::SPAWN::MEDIUM::*}
+
+  set {_castleEntrances::*} to yaml list "CASTLE.ENTRANCES" from "YAML-LOCATION-MAP-CASTLE"
+  loop {_castleEntrances::*}:
+    set {_location} to location_text2Loc(loop-value, {_world})
+    add {_location} to {LOCATION::CASTLE::ENTRANCE::*}
+  unload yaml "YAML-LOCATION-MAP-CASTLE"
+
   #GLOBAL VAR
   set {LORE_LENGTH_MAX} to 30
   set {LANG_FALLBACK} to "fr-FR"

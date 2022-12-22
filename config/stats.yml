@@ -59,7 +59,7 @@ PLAYER:
   - "ATTACK"
   - "POWER"
   - "DEFENCE"
-  - "MAGIC_RESISTANCE"
+  - "MR"
 
 WEAPON:
   - "COOLDOWN"
@@ -69,3 +69,11 @@ WEAPON:
   - "MANA"
   - "RADIUS"
   - "RANGE"
+
+MOB:
+  - "HEALTH"
+  - "DEFENCE"
+  - "MR"
+  - "ATTACK"
+  - "POWER"
+  - "SPEED"

@@ -1,2 +1,19 @@
 function test_player_main(p: player):
+  test_player_store({_p})
+  test_player_stat({_p})
+  test_player_action({_p})
+
+function test_player_store(p: player):
   test_players_store_stat({_p})
+  test_players_store_weapon({_p})
+
+function test_player_action(p: player):
+  test_player_action_damage({_p})
+
+function test_player_main_details(p: player, type: text):
+  if {_type} is "store":
+    test_player_store({_p})
+  else if {_type} is "stat":
+    test_player_stat({_p})
+  else if {_type} is "action":
+    test_player_action({_p})

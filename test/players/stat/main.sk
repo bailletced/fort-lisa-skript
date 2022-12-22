@@ -1,0 +1,2 @@
+function test_player_stat(p: player):
+  test_player_stat_item({_p})

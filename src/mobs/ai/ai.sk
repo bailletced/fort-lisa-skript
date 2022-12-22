@@ -1,0 +1,12 @@
+function mob_ai_init(mob: entity):
+  broadcast "INIT AI"
+  teleport first element of all players to {_mob}
+  set {_nearestEntrance} to location_castle_nearest_entrance({_mob})
+  while {_mob} is alive:
+    set path targets of {_mob} to {_nearestEntrance}
+    broadcast "%distance between {_mob} and {_nearestEntrance}%"
+    wait 20 ticks
+
+
+function mob_ai_checkPlayers(mob: entity):
+  set {_player} to random element of players in radius 5 around {_mob}

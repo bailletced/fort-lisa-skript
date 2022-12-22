@@ -11,7 +11,6 @@ function player_store_weapon_reload_all(p: player):
     set {_slot} to loop-value
     set {_item} to slot {_slot} of {_p}
     if {players::%{_p}%::weapon::*} contains {_item}:
-      
       set {_originWeapon} to slot {_slot} of {_p}
       set {_weapon} to item_stat_initialize({_p}, "WEAPON", {_originWeapon})
       set {_weapon} to i18n_item({_p}, {_weapon})

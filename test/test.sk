@@ -3,3 +3,7 @@ function test_main(p: player):
   test_i18n_main({_p})
   send "§3Testing items" to the console 
   test_item_main({_p})
+  send "§3Testing players" to the console 
+  test_player_main({_p})
+  send "§3Testing mobs" to the console 
+  test_mob_main({_p})

@@ -6,7 +6,7 @@ function player_stat_display(p: player):
   set {_atk} to player_store_stat_get({_p}, "ATTACK")
   set {_power} to player_store_stat_get({_p}, "POWER")
   set {_def} to player_store_stat_get({_p}, "DEFENCE")
-  set {_mr} to player_store_stat_get({_p}, "MAGIC_RESISTANCE")
+  set {_mr} to player_store_stat_get({_p}, "MR")
 
   set {_healthTxt} to healthToHeart({_health})
 

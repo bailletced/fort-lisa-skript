@@ -1,0 +1,14 @@
+function wave_start(waveNumber: number, world: world):
+  load yaml "plugins/Skript/scripts/fort-lisa/config/waves/%{_waveNumber}%.yml" as "YAML-WAVE"
+  set {_duration} to yaml value "DURATION" from "YAML-WAVE"
+  loop node keys "MOBS" of "YAML-WAVE":
+    set {_category} to loop-key
+    set {_id} to yaml value "MOBS.%{_category}%.ID" from "YAML-WAVE"
+    set {_amount} to yaml value "MOBS.%{_category}%.AMOUNT" from "YAML-WAVE"
+    set {_locationType} to yaml value "MOBS.%{_category}%.LOCATION" from "YAML-WAVE"
+
+    loop {_amount} times:
+      set {_location} to random element of {LOCATION::SPAWN::%{_locationType}%::*}
+      mob_summon({_category}, {_id}, {_location})
+    
+  unload yaml "YAML-WAVE"

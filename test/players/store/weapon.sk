@@ -1,0 +1,11 @@
+function test_players_store_weapon(p: player):
+  send "§5Testing player store weapon" to the console 
+  it "test player weapon give":
+    player_store_weapon_delete_all({_p})
+    set {_initialCount} to player_store_weapon_count({_p})
+    set {_weapon} to item_create({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM")
+    player_store_weapon_give({_p}, {_weapon})
+    set {_afterGiveCount} to player_store_weapon_count({_p})
+
+    assert if {_initialCount} is 0 with message "initial weapon count should be 0. Got %{_initialCount}%"
+    assert if {_afterGiveCount} is 1 with message "count after weapon give should be 1. Got %{_afterGiveCount}%"

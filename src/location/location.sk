@@ -1,0 +1,27 @@
+function location_text2Loc(location: text, world: world) :: location:
+  if {_location} contains "yaw":
+    if {_location} contains "pitch":
+      set {_loc::*} to {_location} parsed as "x: %num%, y: %num%, z: %num%, yaw: %num%, pitch: %num%"
+    else:
+      set {_loc::*} to {_location} parsed as "x: %num%, y: %num%, z: %num%, yaw: %num%"
+  else if {_location} contains "pitch":
+    set {_loc::*} to {_location} parsed as "x: %num%, y: %num%, z: %num%, yaw: 0, pitch: %num%"
+  else:
+    set {_loc::*} to {_location} parsed as "x: %num%, y: %num%, z: %num%"
+  
+  if {_loc::4} is not set:
+    set {_loc::4} to 0
+  if {_loc::5} is not set:
+    set {_loc::5} to 0
+      
+  return location({_loc::1}, {_loc::2}, {_loc::3}, {_world}, {_loc::4}, {_loc::5})
+  
+function location_castle_nearest_entrance(mob: entity) :: location:
+  set {_res} to random element of {LOCATION::CASTLE::ENTRANCE::*}
+  set {_minDist} to distance between {_mob} and {_res}
+  loop {LOCATION::CASTLE::ENTRANCE::*}:
+    set {_dist} to distance between {_mob} and loop-value
+    if {_dist} < {_minDist}:
+      set {_minDist} to {_dist}
+      set {_res} to loop-value
+  return {_res}
