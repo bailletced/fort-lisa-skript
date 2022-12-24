@@ -15,8 +15,8 @@ function test_mob_store_listener(p: player):
 
     assert if {_count} is 2 with message "mob store listener should contain 2 element. Got %{_count}%"
     assert if size of {_listeners::*} is 2 with message "mob store listener get all should be 'TARGET_PLAYER_RADIUS_SOFT' and 'LISTENER2'. Got %{_listeners::*}%"
-    assert if size of {_enabledListeners::*} is 2 with message "mob store listener get all should be %{_listeners::*}% Got %{_enabledListeners::*}%"
-    assert if size of {_disabledListeners::*} is 0 with message "disabled listeners count should be 0. Got %size of {_disabledListeners::*}%"
+    assert if size of {_enabledListeners::*} is 0 with message "enabled listeners count should be 0. Got %size of {_enabledListeners::*}%"
+    assert if size of {_disabledListeners::*} is 2 with message "disabled listeners count should be 2. Got %size of {_disabledListeners::*}%"
 
     mob_store_listener_delete({_mob}, "LISTENER2")
     set {_isset} to mob_store_listener_isset({_mob}, "LISTENER2")

@@ -45,7 +45,7 @@ function config_load(world: world):
   #LOCATIONS
   load yaml "plugins/Skript/scripts/fort-lisa/config/locations/map-castle.yml" as "YAML-LOCATION-MAP-CASTLE"
   delete {LOCATION::*}
-  set {LOCATION::LISA::CASTLE:THRONE} to location_text2Loc(yaml value "CASTLE.THRONE" from "YAML-LOCATION-MAP-CASTLE", {_world})
+  set {LOCATION::CASTLE::THRONE} to location_text2Loc(yaml value "CASTLE.THRONE" from "YAML-LOCATION-MAP-CASTLE", {_world})
   
   set {_spawnsFar::*} to yaml list "SPAWNS.FAR" from "YAML-LOCATION-MAP-CASTLE"
   loop {_spawnsFar::*}:

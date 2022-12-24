@@ -1,5 +1,51 @@
-function mob_ai_listener_target_player_radius_soft(mob: entity, p: player):
-  set {_player} to random element of players in radius 5 around {_mob}
-  if {_player} is set:
-    mob_ai_targetPlayer({_mob}, {_player})
-    # broadcast "THERE IS A PLAYER !!!!!!!!!"
+# TARGET_PLAYER_RADIUS_SOFT LISTENER
+function mob_ai_listener_TARGET_PLAYER_RADIUS_SOFT(mob: entity):
+  while mob_store_listener_isEnabled({_mob}, "TARGET_PLAYER_RADIUS_SOFT") is true:
+    set {_player} to random element of players in radius 5 around {_mob}
+    if {_player} is set:
+      # broadcast "TARGET_PLAYER_RADIUS_SOFT : found player"
+      mob_ai_targetPlayer({_mob}, {_player})
+      mob_store_listener_set({_mob}, "TARGET_ABANDON_TOO_FAR")
+      mob_store_listener_delete({_mob}, "TARGET_PLAYER_RADIUS_SOFT")
+    wait 10 ticks
+
+# TARGET_ABANDON_TOO_FAR LISTENER
+function mob_ai_listener_TARGET_ABANDON_TOO_FAR(mob: entity):
+  # broadcast "LISTENER TARGET_ABANDON_TOO_FAR"
+  while mob_store_listener_isEnabled({_mob}, "TARGET_ABANDON_TOO_FAR") is true:
+    if mob_store_target_player_isset({_mob}) is true:
+      set {_playertarget} to mob_store_target_player_get({_mob})
+      # broadcast "LISTENER TARGET_ABANDON_TOO_FAR"
+      set {_dist} to distance between {_mob} and {_playertarget}
+      if {_dist} >= 20:
+        add 1 to {_timeTooFar}
+        # broadcast "I AM FAR - %{_timeTooFar}%"
+      else:
+        set {_timeTooFar} to 0
+
+      if {_timeTooFar} >= 7:
+        # broadcast "I STOP TARGET_ABANDON_TOO_FAR LISTENER"
+        mob_store_listener_delete({_mob}, "TARGET_ABANDON_TOO_FAR")
+        mob_store_listener_set({_mob}, "TARGET_PLAYER_RADIUS_SOFT")
+        mob_store_target_delete({_mob})
+    wait 1 second
+
+# IS_ACTIVE IN_WATER
+function mob_ai_listener_IN_WATER(mob: entity):
+  set {_inWater} to 0
+  while mob_store_listener_isEnabled({_mob}, "IN_WATER") is true:
+    # broadcast "IN WATER LISTENER"
+    if {_mob} is in water:
+      # broadcast "MOB IS IN WATERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
+      if mob_store_target_get({_mob}) is not "PLAYER":
+        add 1 to {_inWater}
+        if {_inWater} >= 5:
+          # broadcast "LISTENER IN_WATER : Teleport to nearest entrance"
+          set {_nearestEntrance} to location_castle_nearest_entrance({_mob})
+          teleport {_mob} to {_nearestEntrance}
+          mob_store_location_delete_all({_mob})
+          mob_store_location_set({_mob}, {LOCATION::CASTLE::THRONE})
+    else:
+      set {_inWater} to 0
+    wait 30 ticks
+

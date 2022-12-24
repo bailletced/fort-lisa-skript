@@ -17,3 +17,7 @@ function mob_store_location_count(mob: entity) :: number:
 function mob_store_location_delete(mob: entity, location: location):
   set {_uuid} to uuid of {_mob}
   remove {_location} from {mobs::%{_uuid}%::location::*}
+
+function mob_store_location_delete_all(mob: entity):
+  set {_uuid} to uuid of {_mob}
+  delete {mobs::%{_uuid}%::location::*}

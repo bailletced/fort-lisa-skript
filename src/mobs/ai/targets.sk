@@ -10,4 +10,15 @@ function mob_ai_targetLocation(mob: entity):
     if mob_store_location_count({_mob}) is 0:
       # No location to be reached
       mob_store_target_delete({_mob})
-    wait 10 ticks
+    wait 5 ticks
+
+function mob_ai_targetPlayer(mob: entity, p: player):
+  mob_store_target_set({_mob}, "PLAYER")
+  mob_store_target_player_set({_mob}, {_p})
+  while mob_store_target_get({_mob}) is "PLAYER":
+    broadcast "targetPlayer : set target to %{_p}%"
+    set target of {_mob} to {_p}
+    wait 20 ticks
+
+function mob_ai_target_findSomethingToDo(mob: entity):
+  broadcast "TODO: make mob find something to do"

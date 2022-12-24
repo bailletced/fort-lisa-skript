@@ -6,6 +6,23 @@ function mob_store_target_get(mob: entity) :: text:
   set {_uuid} to uuid of {_mob}
   return {mobs::%{_uuid}%::target}
 
+function mob_store_target_player_get(mob: entity) :: player:
+  set {_uuid} to uuid of {_mob}
+  return {mobs::%{_uuid}%::target::player}
+
+function mob_store_target_player_set(mob: entity, p: player):
+  set {_uuid} to uuid of {_mob}
+  set {mobs::%{_uuid}%::target::player} to {_p}
+
+function mob_store_target_player_isset(mob: entity) :: boolean:
+  set {_uuid} to uuid of {_mob}
+  if {mobs::%{_uuid}%::target::player} is set:
+    return true
+  return false
+
+function mob_store_target_player_delete(mob: entity):
+  delete {mobs::%{_uuid}%::target::player}
+
 function mob_store_target_isset(mob: entity) :: boolean:
   set {_uuid} to uuid of {_mob}
   if {mobs::%{_uuid}%::target} is set:
