@@ -1,10 +1,10 @@
 function player_action_damage(p: player, target: entity, attack: number, power: number, type: text = "MOB"):
   delete {_typeTarget}
-  set {_typeTarget} to entity_get_tag({_target}, "TYPE")
+  set {_typeTarget} to entity_nbt_get_tag({_target}, "TYPE")
  
   if {_type} is {_typeTarget}:
-    set {_defence} to entity_get_stat({_target}, "DEFENCE")
-    set {_mr} to entity_get_stat({_target}, "MR")
+    set {_defence} to entity_nbt_get_stat({_target}, "DEFENCE")
+    set {_mr} to entity_nbt_get_stat({_target}, "MR")
     if {_defence} is not set:
       set {_defence} to 0
     if {_mr} is not set:

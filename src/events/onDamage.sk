@@ -6,7 +6,7 @@ on damage:
     if {_type} is "WEAPON":
       weapon_leftClick({_p}, {_item})
   else:
-    set {_type} to entity_get_tag(attacker, "TYPE")
+    set {_type} to entity_nbt_get_tag(attacker, "TYPE")
     if {_type} is "MOB":
       mob_action_damage(attacker, victim)
       cancel event

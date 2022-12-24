@@ -2,7 +2,8 @@ function test_mob_store_listener(p: player):
   send "§5Testing mob_store_listener" to the console
   set {_location} to location of {_p}
   it "test all store":
-    set {_mob} to mob_summon("ZOMBIE", "1", {_location})
+    summon zombie at {_location}
+    set {_mob} to last spawned entity
     mob_store_listener_set({_mob}, "TARGET_PLAYER_RADIUS_SOFT")
     set {_count} to mob_store_listener_count({_mob})
     assert if {_count} is 1 with message "mob store listener should contain 1 element. Got %{_count}%"

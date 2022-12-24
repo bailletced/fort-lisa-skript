@@ -5,6 +5,7 @@ function config_load(world: world):
   set {STAT::WEAPON::*} to yaml list "WEAPON" from "YAML-STATS"
   set {STAT::PLAYER::*} to yaml list "PLAYER" from "YAML-STATS"
   set {STAT::MOB::*} to yaml list "MOB" from "YAML-STATS"
+  set {STAT::NPC::*} to yaml list "NPC" from "YAML-STATS"
   loop yaml node keys "ALL" of "YAML-STATS":
     add loop-value to {STAT::ALL::*}
     set {_icon} to yaml value "ALL.%loop-value%.ICON" from "YAML-STATS"
@@ -62,6 +63,15 @@ function config_load(world: world):
     set {_location} to location_text2Loc(loop-value, {_world})
     add {_location} to {LOCATION::CASTLE::ENTRANCE::*}
   unload yaml "YAML-LOCATION-MAP-CASTLE"
+
+  #NPCS
+  load yaml "plugins/Skript/scripts/fort-lisa/config/npcs.yml" as "YAML-NPC"
+  loop node keys "" from "YAML-NPC":
+    set {_id} to loop-value
+    loop yaml node keys "%{_id}%" from "YAML-NPC":
+      set {_key} to loop-value-2
+      set {NPC::%{_id}%::%{_key}%} to yaml value "%{_id}%.%{_key}%" from "YAML-NPC"
+  unload yaml "YAML-NPC"
 
   #LANGS
   load yaml "plugins/Skript/scripts/fort-lisa/config/langs/fr-FR.yml" as "YAML-LANG-fr-FR"

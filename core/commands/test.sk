@@ -28,7 +28,7 @@ command /pig:
         set {_p} to event-player
         summon pig at location of {_p}
         set {_pig} to last spawned entity
-        entity_set_tag({_pig}, "TYPE", "MOB")
+        entity_nbt_set_tag({_pig}, "TYPE", "MOB")
         set maximum health of {_pig} to 1000
         set health of {_pig} to 1000
 
@@ -37,12 +37,13 @@ command /zombie:
         set {_p} to event-player
         summon zombie at location of {_p}
         set {_zombie} to last spawned entity
-        entity_set_tag({_zombie}, "TYPE", "MOB")
-        entity_set_stat({_zombie}, "ATTACK", 10)
+        entity_nbt_set_tag({_zombie}, "TYPE", "MOB")
+        entity_nbt_set_stat({_zombie}, "ATTACK", 10)
 
 command /citizen:
     trigger:
-        create a citizen named "toto" at location 1 meter above player's head
+        lisa_remove()
+        lisa_summon()
 
 command /wave:
     trigger:

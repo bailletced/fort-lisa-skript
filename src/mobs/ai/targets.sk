@@ -16,7 +16,6 @@ function mob_ai_targetPlayer(mob: entity, p: player):
   mob_store_target_set({_mob}, "PLAYER")
   mob_store_target_player_set({_mob}, {_p})
   while mob_store_target_get({_mob}) is "PLAYER":
-    broadcast "targetPlayer : set target to %{_p}%"
     set target of {_mob} to {_p}
     wait 20 ticks
 

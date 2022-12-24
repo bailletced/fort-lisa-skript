@@ -77,3 +77,11 @@ MOB:
   - "ATTACK"
   - "POWER"
   - "SPEED"
+
+NPC:
+  - "HEALTH"
+  - "DEFENCE"
+  - "MR"
+  - "ATTACK"
+  - "POWER"
+  - "SPEED"
