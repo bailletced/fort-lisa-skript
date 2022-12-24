@@ -46,6 +46,6 @@ function test_i18n_items(p: player):
     set {_lore} to "Je suis Cédric Baillet, développeur de Fort Lisa. J'espère de tout coeur que le jeu vous plaira !"
     set {_res::*} to i18n_item_lore_to_list({_lore})
     set {_idxes::*} to all indexes of {_res::*}
-    assert if amount of {_idxes::*} is floor(length of {_lore}/{LORE_LENGTH_MAX}) with message "Got %amount of {_idxes::*}%"
+    assert if amount of {_idxes::*} is ceil(length of {_lore}/{LORE_LENGTH_MAX}) with message "Got %amount of {_idxes::*}%"
 
   player_store_setting_set({_p}, "lang", "fr-FR")

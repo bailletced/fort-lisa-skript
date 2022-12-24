@@ -1,2 +1,7 @@
 function test_mob_main(p: player):
   test_mob({_p})
+  test_mob_store({_p})
+
+function test_mob_store(p: player):
+  test_mob_store_location({_p})
+  test_mob_store_listener({_p})

@@ -1,0 +1,58 @@
+function mob_store_listener_set(mob: entity, listeners: texts):
+  set {_uuid} to uuid of {_mob}
+  loop {_listeners::*}:
+    if mob_store_listener_isset({_mob}, loop-value) is false:
+      add loop-value to {mobs::%{_uuid}%::listener::*}
+      mob_store_listener_enable({_mob}, loop-value)
+
+function mob_store_listener_isset(mob: entity, listener: text) :: boolean:
+  set {_uuid} to uuid of {_mob}
+  if {mobs::%{_uuid}%::listener::*} contains {_listener}:
+    return true
+  return false
+
+function mob_store_listener_get_all(mob: entity) :: texts:
+  set {_uuid} to uuid of {_mob}
+  return {mobs::%{_uuid}%::listener::*}
+
+function mob_store_listener_get_all_enabled(mob: entity) :: texts:
+  set {_uuid} to uuid of {_mob}
+  delete {_res::*}
+  loop {mobs::%{_uuid}%::listener::*}:
+    if mob_store_listener_isEnabled({_mob}, loop-value) is true:
+      add loop-value to {_res::*}
+  return {_res::*}
+
+function mob_store_listener_get_all_disabled(mob: entity) :: texts:
+  set {_uuid} to uuid of {_mob}
+  delete {_res::*}
+  loop {mobs::%{_uuid}%::listener::*}:
+    if mob_store_listener_isEnabled({_mob}, loop-value) is false:
+      add loop-value to {_res::*}
+  return {_res::*}
+
+function mob_store_listener_count(mob: entity) :: number:
+  set {_uuid} to uuid of {_mob}
+  return size of {mobs::%{_uuid}%::listener::*}
+
+function mob_store_listener_enable(mob: entity, listener: text):
+  if mob_store_listener_isset({_mob}, {_listener}) is true:
+    set {mobs::%{_uuid}%::listener::%{_listener}%::enabled} to true
+
+function mob_store_listener_disable(mob: entity, listener: text):
+  if mob_store_listener_isset({_mob}, {_listener}) is true:
+    set {mobs::%{_uuid}%::listener::%{_listener}%::enabled} to false
+
+function mob_store_listener_isEnabled(mob: entity, listener: text) :: boolean:
+  if mob_store_listener_isset({_mob}, {_listener}) is true:
+    return {mobs::%{_uuid}%::listener::%{_listener}%::enabled}
+  return false
+
+function mob_store_listener_delete(mob: entity, listener: text):
+  set {_uuid} to uuid of {_mob}
+  remove {_listener} from {mobs::%{_uuid}%::listener::*}
+  delete {mobs::%{_uuid}%::listener::%{_listener}%}
+
+function mob_store_listener_delete_all(mob: entity):
+  set {_uuid} to uuid of {_mob}
+  delete {mobs::%{_uuid}%::listener::*}

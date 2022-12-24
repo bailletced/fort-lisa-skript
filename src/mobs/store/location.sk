@@ -1,0 +1,19 @@
+function mob_store_location_set(mob: entity, locations: locations):
+  set {_uuid} to uuid of {_mob}
+  set {mobs::%{_uuid}%::location::*} to {_locations::*}
+
+function mob_store_location_get(mob: entity) :: location:
+  set {_uuid} to uuid of {_mob}
+  return first element of {mobs::%{_uuid}%::location::*}
+
+function mob_store_location_get_all(mob: entity) :: locations:
+  set {_uuid} to uuid of {_mob}
+  return {mobs::%{_uuid}%::location::*}
+
+function mob_store_location_count(mob: entity) :: number:
+  set {_uuid} to uuid of {_mob}
+  return size of {mobs::%{_uuid}%::location::*}
+
+function mob_store_location_delete(mob: entity, location: location):
+  set {_uuid} to uuid of {_mob}
+  remove {_location} from {mobs::%{_uuid}%::location::*}

@@ -31,6 +31,9 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/action/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/ai/":
    reload script file fileManager_getRelativePath(event-path)
 
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/store/":
+   reload script file fileManager_getRelativePath(event-path)
+
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/action/":
    reload script file fileManager_getRelativePath(event-path)
 

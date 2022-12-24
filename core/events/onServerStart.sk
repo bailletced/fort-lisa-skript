@@ -1,3 +1,3 @@
 on skript start:
-  config_load() #Load config
+  config_load("world" parsed as world) #Load config
   manager_hotReload() #Initialization of hot reloading

@@ -1,0 +1,33 @@
+function test_mob_store_listener(p: player):
+  send "§5Testing mob_store_listener" to the console
+  set {_location} to location of {_p}
+  it "test all store":
+    set {_mob} to mob_summon("ZOMBIE", "1", {_location})
+    mob_store_listener_set({_mob}, "TARGET_PLAYER_RADIUS_SOFT")
+    set {_count} to mob_store_listener_count({_mob})
+    assert if {_count} is 1 with message "mob store listener should contain 1 element. Got %{_count}%"
+    
+    mob_store_listener_set({_mob}, ("TARGET_PLAYER_RADIUS_SOFT" and "LISTENER2"))
+    set {_count} to mob_store_listener_count({_mob})
+    set {_listeners::*} to mob_store_listener_get_all({_mob})
+    set {_enabledListeners::*} to mob_store_listener_get_all_enabled({_mob})
+    set {_disabledListeners::*} to mob_store_listener_get_all_disabled({_mob})
+
+    assert if {_count} is 2 with message "mob store listener should contain 2 element. Got %{_count}%"
+    assert if size of {_listeners::*} is 2 with message "mob store listener get all should be 'TARGET_PLAYER_RADIUS_SOFT' and 'LISTENER2'. Got %{_listeners::*}%"
+    assert if size of {_enabledListeners::*} is 2 with message "mob store listener get all should be %{_listeners::*}% Got %{_enabledListeners::*}%"
+    assert if size of {_disabledListeners::*} is 0 with message "disabled listeners count should be 0. Got %size of {_disabledListeners::*}%"
+
+    mob_store_listener_delete({_mob}, "LISTENER2")
+    set {_isset} to mob_store_listener_isset({_mob}, "LISTENER2")
+    set {_isset2} to mob_store_listener_isset({_mob}, "LISTENER3")
+    assert if {_isset} is false with message "isset should be false. Got %{_isset}%"
+    assert if {_isset2} is false with message "isset should be false. Got %{_isset2}%"
+
+    mob_store_listener_delete_all({_mob})
+    set {_isset} to mob_store_listener_isset({_mob}, "TARGET_PLAYER_RADIUS_SOFT")
+    set {_isEnabled} to mob_store_listener_isEnabled({_mob}, "TARGET_PLAYER_RADIUS")
+    assert if {_isset} is false with message "isset should be false. Got %{_isset}%"
+    assert if {_isEnabled} is false with message "TARGET_PLAYER_RADIUS isEnabled should be false. Got %{_isEnabled}%"
+
+    kill {_mob}

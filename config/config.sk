@@ -1,8 +1,4 @@
 function config_load(world: world):
-  #LANGS
-  load yaml "plugins/Skript/scripts/fort-lisa/config/langs/fr-FR.yml" as "YAML-LANG-fr-FR"
-  load yaml "plugins/Skript/scripts/fort-lisa/config/langs/en-EN.yml" as "YAML-LANG-en-EN"
-
   #STATS
   load yaml "plugins/Skript/scripts/fort-lisa/config/stats.yml" as "YAML-STATS"
   delete {STAT::*}
@@ -67,8 +63,12 @@ function config_load(world: world):
     add {_location} to {LOCATION::CASTLE::ENTRANCE::*}
   unload yaml "YAML-LOCATION-MAP-CASTLE"
 
+  #LANGS
+  load yaml "plugins/Skript/scripts/fort-lisa/config/langs/fr-FR.yml" as "YAML-LANG-fr-FR"
+  load yaml "plugins/Skript/scripts/fort-lisa/config/langs/en-EN.yml" as "YAML-LANG-en-EN"
+
   #GLOBAL VAR
-  set {LORE_LENGTH_MAX} to 30
+  set {LORE_LENGTH_MAX} to 40
   set {LANG_FALLBACK} to "fr-FR"
   set {HOTBAR_SLOTS::*} to 0,1,2,3,4,5,6,7 and 8
 

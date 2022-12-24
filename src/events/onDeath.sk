@@ -1,0 +1,5 @@
+on death:
+  set {_entity} to victim
+  set {_type} to entity_get_tag({_entity}, "TYPE")
+  if {_type} is "MOB":
+    mob_store_clear_all({_entity})

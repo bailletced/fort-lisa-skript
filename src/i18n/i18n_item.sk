@@ -41,18 +41,20 @@ function i18n_item_lore(p: player, it: item) :: text:
 function i18n_item_lore_to_list(lore: text) :: texts:
     set {_lores::*} to {_lore} split at " "
     set {_text} to ""
+    set {_idx} to 1
     delete {_res::*}
     loop {_lores::*}:
         set {_text} to "%{_text}% %loop-value%"
-        if length of {_text} > {LORE_LENGTH_MAX}:
+        if length of {_text} >= {LORE_LENGTH_MAX}:
             add "§f%{_text}%" to {_res::*}
             set {_text} to ""
-        else if size of {_res::*} is size of {_lores::*}:
+        else if {_idx} >= size of {_lores::*}:
             set {_maxLength} to amount of {_res::*}
             if length of {_text} + length of {_res::%{_maxLength}%} > {LORE_LENGTH_MAX} + 10:
                 add "§f%{_text}%" to {_res::*}
             else:
                 set {_res::%{_maxLength}%} to "%{_res::%{_maxLength}%}%%{_text}%"
+        add 1 to {_idx}
     return {_res::*}
 
 # internationalize an item

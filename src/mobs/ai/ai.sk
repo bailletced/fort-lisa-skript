@@ -1,12 +1,24 @@
 function mob_ai_init(mob: entity):
-  broadcast "INIT AI"
-  teleport first element of all players to {_mob}
+  broadcast "AI INIT"
   set {_nearestEntrance} to location_castle_nearest_entrance({_mob})
+  mob_store_target_set({_mob}, "LOCATION")
+  mob_store_location_set({_mob}, {_nearestEntrance})
   while {_mob} is alive:
-    set path targets of {_mob} to {_nearestEntrance}
-    broadcast "%distance between {_mob} and {_nearestEntrance}%"
+    set {_isset} to mob_store_target_isset({_mob})
+    broadcast "INIT MAIN THREAD %{_isset}%"
+    if mob_store_target_isset({_mob}) is true:
+      if mob_store_target_get({_mob}) is "LOCATION":
+        mob_ai_targetLocation({_mob})
+
+    else:
+      if mob_store_location_count({_mob}) is 0:
+        broadcast "I HAVE NOTHING TO DOOOOOOOOOOO"
+      else:
+        mob_ai_targetLocation({_mob})
+    
     wait 20 ticks
 
+  
 
-function mob_ai_checkPlayers(mob: entity):
-  set {_player} to random element of players in radius 5 around {_mob}
+
+

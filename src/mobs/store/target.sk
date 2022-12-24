@@ -1,0 +1,17 @@
+function mob_store_target_set(mob: entity, target: text):
+  set {_uuid} to uuid of {_mob}
+  set {mobs::%{_uuid}%::target} to {_target}
+
+function mob_store_target_get(mob: entity) :: text:
+  set {_uuid} to uuid of {_mob}
+  return {mobs::%{_uuid}%::target}
+
+function mob_store_target_isset(mob: entity) :: boolean:
+  set {_uuid} to uuid of {_mob}
+  if {mobs::%{_uuid}%::target} is set:
+    return true
+  return false
+
+function mob_store_target_delete(mob: entity):
+  set {_uuid} to uuid of {_mob}
+  delete {mobs::%{_uuid}%::target}

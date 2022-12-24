@@ -2,7 +2,7 @@ function test_item_weapon(p: player):
   send "§5Testing items weapon" to the console 
   it "Test weapon give":
     clear inventory of {_p}
-    weapon_give({_p}, "STAFF", "LIMB_OF_WISDOM")
+    weapon_give({_p}, "STAFF", "TEST")
     set {_weapon} to slot 0 of inventory of {_p}
     set {_type} to item_get_tag({_weapon}, "TYPE")
     set {_category} to item_get_tag({_weapon}, "CATEGORY")
@@ -10,15 +10,15 @@ function test_item_weapon(p: player):
 
     assert if {_type} is "WEAPON" with message "item type should be WEAPON. Got %{_type}%"
     assert if {_category} is "STAFF" with message "weapon category should be STAFF. Got %{_category}%"
-    assert if {_id} is "LIMB_OF_WISDOM" with message "weapon id should be LIMB_OF_WISDOM. Got %{_id}%"
+    assert if {_id} is "TEST" with message "weapon id should be TEST. Got %{_id}%"
 
   it "test weapon reload all":
     clear inventory of {_p}
     player_store_stat_set({_p}, "POWER", 10)
 
-    set {_weaponReference} to item_create({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM")
+    set {_weaponReference} to item_create({_p}, "WEAPON", "STAFF", "TEST")
     set slot 0 of {_p} to stone
-    weapon_give({_p}, "STAFF", "LIMB_OF_WISDOM")
+    weapon_give({_p}, "STAFF", "TEST")
     set {_initialCount} to player_store_weapon_count({_p})
     set {_power} to item_get_stat({_weaponReference}, "POWER")
     set {_powerMultiplier} to item_get_stat({_weaponReference}, "POWER_MULTIPLIER")

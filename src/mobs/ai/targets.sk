@@ -1,0 +1,13 @@
+function mob_ai_targetLocation(mob: entity):
+  mob_store_target_set({_mob}, "LOCATION")
+  while mob_store_target_get({_mob}) is "LOCATION":
+    set {_locationTarget} to mob_store_location_get({_mob})
+    set path targets of {_mob} to {_locationTarget}
+    set {_dist} to distance between {_mob} and {_locationTarget}
+    if {_dist} <= 1.5:
+      # Location has been reached
+      mob_store_location_delete({_mob}, {_locationTarget})
+    if mob_store_location_count({_mob}) is 0:
+      # No location to be reached
+      mob_store_target_delete({_mob})
+    wait 10 ticks

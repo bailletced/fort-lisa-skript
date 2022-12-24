@@ -1,0 +1,5 @@
+function mob_ai_listener_target_player_radius_soft(mob: entity, p: player):
+  set {_player} to random element of players in radius 5 around {_mob}
+  if {_player} is set:
+    mob_ai_targetPlayer({_mob}, {_player})
+    # broadcast "THERE IS A PLAYER !!!!!!!!!"

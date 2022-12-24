@@ -1,0 +1,18 @@
+function test_mob_store_location(p: player):
+  send "§5Testing mob_store_location" to the console
+  set {_location} to location 1 meter in front of {_p}
+  set {_location2} to location 2 meter in front of {_p}
+  it "TEST location set/get/delete":
+    set {_mob} to mob_summon("ZOMBIE", "1", {_location})
+    mob_store_location_set({_mob}, ({_location} and {_location2}))
+    set {_firstMobLocation} to mob_store_location_get({_mob})
+    set {_mobLocation::*} to mob_store_location_get_all({_mob})
+    assert if {_firstMobLocation} is {_location} with message "first element of mob store location should be %{_location}%. Got %{_firstMobLocation}%."
+    assert if size of {_mobLocation::*} is 2 with message "mob store location should contain 2 location. Got %size of {_mobLocation::*}%"
+
+    mob_store_location_delete({_mob}, {_location})
+    set {_firstMobLocation} to mob_store_location_get({_mob})
+    set {_mobLocation::*} to mob_store_location_get_all({_mob})
+    assert if {_firstMobLocation} is {_location2} with message "first element of mob store location should be %{_location2}%. Got %{_firstMobLocation}%."
+    assert if size of {_mobLocation::*} is 1 with message "mob store location should contain 1 location. Got %size of {_mobLocation::*}%"
+    kill {_mob}

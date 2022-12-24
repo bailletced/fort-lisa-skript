@@ -128,7 +128,7 @@ function test_item_item(p: player):
 
   it "Test item create":
     player_store_stat_set({_p}, "POWER", 10)
-    set {_item} to item_create({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM")
+    set {_item} to item_create({_p}, "WEAPON", "STAFF", "TEST")
     set {_power} to item_get_stat({_item}, "POWER")
     set {_powerMultiplier} to item_get_stat({_item}, "POWER_MULTIPLIER")
     set {_finalPower} to {_power} + {_power} * {_powerMultiplier}
