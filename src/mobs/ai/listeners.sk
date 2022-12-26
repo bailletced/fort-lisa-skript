@@ -3,16 +3,18 @@ function mob_ai_listener_TARGET_PLAYER_RADIUS_SOFT(mob: entity):
   while mob_store_listener_isEnabled({_mob}, "TARGET_PLAYER_RADIUS_SOFT") is true:
     set {_player} to random element of players in radius 5 around {_mob}
     if {_player} is set:
-      # broadcast "TARGET_PLAYER_RADIUS_SOFT : found player"
+      # broadcast "%uuid of {_mob}% TARGET_PLAYER_RADIUS_SOFT : found player"
       mob_ai_targetPlayer({_mob}, {_player})
       mob_store_listener_set({_mob}, "TARGET_ABANDON_TOO_FAR")
       mob_store_listener_delete({_mob}, "TARGET_PLAYER_RADIUS_SOFT")
     wait 10 ticks
 
+
 # TARGET_ABANDON_TOO_FAR LISTENER
 function mob_ai_listener_TARGET_ABANDON_TOO_FAR(mob: entity):
-  # broadcast "LISTENER TARGET_ABANDON_TOO_FAR"
+  # broadcast "§2PASSING %uuid of {_mob}%"
   while mob_store_listener_isEnabled({_mob}, "TARGET_ABANDON_TOO_FAR") is true:
+    # broadcast "%uuid of {_mob}% LISTENER TARGET_ABANDON_TOO_FAR %mob_store_target_player_isset({_mob})% %mob_store_target_player_get({_mob})%"
     if mob_store_target_player_isset({_mob}) is true:
       set {_playertarget} to mob_store_target_player_get({_mob})
       # broadcast "LISTENER TARGET_ABANDON_TOO_FAR"
@@ -27,6 +29,7 @@ function mob_ai_listener_TARGET_ABANDON_TOO_FAR(mob: entity):
         # broadcast "I STOP TARGET_ABANDON_TOO_FAR LISTENER"
         mob_store_listener_delete({_mob}, "TARGET_ABANDON_TOO_FAR")
         mob_store_listener_set({_mob}, "TARGET_PLAYER_RADIUS_SOFT")
+        mob_store_target_player_delete({_mob})
         mob_store_target_delete({_mob})
     wait 1 second
 

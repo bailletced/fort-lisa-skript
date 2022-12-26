@@ -1,6 +1,8 @@
 ADMIN:
   COMMANDS:
     SUCCESS: "Commande exécutée avec succès !"
+WAVE:
+  TITLE: "Vague"
 WEAPON:
   STAFF:
     TEST:

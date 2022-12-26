@@ -1,0 +1,31 @@
+function player_stat_tostring(p: player, serialize: text = "all") :: text:
+  set {_health} to health of {_p}
+  set {_mana} to player_store_stat_get({_p}, "MANA")
+  set {_maxMana} to player_store_stat_get({_p}, "MANA_MAX")
+
+  set {_atk} to player_store_stat_get({_p}, "ATTACK")
+  set {_power} to player_store_stat_get({_p}, "POWER")
+  set {_def} to player_store_stat_get({_p}, "DEFENCE")
+  set {_mr} to player_store_stat_get({_p}, "MR")
+
+  if {_atk} is not set:
+    set {_atk} to 0
+  if {_power} is not set:
+    set {_power} to 0
+  if {_def} is not set:
+    set {_def} to 0
+  if {_mr} is not set:
+    set {_mr} to 0
+
+  set {_atkTxt} to "%{STAT::ATTACK::COLOR}%%{STAT::ATTACK::ICON}%%{_atk}%"
+  set {_powerTxt} to "%{STAT::POWER::COLOR}%%{STAT::POWER::ICON}%%{_power}%"
+  set {_defTxt} to "%{STAT::DEFENCE::COLOR}%%{STAT::DEFENCE::ICON}%%{_def}%"
+  set {_mrTxt} to "%{STAT::MR::COLOR}%%{STAT::MR::ICON}%%{_mr}%"
+  set {_healthTxt} to "%{STAT::HEALTH::COLOR}%%{STAT::HEALTH::ICON}%%{_health}%"
+
+  if {_serialize} is "all":
+    return "%{_healthTxt}% %{_mana}%/%{_maxMana}% %{_atkTxt}%%{_powerTxt}% %{_defTxt}%%{_mrTxt}%"
+  else if {_serialize} is "medium":
+    return "%{_healthTxt}% %{_atkTxt}%%{_powerTxt}% %{_defTxt}%%{_mrTxt}%"
+  else:
+    return ""

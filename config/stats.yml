@@ -1,16 +1,16 @@
 ALL:
   ATTACK:
-    ICON: "✲"
+    ICON: "🗡"
     COLOR: "§6"
   POWER:
-    ICON: "✲"
+    ICON: "🗡"
     COLOR: "§d"
-  TRUE_DAMAGE:
-    ICON: "☣"
-    COLOR: "§c"
   DEFENCE:
-    ICON: "❃"
-    COLOR: "§7"
+    ICON: "🛡"
+    COLOR: "§6"
+  MR:
+    ICON: "🛡"
+    COLOR: "§d"
   RANGE:
     ICON: "➝"
     COLOR: "§e"
@@ -45,7 +45,7 @@ ALL:
     ICON: "۝"
     COLOR: "§c"
   HEALTH:
-    ICON: "۝"
+    ICON: "❤"
     COLOR: "§c"
   HEALTH_REGEN:
     ICON: "۝"

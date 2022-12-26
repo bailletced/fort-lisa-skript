@@ -8,39 +8,57 @@ function lisa_remove():
   set {_id} to lisa_get_id()
   remove citizen {_id}
 
-function lisa_summon():
-  create citizen named {NPC::LISA::NAME} at {LOCATION::CASTLE::THRONE}
-  set {_id} to last created citizen
-  set {_lisa} to citizen {_id}
-  set {_npcSkin} to {NPC::LISA::SKIN}
-  execute console command "/npc select %{_id}%"
-  execute console command "/npc skin --url %{_npcSkin}%" 
-
-  load yaml "plugins/Skript/scripts/fort-lisa/config/npcs.yml" as "YAML-NPC"
-  set yaml value "LISA.ID" from "YAML-NPC" to {_id}
-  save yaml "YAML-NPC"
-  unload yaml "YAML-NPC"
-
-  give npc {_id} the look close trait
-  lisa_listener()
-
-function lisa_listener():
-  wait 20 ticks
+function lisa_isset() :: boolean:
   set {_id} to lisa_get_id()
   set {_lisa} to citizen {_id}
-  execute console command "/npc select %{_id}%" 
-  execute console command "/npc targetable"
-  execute console command "/npc vulnerable"
-  while {_lisa} is alive:
-    loop all entities in radius 15 of {_lisa} where [target of entity input is not {_lisa}]:
-      if type of loop-entity is not player:
-        if loop-entity is not {_lisa}:
-          set {_mob} to loop-entity
-          mob_store_target_set({_mob}, "LISA")
-          mob_store_location_delete_all({_mob})
-          mob_store_listener_delete_all({_mob})
-          set target of loop-entity to {_lisa}
+  if {_lisa} is set:
+    return true
+  return false
 
-    move citizen {_id} to {LOCATION::CASTLE::THRONE}
+function lisa_rightClick():
+  if game_isset() is false:
+    game_start()
+
+function lisa_summon():
+  if lisa_isset() is false:
+    create citizen named {NPC::LISA::NAME} at {LOCATION::CASTLE::THRONE}
+    set {_id} to last created citizen
+    set {_lisa} to citizen {_id}
+    set maximum health of {_lisa} to 40
+    set health of {_lisa} to 40
+    set {_npcSkin} to {NPC::LISA::SKIN}
+    execute console command "/npc select %{_id}%"
+    execute console command "/npc skin --url %{_npcSkin}%" 
+
+    load yaml "plugins/Skript/scripts/fort-lisa/config/npcs.yml" as "YAML-NPC"
+    set yaml value "LISA.ID" from "YAML-NPC" to {_id}
+    save yaml "YAML-NPC"
+    unload yaml "YAML-NPC"
+
+    give npc {_id} the look close trait
+    execute console command "/npc select %{_id}%" 
+    execute console command "/npc targetable"
+    execute console command "/npc vulnerable"
+
+    wait 20 ticks
+    lisa_listeners()
+
+function lisa_listeners():
+  lisa_listener_INGAME()
+
+function lisa_listener_INGAME():
+  set {_id} to lisa_get_id()
+  set {_lisa} to citizen {_id}
+  while {_lisa} is alive:
+    if game_isset() is true:
+      loop all entities in radius 15 of {_lisa}:
+        if type of loop-entity is not player:
+          if loop-entity is not {_lisa}:
+            set {_mob} to loop-entity
+            mob_store_target_set({_mob}, "LISA")
+            mob_store_location_delete_all({_mob})
+            mob_store_listener_delete_all({_mob})
+            set target of loop-entity to {_lisa}
+      move citizen {_id} to {LOCATION::CASTLE::THRONE}
     wait 2 seconds
-  broadcast "LISA DEAD"
+  game_end()    

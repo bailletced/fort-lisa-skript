@@ -1,0 +1,5 @@
+function game_store_status_get(status: text) :: text:
+  return {game::status::%{_status}%}
+
+function game_store_status_set(status: text, value: text):
+  set {game::status::%{_status}%} to {_value}

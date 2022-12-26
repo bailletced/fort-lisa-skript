@@ -1,0 +1,10 @@
+function player_init():
+  loop all players:
+    set {_p} to loop-value
+    player_store_stat_set({_p}, "ATTACK", 5)
+    player_store_stat_set({_p}, "POWER", 5)
+    player_store_stat_set({_p}, "DEFENCE", 1)
+    player_store_stat_set({_p}, "MR", 1)
+    player_store_setting_set({_p}, "INGAME", true)
+    set health of {_p} to 20
+    clear inventory of {_p}

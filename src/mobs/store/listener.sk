@@ -48,16 +48,19 @@ function mob_store_listener_count(mob: entity) :: number:
 
 function mob_store_listener_enable(mob: entity, listener: text):
   if {_mob} is set:
+    set {_uuid} to uuid of {_mob}
     if mob_store_listener_isset({_mob}, {_listener}) is true:
       set {mobs::%{_uuid}%::listener::%{_listener}%::enabled} to true
 
 function mob_store_listener_disable(mob: entity, listener: text):
   if {_mob} is set:
+    set {_uuid} to uuid of {_mob}
     if mob_store_listener_isset({_mob}, {_listener}) is true:
       set {mobs::%{_uuid}%::listener::%{_listener}%::enabled} to false
 
 function mob_store_listener_isEnabled(mob: entity, listener: text) :: boolean:
   if {_mob} is set:
+    set {_uuid} to uuid of {_mob}
     if mob_store_listener_isset({_mob}, {_listener}) is true:
       return {mobs::%{_uuid}%::listener::%{_listener}%::enabled}
     return false
@@ -66,7 +69,6 @@ function mob_store_listener_isEnabled(mob: entity, listener: text) :: boolean:
 function mob_store_listener_delete(mob: entity, listener: text):
   set {_uuid} to uuid of {_mob}
   remove {_listener} from {mobs::%{_uuid}%::listener::*}
-  delete {mobs::%{_uuid}%::listener::%{_listener}%}
 
 function mob_store_listener_delete_all(mob: entity):
   set {_uuid} to uuid of {_mob}

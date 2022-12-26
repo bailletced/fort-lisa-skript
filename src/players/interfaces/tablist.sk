@@ -1,0 +1,7 @@
+function player_interface_tablist_player(p: player):
+  set {_statTxt} to player_stat_tostring({_p}, "medium")
+  set {_finalTxt} to "%name of {_p}% %{_statTxt}%"
+  set tablist name of {_p} to {_finalTxt}
+
+function player_interface_tablist_header():
+  set tab list header of all players to "Fort Lisa"

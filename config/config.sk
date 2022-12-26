@@ -22,7 +22,7 @@ function config_load(world: world):
     add {_category} to {WEAPON::CATEGORIES::*}
     loop yaml node keys "%{_category}%" of "YAML-WEAPONS":
       set {_id} to loop-key-2
-      add {_id} to {WEAPON::STAFF::*}
+      add {_id} to {WEAPON::%{_category}%::*}
       set {WEAPON::%{_category}%::%{_id}%::ITEM} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-WEAPONS" parsed as item
       loop yaml node keys "%{_category}%.%{_id}%.STATS" of "YAML-WEAPONS":
         set {WEAPON::%{_category}%::%{_id}%::%loop-key-3%} to yaml value "%{_category}%.%{_id}%.STATS.%loop-key-3%" from "YAML-WEAPONS"
@@ -81,6 +81,7 @@ function config_load(world: world):
   set {LORE_LENGTH_MAX} to 40
   set {LANG_FALLBACK} to "fr-FR"
   set {HOTBAR_SLOTS::*} to 0,1,2,3,4,5,6,7 and 8
+  set {GAME::STATUS} to "WAITING_FOR_START"
 
   # Initialize players. TODO : to be triggered when game starts
   loop all players:

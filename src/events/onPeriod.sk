@@ -3,6 +3,9 @@
 #   p : player The player to give the skill
 function onPeriodTenTicks(p: player):
   set {_ingame} to player_store_setting_get({_p}, "INGAME")
-  while player_store_setting_get({_p}, "INGAME") is true:
-    player_stat_display({_p})
-    wait 10 ticks
+  # broadcast "PERIOD %{_ingame}%"
+  # while player_store_setting_get({_p}, "INGAME") is true:
+  #   broadcast "period"
+  #   # player_interface_actionbar({_p})
+  #   player_interface_tablist_player({_p})
+  #   wait 10 ticks

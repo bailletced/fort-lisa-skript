@@ -1,5 +1,5 @@
 function mob_ai_init(mob: entity):
-  teleport first element of all players to {_mob}
+  teleport first element of all players to location 10 meters above {_mob}
   set {_nearestEntrance} to location_castle_nearest_entrance({_mob})
   mob_store_target_set({_mob}, "LOCATION")
   mob_store_location_set({_mob}, ({_nearestEntrance} and {LOCATION::CASTLE::THRONE}))
@@ -9,8 +9,6 @@ function mob_ai_init(mob: entity):
 function mob_ai_main_thread(mob: entity):
   while {_mob} is alive:
     mob_ai_triggerListeners({_mob})
-    set {_toto} to mob_store_target_get({_mob})
-    set {_isset} to mob_store_target_isset({_mob})
     if mob_store_target_isset({_mob}) is true:
       if mob_store_target_get({_mob}) is "LOCATION":
         mob_ai_targetLocation({_mob})
@@ -34,7 +32,6 @@ function mob_ai_triggerListeners(mob: entity):
       mob_ai_listener_IN_WATER({_mob})
     else:
       broadcast "LISTENER %loop-value% not implemented"
-
 
 
 

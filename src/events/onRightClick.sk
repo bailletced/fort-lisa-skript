@@ -1,0 +1,4 @@
+on right click:
+  set {_targetName} to name of target
+  if {_targetName} is {LISA::NAME}:
+    lisa_rightClick()

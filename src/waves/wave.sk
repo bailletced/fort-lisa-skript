@@ -1,7 +1,36 @@
-function wave_start(waveNumber: number, world: world):
+function wave_init():
+  game_store_wave_set_current(1)
+  game_store_wave_set_current_timer(0)
+  wave_start()
+  wave_listener()
+
+function wave_listener():
+  set {_waveNumber} to game_store_wave_get_current()
+  while game_isset() is true:
+    wave_tablist()
+    game_store_wave_set_current_timer(game_store_wave_get_current_timer() + 40)
+    if {_waveNumber} is not game_store_wave_get_current():
+      game_store_wave_set_next() #Go next wave
+      wave_start()
+    wait 2 seconds
+
+function wave_tablist():
+  set {_waveNumber} to game_store_wave_get_current()
+  set {_waveDuration} to game_store_wave_get_current_duration()
+  set {_waveTimer} to game_store_wave_get_current_timer()
+  broadcast "TIMER: %{_waveTimer}%"
+  loop all players:
+    set {_p} to loop-player
+    set {_waveTxt} to i18n({_p}, "WAVE.TITLE")
+    set tab list footer of {_p} to "%{_waveTxt}% %{_waveNumber}% - %ceil(({_waveTimer}/{_waveDuration})*100)%"
+
+
+function wave_start():
+  set {_waveNumber} to game_store_wave_get_current()
   load yaml "plugins/Skript/scripts/fort-lisa/config/waves/%{_waveNumber}%.yml" as "YAML-WAVE"
-  set {_duration} to yaml value "DURATION" from "YAML-WAVE"
   loop node keys "MOBS" of "YAML-WAVE":
+    set {WAVE::CURRENT} to {_waveNumber}
+    add 1 to {WAVE::PREVIOUS}
     set {_category} to loop-key
     set {_id} to yaml value "MOBS.%{_category}%.ID" from "YAML-WAVE"
     set {_amount} to yaml value "MOBS.%{_category}%.AMOUNT" from "YAML-WAVE"
@@ -10,5 +39,4 @@ function wave_start(waveNumber: number, world: world):
     loop {_amount} times:
       set {_location} to random element of {LOCATION::SPAWN::%{_locationType}%::*}
       mob_summon({_category}, {_id}, {_location})
-    
-  unload yaml "YAML-WAVE"
+  unload YAML "YAML-WAVE"

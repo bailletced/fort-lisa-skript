@@ -1,0 +1,20 @@
+function game_start():
+  broadcast "GAME IS STARTING"
+  game_store_status_set("MAIN", "IN_PROGRESS")
+  lisa_summon()
+  player_init()
+  wave_init()
+
+function game_isset() :: boolean:
+  if game_store_status_get("MAIN") is "IN_PROGRESS":
+    return true
+  return false
+
+function game_end():
+  game_store_status_set("MAIN", "DISABLED")
+  game_store_wave_set_current(0)
+  lisa_summon()
+  loop all entities:
+    set {_mob} to loop-value
+    if entity_nbt_get_tag({_mob}, "TYPE") is "MOB":
+      kill {_mob}

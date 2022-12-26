@@ -40,11 +40,13 @@ command /zombie:
         entity_nbt_set_tag({_zombie}, "TYPE", "MOB")
         entity_nbt_set_stat({_zombie}, "ATTACK", 10)
 
-command /citizen:
+command /lisa:
     trigger:
-        lisa_remove()
+        # lisa_remove()
         lisa_summon()
 
-command /wave:
+command /tag:
     trigger:
-        wave_start(1, world of player)
+        set the player's display name to "<red>[admin] <gold>%name of player%"
+        set the player's tab list name to "<green>%player's name%"
+        set all players' tab list footer to "Welcome%nl% to the Server!"

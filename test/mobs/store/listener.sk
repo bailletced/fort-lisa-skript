@@ -32,3 +32,21 @@ function test_mob_store_listener(p: player):
     assert if {_isEnabled} is false with message "TARGET_PLAYER_RADIUS isEnabled should be false. Got %{_isEnabled}%"
 
     kill {_mob}
+
+  it "test with two different mobs":
+    summon zombie at {_location}
+    set {_mob1} to last spawned entity
+    summon zombie at {_location}
+    set {_mob2} to last spawned entity
+
+    mob_store_listener_set({_mob1}, ("TARGET_PLAYER_RADIUS_SOFT"))
+    mob_store_listener_set({_mob2}, ("TARGET_PLAYER_RADIUS_SOFT" and "LISTENER2"))
+    set {_disabledListeners1::*} to mob_store_listener_get_all_disabled({_mob1})
+    set {_disabledListeners2::*} to mob_store_listener_get_all_disabled({_mob2})
+
+    assert if {_disabledListeners1::*} is "TARGET_PLAYER_RADIUS_SOFT" with message "disabled listeners for mob1 should be TARGET_PLAYER_RADIUS_SOFT. Got %{_disabledListeners1::*}%"
+    assert if {_disabledListeners2::*} contains "TARGET_PLAYER_RADIUS_SOFT" with message "disabled listeners for mob2 should contain TARGET_PLAYER_RADIUS_SOFT. Got %{_disabledListeners2::*}%"
+    assert if {_disabledListeners2::*} contains "LISTENER2" with message "disabled listeners for mob2 should contain LISTENER2. Got %{_disabledListeners2::*}%"
+
+    kill {_mob1}
+    kill {_mob2}

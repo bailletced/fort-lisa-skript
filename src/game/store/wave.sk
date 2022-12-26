@@ -1,0 +1,22 @@
+function game_store_wave_set_current(waveNumber: number):
+  set {game::wave::current} to {_waveNumber}
+
+function game_store_wave_get_current() :: number:
+  return {game::wave::current}
+
+function game_store_wave_get_current_timer() :: number:
+  return {game::wave::timer}
+
+function game_store_wave_set_current_timer(timer: number):
+  set {game::wave::timer} to {_timer}
+
+function game_store_wave_set_next():
+  set {_currentWave} to game_store_wave_get_current()
+  game_store_wave_set_current({_currentWave} + 1)
+
+function game_store_wave_get_current_duration() :: number:
+  set {_currentWave} to game_store_wave_get_current()
+  load yaml "plugins/Skript/scripts/fort-lisa/config/waves/%{_currentWave}%.yml" as "YAML-WAVE"
+  set {_duration} to yaml value "DURATION" from "YAML-WAVE"
+  unload yaml "YAML-WAVE"
+  return {_duration}
