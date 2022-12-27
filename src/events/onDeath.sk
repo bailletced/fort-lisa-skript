@@ -3,3 +3,7 @@ on death:
   set {_type} to entity_nbt_get_tag({_entity}, "TYPE")
   if {_type} is "MOB":
     mob_store_clear_all({_entity})
+  else:
+    set {_victimName} to name of victim
+    if {_victimName} is {NPC::LISA::NAME}:
+      game_end()

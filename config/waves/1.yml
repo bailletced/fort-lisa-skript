@@ -2,5 +2,5 @@ DURATION: 1200
 MOBS:
   ZOMBIE:
     ID: "1"
-    AMOUNT: 2
+    AMOUNT: 15
     LOCATION: "MEDIUM"

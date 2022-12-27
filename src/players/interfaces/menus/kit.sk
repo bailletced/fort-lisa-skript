@@ -1,0 +1,2 @@
+function player_interface_menu_kit(p: player):
+  broadcast "TODO : KIT"

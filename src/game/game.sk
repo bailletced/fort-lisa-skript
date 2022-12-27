@@ -2,6 +2,7 @@ function game_start():
   broadcast "GAME IS STARTING"
   game_store_status_set("MAIN", "IN_PROGRESS")
   lisa_summon()
+  lisa_listeners()
   player_init()
   wave_init()
 
@@ -11,9 +12,12 @@ function game_isset() :: boolean:
   return false
 
 function game_end():
+  broadcast "END OF THE GAME"
   game_store_status_set("MAIN", "DISABLED")
   game_store_wave_set_current(0)
+  execute console command "/npc remove all"
   lisa_summon()
+  player_interface_tablist_footer_clean_all()
   loop all entities:
     set {_mob} to loop-value
     if entity_nbt_get_tag({_mob}, "TYPE") is "MOB":

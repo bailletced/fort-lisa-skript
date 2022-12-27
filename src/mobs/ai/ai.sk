@@ -1,5 +1,4 @@
 function mob_ai_init(mob: entity):
-  teleport first element of all players to location 10 meters above {_mob}
   set {_nearestEntrance} to location_castle_nearest_entrance({_mob})
   mob_store_target_set({_mob}, "LOCATION")
   mob_store_location_set({_mob}, ({_nearestEntrance} and {LOCATION::CASTLE::THRONE}))

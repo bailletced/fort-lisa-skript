@@ -5,3 +5,6 @@ function player_interface_tablist_player(p: player):
 
 function player_interface_tablist_header():
   set tab list header of all players to "Fort Lisa"
+
+function player_interface_tablist_footer_clean_all():
+  set tab list footer of all players to ""

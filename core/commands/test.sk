@@ -40,10 +40,10 @@ command /zombie:
         entity_nbt_set_tag({_zombie}, "TYPE", "MOB")
         entity_nbt_set_stat({_zombie}, "ATTACK", 10)
 
-command /lisa:
+command /percent:
     trigger:
-        # lisa_remove()
-        lisa_summon()
+        set {_ok} to "%%"
+        broadcast "%%"
 
 command /tag:
     trigger:

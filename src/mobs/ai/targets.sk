@@ -20,4 +20,5 @@ function mob_ai_targetPlayer(mob: entity, p: player):
     wait 20 ticks
 
 function mob_ai_target_findSomethingToDo(mob: entity):
-  broadcast "TODO: make mob find something to do"
+  set {_ok} to true
+  # broadcast "TODO: make mob find something to do"

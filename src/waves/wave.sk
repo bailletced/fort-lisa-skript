@@ -18,12 +18,10 @@ function wave_tablist():
   set {_waveNumber} to game_store_wave_get_current()
   set {_waveDuration} to game_store_wave_get_current_duration()
   set {_waveTimer} to game_store_wave_get_current_timer()
-  broadcast "TIMER: %{_waveTimer}%"
   loop all players:
     set {_p} to loop-player
     set {_waveTxt} to i18n({_p}, "WAVE.TITLE")
-    set tab list footer of {_p} to "%{_waveTxt}% %{_waveNumber}% - %ceil(({_waveTimer}/{_waveDuration})*100)%"
-
+    set tab list footer of {_p} to "%{_waveTxt}% %{_waveNumber}% - %ceil(({_waveTimer}/{_waveDuration})*100)%%%"
 
 function wave_start():
   set {_waveNumber} to game_store_wave_get_current()

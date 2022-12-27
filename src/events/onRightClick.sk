@@ -1,4 +1,4 @@
 on right click:
   set {_targetName} to name of target
-  if {_targetName} is {LISA::NAME}:
+  if {_targetName} is {NPC::LISA::NAME}:
     lisa_rightClick()

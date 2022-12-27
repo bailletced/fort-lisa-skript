@@ -24,24 +24,27 @@ function lisa_summon():
     create citizen named {NPC::LISA::NAME} at {LOCATION::CASTLE::THRONE}
     set {_id} to last created citizen
     set {_lisa} to citizen {_id}
-    set maximum health of {_lisa} to 40
-    set health of {_lisa} to 40
-    set {_npcSkin} to {NPC::LISA::SKIN}
-    execute console command "/npc select %{_id}%"
-    execute console command "/npc skin --url %{_npcSkin}%" 
-
     load yaml "plugins/Skript/scripts/fort-lisa/config/npcs.yml" as "YAML-NPC"
     set yaml value "LISA.ID" from "YAML-NPC" to {_id}
     save yaml "YAML-NPC"
     unload yaml "YAML-NPC"
+    lisa_init()
 
-    give npc {_id} the look close trait
-    execute console command "/npc select %{_id}%" 
-    execute console command "/npc targetable"
-    execute console command "/npc vulnerable"
+function lisa_init():
+  set {_id} to last created citizen
+  set {_lisa} to citizen {_id}
+  set {_npcSkin} to {NPC::LISA::SKIN}
+  execute console command "/npc select %{_id}%"
+  wait 1 tick
 
-    wait 20 ticks
-    lisa_listeners()
+  execute console command "/npc skin --url %{_npcSkin}%" 
+  execute console command "/npc lookclose --randomlook"
+  execute console command "/npc targetable"
+  execute console command "/npc vulnerable"
+  set maximum health of {_lisa} to 40
+  set health of {_lisa} to 40
+  entity_nbt_set_stat({_lisa}, "DEFENCE", 0)
+  entity_nbt_set_stat({_lisa}, "MR", 0)
 
 function lisa_listeners():
   lisa_listener_INGAME()
@@ -49,16 +52,15 @@ function lisa_listeners():
 function lisa_listener_INGAME():
   set {_id} to lisa_get_id()
   set {_lisa} to citizen {_id}
-  while {_lisa} is alive:
-    if game_isset() is true:
-      loop all entities in radius 15 of {_lisa}:
-        if type of loop-entity is not player:
-          if loop-entity is not {_lisa}:
-            set {_mob} to loop-entity
-            mob_store_target_set({_mob}, "LISA")
-            mob_store_location_delete_all({_mob})
-            mob_store_listener_delete_all({_mob})
-            set target of loop-entity to {_lisa}
-      move citizen {_id} to {LOCATION::CASTLE::THRONE}
+  while game_isset() is true:
+    loop all entities in radius 15 of {_lisa}:
+      if type of loop-entity is not player:
+        if loop-entity is not {_lisa}:
+          set {_mob} to loop-entity
+          mob_store_target_set({_mob}, "LISA")
+          mob_store_location_delete_all({_mob})
+          mob_store_listener_delete_all({_mob})
+          set target of loop-entity to {_lisa}
+    move citizen {_id} to {LOCATION::CASTLE::THRONE}
     wait 2 seconds
   game_end()    
