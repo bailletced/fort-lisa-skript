@@ -23,7 +23,7 @@ function weapon_leftClick(p: player, weapon: item):
     
 
 function weapon_cast_normal(p: player, weapon: item):
-    set {_category} to item_get_tag({_weapon}, "CATEGORY")
+    set {_category} to item_nbt_get_tag({_weapon}, "CATEGORY")
     if item_store_stat_isset({_weapon}, "CD_NORMAL") is true:
         set {_cd} to item_store_stat_get({_weapon}, "CD_NORMAL")
         if {_cd} is 0:
@@ -35,7 +35,7 @@ function weapon_cast_normal(p: player, weapon: item):
         staff_cast_normal({_p}, {_weapon})
 
 function weapon_cooldown_normal(p: player, weapon: item):
-    set {_cooldown} to item_get_stat({_weapon}, "COOLDOWN")
+    set {_cooldown} to item_nbt_get_stat({_weapon}, "COOLDOWN")
     item_store_stat_set({_weapon}, "CD_NORMAL", {_cooldown})
     set {_cdNormal} to item_store_stat_get({_weapon}, "CD_NORMAL")
     while {_cdNormal} > 0:

@@ -3,9 +3,9 @@ function players_action_shootProjectile(p: player, origin: item, projectile: ent
   make {_p} shoot {_projectile} at speed {_speed}
   set {_projectile} to last shot projectile
 
-  set {_type} to item_get_tag({_origin}, "TYPE")
-  set {_category} to item_get_tag({_origin}, "CATEGORY")
-  set {_id} to item_get_tag({_origin}, "ID")
+  set {_type} to item_nbt_get_tag({_origin}, "TYPE")
+  set {_category} to item_nbt_get_tag({_origin}, "CATEGORY")
+  set {_id} to item_nbt_get_tag({_origin}, "ID")
 
   entity_nbt_set_tag({_projectile}, "ATTACKER", name of {_p})
   entity_nbt_set_tag({_projectile}, "ATTACKER_TYPE", "PLAYER")

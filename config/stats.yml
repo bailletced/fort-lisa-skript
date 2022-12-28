@@ -64,11 +64,23 @@ PLAYER:
 WEAPON:
   - "COOLDOWN"
   - "ATTACK"
+  - "ATTACK_MULTIPLIER"
   - "POWER"
   - "POWER_MULTIPLIER"
   - "MANA"
   - "RADIUS"
   - "RANGE"
+
+SKILL:
+  - "ATTACK"
+  - "ATTACK_MULTIPLIER"
+  - "POWER"
+  - "POWER_MULTIPLIER"
+  - "RADIUS"
+  - "RANGE"
+  - "MANA"
+  - "COOLDOWN"
+  - "DURATION"
 
 MOB:
   - "HEALTH"

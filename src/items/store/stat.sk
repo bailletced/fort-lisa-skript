@@ -1,13 +1,13 @@
 function item_store_stat_get(item: item, stat: text) :: number:
-  set {_uuid} to item_get_tag({_item}, "UUID")
+  set {_uuid} to item_nbt_get_tag({_item}, "UUID")
   return {items::%{_uuid}%::%{_stat}%}
 
 function item_store_stat_set(item: item, stat: text, value: number):
-  set {_uuid} to item_get_tag({_item}, "UUID")
+  set {_uuid} to item_nbt_get_tag({_item}, "UUID")
   set {items::%{_uuid}%::%{_stat}%} to {_value}
 
 function item_store_stat_isset(item: item, stat: text) :: boolean:
-  set {_uuid} to item_get_tag({_item}, "UUID")
+  set {_uuid} to item_nbt_get_tag({_item}, "UUID")
   if {items::%{_uuid}%::%{_stat}%} is set:
     return true
   return false

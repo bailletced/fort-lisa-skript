@@ -4,9 +4,9 @@ function test_item_weapon(p: player):
     clear inventory of {_p}
     weapon_give({_p}, "STAFF", "TEST")
     set {_weapon} to slot 0 of inventory of {_p}
-    set {_type} to item_get_tag({_weapon}, "TYPE")
-    set {_category} to item_get_tag({_weapon}, "CATEGORY")
-    set {_id} to item_get_tag({_weapon}, "ID")
+    set {_type} to item_nbt_get_tag({_weapon}, "TYPE")
+    set {_category} to item_nbt_get_tag({_weapon}, "CATEGORY")
+    set {_id} to item_nbt_get_tag({_weapon}, "ID")
 
     assert if {_type} is "WEAPON" with message "item type should be WEAPON. Got %{_type}%"
     assert if {_category} is "STAFF" with message "weapon category should be STAFF. Got %{_category}%"
@@ -20,8 +20,8 @@ function test_item_weapon(p: player):
     set slot 0 of {_p} to stone
     weapon_give({_p}, "STAFF", "TEST")
     set {_initialCount} to player_store_weapon_count({_p})
-    set {_power} to item_get_stat({_weaponReference}, "POWER")
-    set {_powerMultiplier} to item_get_stat({_weaponReference}, "POWER_MULTIPLIER")
+    set {_power} to item_nbt_get_stat({_weaponReference}, "POWER")
+    set {_powerMultiplier} to item_nbt_get_stat({_weaponReference}, "POWER_MULTIPLIER")
     set {_finalPower} to {_power} + {_power} * {_powerMultiplier}
 
     assert if slot 0 of {_p} is stone with message "slot 0 of player should be stone. Got %slot 0 of {_p}%"

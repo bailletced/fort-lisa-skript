@@ -1,0 +1,40 @@
+
+#Give a weapon to the player
+function skill_give(p: player, category: text, id: text) :: item:
+  set {_skill} to item_create({_p}, "SKILL", {_category}, {_id}) 
+  player_store_skill_give({_p}, {_skill})
+  return {_skill}
+
+function skill_cast(p: player, skill: item):
+  set {_canCast} to true
+  set {_category} to item_nbt_get_tag({_skill}, "CATEGORY")
+  # Condition CD
+  if item_store_stat_isset({_skill}, "CD") is true:
+    set {_cd} to item_store_stat_get({_skill}, "CD")
+    if {_cd} is not 0:
+      set {_canCast} to false
+  # Condition MANA
+  set {_requiredMana} to item_nbt_get_stat({_skill}, "MANA")
+  set {_playerMana} to player_store_stat_get({_p}, "MANA")
+
+  if {_playerMana} < {_requiredMana}:
+    set {_canCast} to false
+  # Conditions ALL  
+  if {_canCast} is true:
+    if {_category} is "MAGE":
+      mage_cast({_p}, {_skill})
+    skill_cooldown({_p}, {_skill})
+
+function skill_cooldown(p: player, skill: item):
+  set {_cooldown} to item_nbt_get_stat({_skill}, "COOLDOWN")
+  item_store_stat_set({_skill}, "CD", {_cooldown})
+  set {_cd} to item_store_stat_get({_weapon}, "CD")
+  while {_cd} > 0:
+    set {_cd} to {_cd} - 5
+    item_store_stat_set({_skill}, "CD", {_cd})
+    wait 5 tick
+
+# #Called when the player hit a block/entity with a projectile skill
+# function skill_hit(p: player, category: text, id: text, location: location):
+#     if {_category} is "MAGE":
+#         staff_hit({_p}, {_id}, {_location})

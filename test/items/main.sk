@@ -1,9 +1,12 @@
 function test_item_main(p: player):
   test_item_item({_p})
   test_item_weapon({_p})
+  test_item_skill({_p})
 
 function test_item_main_detail(p: player, type: text):
   if {_type} is "item":
     test_item_item({_p})
   if {_type} is "weapon":
     test_item_weapon({_p})
+  if {_type} is "skill":
+    test_item_skill({_p})

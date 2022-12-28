@@ -3,6 +3,7 @@ function config_load(world: world):
   load yaml "plugins/Skript/scripts/fort-lisa/config/stats.yml" as "YAML-STATS"
   delete {STAT::*}
   set {STAT::WEAPON::*} to yaml list "WEAPON" from "YAML-STATS"
+  set {STAT::SKILL::*} to yaml list "SKILL" from "YAML-STATS"
   set {STAT::PLAYER::*} to yaml list "PLAYER" from "YAML-STATS"
   set {STAT::MOB::*} to yaml list "MOB" from "YAML-STATS"
   set {STAT::NPC::*} to yaml list "NPC" from "YAML-STATS"
@@ -13,13 +14,27 @@ function config_load(world: world):
     set {STAT::%loop-value%::COLOR} to yaml value "ALL.%loop-value%.COLOR" from "YAML-STATS"
   unload yaml "YAML-STATS"
 
+  #SKILLS
+  load yaml "plugins/Skript/scripts/fort-lisa/config/items/skills.yml" as "YAML-SKILLS"
+  delete {SKILL::*}
+  loop yaml node keys "" of "YAML-SKILLS":
+    set {_category} to loop-value
+    add {_category} to {SKILL::CATEGORY::*}
+    loop yaml node keys "%{_category}%" of "YAML-SKILLS":
+      set {_id} to loop-key-2
+      add {_id} to {SKILL::%{_category}%::*}
+      set {SKILL::%{_category}%::%{_id}%::ITEM} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-SKILLS" parsed as item
+      loop yaml node keys "%{_category}%.%{_id}%.STATS" of "YAML-SKILLS":
+        set {SKILL::%{_category}%::%{_id}%::%loop-key-3%} to yaml value "%{_category}%.%{_id}%.STATS.%loop-key-3%" from "YAML-SKILLS"
+  unload yaml "YAML-SKILLS"
+
   #WEAPONS
-  load yaml "plugins/Skript/scripts/fort-lisa/config/weapons.yml" as "YAML-WEAPONS"
+  load yaml "plugins/Skript/scripts/fort-lisa/config/items/weapons.yml" as "YAML-WEAPONS"
   delete {WEAPON::*}
   loop yaml node keys "" of "YAML-WEAPONS":
     set {_category} to loop-value
-    set {WEAPON::CATEGORIES::%{_category}%} to {_category}
-    add {_category} to {WEAPON::CATEGORIES::*}
+    set {WEAPON::CATEGORY::%{_category}%} to {_category}
+    add {_category} to {WEAPON::CATEGORY::*}
     loop yaml node keys "%{_category}%" of "YAML-WEAPONS":
       set {_id} to loop-key-2
       add {_id} to {WEAPON::%{_category}%::*}
@@ -73,6 +88,13 @@ function config_load(world: world):
       set {NPC::%{_id}%::%{_key}%} to yaml value "%{_id}%.%{_key}%" from "YAML-NPC"
   unload yaml "YAML-NPC"
 
+  #UTILITIES
+  load yaml "plugins/Skript/scripts/fort-lisa/config/items/utilities.yml" as "YAML-UTILITIES"
+  loop yaml node keys "" from "YAML-UTILITIES":
+    set {_id} to loop-value
+    set {UTILITY::%{_id}%::ITEM} to yaml value "%{_id}%.ITEM" from "YAML-UTILITIES" parsed as item
+  unload yaml "YAML-UTILITIES"
+
   #LANGS
   load yaml "plugins/Skript/scripts/fort-lisa/config/langs/fr-FR.yml" as "YAML-LANG-fr-FR"
   load yaml "plugins/Skript/scripts/fort-lisa/config/langs/en-EN.yml" as "YAML-LANG-en-EN"
@@ -82,6 +104,7 @@ function config_load(world: world):
   set {LANG_FALLBACK} to "fr-FR"
   set {HOTBAR_SLOTS::*} to 0,1,2,3,4,5,6,7 and 8
   set {GAME::STATUS} to "WAITING_FOR_START"
+  set {NaN} to -999
 
   # Initialize players. TODO : to be triggered when game starts
   loop all players:

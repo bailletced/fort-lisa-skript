@@ -18,7 +18,7 @@ command /benchmark:
         set {_weapon} to item_create({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM")
         set {_now} to now
         loop 100000 times:
-            set {_toto} to item_get_tag({_weapon}, "TYPE")
+            set {_toto} to item_nbt_get_tag({_weapon}, "TYPE")
         set {_after} to now
 
         broadcast "%difference between {_now} and {_after}%"

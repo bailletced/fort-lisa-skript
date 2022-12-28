@@ -5,9 +5,9 @@ function test_i18n_items(p: player):
   
   it "Test get item title":
     set {_item} to diamond sword
-    set {_item} to item_set_tag({_item}, "TYPE", "WEAPON")
-    set {_item} to item_set_tag({_item}, "CATEGORY", "STAFF")
-    set {_item} to item_set_tag({_item}, "ID", "TEST")
+    set {_item} to item_nbt_set_tag({_item}, "TYPE", "WEAPON")
+    set {_item} to item_nbt_set_tag({_item}, "CATEGORY", "STAFF")
+    set {_item} to item_nbt_set_tag({_item}, "ID", "TEST")
 
     set {_titleFr} to i18n_item_attr({_p}, {_item}, "TITLE")
     set {_referenceFr} to yaml value "WEAPON.STAFF.TEST.TITLE" from "YAML-LANG-fr-FR"
@@ -15,9 +15,9 @@ function test_i18n_items(p: player):
 
   it "Test get item lore":
     set {_item} to diamond sword
-    set {_item} to item_set_tag({_item}, "TYPE", "WEAPON")
-    set {_item} to item_set_tag({_item}, "CATEGORY", "STAFF")
-    set {_item} to item_set_tag({_item}, "ID", "TEST")
+    set {_item} to item_nbt_set_tag({_item}, "TYPE", "WEAPON")
+    set {_item} to item_nbt_set_tag({_item}, "CATEGORY", "STAFF")
+    set {_item} to item_nbt_set_tag({_item}, "ID", "TEST")
     set {_loreFr} to i18n_item_attr({_p}, {_item}, "LORE")
     set {_referenceFr} to yaml value "WEAPON.STAFF.TEST.LORE" from "YAML-LANG-fr-FR"
     assert if {_loreFr} is {_referenceFr} with message "name should be %{_referenceFr}%. Got %{_titleFr}%"
@@ -26,11 +26,11 @@ function test_i18n_items(p: player):
     set {_it} to diamond sword
     set {_powerStat} to 40
     set {_rangeStat} to 5
-    set {_it} to item_set_tag({_it}, "TYPE", "WEAPON")
-    set {_it} to item_set_tag({_it}, "CATEGORY", "STAFF")
-    set {_it} to item_set_tag({_it}, "ID", "TEST")
-    set {_it} to item_set_stat({_it}, "POWER", {_powerStat})
-    set {_it} to item_set_stat({_it}, "RANGE", {_rangeStat})
+    set {_it} to item_nbt_set_tag({_it}, "TYPE", "WEAPON")
+    set {_it} to item_nbt_set_tag({_it}, "CATEGORY", "STAFF")
+    set {_it} to item_nbt_set_tag({_it}, "ID", "TEST")
+    set {_it} to item_nbt_set_stat({_it}, "POWER", {_powerStat})
+    set {_it} to item_nbt_set_stat({_it}, "RANGE", {_rangeStat})
 
     set {_rangeRefIcon} to {STAT::RANGE::ICON}
     set {_rangeRefColor} to {STAT::RANGE::COLOR}

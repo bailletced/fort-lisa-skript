@@ -2,7 +2,7 @@ on damage:
   if type of attacker is player:
     set {_p} to attacker
     set {_item} to held item of {_p}
-    set {_type} to item_get_tag({_item}, "TYPE")
+    set {_type} to item_nbt_get_tag({_item}, "TYPE")
     if entity_nbt_get_tag(victim, "TYPE") is "MOB":
       if {_type} is "WEAPON":
         weapon_leftClick({_p}, {_item})

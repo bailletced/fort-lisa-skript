@@ -10,4 +10,16 @@ WEAPON:
       LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE} infligeant {_POWER}."
     LIMB_OF_WISDOM:
       TITLE: "L'Abattis de Sagesse"
-      LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE}, rayon {_RADIUS} et infligeant {_POWER}."
+      LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE}, rayon {_RADIUS} et infligeant {_POWER}"
+SKILL:
+  MAGE:
+    TEST:
+      TITLE: "Le souffle du dragon"
+      LORE: "Le souffle du dragon repousse les ennemis avant d'infliger des dégâts en bout de course, infligeant {_POWER} dans un rayon de {_RADIUS}"
+    DRAGON_BREATH:
+      TITLE: "Le souffle du dragon"
+      LORE: "Le souffle du dragon repousse les ennemis avant d'infliger des dégâts en bout de course, infligeant {_POWER} dans un rayon de {_RADIUS}"
+UTILITY:
+  CD:
+    TITLE: "cooldown"
+    LORE: "Cooldown ..."

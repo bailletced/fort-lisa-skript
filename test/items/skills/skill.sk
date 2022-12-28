@@ -1,0 +1,37 @@
+function test_item_skill(p: player):
+  send "§5Testing items skill" to the console 
+  it "Test skill give":
+    player_store_skill_delete_all({_p})
+    clear inventory of {_p}
+    skill_give({_p}, "MAGE", "TEST")
+    set {_skill} to slot 0 of inventory of {_p}
+    set {_type} to item_nbt_get_tag({_skill}, "TYPE")
+    set {_category} to item_nbt_get_tag({_skill}, "CATEGORY")
+    set {_id} to item_nbt_get_tag({_skill}, "ID")
+
+    assert if {_type} is "SKILL" with message "item type should be SKILL. Got %{_type}%"
+    assert if {_category} is "MAGE" with message "weapon category should be MAGE. Got %{_category}%"
+    assert if {_id} is "TEST" with message "weapon id should be TEST. Got %{_id}%"
+  
+  it "Test skill cast: skill in cd":
+    clear inventory of {_p}
+    player_store_skill_delete_all({_p})
+    skill_give({_p}, "MAGE", "TEST")
+    set {_skill} to slot 0 of inventory of {_p}
+    item_nbt_set_stat({_skill}, "CD", 10)
+    skill_cast({_p}, {_skill})
+    set {_cd} to item_store_stat_get({_skill}, "CD")
+    assert if {_cd} is not set with message "skill should not be casted because in CD"
+
+  it "Test skill cast: not enough mana":
+    clear inventory of {_p}
+    player_store_skill_delete_all({_p})
+    skill_give({_p}, "MAGE", "TEST")
+    set {_skill} to slot 0 of inventory of {_p}
+    player_store_stat_set({_p}, "MANA", 10)
+    set {_playerMana} to player_store_stat_get({_p}, "MANA")
+    set {_requiredMana} to item_nbt_get_stat({_skill}, "MANA")
+    skill_cast({_p}, {_skill})
+    set {_cd} to item_store_stat_get({_skill}, "CD")
+    assert if {_playerMana} < {_requiredMana} with message "player mana should be inferior than %{_requiredMana}%. Got %{_playerMana}%."
+    assert if {_cd} is not set with message "skill should not be casted because not enough mana"

@@ -25,6 +25,11 @@ command /admin [<text>] [<text>] [<text>] [<text>]:
       set {_id} to arg-3
       item_give(player, "WEAPON", {_category}, {_id})
 
+    else if arg-1 is "skill":
+      set {_category} to arg-2
+      set {_id} to arg-3
+      item_give(player, "SKILL", {_category}, {_id})
+
     else if arg-1 is "settings":
       if arg-2 is "INGAME":
         if arg-3 is "true":
@@ -61,16 +66,10 @@ command /admin [<text>] [<text>] [<text>] [<text>]:
         test_mob_main(player)
 
 on tab complete of "/admin":
-  set tab completions for position 1 to "init", "hmr", "stat", "weapon", "settings", "game" and "test"
+  set tab completions for position 1 to "init", "hmr", "stat", "weapon", "skill", "settings", "game" and "test"
 
   if tab arg-1 is "hmr":
     set tab completions for position 2 to "reset"
-  else if tab arg-1 is "test":
-    set tab completions for position 2 to "items", "i18n", "player", "mob" and "all"
-    if tab arg-2 is "items":
-      set tab completions for position 3 to "weapon" and "item"
-    else if tab arg-2 is "player":
-      set tab completions for position 3 to "store", "action" and "stat"
   else if tab arg-1 is "stat":
     set tab completions for position 2 to "get" and "set"
     if tab arg-2 is set:
@@ -78,12 +77,26 @@ on tab complete of "/admin":
   else if tab arg-1 is "player":
     set tab completions for position 2 to "store"
   else if tab arg-1 is "weapon":
-    set tab completions for position 2 to {WEAPON::CATEGORIES::*}
+    set tab completions for position 2 to {WEAPON::CATEGORY::*}
     if tab arg-2 is set:
-      set tab completions for position 3 to {WEAPON::%tab arg-2%::*}
+      set {_weapons::*} to {WEAPON::%tab arg-2%::*}
+      remove "TEST" from {_weapons::*}
+      set tab completions for position 3 to {_weapons::*}
+  else if tab arg-1 is "skill":
+    set tab completions for position 2 to {SKILL::CATEGORY::*}
+    if tab arg-2 is set:
+      set {_skills::*} to {SKILL::%tab arg-2%::*}
+      remove "TEST" from {_skills::*}
+      set tab completions for position 3 to {_skills::*}
   else if tab arg-1 is "settings":
     set tab completions for position 2 to "INGAME"
     if tab arg-2 is "INGAME":
       set tab completions for position 3 to "true" and "false"
   else if tab arg-1 is "game":
     set tab completions for position 2 to "start" and "stop"
+  else if tab arg-1 is "test":
+    set tab completions for position 2 to "items", "i18n", "player", "mob" and "all"
+    if tab arg-2 is "items":
+      set tab completions for position 3 to "weapon", "skill" and "item"
+    else if tab arg-2 is "player":
+      set tab completions for position 3 to "store", "action" and "stat"

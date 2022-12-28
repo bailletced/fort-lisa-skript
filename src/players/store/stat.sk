@@ -10,8 +10,8 @@ function player_store_stat_set(p: player, key: text, value: number):
         set health of {_p} to {_value}
     set {players::%{_p}%::stat::%{_key}%} to {_value}
     player_store_weapon_reload_all({_p})
+    player_store_skill_reload_all({_p})
     player_interface_tablist_player({_p})
-
 
 #Add a stat to a a player 
 #Params: 
