@@ -4,4 +4,6 @@ function i18n(p: player, path: text, color: text = "") :: text:
   if {_lang} is not set:
     set {_lang} to {LANG_FALLBACK}
   set {_text} to yaml value {_path} in upper case from "YAML-LANG-%{_lang}%"
-  return "%{_color}%%{_text}%"
+  if {_text} is set:
+    return "%{_color}%%{_text}%"
+  return ""

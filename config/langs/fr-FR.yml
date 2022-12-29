@@ -20,6 +20,6 @@ SKILL:
       TITLE: "Le souffle du dragon"
       LORE: "Le souffle du dragon repousse les ennemis avant d'infliger des dégâts en bout de course, infligeant {_POWER} dans un rayon de {_RADIUS}"
 UTILITY:
-  CD:
-    TITLE: "cooldown"
-    LORE: "Cooldown ..."
+  MAIN:
+    CD:
+      TITLE: "Cooldown"

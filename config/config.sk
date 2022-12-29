@@ -81,6 +81,7 @@ function config_load(world: world):
 
   #NPCS
   load yaml "plugins/Skript/scripts/fort-lisa/config/npcs.yml" as "YAML-NPC"
+  delete {NPC::*}
   loop node keys "" from "YAML-NPC":
     set {_id} to loop-value
     loop yaml node keys "%{_id}%" from "YAML-NPC":
@@ -90,9 +91,10 @@ function config_load(world: world):
 
   #UTILITIES
   load yaml "plugins/Skript/scripts/fort-lisa/config/items/utilities.yml" as "YAML-UTILITIES"
+  delete {UTILITY::*}
   loop yaml node keys "" from "YAML-UTILITIES":
     set {_id} to loop-value
-    set {UTILITY::%{_id}%::ITEM} to yaml value "%{_id}%.ITEM" from "YAML-UTILITIES" parsed as item
+    set {UTILITY::MAIN::%{_id}%::ITEM} to yaml value "%{_id}%.ITEM" from "YAML-UTILITIES" parsed as item
   unload yaml "YAML-UTILITIES"
 
   #LANGS
@@ -110,6 +112,7 @@ function config_load(world: world):
   loop all players:
     set {_p} to loop-value
     player_store_weapon_delete_all({_p})
+    player_store_skill_delete_all({_p})
     player_store_setting_set({_p}, "INGAME", false)
     wait 20 ticks
     player_store_setting_set({_p}, "INGAME", true)

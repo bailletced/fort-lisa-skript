@@ -35,3 +35,29 @@ function test_item_skill(p: player):
     set {_cd} to item_store_stat_get({_skill}, "CD")
     assert if {_playerMana} < {_requiredMana} with message "player mana should be inferior than %{_requiredMana}%. Got %{_playerMana}%."
     assert if {_cd} is not set with message "skill should not be casted because not enough mana"
+
+  it "Test skill cooldown":
+    clear inventory of {_p}
+    player_store_skill_delete_all({_p})
+    player_store_stat_set({_p}, "POWER", 50)
+    set {_skill} to skill_give({_p}, "MAGE", "TEST")
+    set {_slot} to player_store_skill_slot({_p}, {_skill})
+    set {_expectedType} to type of {UTILITY::MAIN::CD::ITEM}
+    set {_initialCount} to player_store_skill_count({_p})
+    skill_cooldown({_p}, {_skill})
+    set {_type} to type of slot {_slot} of {_p}
+    set {_finalCount} to player_store_skill_count({_p})
+    set {_expectedName} to name of {_skill}
+    set {_name} to name of slot {_slot} of {_p}
+    assert if {_type} is {_expectedType} with message "type of slot %{_slot}% of player should be %{_expectedType}%. Got %{_type}%"
+    assert if {_initialCount} is {_finalCount} with message "skill count should be %{_initialCount}%. Got %{_finalCount}%"
+    assert if {_name} is {_expectedName} with message "name of cd item should be %{_expectedName}% Got %{_name}%"
+
+    set {_initialItemCd} to slot {_slot} of {_p}
+    player_store_stat_set({_p}, "POWER", 100)
+    set {_itemCd} to slot {_slot} of {_p}
+    set {_initialLore} to line 3 of lore of {_initialItemCd}
+    set {_lore} to line 3 of lore of {_itemCd}
+    set {_finalCount} to player_store_skill_count({_p})
+    assert if {_initialLore} is not {_lore} with message "Lore should not be the same. Before: %{_initialLore}%. After: %{_lore}%"
+    assert if {_initialCount} is {_finalCount} with message "skill count should be %{_initialCount}%. Got %{_finalCount}%"

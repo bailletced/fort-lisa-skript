@@ -6,7 +6,8 @@ function player_store_skill_give(p: player, skill: item):
     give {_tmp} to {_p}
   else:
     set slot {_count} of {_p} to {_skill}
-  add {_skill} to {players::%{_p}%::skill::*}
+  set {_uuid} to item_nbt_get_tag({_skill}, "UUID")
+  add {_uuid} to {players::%{_p}%::skill::*}
 
 function player_store_skill_count(p: player) :: number:
   return size of {players::%{_p}%::skill::*}
@@ -15,30 +16,36 @@ function player_store_skill_reload_all(p: player):
   loop {HOTBAR_SLOTS::*}:
     set {_slot} to loop-value
     set {_item} to slot {_slot} of {_p}
-    if {players::%{_p}%::skill::*} contains {_item}:
+    set {_uuid} to item_nbt_get_tag({_item}, "UUID")
+    if {players::%{_p}%::skill::*} contains {_uuid}:
       set {_originSkill} to slot {_slot} of {_p}
       set {_skill} to item_stat_initialize({_p}, "SKILL", {_originSkill})
       set {_skill} to i18n_item({_p}, {_skill})
       set slot {_slot} of {_p} to {_skill}
-      remove {_originSkill} from {players::%{_p}%::skill::*}
-      add {_skill} to {players::%{_p}%::skill::*}
 
 function player_store_skill_slot(p: player, skill: item) :: number:
+  set {_uuid} to item_nbt_get_tag({_skill}, "UUID")
+  return player_store_skill_slot_uuid({_p}, {_uuid})
+
+function player_store_skill_slot_uuid(p: player, uuid: text) :: number:
   loop {HOTBAR_SLOTS::*}:
     set {_slot} to loop-value
     set {_item} to slot {_slot} of {_p}
-    if {_item} is {_skill}:
+    if item_nbt_get_tag({_item}, "UUID") is {_uuid}:
       return {_slot}
   return {NaN}
-
+  
 function player_store_skill_delete(p: player, skill: item):
-  if {players::%{_p}%::skill::*} contains {_skill}:
-    remove {_skill} from {players::%{_p}%::skill::*}
-    set {_slot} to player_store_skill_slot({_p}, {_skill})
+  set {_uuid} to item_nbt_get_tag({_skill}, "UUID")
+  player_store_skill_delete_uuid({_p}, {_uuid})
+
+function player_store_skill_delete_uuid(p: player, uuid: text):
+  if {players::%{_p}%::skill::*} contains {_uuid}:
+    set {_slot} to player_store_skill_slot_uuid({_p}, {_uuid})
+    remove {_uuid} from {players::%{_p}%::skill::*}
     set slot {_slot} of {_p} to air
 
 function player_store_skill_delete_all(p: player):
   loop {players::%{_p}%::skill::*}:
-    player_store_skill_delete({_p}, loop-value)
-
-
+    player_store_skill_delete_uuid({_p}, loop-value)
+  delete {players::%{_p}%::skill::*}

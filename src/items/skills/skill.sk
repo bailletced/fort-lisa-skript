@@ -1,4 +1,6 @@
 
+
+
 #Give a weapon to the player
 function skill_give(p: player, category: text, id: text) :: item:
   set {_skill} to item_create({_p}, "SKILL", {_category}, {_id}) 
@@ -27,12 +29,35 @@ function skill_cast(p: player, skill: item):
 
 function skill_cooldown(p: player, skill: item):
   set {_cooldown} to item_nbt_get_stat({_skill}, "COOLDOWN")
+  set {_slot} to player_store_skill_slot({_p}, {_skill})
+  set {_cdItem} to skill_cooldown_item({_p}, {_skill})
+  set slot {_slot} of {_p} to {_cdItem}
   item_store_stat_set({_skill}, "CD", {_cooldown})
-  set {_cd} to item_store_stat_get({_weapon}, "CD")
+  set {_cd} to item_store_stat_get({_skill}, "CD")
   while {_cd} > 0:
-    set {_cd} to {_cd} - 5
+    set {_cd} to {_cd} - 20
     item_store_stat_set({_skill}, "CD", {_cd})
-    wait 5 tick
+    wait 20 ticks
+  set {_skill} to skill_copy({_cdItem}, {_skill})
+  set slot {_slot} of {_p} to {_skill}
+
+function skill_cooldown_item(p: player, skill: item) :: item:
+  set {_cdItem} to {UTILITY::MAIN::CD::ITEM}
+  return skill_copy({_skill}, {_cdItem})
+
+function skill_copy(source: item, dest: item) :: item:
+  loop {STAT::SKILL::*}:
+    # copy stats
+    set {_key} to loop-value
+    set {_value} to item_nbt_get_stat({_source}, {_key})
+    set {_dest} to item_nbt_set_stat({_dest}, {_key}, {_value})
+    set {_dest} to item_nbt_set_tag({_dest}, "UUID", item_nbt_get_tag({_source}, "UUID"))
+    set {_dest} to item_nbt_set_tag({_dest}, "TYPE", item_nbt_get_tag({_source}, "TYPE"))
+    set {_dest} to item_nbt_set_tag({_dest}, "CATEGORY", item_nbt_get_tag({_source}, "CATEGORY"))
+    set {_dest} to item_nbt_set_tag({_dest}, "ID", item_nbt_get_tag({_source}, "ID"))
+    set name of {_dest} to name of {_source}
+    set lore of {_dest} to lore of {_source}
+  return {_dest}
 
 # #Called when the player hit a block/entity with a projectile skill
 # function skill_hit(p: player, category: text, id: text, location: location):
