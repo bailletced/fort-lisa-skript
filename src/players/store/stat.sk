@@ -4,14 +4,23 @@
 #   key : text The stat to set
 #   value : object The value to set 
 function player_store_stat_set(p: player, key: text, value: number):
-    if {_key} is "HEALTH_MAX":
-        set max health of {_p} to {_value}
-    if {_key} is "HEALTH":
-        set health of {_p} to {_value}
+    set {_reload} to true
     set {players::%{_p}%::stat::%{_key}%} to {_value}
-    player_store_weapon_reload_all({_p})
-    player_store_skill_reload_all({_p})
-    player_interface_tablist_player({_p})
+    if "HEALTH_MAX", "HEALTH" and "MANA" contains {_key}:
+        set {_reload} to false
+    else if {_key} is "HEALTH_MAX":
+        set max health of {_p} to {_value}
+        set {_reload} to false
+    else if {_key} is "HEALTH":
+        set health of {_p} to {_value}
+        set {_reload} to false
+    else if {_key} is "MANA_MAX":
+        set level of {_p} to {_value}
+
+    if {_reload} is true:
+        player_store_weapon_reload_all({_p})
+        player_store_skill_reload_all({_p})
+        player_interface_tablist_player({_p})
 
 #Add a stat to a a player 
 #Params: 

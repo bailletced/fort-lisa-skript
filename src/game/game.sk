@@ -22,3 +22,7 @@ function game_end():
     set {_mob} to loop-value
     if entity_nbt_get_tag({_mob}, "TYPE") is "MOB":
       kill {_mob}
+    if loop-value is a player:
+      if player_store_setting_get(loop-value, "INGAME") is true:
+        player_clean({_p})
+        

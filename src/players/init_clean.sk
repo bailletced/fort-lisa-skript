@@ -1,0 +1,22 @@
+function player_init():
+  loop all players:
+    set {_p} to loop-value
+    player_clean({_p})
+    player_store_stat_set({_p}, "ATTACK", 3)
+    player_store_stat_set({_p}, "POWER", 3)
+    player_store_stat_set({_p}, "DEFENCE", 0)
+    player_store_stat_set({_p}, "MR", 0)
+    player_store_stat_set({_p}, "MANA", 100)
+    player_store_stat_set({_p}, "MANA_MAX", 100)
+    player_store_stat_set({_p}, "MANA_REGEN", 30)
+    player_store_setting_set({_p}, "INGAME", true)
+    set health of {_p} to 20
+    clear inventory of {_p}
+    # Listeners
+    player_listener_mana({_p})
+
+function player_clean(p: player):
+  set {_test} to player_store_setting_get({_p}, "INGAME")
+  broadcast "INGAME: %{_test}%"
+  delete {players::%{_p}%::*}
+  

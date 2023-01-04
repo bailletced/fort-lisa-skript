@@ -7,7 +7,7 @@ MAGE:
       COOLDOWN: 300
       RANGE: 8
       RADIUS: 5
-      MANA: 100
+      MANA: 70
   DRAGON_BREATH:
     ITEM: dragon's breath
     STATS:

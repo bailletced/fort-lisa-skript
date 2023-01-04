@@ -116,4 +116,3 @@ function config_load(world: world):
     player_store_setting_set({_p}, "INGAME", false)
     wait 20 ticks
     player_store_setting_set({_p}, "INGAME", true)
-    onPeriodTenTicks({_p})

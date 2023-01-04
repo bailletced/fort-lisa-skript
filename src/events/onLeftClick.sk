@@ -4,3 +4,5 @@ on leftclick:
   if {_type} is "WEAPON":
     weapon_leftClick(event-player, {_item})
     cancel event
+  else if {_type} is "SKILL":
+    cancel event

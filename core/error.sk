@@ -1,2 +1,5 @@
 function error(message: text):
   broadcast "§c%{_message}%"
+
+function error_player(p: player, message: text):
+  send "§c%{_message}%" to {_p}

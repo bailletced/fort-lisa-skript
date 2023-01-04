@@ -50,3 +50,7 @@ command /tag:
         set the player's display name to "<red>[admin] <gold>%name of player%"
         set the player's tab list name to "<green>%player's name%"
         set all players' tab list footer to "Welcome%nl% to the Server!"
+
+command /xp:
+    trigger:
+        set experience of player to 0.5

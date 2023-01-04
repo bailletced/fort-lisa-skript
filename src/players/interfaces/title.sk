@@ -1,0 +1,3 @@
+function player_interface_title(p: player, title: text, subtitle: text, duration: timespan):
+  reset the title of {_p}
+  send title {_title} with subtitle {_subtitle} to {_p} for {_duration}

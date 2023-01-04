@@ -1,0 +1,14 @@
+function player_listener_mana(p: player):
+  while player_store_setting_get({_p}, "INGAME") is true:
+    set {_manaRegen} to player_store_stat_get({_p}, "MANA_REGEN")
+    set {_manaMax} to player_store_stat_get({_p}, "MANA_MAX")
+    set {_mana} to player_store_stat_get({_p}, "MANA")
+
+    if {_mana} + {_manaRegen} <= {_manaMax}:
+      player_store_stat_add({_p}, "MANA", {_manaRegen})
+    else:
+      player_store_stat_set({_p}, "MANA", {_manaMax})
+    
+    set {_mana} to player_store_stat_get({_p}, "MANA")
+    set level progress of {_p} to ({_mana} / {_manaMax}) - 0.01
+    wait 15 ticks

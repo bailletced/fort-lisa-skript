@@ -3,46 +3,87 @@
 
 #Give a weapon to the player
 function skill_give(p: player, category: text, id: text) :: item:
-  set {_skill} to item_create({_p}, "SKILL", {_category}, {_id}) 
+  set {_skill} to item_create({_p}, "SKILL", {_category}, {_id})
+  item_store_stat_set({_skill}, "CD", 0)
   player_store_skill_give({_p}, {_skill})
+  skill_mana({_p}, {_skill})
   return {_skill}
 
 function skill_cast(p: player, skill: item):
   set {_canCast} to true
   set {_category} to item_nbt_get_tag({_skill}, "CATEGORY")
+  set {_requiredMana} to item_nbt_get_stat({_skill}, "MANA")
+  set {_playerMana} to player_store_stat_get({_p}, "MANA")
+
+  # Condition MANA
+  if {_playerMana} < {_requiredMana}:
+    error_player({_p}, i18n({_p}, "MESSAGE.PLAYER.MANA.NOT_ENOUGH"))
+    set {_canCast} to false
+
   # Condition CD
   if item_store_stat_isset({_skill}, "CD") is true:
     set {_cd} to item_store_stat_get({_skill}, "CD")
     if {_cd} is not 0:
+      error_player({_p}, i18n({_p}, "MESSAGE.PLAYER.CD.SKILL.IN_PROGRESS"))
       set {_canCast} to false
-  # Condition MANA
-  set {_requiredMana} to item_nbt_get_stat({_skill}, "MANA")
-  set {_playerMana} to player_store_stat_get({_p}, "MANA")
 
-  if {_playerMana} < {_requiredMana}:
-    set {_canCast} to false
-  # Conditions ALL  
+  # CAST SKILLS
   if {_canCast} is true:
     if {_category} is "MAGE":
       mage_cast({_p}, {_skill})
-    skill_cooldown({_p}, {_skill})
 
+    # APPLY EFFECTS AFTER CAST
+    set {_cooldown} to item_nbt_get_stat({_skill}, "COOLDOWN")
+    item_store_stat_set({_skill}, "CD", {_cooldown})
+    player_store_stat_add({_p}, "MANA", -1*{_requiredMana})
+    loop player_store_skills({_p}):
+      skill_mana({_p}, loop-value)
+    skill_cooldown({_p}, {_skill})
+    
+
+# Handle whether skill is not in CD
 function skill_cooldown(p: player, skill: item):
-  set {_cooldown} to item_nbt_get_stat({_skill}, "COOLDOWN")
+  set {_uuid} to item_nbt_get_tag({_skill}, "UUID")
   set {_slot} to player_store_skill_slot({_p}, {_skill})
   set {_cdItem} to skill_cooldown_item({_p}, {_skill})
   set slot {_slot} of {_p} to {_cdItem}
-  item_store_stat_set({_skill}, "CD", {_cooldown})
   set {_cd} to item_store_stat_get({_skill}, "CD")
   while {_cd} > 0:
     set {_cd} to {_cd} - 20
     item_store_stat_set({_skill}, "CD", {_cd})
+    
+    set {_toolUuid} to item_nbt_get_tag(tool of {_p}, "UUID")
+    if {_toolUuid} is {_uuid}:
+      player_interface_title({_p}, "%{_cd} / 20%", "", 1 second)
     wait 20 ticks
+  # End of CD
   set {_skill} to skill_copy({_cdItem}, {_skill})
   set slot {_slot} of {_p} to {_skill}
 
+# Handle whether player has enough mana
+function skill_mana(p: player, skill: item):
+  set {_cd} to item_store_stat_get({_skill}, "CD")
+  if {_cd} is 0:
+    # Skill under CD. CD listener already handling it
+    set {_requiredMana} to item_nbt_get_stat({_skill}, "MANA")
+    set {_playerMana} to player_store_stat_get({_p}, "MANA")
+    set {_slot} to player_store_skill_slot({_p}, {_skill})
+    if {_playerMana} < {_requiredMana}:
+      set {_manaItem} to skill_mana_item({_p}, {_skill})
+      set slot {_slot} of {_p} to {_manaItem}
+      while {_playerMana} < {_requiredMana}:
+        set {_playerMana} to player_store_stat_get({_p}, "MANA")
+        wait 5 ticks
+      # Player has enough mana
+      set {_skill} to skill_copy({_manaItem}, {_skill})
+      set slot {_slot} of {_p} to {_skill}
+
 function skill_cooldown_item(p: player, skill: item) :: item:
   set {_cdItem} to {UTILITY::MAIN::CD::ITEM}
+  return skill_copy({_skill}, {_cdItem})
+
+function skill_mana_item(p: player, skill: item) :: item:
+  set {_cdItem} to {UTILITY::MAIN::NOMANA::ITEM}
   return skill_copy({_skill}, {_cdItem})
 
 function skill_copy(source: item, dest: item) :: item:

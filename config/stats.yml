@@ -32,6 +32,9 @@ ALL:
   MANA_MAX:
     ICON: "☄"
     COLOR: "§b"
+  MANA_REGEN:
+    ICON: "☄"
+    COLOR: "§b"
   MANA_COST:
     ICON: "☄"
     COLOR: "§3"
@@ -56,6 +59,7 @@ PLAYER:
   - "HEALTH_MAX"
   - "MANA"
   - "MANA_MAX"
+  - "MANA_REGEN"
   - "ATTACK"
   - "POWER"
   - "DEFENCE"

@@ -31,3 +31,13 @@ function test_players_store_skill(p: player):
     set {_powerMultiplier} to item_nbt_get_stat({_skill}, "POWER_MULTIPLIER")
     set {_finalPower} to {_power} + {_playerPower} * {_powerMultiplier}
     assert if line 3 of lore of slot {_slot} of {_p} contains "%{_finalPower}%" with message "lore should contain a final power of %{_finalPower}%. Got %line 3 of lore of slot {_slot} of {_p}%"
+
+  it "test get all skills":
+    clear inventory of {_p}
+    player_store_skill_delete_all({_p})
+    skill_give({_p}, "MAGE", "TEST")
+    skill_give({_p}, "MAGE", "TEST")
+    skill_give({_p}, "MAGE", "TEST")
+    delete {_skill::*}
+    set {_skill::*} to player_store_skills({_p})
+    assert if size of {_skill::*} is 3 with message "player_store_skills should return 3 skills. Got %size of {_skill::*}%"

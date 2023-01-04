@@ -1,6 +1,13 @@
 ADMIN:
   COMMANDS:
     SUCCESS: "Commande exécutée avec succès !"
+MESSAGE:
+  PLAYER:
+    MANA:
+      NOT_ENOUGH: "Pas assez de mana"
+    CD:
+      SKILL:
+        IN_PROGRESS: "Ce sort est en cooldown"
 WAVE:
   TITLE: "Vague"
 WEAPON:
@@ -23,3 +30,5 @@ UTILITY:
   MAIN:
     CD:
       TITLE: "Cooldown"
+    NOMANA:
+      TITLE: "Pas assez de mana"

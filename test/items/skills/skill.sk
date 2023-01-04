@@ -13,20 +13,23 @@ function test_item_skill(p: player):
     assert if {_category} is "MAGE" with message "weapon category should be MAGE. Got %{_category}%"
     assert if {_id} is "TEST" with message "weapon id should be TEST. Got %{_id}%"
   
-  it "Test skill cast: skill in cd":
+  it "Test skill should be in cd after being casted":
     clear inventory of {_p}
     player_store_skill_delete_all({_p})
+    player_store_stat_set({_p}, "MANA", 100)
     skill_give({_p}, "MAGE", "TEST")
     set {_skill} to slot 0 of inventory of {_p}
-    item_nbt_set_stat({_skill}, "CD", 10)
+    set {_cdBefore} to item_store_stat_get({_skill}, "CD")
     skill_cast({_p}, {_skill})
-    set {_cd} to item_store_stat_get({_skill}, "CD")
-    assert if {_cd} is not set with message "skill should not be casted because in CD"
+    set {_cdAfter} to item_store_stat_get({_skill}, "CD")
+    assert if {_cdBeofre} is not set with message "skill CD not be set if not casted. Got %{_cdBefore}%"
+    assert if {_cdAfter} is 280 with message "skill CD should be 280. Got %{_cdAfter}%"
 
   it "Test skill cast: not enough mana":
     clear inventory of {_p}
     player_store_skill_delete_all({_p})
     skill_give({_p}, "MAGE", "TEST")
+    player_store_stat_set({_p}, "MANA", 100)
     set {_skill} to slot 0 of inventory of {_p}
     player_store_stat_set({_p}, "MANA", 10)
     set {_playerMana} to player_store_stat_get({_p}, "MANA")
@@ -61,3 +64,17 @@ function test_item_skill(p: player):
     set {_finalCount} to player_store_skill_count({_p})
     assert if {_initialLore} is not {_lore} with message "Lore should not be the same. Before: %{_initialLore}%. After: %{_lore}%"
     assert if {_initialCount} is {_finalCount} with message "skill count should be %{_initialCount}%. Got %{_finalCount}%"
+
+  it "Test skill not enough mana":
+    clear inventory of {_p}
+    player_store_skill_delete_all({_p})
+    player_store_stat_set({_p}, "MANA", 70)
+    set {_skill1} to skill_give({_p}, "MAGE", "TEST")
+    set {_slotSkill1} to player_store_skill_slot({_p}, {_skill1})
+
+    set {_skill2} to skill_give({_p}, "MAGE", "DRAGON_BREATH")
+    set {_slotSkill2} to player_store_skill_slot({_p}, {_skill2})
+    set {_manaItem} to skill_mana_item({_p}, {_skill2})
+    
+    assert if slot {_slotSkill1} of {_p} is {_skill1} with message "skill 1 should be %{_skill1}%. Got %slot {_slotSkill1} of {_p}%"
+    assert if slot {_slotSkill2} of {_p} is {_manaItem} with message "skill 2 should be %{_manaItem2}%. Got %slot {_slotSkill2} of {_p}%"

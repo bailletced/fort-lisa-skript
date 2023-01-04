@@ -1,3 +1,14 @@
+function player_store_skill_uuids(p: player) :: texts:
+  return {players::%{_p}%::skill::*}
+
+function player_store_skills(p: player) :: items:
+  delete {_res::*}
+  set {_uuid::*} to player_store_skill_uuids({_p})
+  loop {_uuid::*}:
+    set {_slot} to player_store_skill_slot_uuid({_p}, loop-value)
+    add slot {_slot} of {_p} to {_res::*}
+  return {_res::*} 
+
 function player_store_skill_give(p: player, skill: item):
   set {_count} to size of {players::%{_p}%::skill::*}
   if slot {_count} of {_p} is not air:

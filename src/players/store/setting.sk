@@ -1,7 +1,7 @@
 
 #store menu value to a player (usefull in events)
 function player_store_setting_set(p: player, key: text, value: object):
-    set {players::%{_p}%.settings::%{_key}%} to {_value}
+    set {players::%{_p}%::settings::%{_key}%} to {_value}
 
 
 #Get a player's setting
@@ -11,7 +11,7 @@ function player_store_setting_set(p: player, key: text, value: object):
 #Return
 #   Text : The value associated to the setting key
 function player_store_setting_get(p: player, key: text) :: object:
-    return {players::%{_p}%.settings::%{_key}%}
+    return {players::%{_p}%::settings::%{_key}%}
 
 
 #Get a player's setting
@@ -21,8 +21,8 @@ function player_store_setting_get(p: player, key: text) :: object:
 #Return
 #   Text : The value associated to the setting key
 function player_store_setting_delete(p: player, key: text):
-    delete {players::%{_p}%.settings::%{_key}%}
+    delete {players::%{_p}%::settings::%{_key}%}
   
 
 function player_store_setting_delete_all(p: player):
-    delete {players::%{_p}%.settings::*}
+    delete {players::%{_p}%::settings::*}
