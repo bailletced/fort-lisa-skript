@@ -1,3 +1,28 @@
-function dragon_breath_cast(p: player):
-  broadcast "TODO: implement dragon breath"
-  
+function dragon_breath_cast(p: player, skill: item):
+  set {_range} to player_stat_item({_p}, {_skill}, "RANGE")
+  set {_radius} to player_stat_item({_p}, {_skill}, "RADIUS")
+  set {_power} to player_stat_item({_p}, {_skill}, "POWER")
+
+  set {_factor} to {_range} / 0.7
+  set {_it} to 0
+  set {_startPoint} to head of {_p}
+  set {_yaw} to yaw of {_p}
+  set {_pitch} to pitch of {_p} + 90
+  set {_frame} to frame with yaw {_yaw} and pitch {_pitch}
+  set {_circle::*} to circle with radius {_radius}/2 and density 10 in {_frame}
+  delete {_victim::*}
+  loop ceil({_factor}) times:
+    set {_loc} to location {_it} in front of {_startPoint}
+    add 0.7 to {_it}
+    loop {_circle::*}:
+      loop all entities in radius {_radius} of {_loc}:
+        set {_type} to entity_nbt_get_tag(loop-entity, "TYPE")
+        if {_type} is "MOB":
+          if {_victim::*} does not contain loop-entity:
+            add loop-entity to {_victim::*}
+          teleport loop-entity to {_loc}
+      draw 5 of dust using dustOption(rgb(255,0,255), 0.5) at {_loc} offset by loop-value-2
+    wait 1 tick
+
+  loop {_victim::*}:
+    player_action_damage({_p}, loop-value, 0, {_power})

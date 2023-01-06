@@ -1,4 +1,4 @@
 function mage_cast(p: player, skill: item):
   set {_id} to item_nbt_get_tag({_skill}, "ID")
   if {_id} is "DRAGON_BREATH":
-    dragon_breath_cast({_p})
+    dragon_breath_cast({_p}, {_skill})

@@ -7,13 +7,10 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/npc/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/events/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/game/":
-   reload script file fileManager_getRelativePath(event-path)
-
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/game/store/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/i18n/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/game/store/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/":
@@ -22,19 +19,19 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/mage/":
-   reload script file fileManager_getRelativePath(event-path)
-
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/store/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/staffs/":
+   reload script file fileManager_getRelativePath(event-path)
+
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/mage/":
+   reload script file fileManager_getRelativePath(event-path)
+
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/staffs/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/location/":
-   reload script file fileManager_getRelativePath(event-path)
-
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/":

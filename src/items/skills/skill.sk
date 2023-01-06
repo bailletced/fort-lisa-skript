@@ -23,14 +23,12 @@ function skill_cast(p: player, skill: item):
   # Condition CD
   if item_store_stat_isset({_skill}, "CD") is true:
     set {_cd} to item_store_stat_get({_skill}, "CD")
-    if {_cd} is not 0:
+    if max({_cd}, 0) > 0:
       error_player({_p}, i18n({_p}, "MESSAGE.PLAYER.CD.SKILL.IN_PROGRESS"))
       set {_canCast} to false
 
   # CAST SKILLS
   if {_canCast} is true:
-    if {_category} is "MAGE":
-      mage_cast({_p}, {_skill})
 
     # APPLY EFFECTS AFTER CAST
     set {_cooldown} to item_nbt_get_stat({_skill}, "COOLDOWN")
@@ -39,6 +37,10 @@ function skill_cast(p: player, skill: item):
     loop player_store_skills({_p}):
       skill_mana({_p}, loop-value)
     skill_cooldown({_p}, {_skill})
+
+    # CAST THE SKILL
+    if {_category} is "MAGE":
+      mage_cast({_p}, {_skill})
     
 
 # Handle whether skill is not in CD
@@ -49,13 +51,13 @@ function skill_cooldown(p: player, skill: item):
   set slot {_slot} of {_p} to {_cdItem}
   set {_cd} to item_store_stat_get({_skill}, "CD")
   while {_cd} > 0:
+    wait 20 ticks
     set {_cd} to {_cd} - 20
     item_store_stat_set({_skill}, "CD", {_cd})
-    
     set {_toolUuid} to item_nbt_get_tag(tool of {_p}, "UUID")
     if {_toolUuid} is {_uuid}:
       player_interface_title({_p}, "%{_cd} / 20%", "", 1 second)
-    wait 20 ticks
+
   # End of CD
   set {_skill} to skill_copy({_cdItem}, {_skill})
   set slot {_slot} of {_p} to {_skill}

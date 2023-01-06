@@ -2,7 +2,7 @@ command /testplanet:
     trigger:
         set {_loc} to location 1 meter above event-location
         set {_p} to event-player
-        drawPlanet particle1 "redstone", RGB 0, 255, 10, particle2 "redstone", RGB2 0, 10, 255, center {_loc}, id "%{_p}%", radius 0.25, density 150, precision 100, bumpHeight 0.25, visibleRange 30, tps 1, second 2
+        drawPlanet particle1 "redstone", RGB 0, 0, 0, particle2 "redstone", RGB2 0, 0, 0, center {_loc}, id "%{_p}%", radius 0.25, density 150, precision 100, bumpHeight 0.25, visibleRange 30, tps 1, second 2
         wait 5 seconds
         stopEffect "%{_p}%"
 
@@ -35,8 +35,9 @@ command /pig:
 command /zombie:
     trigger:
         set {_p} to event-player
-        summon zombie at location of {_p}
+        mob_summon("ZOMBIE", "1", location of {_p})
         set {_zombie} to last spawned entity
+        apply potion of slowness of tier 100 to {_zombie} for 999 days
         entity_nbt_set_tag({_zombie}, "TYPE", "MOB")
         entity_nbt_set_stat({_zombie}, "ATTACK", 10)
 
@@ -51,6 +52,66 @@ command /tag:
         set the player's tab list name to "<green>%player's name%"
         set all players' tab list footer to "Welcome%nl% to the Server!"
 
-command /xp:
+command /dragonbreath:
     trigger:
-        set experience of player to 0.5
+        set {_loc} to location 1 meter in front of player
+        drawDragonBreath particle "endrod", speed 0.1, RGB 0, 0, 0, center {_loc}, id "tsunami", arcPitch 0.02, arcCount 50, arcDensity 200, arcSteps 5, arcLength 26, visibleRange 80
+
+command /testspiral:
+    trigger:
+        set {_circle::*} to circle with radius 3 and density 2
+        add {_circle::*} to {_circle::*}
+        set {_bigcircle::*} to {_circle::*} scaled by 2
+        loop size of {_circle::*} / 2 times:
+            add vector line from {_circle::%loop-number%} to {_bigcircle::%loop-number + 7%} with density 5 to {_lines::*}
+        # broadcast "%{_lines::*}%"
+        show happy villager at location 8 in front of player offset by {_lines::*}
+
+command /line-circle:
+    trigger:
+        set {_circle::*} to circle with radius 5 and density 1
+        set {_bigcircle::*} to {_circle::*} scaled by 1.5
+        loop size of {_circle::*} times:
+            add vector line from {_circle::%loop-number%} to {_bigcircle::%loop-number%} with density 5 to {_lines::*}
+        
+        loop {_circle::*}:
+            set {_loc} to location 10 in front of player offset by loop-value
+            drawDot count 1, particle "flame", RGB 0, 0, 0, center {_loc}, rainbowMode true, visibleRange 32, pulseDelay 0, keepFor 10 ticks
+            loop {_lines::*}:
+                set {_loc1} to location 10 in front of player offset by loop-value-2
+                drawDot count 1, particle "flame", RGB 0, 0, 0, center {_loc1}, rainbowMode true, visibleRange 32, pulseDelay 0, keepFor 10 ticks
+
+command /line-vortex-2:
+    trigger:
+        set {_yaw} to yaw of player
+        set {_pitch} to pitch of player + 90
+        set {_frame} to frame with yaw {_yaw} and pitch {_pitch}
+        set {_circle::*} to circle with radius 1.8 and density 1 in {_frame}
+        add {_circle::*} to {_circle::*}
+        
+        set {_bigcircle::*} to {_circle::*} scaled by 2
+        set {_smallcircle::*} to {_circle::*} scaled by 0.5
+        loop size of {_circle::*} / 2 times:
+            add vector line from {_circle::%loop-number%} to {_bigcircle::%loop-number + 7%} with density 5 to {_lines::*}
+            add vector line from {_circle::%loop-number%} to {_smallcircle::%loop-number + 7%} with density 5 to {_lines::*}
+        
+        loop 20 times:
+            loop {_lines::*}:
+                set {_loc1} to location 10 in front of player offset by loop-value-2
+                draw 5 of dust using dustOption(rgb(0,0,0), 0.5) at {_loc1}
+            wait 1 tick
+                # drawDot count 1, particle "critmagic", RGB 0, 0, 0, center {_loc1}, rainbowMode true, visibleRange 32, pulseDelay 0, keepFor 100 ticks
+
+command /circle:
+    trigger:
+        set {_startPoint} to head of player
+        set {_yaw} to yaw of player
+        set {_pitch} to pitch of player + 90
+        set {_frame} to frame with yaw {_yaw} and pitch {_pitch}
+        set {_circle::*} to circle with radius 0.7 and density 10 in {_frame}
+        loop 20 times:
+            set {_loc} to location loop-value/1 in front of {_startPoint}
+            loop 1 times:
+                loop {_circle::*}:
+                    draw 5 of dust using dustOption(rgb(255,0,255), 0.5) at {_loc} offset by loop-value-3
+                wait 1 tick

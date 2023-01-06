@@ -1,8 +1,10 @@
 on leftclick:
+  set {_p} to player
   set {_item} to held item of player
   set {_type} to item_nbt_get_tag({_item}, "TYPE")  
   if {_type} is "WEAPON":
     weapon_leftClick(event-player, {_item})
     cancel event
   else if {_type} is "SKILL":
+    skill_cast({_p}, {_item})
     cancel event

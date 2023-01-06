@@ -9,11 +9,11 @@ MAGE:
       RADIUS: 5
       MANA: 70
   DRAGON_BREATH:
-    ITEM: dragon's breath
+    ITEM: allium
     STATS:
-      POWER: 20
-      POWER_MULTIPLIER: 1
-      COOLDOWN: 300
+      POWER: 10
+      POWER_MULTIPLIER: 0.7
+      COOLDOWN: 20
       RANGE: 8
-      RADIUS: 5
-      MANA: 100
+      RADIUS: 2
+      MANA: 10
