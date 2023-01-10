@@ -59,14 +59,19 @@ function skill_cooldown(p: player, skill: item):
       player_interface_title({_p}, "%{_cd} / 20%", "", 1 second)
 
   # End of CD
-  set {_skill} to skill_copy({_cdItem}, {_skill})
-  set slot {_slot} of {_p} to {_skill}
+  set {_requiredMana} to item_nbt_get_stat({_skill}, "MANA")
+  set {_playerMana} to player_store_stat_get({_p}, "MANA")
+  if {_playerMana} < {_requiredMana}:
+    skill_mana({_p}, {_skill})
+  else:
+    set {_skill} to skill_copy({_cdItem}, {_skill})
+    set slot {_slot} of {_p} to {_skill}
 
 # Handle whether player has enough mana
 function skill_mana(p: player, skill: item):
   set {_cd} to item_store_stat_get({_skill}, "CD")
   if {_cd} is 0:
-    # Skill under CD. CD listener already handling it
+    # Skill must not be under cd
     set {_requiredMana} to item_nbt_get_stat({_skill}, "MANA")
     set {_playerMana} to player_store_stat_get({_p}, "MANA")
     set {_slot} to player_store_skill_slot({_p}, {_skill})

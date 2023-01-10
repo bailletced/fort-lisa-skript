@@ -1,30 +1,47 @@
 function wave_init():
-  game_store_wave_set_current(1)
-  game_store_wave_set_current_timer(0)
-  wave_start()
+  wave_start(1)
   wave_listener()
 
 function wave_listener():
+  game_store_wave_set_current_timer(0)
   set {_waveNumber} to game_store_wave_get_current()
+  set {_waveDuration} to game_store_wave_get_current_duration()
   while game_isset() is true:
-    wave_tablist()
-    game_store_wave_set_current_timer(game_store_wave_get_current_timer() + 40)
-    if {_waveNumber} is not game_store_wave_get_current():
-      game_store_wave_set_next() #Go next wave
-      wave_start()
+    set {_waveTimer} to game_store_wave_get_current_timer()
+    wave_tablist({_waveNumber}, {_waveDuration}, {_waveTimer})
+    game_store_wave_set_current_timer({_waveTimer} + 40)
+    # If no mobs anymore
+    if mob_count() is 0:
+      wave_next()
+    # If timer, go to next wave
+    if {_waveTimer} >= {_waveDuration}:
+      wave_next()
+      set {_waveNumber} to game_store_wave_get_current()
+      set {_waveDuration} to game_store_wave_get_current_duration()
     wait 2 seconds
 
-function wave_tablist():
+function wave_tablist(waveNumber: number, waveDuration: number, waveTimer: number):
   set {_waveNumber} to game_store_wave_get_current()
   set {_waveDuration} to game_store_wave_get_current_duration()
   set {_waveTimer} to game_store_wave_get_current_timer()
   loop all players:
     set {_p} to loop-player
     set {_waveTxt} to i18n({_p}, "WAVE.TITLE")
-    set tab list footer of {_p} to "%{_waveTxt}% %{_waveNumber}% - %ceil(({_waveTimer}/{_waveDuration})*100)%%%"
+    set tab list footer of {_p} to "%{_waveTxt}% %{_waveNumber}% - %min(100, ceil(({_waveTimer}/{_waveDuration})*100))%%%"
 
-function wave_start():
+function wave_next():
   set {_waveNumber} to game_store_wave_get_current()
+  set {_nextWave} to game_store_wave_set_next() #Go next wave
+  if {_nextWave} is {_waveNumber}:
+    if mob_count() is 0:
+      broadcast "END OF GAME : No next wave AND NO MOBS"
+      game_end()
+  else:
+    wave_start({_nextWave})
+
+function wave_start(waveNumber: number):
+  game_store_wave_set_current({_waveNumber})
+  game_store_wave_set_current_timer(0)
   load yaml "plugins/Skript/scripts/fort-lisa/config/waves/%{_waveNumber}%.yml" as "YAML-WAVE"
   loop node keys "MOBS" of "YAML-WAVE":
     set {WAVE::CURRENT} to {_waveNumber}

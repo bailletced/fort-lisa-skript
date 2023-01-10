@@ -8,15 +8,18 @@ function player_init():
     player_store_stat_set({_p}, "MR", 0)
     player_store_stat_set({_p}, "MANA", 100)
     player_store_stat_set({_p}, "MANA_MAX", 100)
-    player_store_stat_set({_p}, "MANA_REGEN", 30)
+    player_store_stat_set({_p}, "MANA_REGEN", 3)
     player_store_setting_set({_p}, "INGAME", true)
+    set max health of {_p} to 20
     set health of {_p} to 20
     clear inventory of {_p}
     # Listeners
+    skill_give({_p}, "MAGE", "DRAGON_BREATH")
+    item_give({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM")
     player_listener_mana({_p})
+    set gamemode of {_p} to adventure
+    teleport {_p} to {LOCATION::CASTLE::THRONE}
 
 function player_clean(p: player):
-  set {_test} to player_store_setting_get({_p}, "INGAME")
-  broadcast "INGAME: %{_test}%"
   delete {players::%{_p}%::*}
-  
+  clear inventory of {_p}

@@ -10,9 +10,11 @@ function game_store_wave_get_current_timer() :: number:
 function game_store_wave_set_current_timer(timer: number):
   set {game::wave::timer} to {_timer}
 
-function game_store_wave_set_next():
+function game_store_wave_set_next() :: number:
   set {_currentWave} to game_store_wave_get_current()
-  game_store_wave_set_current({_currentWave} + 1)
+  if yaml file "plugins/Skript/scripts/fort-lisa/config/waves/%{_currentWave}+1%.yml" exists:
+    game_store_wave_set_current({_currentWave} + 1)
+  return game_store_wave_get_current()
 
 function game_store_wave_get_current_duration() :: number:
   set {_currentWave} to game_store_wave_get_current()

@@ -1,5 +1,6 @@
 function game_start():
   broadcast "GAME IS STARTING"
+  mob_store_delete_all()
   game_store_status_set("MAIN", "IN_PROGRESS")
   lisa_summon()
   lisa_listeners()
@@ -24,5 +25,5 @@ function game_end():
       kill {_mob}
     if loop-value is a player:
       if player_store_setting_get(loop-value, "INGAME") is true:
-        player_clean({_p})
+        player_clean(loop-value)
         

@@ -59,25 +59,30 @@ function config_load(world: world):
   unload yaml "YAML-MOB-ZOMBIE"
 
   #LOCATIONS
-  load yaml "plugins/Skript/scripts/fort-lisa/config/locations/map-castle.yml" as "YAML-LOCATION-MAP-CASTLE"
+  load yaml "plugins/Skript/scripts/fort-lisa/config/locations/dragonland.yml" as "YAML-LOCATION-DRAGONLAND"
   delete {LOCATION::*}
-  set {LOCATION::CASTLE::THRONE} to location_text2Loc(yaml value "CASTLE.THRONE" from "YAML-LOCATION-MAP-CASTLE", {_world})
+  set {LOCATION::CASTLE::THRONE} to location_text2Loc(yaml value "CASTLE.THRONE" from "YAML-LOCATION-DRAGONLAND", {_world})
   
-  set {_spawnsFar::*} to yaml list "SPAWNS.FAR" from "YAML-LOCATION-MAP-CASTLE"
+  set {_spawnsFar::*} to yaml list "SPAWNS.FAR" from "YAML-LOCATION-DRAGONLAND"
   loop {_spawnsFar::*}:
     set {_location} to location_text2Loc(loop-value, {_world})
     add {_location} to {LOCATION::SPAWN::FAR::*}
 
-  set {_spawnsMedium::*} to yaml list "SPAWNS.MEDIUM" from "YAML-LOCATION-MAP-CASTLE"
+  set {_spawnsMedium::*} to yaml list "SPAWNS.MEDIUM" from "YAML-LOCATION-DRAGONLAND"
   loop {_spawnsMedium::*}:
     set {_location} to location_text2Loc(loop-value, {_world})
     add {_location} to {LOCATION::SPAWN::MEDIUM::*}
 
-  set {_castleEntrances::*} to yaml list "CASTLE.ENTRANCES" from "YAML-LOCATION-MAP-CASTLE"
+  set {_castleEntrances::*} to yaml list "CASTLE.ENTRANCES" from "YAML-LOCATION-DRAGONLAND"
   loop {_castleEntrances::*}:
     set {_location} to location_text2Loc(loop-value, {_world})
     add {_location} to {LOCATION::CASTLE::ENTRANCE::*}
-  unload yaml "YAML-LOCATION-MAP-CASTLE"
+  unload yaml "YAML-LOCATION-DRAGONLAND"
+
+  # BLOCKS
+  load yaml "plugins/Skript/scripts/fort-lisa/config/blocks/nocollision.yml" as "YAML-BLOCK-NOCOLLISION"
+  delete {BLOCK::*}
+  set {BLOCK::NOCOLLISION::*} to yaml list "NOCOLLISION" from "YAML-BLOCK-NOCOLLISION"
 
   #NPCS
   load yaml "plugins/Skript/scripts/fort-lisa/config/npcs.yml" as "YAML-NPC"

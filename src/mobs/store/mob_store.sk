@@ -1,0 +1,17 @@
+function mob_store_clear_all(mob: entity):
+  set {_uuid} to uuid of {_mob}
+  delete {mobs::%{_uuid}%::*}
+
+function mob_store_add(mob: entity):
+  set {_uuid} to uuid of {_mob}
+  add {_uuid} to {mobs::*}
+
+function mob_count() :: number:
+  return size of {mobs::*}
+
+function mob_store_delete(mob: entity):
+  set {_uuid} to uuid of {_mob}
+  remove {_uuid} from {mobs::*}
+
+function mob_store_delete_all():
+  delete {mobs::*}

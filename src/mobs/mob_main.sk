@@ -18,4 +18,5 @@ function mob_summon(category: text, id: text, location: location) :: entity:
   entity_nbt_set_tag({_mob}, "CATEGORY", {_category})
   entity_nbt_set_tag({_mob}, "ID", {_id})
   mob_set_stats({_mob})
+  mob_store_add({_mob})
   return {_mob}

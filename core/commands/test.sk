@@ -102,16 +102,8 @@ command /line-vortex-2:
             wait 1 tick
                 # drawDot count 1, particle "critmagic", RGB 0, 0, 0, center {_loc1}, rainbowMode true, visibleRange 32, pulseDelay 0, keepFor 100 ticks
 
-command /circle:
+command /toto:
     trigger:
-        set {_startPoint} to head of player
-        set {_yaw} to yaw of player
-        set {_pitch} to pitch of player + 90
-        set {_frame} to frame with yaw {_yaw} and pitch {_pitch}
-        set {_circle::*} to circle with radius 0.7 and density 10 in {_frame}
-        loop 20 times:
-            set {_loc} to location loop-value/1 in front of {_startPoint}
-            loop 1 times:
-                loop {_circle::*}:
-                    draw 5 of dust using dustOption(rgb(255,0,255), 0.5) at {_loc} offset by loop-value-3
-                wait 1 tick
+        set {_world} to world of player
+        if yaml file "plugins/Skript/scripts/fort-lisa/config/waves/2.yml" exists:
+            broadcast "I EXIST"

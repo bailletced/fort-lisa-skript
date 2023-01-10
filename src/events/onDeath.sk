@@ -2,7 +2,9 @@ on death:
   set {_entity} to victim
   set {_type} to entity_nbt_get_tag({_entity}, "TYPE")
   if {_type} is "MOB":
+    broadcast "I AM DEAD"
     mob_store_clear_all({_entity})
+    mob_store_delete({_entity})
   else:
     set {_victimName} to name of victim
     if {_victimName} is {NPC::LISA::NAME}:

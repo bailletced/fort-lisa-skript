@@ -11,8 +11,11 @@ function dragon_breath_cast(p: player, skill: item):
   set {_frame} to frame with yaw {_yaw} and pitch {_pitch}
   set {_circle::*} to circle with radius {_radius}/2 and density 10 in {_frame}
   delete {_victim::*}
+  
   loop ceil({_factor}) times:
     set {_loc} to location {_it} in front of {_startPoint}
+    if {BLOCK::NOCOLLISION::*} does not contain "%type of block at {_loc}%":
+      stop loop
     add 0.7 to {_it}
     loop {_circle::*}:
       loop all entities in radius {_radius} of {_loc}:

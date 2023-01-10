@@ -13,7 +13,7 @@ MAGE:
     STATS:
       POWER: 10
       POWER_MULTIPLIER: 0.7
-      COOLDOWN: 20
-      RANGE: 8
+      COOLDOWN: 300
+      RANGE: 12
       RADIUS: 2
-      MANA: 10
+      MANA: 100

@@ -1,0 +1,5 @@
+on first join:
+  set {_world} to world of player
+  if {_world} is not "flat_world":
+    execute console command "/mvtp %player% flat_world"
+    execute console command "/mv confirm"

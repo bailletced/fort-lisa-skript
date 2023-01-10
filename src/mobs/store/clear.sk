@@ -1,3 +1,0 @@
-function mob_store_clear_all(mob: entity):
-  set {_uuid} to uuid of {_mob}
-  delete {mobs::%{_uuid}%::*}
