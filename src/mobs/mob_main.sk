@@ -3,12 +3,21 @@ function mob_set_stats(mob: entity):
   set {_id} to entity_nbt_get_tag({_mob}, "ID")
   loop {STAT::MOB::*}:
     set {_key} to loop-value
-    set {_value} to {MOB::%{_category}%::%{_id}%::%{_key}%}
+    set {_value} to {MOB::%{_category}%::%{_id}%::STAT::%{_key}%}
     if {_value} is set:
       entity_nbt_set_stat({_mob}, {_key}, {_value})
       if {_key} is "HEALTH":
         set maximum health of {_mob} to {_value}
         set health of {_mob} to {_value}
+
+function mob_set_equipments(mob: entity):
+  set {_category} to entity_nbt_get_tag({_mob}, "CATEGORY")
+  set {_id} to entity_nbt_get_tag({_mob}, "ID")
+  loop {EQUIPMENT::CATEGORY::*}:
+    broadcast "%{MOB::%{_category}%::%{_id}%::EQUIPMENT::%loop-value%}% %loop-value%"
+    if {MOB::%{_category}%::%{_id}%::EQUIPMENT::%loop-value%} is set:
+      equip {_mob} with {MOB::%{_category}%::%{_id}%::EQUIPMENT::%loop-value%} parsed as item
+
 
 function mob_summon(category: text, id: text, location: location) :: entity:
   if {_category} is "ZOMBIE":
@@ -18,5 +27,6 @@ function mob_summon(category: text, id: text, location: location) :: entity:
   entity_nbt_set_tag({_mob}, "CATEGORY", {_category})
   entity_nbt_set_tag({_mob}, "ID", {_id})
   mob_set_stats({_mob})
+  mob_set_equipments({_mob})
   mob_store_add({_mob})
   return {_mob}

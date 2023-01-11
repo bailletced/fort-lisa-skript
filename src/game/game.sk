@@ -1,5 +1,7 @@
 function game_start():
   broadcast "GAME IS STARTING"
+  game_store_status_set("MAIN", "DISABLED")
+  wait 3 seconds
   mob_store_delete_all()
   game_store_status_set("MAIN", "IN_PROGRESS")
   lisa_summon()

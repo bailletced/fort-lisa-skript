@@ -51,10 +51,12 @@ function config_load(world: world):
     set {_category} to loop-value
     loop node keys "" of "YAML-MOB-%{_category}%":
       set {_id} to loop-value-2
-      loop yaml node keys {_id} of "YAML-MOB-%{_category}%":
-        set {_stat} to loop-key-3
-        set {_value} to yaml value "%{_id}%.%{_stat}%" from "YAML-MOB-%{_category}%"
-        set {MOB::%{_category}%::%{_id}%::%{_stat}%} to {_value}
+      loop yaml node keys "%{_id}%" of "YAML-MOB-%{_category}%":
+        set {_attribute} to loop-value-3
+        loop yaml node keys "%{_id}%.%{_attribute}%" of "YAML-MOB-%{_category}%":
+          set {_key} to loop-key-4
+          set {_value} to yaml value "%{_id}%.%{_attribute}%.%{_key}%" from "YAML-MOB-%{_category}%"
+          set {MOB::%{_category}%::%{_id}%::%{_attribute}%::%{_key}%} to {_value}
   unload yaml "YAML-MOB"
   unload yaml "YAML-MOB-ZOMBIE"
 
@@ -112,6 +114,7 @@ function config_load(world: world):
   set {HOTBAR_SLOTS::*} to 0,1,2,3,4,5,6,7 and 8
   set {GAME::STATUS} to "WAITING_FOR_START"
   set {NaN} to -999
+  set {EQUIPMENT::CATEGORY::*} to "HELMET", "LEGGING", "BOOT", and "CHESTPLATE"
 
   # Initialize players. TODO : to be triggered when game starts
   loop all players:

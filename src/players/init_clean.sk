@@ -1,6 +1,8 @@
 function player_init():
   loop all players:
     set {_p} to loop-value
+    execute console command "/mvtp %{_p}% flat_world"
+    execute console command "/mv confirm"
     player_clean({_p})
     player_store_stat_set({_p}, "ATTACK", 3)
     player_store_stat_set({_p}, "POWER", 3)

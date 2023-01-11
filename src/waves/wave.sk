@@ -44,12 +44,11 @@ function wave_start(waveNumber: number):
   game_store_wave_set_current_timer(0)
   load yaml "plugins/Skript/scripts/fort-lisa/config/waves/%{_waveNumber}%.yml" as "YAML-WAVE"
   loop node keys "MOBS" of "YAML-WAVE":
-    set {WAVE::CURRENT} to {_waveNumber}
-    add 1 to {WAVE::PREVIOUS}
-    set {_category} to loop-key
-    set {_id} to yaml value "MOBS.%{_category}%.ID" from "YAML-WAVE"
-    set {_amount} to yaml value "MOBS.%{_category}%.AMOUNT" from "YAML-WAVE"
-    set {_locationType} to yaml value "MOBS.%{_category}%.LOCATION" from "YAML-WAVE"
+    set {_categoryId::*} to loop-key split at "-"
+    set {_category} to first element of {_categoryId::*}
+    set {_id} to 2nd element of {_categoryId::*}
+    set {_amount} to yaml value "MOBS.%loop-key%.AMOUNT" from "YAML-WAVE"
+    set {_locationType} to yaml value "MOBS.%loop-key%.LOCATION" from "YAML-WAVE"
 
     loop {_amount} times:
       set {_location} to random element of {LOCATION::SPAWN::%{_locationType}%::*}

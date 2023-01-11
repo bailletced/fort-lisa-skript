@@ -25,13 +25,13 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/mage/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/store/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/location/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/staffs/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/location/":
@@ -43,16 +43,16 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/action/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/bestiary/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/ai/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/ai/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/bestiary/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/store/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/action/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/action/":
