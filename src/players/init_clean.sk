@@ -2,6 +2,7 @@ function player_init():
   loop all players:
     set {_p} to loop-value
     execute console command "/mvtp %{_p}% flat_world"
+    wait 10 ticks
     execute console command "/mv confirm"
     player_clean({_p})
     player_store_stat_set({_p}, "ATTACK", 3)
