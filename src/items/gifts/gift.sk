@@ -1,0 +1,6 @@
+#Give a skill to the player
+function gift_give(p: player, category: text, id: text) :: item:
+  set {_gift} to item_create({_p}, "GIFT", {_category}, {_id})
+  set {_gift} to item_nbt_set_stat({_gift}, "TIER", {GIFT::%{_category}%::%{_id}%::TIER})
+  player_store_gift_give({_p}, {_gift})
+  return {_gift}

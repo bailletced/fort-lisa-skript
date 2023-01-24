@@ -136,3 +136,16 @@ function test_item_item(p: player):
     assert if {_power} is {WEAPON::STAFF::LIMB_OF_WISDOM::POWER} with message "power should be %{WEAPON::STAFF::LIMB_OF_WISDOM::POWER}%. Got %{_power}%"
     assert if "%{_powerMultiplier}%" is "%{WEAPON::STAFF::LIMB_OF_WISDOM::POWER_MULTIPLIER}%" with message "powerMultiplier should be %{WEAPON::STAFF::LIMB_OF_WISDOM::POWER_MULTIPLIER}%. Got %{_powerMultiplier}%"
     assert if the line 2 of lore of {_item} contains "%{_finalPower}%" with message "lore should contain a final power of %{_finalPower}%. Got %line 2 of lore of {_item}%"
+
+    it "Test item nbt list":
+      set {_item} to item_create({_p}, "WEAPON", "STAFF", "TEST")
+      set {_list::*} to "toto" and "tata"
+      set {_item} to item_nbt_set_list({_item}, "ATTRIBUTE", {_list::*})
+      
+      set {_listRes::*} to item_nbt_get_list({_item}, "ATTRIBUTE")
+      set {_issetListRes} to item_nbt_isset_list({_item}, "ATTRIBUTE")
+      set {_issetFake} to item_nbt_isset_list({_item}, "FAKE")
+
+      assert if size of {_listRes::*} is size of {_list::*} with message "{_listRes::*} should be %{_list::*}%. Got %{_listRes::*}%"
+      assert if {_issetListRes} is true with message "{_issetListRes} should be true. Got %{_issetListRes}%"
+      assert if {_issetFake} is false with message "{_issetFake} should be false. Got %{_issetFake}%"

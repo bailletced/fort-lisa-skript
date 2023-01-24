@@ -4,6 +4,7 @@ function config_load(world: world):
   delete {STAT::*}
   set {STAT::WEAPON::*} to yaml list "WEAPON" from "YAML-STATS"
   set {STAT::SKILL::*} to yaml list "SKILL" from "YAML-STATS"
+  set {STAT::GIFT::*} to yaml list "GIFT" from "YAML-STATS"
   set {STAT::PLAYER::*} to yaml list "PLAYER" from "YAML-STATS"
   set {STAT::MOB::*} to yaml list "MOB" from "YAML-STATS"
   set {STAT::NPC::*} to yaml list "NPC" from "YAML-STATS"
@@ -13,6 +14,11 @@ function config_load(world: world):
     set {STAT::%loop-value%::ICON} to yaml value "ALL.%loop-value%.ICON" from "YAML-STATS"
     set {STAT::%loop-value%::COLOR} to yaml value "ALL.%loop-value%.COLOR" from "YAML-STATS"
   unload yaml "YAML-STATS"
+
+  #ATTRIBUTES
+  load yaml "plugins/Skript/scripts/fort-lisa/config/attributes.yml" as "YAML-ATTRIBUTES"
+  delete {ATTRIBUTE::*}
+  set {ATTRIBUTE::*} to yaml list "ATTRIBUTES" from "YAML-ATTRIBUTES"
 
   #SKILLS
   load yaml "plugins/Skript/scripts/fort-lisa/config/items/skills.yml" as "YAML-SKILLS"
@@ -81,7 +87,7 @@ function config_load(world: world):
     add {_location} to {LOCATION::CASTLE::ENTRANCE::*}
   unload yaml "YAML-LOCATION-DRAGONLAND"
 
-  # BLOCKS
+  #BLOCKS
   load yaml "plugins/Skript/scripts/fort-lisa/config/blocks/nocollision.yml" as "YAML-BLOCK-NOCOLLISION"
   delete {BLOCK::*}
   set {BLOCK::NOCOLLISION::*} to yaml list "NOCOLLISION" from "YAML-BLOCK-NOCOLLISION"
@@ -95,6 +101,18 @@ function config_load(world: world):
       set {_key} to loop-value-2
       set {NPC::%{_id}%::%{_key}%} to yaml value "%{_id}%.%{_key}%" from "YAML-NPC"
   unload yaml "YAML-NPC"
+
+  #GIFTS
+  delete {GIFT::*}
+  #MEMORY
+  load yaml "plugins/Skript/scripts/fort-lisa/config/items/gifts/memory.yml" as "YAML-GIFT-MEMORY"
+  loop node keys "" from "YAML-GIFT-MEMORY":
+    set {_id} to loop-value
+    add {_id} to {GIFT::MEMORY::ID::*}
+    set {GIFT::MEMORY::%{_id}%::ITEM} to yaml value "%{_id}%.ITEM" from "YAML-GIFT-MEMORY" parsed as item
+    set {GIFT::MEMORY::%{_id}%::TIER} to yaml value "%{_id}%.TIER" from "YAML-GIFT-MEMORY"
+    loop node keys "%{_id}%.STATS" from "YAML-GIFT-MEMORY":
+      set {GIFT::MEMORY::%{_id}%::%loop-key-2%} to yaml value "%{_id}%.STATS.%loop-key-2%" from "YAML-GIFT-MEMORY"
 
   #UTILITIES
   load yaml "plugins/Skript/scripts/fort-lisa/config/items/utilities.yml" as "YAML-UTILITIES"

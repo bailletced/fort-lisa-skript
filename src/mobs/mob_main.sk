@@ -14,7 +14,6 @@ function mob_set_equipments(mob: entity):
   set {_category} to entity_nbt_get_tag({_mob}, "CATEGORY")
   set {_id} to entity_nbt_get_tag({_mob}, "ID")
   loop {EQUIPMENT::CATEGORY::*}:
-    broadcast "%{MOB::%{_category}%::%{_id}%::EQUIPMENT::%loop-value%}% %loop-value%"
     if {MOB::%{_category}%::%{_id}%::EQUIPMENT::%loop-value%} is set:
       equip {_mob} with {MOB::%{_category}%::%{_id}%::EQUIPMENT::%loop-value%} parsed as item
 

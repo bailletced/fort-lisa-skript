@@ -17,7 +17,6 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
             player_store_stat_set({_p}, arg-4, arg-5 parsed as number)
         else if arg-3 is "get":
           set {_stat} to player_store_stat_get({_p}, arg-4)
-          broadcast "%arg-4% %{_stat}%"
       else if arg-2 is "init":
         player_init()
       else if arg-2 is "clean":
@@ -32,6 +31,11 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
       set {_category} to arg-2
       set {_id} to arg-3
       item_give(player, "SKILL", {_category}, {_id})
+    
+    else if arg-1 is "gift":
+      set {_category} to arg-2
+      set {_id} to arg-3
+      item_give(player, "GIFT", {_category}, {_id})
 
     else if arg-1 is "settings":
       if arg-2 is "INGAME":
@@ -69,17 +73,18 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
         test_mob_main(player)
 
 on tab complete of "/admin":
-  set tab completions for position 1 to "init", "hmr", "stat", "player", "weapon", "skill", "settings", "game" and "test"
+  set tab completions for position 1 to "init", "hmr", "stat", "player", "weapon", "skill", "settings", "game", "gift" and "test"
 
   if tab arg-1 is "hmr":
     set tab completions for position 2 to "reset"
 
   else if tab arg-1 is "player":
     set tab completions for position 2 to "stat", "clean" and "init"
-    if tab arg-2 is "stat":
-      set tab completions for position 3 to "get" and "set"
-      if tab arg-3 is set:
-        set tab completions for position 4 to {STAT::PLAYER::*}
+      
+  else if tab arg-1 is "stat":
+    set tab completions for position 2 to "get" and "set"
+    if tab arg-2 is set:
+      set tab completions for position 3 to {STAT::PLAYER::*}
   
   else if tab arg-1 is "weapon":
     set tab completions for position 2 to {WEAPON::CATEGORY::*}
@@ -94,6 +99,13 @@ on tab complete of "/admin":
       set {_skills::*} to {SKILL::%tab arg-2%::*}
       remove "TEST" from {_skills::*}
       set tab completions for position 3 to {_skills::*}
+
+  else if tab arg-1 is "gift":
+    set tab completions for position 2 to "MEMORY", "WILL" and "INTELLECT"
+    
+    if tab arg-2 is set:
+      set {_id::*} to {GIFT::%tab arg-2%::ID::*}
+      set tab completions for position 3 to {_id::*}
   
   else if tab arg-1 is "settings":
     set tab completions for position 2 to "INGAME"

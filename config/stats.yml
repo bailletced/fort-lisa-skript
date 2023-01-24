@@ -86,6 +86,17 @@ SKILL:
   - "COOLDOWN"
   - "DURATION"
 
+GIFT:
+  - "ATTACK"
+  - "POWER"
+  - "MANA"
+  - "MANA_REGEN"
+  - "HEALTH"
+  - "HEALTH_REGEN"
+  - "DEFENCE"
+  - "MR"
+  - "COOLDOWN"
+
 MOB:
   - "HEALTH"
   - "DEFENCE"

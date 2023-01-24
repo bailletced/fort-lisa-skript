@@ -1,0 +1,5 @@
+function player_store_gift_give(p: player, gift: item):
+  set {_category} to item_nbt_get_tag({_gift}, "CATEGORY")
+  set {_level} to item_nbt_get_stat({_gift}, "TIER")
+  add {_gift} to {players::%{_p}%::gift::%{_category}%::%{_level}%::*}
+  give 1 of {_gift} to {_p}

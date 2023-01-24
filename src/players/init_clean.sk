@@ -17,7 +17,7 @@ function player_init():
     set health of {_p} to 20
     clear inventory of {_p}
     # Listeners
-    skill_give({_p}, "MAGE", "DRAGON_BREATH")
+    skill_give({_p}, "GENERAL", "DRAGON_BREATH")
     item_give({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM")
     player_listener_mana({_p})
     set gamemode of {_p} to adventure
