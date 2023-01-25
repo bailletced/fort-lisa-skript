@@ -26,11 +26,20 @@ SKILL:
     DRAGON_BREATH:
       TITLE: "Le souffle du dragon"
       LORE: "Le souffle du dragon repousse les ennemis avant d'infliger des dégâts en bout de course, infligeant {_POWER} dans un rayon de {_RADIUS}"
-GIFT:
-  MEMORY:
+MEMORY:
+  GENERAL:
     DAMAGE_1:
-      TITLE: "Rune offensive I"
+      TITLE: "Rune offensive"
       LORE: "Octroie {_ATTACK} et {_POWER}"
+WILL:
+  GENERAL:
+    DRAGON_BREATH:
+      TITLE: "Rune de volonté"
+      LORE: "Octroie le souffle du dragon"
+ATTRIBUTE:
+  RADIUS: "AOE"
+  RANGE: "Portée"
+  PROJECTILE: "Projectile"
 UTILITY:
   MAIN:
     CD:

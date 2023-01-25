@@ -11,12 +11,10 @@ function item_stat_initialize(p: player, type: text, item: item) :: item:
   set {_item} to item_nbt_set_stat({_item}, "CD_SPECIAL", 0)
   return {_item}
 
-function item_attribute_initialize(p: player, type: text, item: item):
+function item_attribute_initialize(p: player, item: item) :: item:
   set {_category} to item_nbt_get_tag({_item}, "CATEGORY")
   set {_id} to item_nbt_get_tag({_item}, "ID")
-  loop {ATTRIBUTE::*}:
-    set {_attribute} to loop-value
-    set {_item} to item_nbt_set_tag({_item}, "ATTRIBUTE.%{_attribute}%", {_value})
+  set {_item} to item_nbt_set_list({_item}, "ATTRIBUTE", {SKILL::%{_category}%::%{_id}%::ATTRIBUTE::*})
   return {_item}
 
 function item_create(p: player, type: text, category: text, id: text) :: item:
@@ -27,6 +25,7 @@ function item_create(p: player, type: text, category: text, id: text) :: item:
   set {_item} to item_nbt_set_tag({_item}, "ID", {_id})
   set {_item} to item_nbt_set_tag({_item}, "UUID", {_uuid})
   set {_item} to item_stat_initialize({_p}, {_type}, {_item})
+  set {_item} to item_attribute_initialize({_p}, {_item})
   set {_item} to i18n_item({_p}, {_item})
   return {_item}
 
@@ -39,7 +38,7 @@ function item_give(p: player, type: text, category: text, id: text):
     weapon_give({_p}, {_category}, {_id})
   else if {_type} is "SKILL":
     skill_give({_p}, {_category}, {_id})
-  else if {_type} is "GIFT":
-    gift_give({_p}, {_category}, {_id})
+  else if "WILL", "INTELLECT" and "MEMORY" contains {_type}:
+    gift_give({_p}, {_type}, {_category}, {_id})
   else:
     error("ITEM GIVE ERROR : %{_type}% NOT FOUND")

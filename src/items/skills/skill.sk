@@ -6,7 +6,7 @@ function skill_give(p: player, category: text, id: text) :: item:
   skill_mana({_p}, {_skill})
   return {_skill}
 
-function skill_cast(p: player, skill: item):
+function skill_cast(p: player, skill: item) :: boolean:
   set {_canCast} to true
   set {_category} to item_nbt_get_tag({_skill}, "CATEGORY")
   set {_requiredMana} to item_nbt_get_stat({_skill}, "MANA")
@@ -38,6 +38,7 @@ function skill_cast(p: player, skill: item):
     # CAST THE SKILL
     if {_category} is "GENERAL":
       general_cast({_p}, {_skill})
+  return {_canCast}
 
 # Handle whether skill is not in CD
 function skill_cooldown(p: player, skill: item):

@@ -10,6 +10,10 @@ GENERAL:
       MANA: 70
   DRAGON_BREATH:
     ITEM: allium
+    ATTRIBUTES:
+      - RADIUS
+      - RANGE
+      - PROJECTILE
     STATS:
       POWER: 10
       POWER_MULTIPLIER: 0.7

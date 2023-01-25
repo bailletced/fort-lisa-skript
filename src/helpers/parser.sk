@@ -1,0 +1,17 @@
+function parser_tier(tier: number) :: text:
+  if {_tier} is 1:
+    return "I"
+  else if {_tier} is 2:
+    return "II"
+  else if {_tier} is 3:
+    return "III"
+  else if {_tier} is 4:
+    return "IV"
+  else if {_tier} is 5:
+    return "V"
+  else if {_tier} is 6:
+    return "VI"
+  else if {_tier} is 7:
+    return "VII"
+  else:
+    return ""
