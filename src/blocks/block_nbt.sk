@@ -1,0 +1,18 @@
+function block_nbt_get_tag(block: block, key: text) :: text:
+  set {_res} to string tag "custom;%{_key}%" of nbt compound of {_block}
+  return {_res}
+
+function block_nbt_set_tag(block: block, key: text, value: text):
+  set {_nbt} to nbt compound of {_block}
+  set tag "custom;%{_key}%" of {_nbt} to {_value}
+
+function block_nbt_set_tag_native(block: block, value: text):
+  add nbt compound of {_value} to nbt compound of {_block}
+
+function block_nbt_set_stat(block: block, key: text, value: number):
+  set {_nbt} to nbt compound of {_block}
+  set float tag "custom;%{_key}%" of {_nbt} to {_value}
+
+function block_nbt_get_stat(block: block, key: text) :: number:
+  set {_res} to float tag "custom;%{_key}%" of nbt compound of {_block}
+  return {_res}

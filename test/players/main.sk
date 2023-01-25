@@ -7,6 +7,7 @@ function test_player_store(p: player):
   test_players_store_stat({_p})
   test_players_store_weapon({_p})
   test_players_store_skill({_p})
+  test_players_store_inventory({_p})
 
 function test_player_action(p: player):
   test_player_action_damage({_p})

@@ -1,0 +1,15 @@
+function player_store_inventory_backup(p: player):
+  loop all items in inventory of {_p}:
+    set {_item} to loop-value
+    add loop-value to {players::%{_p}%::inventory::items::*}
+  clear inventory of {_p}
+
+function player_store_inventory_restore(p: player):
+  loop {players::%{_p}%::inventory::items::*}:
+    set {_item} to loop-value
+    give {_item} to {_p}
+  delete {players::%{_p}%::inventory::items::*}
+
+function player_store_inventory_items_count(p: player) :: number:
+  return size of {players::%{_p}%::inventory::items::*}
+  

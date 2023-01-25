@@ -1,3 +1,13 @@
-function gui_gift(p: player):
-  # set {_name} to i18n_get({_p}, "GUI.GIFT.EQUIPMENT.TITLE")
-  create a gui with anvil inventory named {_name}:
+function gui_gift_open(p: player, gui: block):
+  set {_id} to block_nbt_get_tag({_gui}, "ID")
+  if {_id} is "ALTAR":
+    gui_gift_altar_initial({_p})
+
+function gui_gift_altar_initial(p: player):
+  set {_name} to i18n({_p}, "GUI.GIFT.ALTAR.INITIAL.TITLE")
+  set {_unavailableSlot} to {UTILITY::GUI::UNAVAILABLE::ITEM}
+  set {_unavailableSlotName} to i18n({_p}, "UTILITY.GUI.UNAVAILABLE.TITLE")
+  broadcast "%{_unavailableSlot}%"
+  create a gui with virtual chest inventory with 1 row named {_name} and shape "xxxx1xxxx":
+    make gui slot "x" with {_unavailableSlot} named {_unavailableSlotName}
+  open the last gui to {_p}

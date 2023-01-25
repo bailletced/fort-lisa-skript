@@ -40,9 +40,17 @@ ATTRIBUTE:
   RADIUS: "AOE"
   RANGE: "Portée"
   PROJECTILE: "Projectile"
+GUI:
+  GIFT:
+    ALTAR:
+      INITIAL:
+        TITLE: "Equipement / Arme"
 UTILITY:
   MAIN:
     CD:
       TITLE: "Cooldown"
     NOMANA:
       TITLE: "Pas assez de mana"
+  GUI:
+    UNAVAILABLE:
+      TITLE: "Slot non disponible"

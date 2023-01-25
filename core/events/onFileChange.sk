@@ -1,3 +1,6 @@
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/blocks/":
+   reload script file fileManager_getRelativePath(event-path)
+
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/":
    reload script file fileManager_getRelativePath(event-path)
 

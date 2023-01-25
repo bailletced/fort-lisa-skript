@@ -92,6 +92,20 @@ function config_load(world: world):
   load yaml "plugins/Skript/scripts/fort-lisa/config/blocks/nocollision.yml" as "YAML-BLOCK-NOCOLLISION"
   delete {BLOCK::*}
   set {BLOCK::NOCOLLISION::*} to yaml list "NOCOLLISION" from "YAML-BLOCK-NOCOLLISION"
+  unload yaml "YAML-BLOCK-NOCOLLISION"
+  
+  #GUIS
+  load yaml "plugins/Skript/scripts/fort-lisa/config/blocks/guis.yml" as "YAML-GUIS"
+  delete {GUI::*}
+  loop node keys "" from "YAML-GUIS":
+    set {_category} to loop-value
+    add {_category} to {GUI::CATEGORY::*}
+    loop node keys "%{_category}%" from "YAML-GUIS":
+      set {_id} to loop-value-2
+      add {_id} to {GUI::%{_category}%::ID::*}
+      set {GUI::%{_category}%::%{_id}%::ITEM} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-GUIS" parsed as item
+  unload yaml "YAML-GUIS"
+
 
   #NPCS
   load yaml "plugins/Skript/scripts/fort-lisa/config/npcs.yml" as "YAML-NPC"
@@ -134,8 +148,10 @@ function config_load(world: world):
   load yaml "plugins/Skript/scripts/fort-lisa/config/items/utilities.yml" as "YAML-UTILITIES"
   delete {UTILITY::*}
   loop yaml node keys "" from "YAML-UTILITIES":
-    set {_id} to loop-value
-    set {UTILITY::MAIN::%{_id}%::ITEM} to yaml value "%{_id}%.ITEM" from "YAML-UTILITIES" parsed as item
+    set {_category} to loop-value
+    loop yaml node keys "%{_category}%" from "YAML-UTILITIES":
+      set {_id} to loop-value-2
+      set {UTILITY::%{_category}%::%{_id}%::ITEM} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-UTILITIES" parsed as item
   unload yaml "YAML-UTILITIES"
 
   #LANGS
