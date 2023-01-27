@@ -1,0 +1,13 @@
+function gui_open(p: player, category: text, id: text):
+  if {_category} is "GIFT":
+    gui_gift_open({_p}, {_id})
+
+function gui_move_to_inventory(p: player, guiInventory: inventory, slot: number):
+  set {_guiId} to player_store_gui_get_last({_p})
+  if {_guiId} contains "GIFT":
+    gui_gift_move_to_inventory({_p}, {_guiInventory}, {_slot})
+
+function gui_move_to_gui(p: player, guiInventory: inventory, slot: number):
+  set {_guiId} to player_store_gui_get_last({_p})
+  if {_guiId} contains "GIFT":
+    gui_gift_move_to_gui({_p}, {_guiInventory}, {_slot})

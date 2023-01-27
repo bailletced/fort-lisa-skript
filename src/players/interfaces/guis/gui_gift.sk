@@ -1,13 +1,45 @@
-function gui_gift_open(p: player, gui: block):
-  set {_id} to block_nbt_get_tag({_gui}, "ID")
-  if {_id} is "ALTAR":
+function gui_gift_open(p: player, id: text):
+  if {_id} is "INITIAL":
     gui_gift_altar_initial({_p})
 
+function gui_gift_move_to_inventory(p: player, guiInventory: inventory, slot: number):
+  set {_guiId} to player_store_gui_get_last({_p})
+  if {_guiId} contains "INITIAL":
+    if {_slot} is 4:
+      player_store_gui_delete_slot({_p}, {_guiId}, {_slot})
+      set {_item} to slot {_slot} of {_guiInventory}
+      give {_item} to {_p}
+      set slot {_slot} of {_guiInventory} to air
+
+function gui_gift_move_to_gui(p: player, guiInventory: inventory, slot: number):
+  set {_guiId} to player_store_gui_get_last({_p})
+  if {_guiId} contains "INITIAL": 
+    set {_item} to slot {_slot} of inventory of {_p}
+    set {_type} to item_nbt_get_tag({_item}, "TYPE")
+    if "WEAPON" and "EQUIPMENT" contains {_type}:
+      player_store_gui_set_slot({_p}, {_guiId}, {_slot}, {_item})
+      set slot 4 of {_guiInventory} to {_item}
+      set slot {_slot} of inventory of {_p} to air
+      gui_gift_altar_consecrate({_p})
+
 function gui_gift_altar_initial(p: player):
+  player_store_gui_add({_p}, "GIFT.INITIAL")
   set {_name} to i18n({_p}, "GUI.GIFT.ALTAR.INITIAL.TITLE")
   set {_unavailableSlot} to {UTILITY::GUI::UNAVAILABLE::ITEM}
   set {_unavailableSlotName} to i18n({_p}, "UTILITY.GUI.UNAVAILABLE.TITLE")
-  broadcast "%{_unavailableSlot}%"
+  player_store_inventory_backup({_p})
+  player_store_inventory_filter_types({_p}, ("WILL" and "WEAPON"))
   create a gui with virtual chest inventory with 1 row named {_name} and shape "xxxx1xxxx":
-    make gui slot "x" with {_unavailableSlot} named {_unavailableSlotName}
+    make gui slot "x" with {_unavailableSlot} named {_unavailableSlotName}     
+  open the last gui to {_p}
+
+function gui_gift_altar_consecrate(p: player):
+  player_store_gui_add({_p}, "GIFT.CONSECRATE")
+  set {_name} to i18n({_p}, "GUI.GIFT.ALTAR.CONSECRATE.TITLE")
+  set {_unavailableSlot} to {UTILITY::GUI::UNAVAILABLE::ITEM}
+  set {_unavailableSlotName} to i18n({_p}, "UTILITY.GUI.UNAVAILABLE.TITLE")
+  # player_store_inventory_backup({_p})
+  # player_store_inventory_filter_types({_p}, ("WILL" and "WEAPON"))
+  create a gui with virtual chest inventory with 2 row named {_name} and shape "xxxx1xxxx":
+    make gui slot "x" with {_unavailableSlot} named {_unavailableSlotName}     
   open the last gui to {_p}

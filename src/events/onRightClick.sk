@@ -7,4 +7,8 @@ on right click:
     if block is set:
       set {_type} to block_nbt_get_tag(block, "TYPE")
       if {_type} is "GUI":
-        gui_open({_p}, block)
+        if player_store_gui_count({_p}) is 0:
+          set {_category} to block_nbt_get_tag(block, "CATEGORY")
+          set {_id} to block_nbt_get_tag(block, "ID")
+          gui_open({_p}, {_category}, {_id})
+          cancel event

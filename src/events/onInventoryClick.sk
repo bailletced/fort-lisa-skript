@@ -1,0 +1,12 @@
+on inventory click:
+  set {_p} to event-player
+  set {_item} to event-item
+  set {_slot} to index of event-slot
+  if player_store_gui_count({_p}) > 0:
+    cancel event
+    set {_guiInventory} to top inventory of {_p}
+    if {_item} is set:
+      if event-inventory is inventory of {_p}:
+        gui_move_to_gui({_p}, {_guiInventory}, {_slot})
+      else:
+        gui_move_to_inventory({_p}, {_guiInventory}, {_slot})

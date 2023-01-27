@@ -19,7 +19,7 @@ WEAPON:
       TITLE: "L'Abattis de Sagesse"
       LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE}, rayon {_RADIUS} et infligeant {_POWER}"
 SKILL:
-  GENERAL:
+  TIER_1:
     TEST:
       TITLE: "Le souffle du dragon"
       LORE: "Le souffle du dragon repousse les ennemis avant d'infliger des dégâts en bout de course, infligeant {_POWER} dans un rayon de {_RADIUS}"
@@ -27,12 +27,12 @@ SKILL:
       TITLE: "Le souffle du dragon"
       LORE: "Le souffle du dragon repousse les ennemis avant d'infliger des dégâts en bout de course, infligeant {_POWER} dans un rayon de {_RADIUS}"
 MEMORY:
-  GENERAL:
+  TIER_1:
     DAMAGE_1:
       TITLE: "Rune offensive"
       LORE: "Octroie {_ATTACK} et {_POWER}"
 WILL:
-  GENERAL:
+  TIER_1:
     DRAGON_BREATH:
       TITLE: "Rune de volonté"
       LORE: "Octroie le souffle du dragon"
@@ -45,6 +45,8 @@ GUI:
     ALTAR:
       INITIAL:
         TITLE: "Equipement / Arme"
+      CONSECRATE:
+        TITLE: "Consacrer des dons"
 UTILITY:
   MAIN:
     CD:

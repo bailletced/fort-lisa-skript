@@ -36,7 +36,7 @@ function skill_cast(p: player, skill: item) :: boolean:
     skill_cooldown({_p}, {_skill})
 
     # CAST THE SKILL
-    if {_category} is "GENERAL":
+    if {_category} is "TIER_1":
       general_cast({_p}, {_skill})
   return {_canCast}
 

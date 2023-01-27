@@ -35,7 +35,7 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
     else if arg-1 is "gift":
       set {_type} to arg-2
       set {_id} to arg-3
-      item_give(player, {_type}, "GENERAL", {_id})
+      item_give(player, {_type}, "TIER_1", {_id})
 
     else if arg-1 is "gui":
       set {_category} to arg-2

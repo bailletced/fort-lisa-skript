@@ -5,8 +5,3 @@ function gui_summon(category: text, id: text, location: location):
   block_nbt_set_tag({_block}, "TYPE", "GUI")
   block_nbt_set_tag({_block}, "CATEGORY", {_category})
   block_nbt_set_tag({_block}, "ID", {_id})
-
-function gui_open(p: player, block: block):
-  set {_category} to block_nbt_get_tag({_block}, "CATEGORY")
-  if {_category} is "GIFT":
-    gui_gift_open({_p}, {_block})
