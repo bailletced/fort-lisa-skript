@@ -9,9 +9,16 @@ STAFF:
       RADIUS: 1.5
   LIMB_OF_WISDOM:
     ITEM: carrot on a stick
+    GIFTS:
+      WILL_MAX: 0
+      INTELLECT_MAX: 1
+      MEMORY_MAX: 0
     STATS:
       POWER: 10
       POWER_MULTIPLIER: 0.2
       COOLDOWN: 30
       RANGE: 5
       RADIUS: 1.5
+    ATTRIBUTES:
+      - RADIUS
+      - PROJECTILE

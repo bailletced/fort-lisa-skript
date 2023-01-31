@@ -1,4 +1,14 @@
-TIER_1:
-  DRAGON_BREATH:
-    TIER: 1
-    ITEM: Purple Dye
+DRAGON_BREATH:
+  TIER: 1
+  ITEM: allium
+  ATTRIBUTES:
+    - RADIUS
+    - RANGE
+    - PROJECTILE
+  STATS:
+    POWER: 10
+    POWER_MULTIPLIER: 0.7
+    COOLDOWN: 300
+    RANGE: 12
+    RADIUS: 2
+    MANA: 100

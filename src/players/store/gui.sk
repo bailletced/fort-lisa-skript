@@ -1,6 +1,11 @@
 function player_store_gui_get_all(p: player) :: texts:
   return {players::%{_p}%::guis::*}
 
+function player_store_gui_isset(p: player, gui: text) :: boolean:
+  if {players::%{_p}%::guis::*} contains {_gui}:
+    return true
+  return false
+
 function player_store_gui_get_first(p: player) :: text:
   return first element of {players::%{_p}%::guis::*}
 

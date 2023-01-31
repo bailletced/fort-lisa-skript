@@ -3,7 +3,7 @@ function i18n(p: player, path: text, color: text = "") :: text:
   set {_lang} to player_store_setting_get({_p}, "lang")
   if {_lang} is not set:
     set {_lang} to {LANG_FALLBACK}
-  set {_text} to yaml value {_path} in upper case from "YAML-LANG-%{_lang}%"
-  if {_text} is set:
+  if yaml path {_path} in "YAML-LANG-%{_lang}%" exists:
+    set {_text} to yaml value {_path} in upper case from "YAML-LANG-%{_lang}%"
     return "%{_color}%%{_text}%"
   return ""

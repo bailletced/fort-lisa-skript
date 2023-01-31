@@ -1,7 +1,6 @@
-TIER_1:
-  DAMAGE_1:
-    ITEM: orange wool
-    TIER: 1
-    STATS:
-      ATTACK: 5
-      POWER: 5
+DAMAGE_1:
+  ITEM: orange wool
+  TIER: 1
+  STATS:
+    ATTACK: 5
+    POWER: 5

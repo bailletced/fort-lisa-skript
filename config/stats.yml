@@ -13,7 +13,7 @@ ALL:
     COLOR: "§d"
   RANGE:
     ICON: "➝"
-    COLOR: "§e"
+    COLOR: "§f"
   RADIUS:
     ICON: "۞"
     COLOR: "§d"
@@ -86,7 +86,7 @@ SKILL:
   - "COOLDOWN"
   - "DURATION"
 
-MEMORY:
+GIFT:
   - "ATTACK"
   - "POWER"
   - "MANA"

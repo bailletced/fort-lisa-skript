@@ -20,7 +20,7 @@ function gui_gift_move_to_gui(p: player, guiInventory: inventory, slot: number):
       player_store_gui_set_slot({_p}, {_guiId}, {_slot}, {_item})
       set slot 4 of {_guiInventory} to {_item}
       set slot {_slot} of inventory of {_p} to air
-      gui_gift_altar_consecrate({_p})
+      gui_gift_altar_choose_category({_p}, {_item})
 
 function gui_gift_altar_initial(p: player):
   player_store_gui_add({_p}, "GIFT.INITIAL")
@@ -30,16 +30,31 @@ function gui_gift_altar_initial(p: player):
   player_store_inventory_backup({_p})
   player_store_inventory_filter_types({_p}, ("WILL" and "WEAPON"))
   create a gui with virtual chest inventory with 1 row named {_name} and shape "xxxx1xxxx":
-    make gui slot "x" with {_unavailableSlot} named {_unavailableSlotName}     
+    make gui slot "x" with {_unavailableSlot} named {_unavailableSlotName}
+    run on gui close:
+      if player_store_gui_isset({_p}, "GIFT.CHOOSE_CATEGORY") is false:
+        player_store_gui_delete({_p}, "GIFT.INITIAL")
+        clear inventory of {_p}
+        player_store_inventory_restore({_p})    
   open the last gui to {_p}
 
-function gui_gift_altar_consecrate(p: player):
-  player_store_gui_add({_p}, "GIFT.CONSECRATE")
-  set {_name} to i18n({_p}, "GUI.GIFT.ALTAR.CONSECRATE.TITLE")
+function gui_gift_altar_choose_category(p: player, item: item):
+  player_store_gui_add({_p}, "GIFT.CHOOSE_CATEGORY")
+  set {_name} to i18n({_p}, "GUI.GIFT.ALTAR.CHOOSE_CATEGORY.TITLE")
   set {_unavailableSlot} to {UTILITY::GUI::UNAVAILABLE::ITEM}
   set {_unavailableSlotName} to i18n({_p}, "UTILITY.GUI.UNAVAILABLE.TITLE")
-  # player_store_inventory_backup({_p})
-  # player_store_inventory_filter_types({_p}, ("WILL" and "WEAPON"))
-  create a gui with virtual chest inventory with 2 row named {_name} and shape "xxxx1xxxx":
-    make gui slot "x" with {_unavailableSlot} named {_unavailableSlotName}     
+  
+  set {_willItem} to item_utility_gift_create({_p}, {_item}, "WILL")
+  set {_intellectItem} to item_utility_gift_create({_p}, {_item}, "INTELLECT")
+  set {_memoryItem} to item_utility_gift_create({_p}, {_item}, "MEMORY")
+  create a gui with brewing stand inventory named {_name}:
+    make gui slot 0 with {_memoryItem}
+    make gui slot 1 with {_willItem}
+    make gui slot 2 with {_intellectItem}
+    make gui slot 3 with {_item}
+    make gui slot 4 with {_unavailableSlot} named {_unavailableSlotName}
+    run on gui close:
+      player_store_gui_delete({_p}, "GIFT.CHOOSE_CATEGORY")
+      clear inventory of {_p}
+      player_store_inventory_restore({_p})
   open the last gui to {_p}

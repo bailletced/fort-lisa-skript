@@ -6,3 +6,12 @@ MAIN:
 GUI:
   UNAVAILABLE:
     ITEM: barrier
+GIFT:
+  MEMORY:
+    ITEM: yellow wool
+  INTELLECT:
+    ITEM: red wool
+  WILL:
+    ITEM: purple wool
+  UNAVAILABLE:
+    ITEM: barrier

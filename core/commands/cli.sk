@@ -33,9 +33,9 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
       item_give(player, "SKILL", {_category}, {_id})
     
     else if arg-1 is "gift":
-      set {_type} to arg-2
+      set {_category} to arg-2
       set {_id} to arg-3
-      item_give(player, {_type}, "TIER_1", {_id})
+      item_give(player, "GIFT", {_category}, {_id})
 
     else if arg-1 is "gui":
       set {_category} to arg-2
@@ -108,7 +108,7 @@ on tab complete of "/admin":
   else if tab arg-1 is "gift":
     set tab completions for position 2 to "MEMORY", "WILL" and "INTELLECT"
     if tab arg-2 is set:
-      set {_id::*} to {%tab arg-2%::ID::*}
+      set {_id::*} to {GIFT::%tab arg-2%::ID::*}
       set tab completions for position 3 to {_id::*}
 
   else if tab arg-1 is "gui":

@@ -1,8 +1,0 @@
-on inventory close:
-  set {_p} to event-player
-  # A gui is closing
-  if player_store_gui_count({_p}) is 1:
-    clear inventory of {_p}
-    player_store_inventory_restore({_p})
-    set {_gui} to player_store_gui_get_last({_p})
-    player_store_gui_delete({_p}, {_gui})
