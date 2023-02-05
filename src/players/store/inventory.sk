@@ -5,35 +5,43 @@ function player_store_inventory_backup(p: player):
   clear inventory of {_p}
 
 function player_store_inventory_restore(p: player):
+  broadcast "RESTORE %{players::%{_p}%::inventory::items::*}%"
   loop {players::%{_p}%::inventory::items::*}:
     set {_item} to loop-value
     give {_item} to {_p}
   delete {players::%{_p}%::inventory::items::*}
 
-function player_store_inventory_items_count(p: player) :: number:
+function player_store_inventory_count(p: player) :: number:
   return size of {players::%{_p}%::inventory::items::*}
 
-function player_store_inventory_filter_categories(p: player, categories: texts):
-  set {_index} to 0
-  clear inventory of {_p}
-  delete {_res::*}
-  loop {players::%{_p}%::inventory::items::*}:
-    set {_item} to loop-value
-    set {_category} to item_nbt_get_tag({_item}, "CATEGORY")
-    if {_categories::*} contains {_category}:
-      add {_item} to {_res::*}
-  loop {_res::*}:
-    set slot {_index} of {_p} to loop-value
-    add 1 to {_index}
+function player_store_inventory_remove(p: player, item: item):
+  remove {_item} from {players::%{_p}%::inventory::items::*}
 
-function player_store_inventory_filter_types(p: player, types: texts):
+function player_store_inventory_add(p: player, item: item):
+  add {_item} to {players::%{_p}%::inventory::items::*}
+
+function player_store_inventory_filter(p: player, types: texts = "", categories: texts = "", ids: texts = ""):
   set {_index} to 0
   clear inventory of {_p}
   delete {_res::*}
   loop {players::%{_p}%::inventory::items::*}:
+    set {_found} to false
     set {_item} to loop-value
-    set {_type} to item_nbt_get_tag({_item}, "TYPE")
-    if {_types::*} contains {_type}:
+
+    if {_types::*} is not "":
+      set {_type} to item_nbt_get_tag({_item}, "TYPE")
+      if {_types::*} contains {_type}:
+        set {_found} to true
+    if {_categories::*} is not "":
+      set {_category} to item_nbt_get_tag({_item}, "CATEGORY")
+      if {_categories::*} contains {_category}:
+        set {_found} to true
+    if {_ids::*} is not "":
+      set {_id} to item_nbt_get_tag({_item}, "ID")
+      if {_ids::*} contains {_id}:
+        set {_found} to true
+
+    if {_found} is true:
       add {_item} to {_res::*}
   loop {_res::*}:
     set slot {_index} of {_p} to loop-value

@@ -96,6 +96,7 @@ GIFT:
   - "DEFENCE"
   - "MR"
   - "COOLDOWN"
+  - "RANGE"
 
 MOB:
   - "HEALTH"

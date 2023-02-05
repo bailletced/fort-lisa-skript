@@ -52,3 +52,11 @@ function item_give(p: player, type: text, category: text, id: text):
     gift_give({_p}, {_type}, {_category}, {_id})
   else:
     error("ITEM GIVE ERROR : %{_type}% NOT FOUND")
+
+function item_merge_stats(source: item, destination: item) :: item:
+  loop {STAT::ALL::*}:
+    set {_stat} to loop-value
+    if item_nbt_isset_stat({_source}, {_stat}) is true:
+      set {_value} to item_nbt_get_stat({_source}, {_stat})
+      set {_destination} to item_nbt_add_stat({_destination}, {_stat}, {_value})
+  return {_destination}

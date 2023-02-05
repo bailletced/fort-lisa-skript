@@ -144,9 +144,20 @@ function config_load(world: world):
     loop node keys "%{_id}%.STATS" from "YAML-GIFT-WILL":
       set {GIFT::%{_category}%::%{_id}%::%loop-key-2%} to yaml value "%{_id}%.STATS.%loop-key-2%" from "YAML-GIFT-WILL"
     set {GIFT::%{_category}%::%{_id}%::ATTRIBUTE::*} to yaml list "%{_id}%.ATTRIBUTES" from "YAML-GIFT-WILL"
-
+  #INTELLECT
+  load yaml "plugins/Skript/scripts/fort-lisa/config/items/gifts/intellect.yml" as "YAML-GIFT-INTELLECT"
+  loop node keys "" from "YAML-GIFT-INTELLECT":
+    set {_category} to "INTELLECT"
+    set {_id} to loop-value
+    add {_id} to {GIFT::%{_category}%::ID::*}
+    set {GIFT::%{_category}%::%{_id}%::ITEM} to yaml value "%{_id}%.ITEM" from "YAML-GIFT-INTELLECT" parsed as item
+    set {GIFT::%{_category}%::%{_id}%::TIER} to yaml value "%{_id}%.TIER" from "YAML-GIFT-INTELLECT"
+    loop node keys "%{_id}%.STATS" from "YAML-GIFT-INTELLECT":
+      set {GIFT::%{_category}%::%{_id}%::%loop-key-2%} to yaml value "%{_id}%.STATS.%loop-key-2%" from "YAML-GIFT-INTELLECT"
+    set {GIFT::%{_category}%::%{_id}%::ATTRIBUTE::*} to yaml list "%{_id}%.ATTRIBUTES" from "YAML-GIFT-INTELLECT"
   unload yaml "YAML-GIFT-MEMORY"
   unload yaml "YAML-GIFT-WILL"
+  unload yaml "YAML-GIFT-INTELLECT"
 
   #UTILITIES
   load yaml "plugins/Skript/scripts/fort-lisa/config/items/utilities.yml" as "YAML-UTILITIES"

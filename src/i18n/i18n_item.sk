@@ -93,6 +93,8 @@ function i18n_item(p: player, it: item) :: item:
     set {_finalLore::*} to i18n_item_lore_to_list({_lore})
     set {_lores::*} to {_loreGifts::*}, {_loreAttributes} and {_finalLore::*}
     if first element of {_lores::*} is "":
+        set {_lores::*} to {_loreAttributes} and {_finalLore::*}
+    if first element of {_lores::*} is "":
         set {_lores::*} to {_finalLore::*}
     if {_lores::*} is not "":
         set lore of {_it} to {_lores::*}    

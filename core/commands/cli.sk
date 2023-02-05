@@ -127,6 +127,6 @@ on tab complete of "/admin":
   else if tab arg-1 is "test":
     set tab completions for position 2 to "items", "i18n", "player", "mob" and "all"
     if tab arg-2 is "items":
-      set tab completions for position 3 to "weapon", "skill" and "item"
+      set tab completions for position 3 to "weapon", "skill", "gift" and "item"
     else if tab arg-2 is "player":
       set tab completions for position 3 to "store", "action" and "stat"

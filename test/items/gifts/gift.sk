@@ -1,0 +1,15 @@
+function test_item_gift(p: player):
+  send "§5Testing items gift" to the console 
+  it "Test item gift consecrate":
+    set {_weapon} to item_create({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM")
+    set {_rangeGift} to item_create({_p}, "GIFT", "INTELLECT", "RANGE_1")
+    set {_giftIntellect::*} to item_nbt_get_list({_weapon}, "INTELLECT")
+    assert if size of {_giftIntellect::*} is 0 with message "{_boostedWeapon} should have 0 intellect gift. Got %size of {_giftIntellect::*}%"
+    
+    set {_boostedWeapon} to gift_consecrate({_p}, {_rangeGift}, {_weapon})
+    set {_range} to item_nbt_get_stat({_boostedWeapon}, "RANGE")
+    set {_giftIntellect::*} to item_nbt_get_list({_boostedWeapon}, "INTELLECT")
+    assert if {_range} is {WEAPON::STAFF::LIMB_OF_WISDOM::RANGE} + {GIFT::INTELLECT::RANGE_1::RANGE} with message "{_range} should be %{WEAPON::STAFF::LIMB_OF_WISDOM::RANGE} + {GIFT::INTELLECT::RANGE_1::RANGE}%. Got %{_range}%"
+    assert if size of {_giftIntellect::*} is 1 with message "{_boostedWeapon} should have 1 intellect gift. Got %size of {_giftIntellect::*}%"
+
+    

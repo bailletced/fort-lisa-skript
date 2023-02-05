@@ -1,4 +1,4 @@
-function test_item_item(p: player):
+function test_item_nbt(p: player):
   send "§5Testing items item" to the console 
   it "Test item get/set/isset stat":
     set {_equipment} to diamond sword

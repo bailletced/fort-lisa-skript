@@ -1,0 +1,19 @@
+function test_item_item(p: player):
+  send "§5Testing items item" to the console 
+  it "Test item merge stats":
+    set {_weapon} to item_create({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM")
+    set {_rangeGift} to item_create({_p}, "GIFT", "INTELLECT", "RANGE_1")
+    
+    set {_type1} to item_nbt_get_tag({_weapon}, "TYPE")
+    set {_type2} to item_nbt_get_tag({_rangeGift}, "TYPE")
+    set {_range1} to item_nbt_get_stat({_weapon}, "RANGE")
+    set {_range2} to item_nbt_get_stat({_rangeGift}, "RANGE")
+    assert if {_type1} is "WEAPON" with message "{_type1} should be WEAPON. Got %{_type1}%"
+    assert if {_type2} is "GIFT" with message "{_type2} should be GIFT. Got %{_type2}%"
+    assert if {_range1} is {WEAPON::STAFF::LIMB_OF_WISDOM::RANGE} with message "{_range1} should be %{WEAPON::STAFF::LIMB_OF_WISDOM::RANGE}%. Got %{_range1}%"
+    assert if {_range2} is {GIFT::INTELLECT::RANGE_1::RANGE} with message "{_range2} should be %{GIFT::INTELLECT::RANGE_1::RANGE}%. Got %{_range2}%"
+
+    set {_boostedWeapon} to item_merge_stats({_rangeGift}, {_weapon})
+    set {_range3} to item_nbt_get_stat({_boostedWeapon}, "RANGE")
+    assert if {_range3} is {WEAPON::STAFF::LIMB_OF_WISDOM::RANGE} + {GIFT::INTELLECT::RANGE_1::RANGE} with message "{_range3} should be %{WEAPON::STAFF::LIMB_OF_WISDOM::RANGE} + {GIFT::INTELLECT::RANGE_1::RANGE}%. Got %{_range3}%"
+

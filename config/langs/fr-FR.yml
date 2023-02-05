@@ -33,12 +33,15 @@ GIFT:
       TITLE: "Mémoire offensive"
       LORE: "Octroie {_ATTACK} et {_POWER}"
   WILL:
-    TITLE: "Volonté"
+    TITLE: "Don de Volonté"
     DRAGON_BREATH:
-      TITLE: "Rune de volonté"
+      TITLE: "Volonté : Souffle du dragon"
       LORE: "Octroie le souffle du dragon"
   INTELLECT:
     TITLE: "Intelligence"
+    RANGE_1:
+      TITLE: "Intelligence conceptuelle"
+      LORE: "Octroie {_RANGE} de portée supplémentaire sur l'équipement appliqué"
 ATTRIBUTE:
   RADIUS: "AOE"
   RANGE: "Portée"
@@ -50,6 +53,8 @@ GUI:
         TITLE: "Equipement / Arme"
       CHOOSE_CATEGORY:
         TITLE: "Fructifier les dons"
+      CONSECRATE:
+        TITLE: "Don : {_category}"
 UTILITY:
   MAIN:
     CD:

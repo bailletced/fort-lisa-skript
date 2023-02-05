@@ -34,6 +34,15 @@ function item_nbt_isset_list(it: item, key: text) :: boolean:
     return true
   return false
 
+function item_nbt_add_list(it: item, key: text, value: texts) :: item:
+  set {_nbt} to full nbt compound of {_it}
+  if item_nbt_isset_list({_it}, {_key}) is true:
+    set {_currList::*} to item_nbt_get_list({_it}, {_key})
+    set {_it} to item_nbt_set_list({_it}, {_key}, ({_currList::*} and {_value::*}))
+  else:
+    set {_it} to item_nbt_set_list({_it}, {_key}, {_value::*})
+  return {_it}
+
 function item_nbt_set_stat(it: item, key: text, value: number) :: item:
   set {_nbt} to full nbt compound of {_it}
   if {_value} is set:

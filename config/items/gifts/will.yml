@@ -3,8 +3,8 @@ DRAGON_BREATH:
   ITEM: allium
   ATTRIBUTES:
     - RADIUS
-    - RANGE
     - PROJECTILE
+    - RANGE
   STATS:
     POWER: 10
     POWER_MULTIPLIER: 0.7
