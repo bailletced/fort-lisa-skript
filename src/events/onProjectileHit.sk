@@ -2,11 +2,7 @@ on projectile hit:
   set {_projectile} to event-projectile
   set {_attackerType} to entity_nbt_get_tag({_projectile}, "ATTACKER_TYPE")
   if {_attackerType} is "PLAYER":
-    # set {_attacker} to entity_nbt_get_tag({_projectile}, "ATTACKER")
-    # set {_p} to all players where [name of player input name is {_attacker}]
     set {_p} to entity_nbt_get_tag({_projectile}, "ATTACKER") parsed as player
     set {_type} to entity_nbt_get_tag({_projectile}, "TYPE")
-    set {_category} to entity_nbt_get_tag({_projectile}, "CATEGORY")
-    set {_id} to entity_nbt_get_tag({_projectile}, "ID")
     if {_type} is "WEAPON":
-      weapon_hit({_p}, {_category}, {_id}, location of event-projectile)
+      weapon_hit({_p}, {_projectile})

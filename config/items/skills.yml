@@ -1,4 +1,4 @@
-TIER_1:
+STAFF:
   TEST:
     ITEM: dragon's breath
     STATS:
@@ -9,15 +9,21 @@ TIER_1:
       RADIUS: 5
       MANA: 70
   DRAGON_BREATH:
+    STATS:
+      POWER: 10
+      POWER_MULTIPLIER: 0.5
+      COOLDOWN: 30
+      RANGE: 5
+      RADIUS: 1.5
+      PROJECTILE_SPEED: 10
+      PROJECTILE_AMOUNT: 1
+HELMET:
+  DRAGON_BREATH:
     ITEM: allium
-    ATTRIBUTES:
-      - RADIUS
-      - RANGE
-      - PROJECTILE
     STATS:
       POWER: 10
       POWER_MULTIPLIER: 0.7
       COOLDOWN: 300
-      RANGE: 12
-      RADIUS: 2
+      RANGE: 8
+      RADIUS: 1.5
       MANA: 100

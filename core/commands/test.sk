@@ -106,4 +106,6 @@ command /toto:
     trigger:
         set {_world} to world of player
         if yaml file "plugins/Skript/scripts/fort-lisa/config/waves/2.yml" exists:
-            broadcast "I EXIST"
+            set {_test::*} to "3 + 5" split at " "
+            
+            broadcast "3 + 5*4 => %{_test::*}%"

@@ -1,0 +1,13 @@
+function player_stat_projectile(p: player, projectile: entity, stat: text) :: number:
+  set {_playerStat} to 0
+  set {_keyMultiplier} to "%{_stat}%_MULTIPLIER"
+  set {_statMultiplier} to entity_nbt_get_stat({_projectile}, {_keyMultiplier})
+  set {_projectileStat} to entity_nbt_get_stat({_projectile}, {_stat})
+
+  if {_statMultiplier} is not set:
+    set {_statMultiplier} to 1
+  if player_store_stat_isset({_p}, {_stat}) is true:
+    set {_playerStat} to player_store_stat_get({_p}, {_stat})
+  return {_projectileStat} + {_statMultiplier} * {_playerStat}
+
+  

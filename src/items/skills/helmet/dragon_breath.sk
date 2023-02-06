@@ -1,4 +1,4 @@
-function dragon_breath_cast(p: player, skill: item):
+function helmet_dragon_breath_cast(p: player, skill: item):
   set {_range} to player_stat_item({_p}, {_skill}, "RANGE")
   set {_radius} to player_stat_item({_p}, {_skill}, "RADIUS")
   set {_power} to player_stat_item({_p}, {_skill}, "POWER")

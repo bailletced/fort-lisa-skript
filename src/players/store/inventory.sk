@@ -5,7 +5,6 @@ function player_store_inventory_backup(p: player):
   clear inventory of {_p}
 
 function player_store_inventory_restore(p: player):
-  broadcast "RESTORE %{players::%{_p}%::inventory::items::*}%"
   loop {players::%{_p}%::inventory::items::*}:
     set {_item} to loop-value
     give {_item} to {_p}
@@ -27,18 +26,18 @@ function player_store_inventory_filter(p: player, types: texts = "", categories:
   loop {players::%{_p}%::inventory::items::*}:
     set {_found} to false
     set {_item} to loop-value
-
-    if {_types::*} is not "":
-      set {_type} to item_nbt_get_tag({_item}, "TYPE")
-      if {_types::*} contains {_type}:
-        set {_found} to true
-    if {_categories::*} is not "":
-      set {_category} to item_nbt_get_tag({_item}, "CATEGORY")
-      if {_categories::*} contains {_category}:
-        set {_found} to true
+    
     if {_ids::*} is not "":
       set {_id} to item_nbt_get_tag({_item}, "ID")
       if {_ids::*} contains {_id}:
+        set {_found} to true
+    else if {_categories::*} is not "":
+      set {_category} to item_nbt_get_tag({_item}, "CATEGORY")
+      if {_categories::*} contains {_category}:
+        set {_found} to true
+    else if {_types::*} is not "":
+      set {_type} to item_nbt_get_tag({_item}, "TYPE")
+      if {_types::*} contains {_type}:
         set {_found} to true
 
     if {_found} is true:

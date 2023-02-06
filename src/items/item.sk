@@ -60,3 +60,11 @@ function item_merge_stats(source: item, destination: item) :: item:
       set {_value} to item_nbt_get_stat({_source}, {_stat})
       set {_destination} to item_nbt_add_stat({_destination}, {_stat}, {_value})
   return {_destination}
+
+function item_merge_attributes(source: item, destination: item) :: item:
+  set {_attrs::*} to item_nbt_get_list({_source}, "ATTRIBUTE")
+  set {_destAttrs::*} to item_nbt_get_list({_destination}, "ATTRIBUTE")
+  loop {_attrs::*}:
+    if {_destAttrs::*} does not contain loop-value:
+      set {_destination} to item_nbt_add_list({_destination}, "ATTRIBUTE", loop-value)
+  return {_destination}

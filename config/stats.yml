@@ -53,6 +53,12 @@ ALL:
   HEALTH_REGEN:
     ICON: "۝"
     COLOR: "§c"
+  PROJECTILE_SPEED:
+    ICON: "۝"
+    COLOR: "§c"
+  PROJECTILE_AMOUNT:
+    ICON: "۝"
+    COLOR: "§c"
 
 PLAYER:
   - "HEALTH"
@@ -74,6 +80,8 @@ WEAPON:
   - "MANA"
   - "RADIUS"
   - "RANGE"
+  - PROJECTILE_SPEED
+  - PROJECTILE_AMOUNT
 
 SKILL:
   - "ATTACK"
@@ -85,6 +93,8 @@ SKILL:
   - "MANA"
   - "COOLDOWN"
   - "DURATION"
+  - PROJECTILE_SPEED
+  - PROJECTILE_AMOUNT
 
 GIFT:
   - "ATTACK"
@@ -97,6 +107,10 @@ GIFT:
   - "MR"
   - "COOLDOWN"
   - "RANGE"
+  - "RADIUS"
+  - "PROJECTILE"
+  - PROJECTILE_SPEED
+  - PROJECTILE_AMOUNT
 
 MOB:
   - "HEALTH"

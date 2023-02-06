@@ -16,3 +16,11 @@ function entity_nbt_set_stat(entity: entity, key: text, value: number):
 function entity_nbt_get_stat(entity: entity, key: text) :: number:
   set {_res} to float tag "custom;%{_key}%" of nbt compound of {_entity}
   return {_res}
+
+function entity_nbt_get_list(entity: entity, key: text) :: texts:
+  set {_res::*} to string list tag "custom;%{_key}%" of nbt compound of {_entity}
+  return {_res::*}
+
+function entity_nbt_set_list(entity: entity, key: text, value: texts):
+  set {_nbt} to full nbt compound of {_entity}
+  set string list tag "custom;%{_key}%" of {_nbt} to {_value::*}

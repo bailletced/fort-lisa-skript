@@ -17,15 +17,18 @@ WEAPON:
       LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE} infligeant {_POWER}."
     LIMB_OF_WISDOM:
       TITLE: "L'Abattis de Sagesse"
-      LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE}, rayon {_RADIUS} et infligeant {_POWER}"
+      LORE: "Projette une boule de portée {_RANGE} et infligeant {_POWER}"
 SKILL:
-  TIER_1:
+  HELMET:
     TEST:
       TITLE: "Le souffle du dragon"
       LORE: "Le souffle du dragon repousse les ennemis avant d'infliger des dégâts en bout de course, infligeant {_POWER} dans un rayon de {_RADIUS}"
     DRAGON_BREATH:
       TITLE: "Le souffle du dragon"
       LORE: "Le souffle du dragon repousse les ennemis avant d'infliger des dégâts en bout de course, infligeant {_POWER} dans un rayon de {_RADIUS}"
+  STAFF:
+    DRAGON_BREATH:
+      LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE}, rayon {_RADIUS} et infligeant {_POWER}"
 GIFT:
   MEMORY:
     TITLE: "Mémoire"
@@ -33,7 +36,7 @@ GIFT:
       TITLE: "Mémoire offensive"
       LORE: "Octroie {_ATTACK} et {_POWER}"
   WILL:
-    TITLE: "Don de Volonté"
+    TITLE: "Volonté"
     DRAGON_BREATH:
       TITLE: "Volonté : Souffle du dragon"
       LORE: "Octroie le souffle du dragon"

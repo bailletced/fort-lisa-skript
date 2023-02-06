@@ -22,18 +22,20 @@ function config_load(world: world):
 
   #SKILLS
   load yaml "plugins/Skript/scripts/fort-lisa/config/items/skills.yml" as "YAML-SKILLS"
+  load yaml "plugins/Skript/scripts/fort-lisa/config/items/gifts/will.yml" as "YAML-GIFT-WILL"
   delete {SKILL::*}
   loop yaml node keys "" of "YAML-SKILLS":
     set {_category} to loop-value
-    add {_category} to {SKILL::CATEGORY::*}
     loop yaml node keys "%{_category}%" of "YAML-SKILLS":
       set {_id} to loop-key-2
       add {_id} to {SKILL::%{_category}%::*}
       set {SKILL::%{_category}%::%{_id}%::ITEM} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-SKILLS" parsed as item
-      set {SKILL::%{_category}%::%{_id}%::ATTRIBUTE::*} to yaml list "%{_category}%.%{_id}%.ATTRIBUTES" from "YAML-SKILLS"
+      set {SKILL::%{_category}%::%{_id}%::ATTRIBUTE::*} to yaml list "%{_id}%.ATTRIBUTES" from "YAML-GIFT-WILL"
       loop yaml node keys "%{_category}%.%{_id}%.STATS" of "YAML-SKILLS":
+        add loop-key-3 to {SKILL::%{_category}%::%{_id}%::STAT::*}
         set {SKILL::%{_category}%::%{_id}%::%loop-key-3%} to yaml value "%{_category}%.%{_id}%.STATS.%loop-key-3%" from "YAML-SKILLS"
   unload yaml "YAML-SKILLS"
+  unload yaml "YAML-GIFT-WILL"
 
   #WEAPONS
   load yaml "plugins/Skript/scripts/fort-lisa/config/items/weapons.yml" as "YAML-WEAPONS"

@@ -1,8 +1,19 @@
-function staff_cast_normal(p: player, staff: item):
+function staff_cast(p: player, staff: item):
   set {_id} to item_nbt_get_tag({_staff}, "ID")
   if {_id} is "LIMB_OF_WISDOM":
     limb_of_wisdom_cast({_p}, {_staff})
 
-function staff_hit(p: player, id: text, location: location):
+function staff_hit(p: player, projectile: entity):
+  set {_id} to entity_nbt_get_tag({_projectile}, "ID")
   if {_id} is "LIMB_OF_WISDOM":
-    limb_of_wisdom_hit({_p}, {_location})
+    limb_of_wisdom_hit({_p}, {_projectile})
+
+function staff_cast_skill(p: player, staff: item):
+  set {_idSkill} to first element of item_nbt_get_list({_staff}, "WILL")
+  if {_idSkill} is "DRAGON_BREATH":
+    staff_dragon_breath_cast({_p}, {_staff})
+
+function staff_hit_skill(p: player, projectile: entity):
+  set {_idSkill} to first element of entity_nbt_get_list({_projectile}, "WILL")
+  if {_idSkill} is "DRAGON_BREATH":
+    staff_dragon_breath_hit({_p}, {_projectile})

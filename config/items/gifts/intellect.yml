@@ -5,3 +5,10 @@ RANGE_1:
     - RANGE
   STATS:
     RANGE: 5
+RADIUS_1:
+  TIER: 1
+  ITEM: sunflower
+  ATTRIBUTES:
+    - RADIUS
+  STATS:
+    RADIUS: 1.5

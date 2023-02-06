@@ -98,3 +98,24 @@ function item_nbt_add_stat(it: item, key: text, amount: number) :: item:
   else:
     set {_item} to item_nbt_set_stat({_it}, {_key}, {_amount})
   return {_item}
+
+function item_nbt_copyToEntity(it: item, entity: entity):
+  set {_type} to item_nbt_get_tag({_it}, "TYPE")
+  set {_category} to item_nbt_get_tag({_it}, "CATEGORY")
+  set {_id} to item_nbt_get_tag({_it}, "ID")
+  set {_will::*} to item_nbt_get_list({_it}, "WILL")
+  set {_intellect::*} to item_nbt_get_list({_it}, "INTELLECT")
+  set {_memory::*} to item_nbt_get_list({_it}, "MEMORY")
+
+  entity_nbt_set_tag({_entity}, "TYPE", {_type})
+  entity_nbt_set_tag({_entity}, "CATEGORY", {_category})
+  entity_nbt_set_tag({_entity}, "ID", {_id})
+  entity_nbt_set_list({_entity}, "WILL", {_will::*})
+  entity_nbt_set_list({_entity}, "INTELLECT", {_intellect::*})
+  entity_nbt_set_list({_entity}, "MEMORY", {_memory::*})
+
+  loop {STAT::ALL::*}:
+    set {_stat} to loop-value
+    if item_nbt_isset_stat({_it}, {_stat}) is true:
+      set {_itemValue} to item_nbt_get_stat({_it}, {_stat})
+      entity_nbt_set_stat({_entity}, {_stat}, {_itemValue})

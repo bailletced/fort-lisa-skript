@@ -31,7 +31,10 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/gifts/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/general/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/helmet/":
+   reload script file fileManager_getRelativePath(event-path)
+
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/staff/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/store/":
@@ -71,9 +74,6 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/interfaces
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/interfaces/guis/":
-   reload script file fileManager_getRelativePath(event-path)
-
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/interfaces/menus/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/stat/":

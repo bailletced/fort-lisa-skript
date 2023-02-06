@@ -1,0 +1,17 @@
+function limb_of_wisdom_cast(p: player, staff: item):
+  players_action_shootProjectile({_p}, {_staff}, snowball, 1, false)
+  set {_projectile} to last shot projectile
+  set {_loc} to location of {_p}
+  set {_range} to player_stat_item({_p}, {_staff}, "RANGE")
+  while {_projectile} is alive:
+    if distance between {_projectile} and {_loc} > {_range}:
+      limb_of_wisdom_hit({_p}, {_projectile})
+      stop loop
+    wait 5 ticks
+  kill {_projectile}
+
+function limb_of_wisdom_hit(p: player, projectile: entity):
+  set {_location} to location of {_projectile}
+  set {_power} to player_stat_projectile({_p}, {_projectile}, "POWER")
+  loop all entities in radius 1 of {_location}:
+    player_action_damage({_p}, loop-entity, 0, {_power})
