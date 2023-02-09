@@ -75,7 +75,7 @@ function i18n_item_lore(p: player, it: item) :: text:
 #transform a lore to list to make sure it will be visible once set to an item
 function i18n_item_lore_to_list(lore: text) :: texts:    
     if {_lore} is "":
-        return ""
+        stop
     set {_lores::*} to {_lore} split at " "
     set {_text} to "§f"
     set {_idx} to 1

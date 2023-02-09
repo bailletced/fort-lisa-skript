@@ -90,11 +90,10 @@ on tab complete of "/admin":
 
   else if tab arg-1 is "player":
     set tab completions for position 2 to "stat", "clean" and "init"
-      
-  else if tab arg-1 is "stat":
-    set tab completions for position 2 to "get" and "set"
-    if tab arg-2 is set:
-      set tab completions for position 3 to {STAT::PLAYER::*}
+    if tab arg-2 is "stat":
+      set tab completions for position 3 to "get" and "set"
+      if tab arg-3 is set:
+        set tab completions for position 4 to {STAT::PLAYER::*}
   
   else if tab arg-1 is "weapon":
     set tab completions for position 2 to {WEAPON::CATEGORY::*}
