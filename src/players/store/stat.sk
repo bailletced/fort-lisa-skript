@@ -30,8 +30,19 @@ function player_store_stat_set(p: player, key: text, value: number):
 function player_store_stat_add(p: player, key: text, value: number):
     if player_store_stat_isset({_p}, {_key}) is true:
         add {_value} to {players::%{_p}%::stat::%{_key}%}
-        player_store_weapon_reload_all({_p})
-        player_interface_tablist_player({_p})
+    else:
+        set {players::%{_p}%::stat::%{_key}%} to {_value}
+    player_store_stat_render({_p})
+
+function player_store_stat_add_lazy(p: player, key: text, value: number):
+    if player_store_stat_isset({_p}, {_key}) is true:
+        add {_value} to {players::%{_p}%::stat::%{_key}%}
+    else:
+        set {players::%{_p}%::stat::%{_key}%} to {_value}
+
+function player_store_stat_render(p: player):
+    player_store_weapon_reload_all({_p})
+    player_interface_tablist_player({_p})
 
 #Set stat to a a player 
 #Params: 

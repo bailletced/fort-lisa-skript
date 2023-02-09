@@ -55,6 +55,23 @@ function config_load(world: world):
         set {WEAPON::%{_category}%::%{_id}%::%loop-key-3%} to yaml value "%{_category}%.%{_id}%.GIFTS.%loop-key-3%" from "YAML-WEAPONS"
   unload yaml "YAML-WEAPONS"
 
+  #EQUIPMENTS
+  load yaml "plugins/Skript/scripts/fort-lisa/config/items/equipments.yml" as "YAML-EQUIPMENTS"
+  delete {EQUIPMENT::*}
+  loop yaml node keys "" of "YAML-EQUIPMENTS":
+    set {_category} to loop-value
+    add {_category} to {EQUIPMENT::CATEGORY::*}
+    loop yaml node keys "%{_category}%" of "YAML-EQUIPMENTS":
+      set {_id} to loop-key-2
+      add {_id} to {EQUIPMENT::%{_category}%::*}
+      set {EQUIPMENT::%{_category}%::%{_id}%::ITEM} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-EQUIPMENTS" parsed as item
+      set {EQUIPMENT::%{_category}%::%{_id}%::TIER} to yaml value "%{_category}%.%{_id}%.TIER" from "YAML-EQUIPMENTS"
+      loop yaml node keys "%{_category}%.%{_id}%.STATS" of "YAML-EQUIPMENTS":
+        set {EQUIPMENT::%{_category}%::%{_id}%::%loop-key-3%} to yaml value "%{_category}%.%{_id}%.STATS.%loop-key-3%" from "YAML-EQUIPMENTS"
+      loop yaml node keys "%{_category}%.%{_id}%.GIFTS" of "YAML-EQUIPMENTS":
+        set {EQUIPMENT::%{_category}%::%{_id}%::%loop-key-3%} to yaml value "%{_category}%.%{_id}%.GIFTS.%loop-key-3%" from "YAML-EQUIPMENTS"
+  unload yaml "YAML-EQUIPMENTS"
+
   #MOBS
   load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/mobs.yml" as "YAML-MOB"
   load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/zombies.yml" as "YAML-MOB-ZOMBIE"

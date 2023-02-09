@@ -27,6 +27,11 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
       set {_id} to arg-3
       item_give(player, "WEAPON", {_category}, {_id})
 
+    else if arg-1 is "equipment":
+      set {_category} to arg-2
+      set {_id} to arg-3
+      item_give(player, "EQUIPMENT", {_category}, {_id})
+
     else if arg-1 is "skill":
       set {_category} to arg-2
       set {_id} to arg-3
@@ -78,7 +83,7 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
         test_mob_main(player)
 
 on tab complete of "/admin":
-  set tab completions for position 1 to "init", "hmr", "stat", "player", "weapon", "skill", "settings", "game", "gift", "gui" and "test"
+  set tab completions for position 1 to "init", "hmr", "stat", "player", "weapon", "equipment", "skill", "settings", "game", "gift", "gui" and "test"
 
   if tab arg-1 is "hmr":
     set tab completions for position 2 to "reset"
@@ -97,6 +102,13 @@ on tab complete of "/admin":
       set {_weapons::*} to {WEAPON::%tab arg-2%::*}
       remove "TEST" from {_weapons::*}
       set tab completions for position 3 to {_weapons::*}
+  
+  else if tab arg-1 is "equipment":
+    set tab completions for position 2 to {EQUIPMENT::CATEGORY::*}
+    if tab arg-2 is set:
+      set {_equipments::*} to {EQUIPMENT::%tab arg-2%::*}
+      remove "TEST" from {_equipments::*}
+      set tab completions for position 3 to {_equipments::*}
   
   else if tab arg-1 is "skill":
     set tab completions for position 2 to {SKILL::CATEGORY::*}

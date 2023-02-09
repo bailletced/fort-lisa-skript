@@ -1,0 +1,3 @@
+on player change armor:
+  set {_p} to event-player
+  equipment_equip({_p}, old armor item, new armor item)

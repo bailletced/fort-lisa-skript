@@ -1,0 +1,15 @@
+function equipment_give(p: player, category: text, id: text):
+  set {_equipment} to item_create({_p}, "EQUIPMENT", {_category}, {_id})
+  set {_equipment} to item_nbt_set_tag_native({_equipment}, "{HideFlags:2}")
+  give 1 of {_equipment} to {_p}
+
+function equipment_equip(p: player, oldEquipment: item, newEquipment: item):
+  loop {STAT::ALL::*}:
+    set {_stat} to loop-value
+    if item_nbt_isset_stat({_oldEquipment}, {_stat}) is true:
+      set {_oldStat} to item_nbt_get_stat({_oldEquipment}, {_stat})
+      set {_newStat} to item_nbt_get_stat({_newEquipment}, {_stat})
+      player_store_stat_add_lazy({_p}, {_stat}, -1*{_oldStat} + {_newStat})
+  player_store_stat_render({_p})
+    
+

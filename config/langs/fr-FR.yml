@@ -10,6 +10,27 @@ MESSAGE:
         IN_PROGRESS: "Ce sort est en cooldown"
 WAVE:
   TITLE: "Vague"
+STAT:
+  ATTACK:
+    NORMAL: "Attaque"
+  POWER:
+    NORMAL: "Puissance"
+  DEFENCE:
+    NORMAL: "Défense"
+  MR:
+    NORMAL: "Res.Magique"
+  HEALTH:
+    NORMAL: "PV"
+  HEALTH_MAX:
+    NORMAL: "PV.Max"
+  HEALTH_REGEN:
+    NORMAL: "PV.Regen"
+  MANA:
+    NORMAL: "Mana"
+  MANA_MAX:
+    NORMAL: "Mana.Max"
+  MANA_REGEN:
+    NORMAL: "Mana.Regen"
 WEAPON:
   STAFF:
     TEST:
@@ -18,6 +39,10 @@ WEAPON:
     LIMB_OF_WISDOM:
       TITLE: "L'Abattis de Sagesse"
       LORE: "Projette une boule de portée {_RANGE} et infligeant {_POWER}"
+EQUIPMENT:
+  HELMET:
+    LAUREL_CROWN:
+      TITLE: "La couronne de laurier {_TIER}"
 SKILL:
   HELMET:
     TEST:
@@ -76,3 +101,9 @@ UTILITY:
       TITLE: "Don de volonté"
     UNAVAILABLE:
       TITLE: "Slot non disponible"
+    MAXIMUM_REACHED:
+      TITLE: "Slot non disponible"
+      LORE: "Impossible d'ajouter un don supplémentaire"
+    WILL_REQUITED:
+      TITLE: "Slot non disponible"
+      LORE: "Intelligence sans volonté ne rime à rien"

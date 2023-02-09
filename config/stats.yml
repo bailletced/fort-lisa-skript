@@ -1,4 +1,13 @@
 ALL:
+  HEALTH_MAX:
+    ICON: "۝"
+    COLOR: "§c"
+  HEALTH:
+    ICON: "❤"
+    COLOR: "§c"
+  HEALTH_REGEN:
+    ICON: "۝"
+    COLOR: "§c"
   ATTACK:
     ICON: "🗡"
     COLOR: "§6"
@@ -44,15 +53,6 @@ ALL:
   DURATION:
     ICON: "۝"
     COLOR: "§9"
-  HEALTH_MAX:
-    ICON: "۝"
-    COLOR: "§c"
-  HEALTH:
-    ICON: "❤"
-    COLOR: "§c"
-  HEALTH_REGEN:
-    ICON: "۝"
-    COLOR: "§c"
   PROJECTILE_SPEED:
     ICON: "۝"
     COLOR: "§c"

@@ -99,6 +99,10 @@ function item_nbt_add_stat(it: item, key: text, amount: number) :: item:
     set {_item} to item_nbt_set_stat({_it}, {_key}, {_amount})
   return {_item}
 
+function item_nbt_set_tag_native(it: item, value: text) :: item:
+  add nbt compound of {_value} to nbt compound of {_it}
+  return {_it}
+
 function item_nbt_copyToEntity(it: item, entity: entity):
   set {_type} to item_nbt_get_tag({_it}, "TYPE")
   set {_category} to item_nbt_get_tag({_it}, "CATEGORY")

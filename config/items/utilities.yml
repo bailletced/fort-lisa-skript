@@ -15,3 +15,7 @@ GIFT:
     ITEM: purple wool
   UNAVAILABLE:
     ITEM: barrier
+  MAXIMUM_REACHED:
+    ITEM: barrier
+  WILL_REQUIRED:
+    ITEM: barrier

@@ -25,6 +25,9 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/i18n/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/":
    reload script file fileManager_getRelativePath(event-path)
 
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/equipments/":
+   reload script file fileManager_getRelativePath(event-path)
+
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/gifts/":
    reload script file fileManager_getRelativePath(event-path)
 
@@ -74,6 +77,9 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/interfaces
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/interfaces/guis/":
+   reload script file fileManager_getRelativePath(event-path)
+
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/interfaces/menus/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/stat/":
