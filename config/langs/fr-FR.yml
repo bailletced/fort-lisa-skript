@@ -104,6 +104,6 @@ UTILITY:
     MAXIMUM_REACHED:
       TITLE: "Slot non disponible"
       LORE: "Impossible d'ajouter un don supplémentaire"
-    WILL_REQUITED:
+    WILL_REQUIRED:
       TITLE: "Slot non disponible"
       LORE: "Intelligence sans volonté ne rime à rien"

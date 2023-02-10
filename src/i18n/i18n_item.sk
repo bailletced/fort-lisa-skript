@@ -4,11 +4,7 @@ function i18n_item_attr(p: player, item: item, attr: text) :: text:
     set {_category} to item_nbt_get_tag({_item}, "CATEGORY")
     set {_id} to item_nbt_get_tag({_item}, "ID")
     set {_will::*} to item_nbt_get_list({_item}, "WILL")
-    if size of {_will::*} > 0:
-        set {_id} to first element of {_will::*}
-        return i18n({_p}, "SKILL.%{_category}%.%{_id}%.%{_attr}%")
-    else:
-        return i18n({_p}, "%{_type}%.%{_category}%.%{_id}%.%{_attr}%")
+    return i18n({_p}, "%{_type}%.%{_category}%.%{_id}%.%{_attr}%")
 
 function i18n_item_title(p: player, it: item) :: text:
     set {_title} to i18n_item_attr({_p}, {_it}, "TITLE")
@@ -37,8 +33,16 @@ function i18n_item_attribute_lore(p: player, it: item) :: text:
     if {_attributes::*} is set:
         loop {_attributes::*}:
             set {_i18nAttr} to i18n({_p}, "ATTRIBUTE.%loop-value%", "§e")
-            set {_res} to "%{_res}%%{_i18nAttr}%"
+            set {_res} to "%{_res}%%{_i18nAttr}% "
         return {_res}
+
+function i18n_item_skill_lore(p: player, it: item) :: texts:
+    set {_will::*} to item_nbt_get_list({_it}, "WILL")
+    if size of {_will::*} > 0:
+        set {_category} to item_nbt_get_tag({_it}, "CATEGORY")
+        set {_will} to first element of {_will::*}
+        set {_nameSkill} to i18n({_p}, "SKILL.%{_category}%.%{_will}%.TITLE")
+        return "" and "§3%{_nameSkill}%"
 
 function i18n_item_stat_lore(p: player, it: item) :: texts:
     set {_type} to item_nbt_get_tag({_it}, "TYPE")
@@ -103,9 +107,10 @@ function i18n_item(p: player, it: item) :: item:
     set {_lore} to i18n_item_lore({_p}, {_it})
     set {_loreGifts::*} to i18n_item_gift_lore({_p}, {_it})
     set {_loreAttributes} to i18n_item_attribute_lore({_p}, {_it})
+    set {_loreSkill::*} to i18n_item_skill_lore({_p}, {_it})
     set {_loreStats::*} to i18n_item_stat_lore({_p}, {_it})
     set {_finalLore::*} to i18n_item_lore_to_list({_lore})
-    set {_lores::*} to {_loreGifts::*}, {_loreAttributes}, {_loreStats::*} and {_finalLore::*}
+    set {_lores::*} to {_loreGifts::*}, {_loreAttributes}, {_loreSkill::*}, {_loreStats::*} and {_finalLore::*}
     if {_lores::*} is not "":
         set lore of {_it} to {_lores::*}    
     set name of {_it} to {_title}

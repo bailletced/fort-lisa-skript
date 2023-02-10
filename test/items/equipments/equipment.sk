@@ -1,0 +1,23 @@
+function test_item_equipment(p: player):
+  send "§5Testing items equipment" to the console 
+  it "Test equipment equip":
+    player_store_stat_set({_p}, "HEALTH_MAX", 20)
+    set {_helmet1} to equipment_give({_p}, "HELMET", "TEST")
+    set {_defence1} to item_nbt_get_stat({_helmet1}, "DEFENCE")
+    set {_maxHealth1} to item_nbt_get_stat({_helmet1}, "HEALTH_MAX")
+
+    player_store_stat_delete({_p}, "DEFENCE")
+    set {_healthMax} to player_store_stat_get({_p}, "HEALTH_MAX")
+
+    equipment_equip({_p}, air, {_helmet1})
+    set {_defencePlayerAfter} to player_store_stat_get({_p}, "DEFENCE")
+    assert if {_defencePlayerAfter} is {_defence1} with message "player's defence should be %{_defence1}%. Got %{_defencePlayerAfter}%"
+    assert if max health of {_p} is {_maxHealth1} + {_healthMax} with message "player's health max should be %{_maxHealth1} + {_healthMax}%. Got %max health of {_p}%"
+
+    set {_helmet2} to equipment_give({_p}, "HELMET", "TEST")
+    set {_defence2} to 10
+    set {_helmet2} to item_nbt_set_stat({_helmet2}, "DEFENCE", {_defence2})
+    equipment_equip({_p}, {_helmet1}, {_helmet2})
+    set {_defencePlayerAfter} to player_store_stat_get({_p}, "DEFENCE")
+    assert if {_defencePlayerAfter} is {_defence2} with message "player's defence should be %{_defence2}%. Got %{_defencePlayerAfter}%"
+    assert if max health of {_p} is {_maxHealth1} + {_healthMax} with message "player's health max should be %{_maxHealth1} + {_healthMax}%. Got %max health of {_p}%"

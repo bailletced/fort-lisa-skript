@@ -48,7 +48,7 @@ function gui_gift_altar_initial(p: player):
   set {_unavailableSlot} to {UTILITY::GUI::UNAVAILABLE::ITEM}
   set {_unavailableSlotName} to i18n({_p}, "UTILITY.GUI.UNAVAILABLE.TITLE")
   player_store_inventory_backup({_p})
-  player_store_inventory_filter({_p}, ("WILL" and "WEAPON"))
+  player_store_inventory_filter({_p}, ("EQUIPMENT" and "WEAPON"))
   create a gui with virtual chest inventory with 1 row named {_name} and shape "xxxx1xxxx":
     make gui slot "x" with {_unavailableSlot} named {_unavailableSlotName}
     run on gui close:

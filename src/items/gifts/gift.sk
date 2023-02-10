@@ -21,9 +21,12 @@ function gift_consecrate(p: player, gift: item, item: item) :: item:
   return {_item}
 
 function gift_will_consecrate(p: player, gift: item, item: item) :: item:
-  set {_category} to item_nbt_get_tag({_item}, "CATEGORY")
-  set {_id} to item_nbt_get_tag({_gift}, "ID")
-  loop {SKILL::%{_category}%::%{_id}%::STAT::*}:
-    set {_value} to {SKILL::%{_category}%::%{_id}%::%loop-value%}
-    set {_item} to item_nbt_set_stat({_item}, loop-value, {_value})
+  set {_type} to item_nbt_get_tag({_item}, "TYPE")
+  if {_type} is "WEAPON":
+    set {_category} to item_nbt_get_tag({_item}, "CATEGORY")
+    set {_id} to item_nbt_get_tag({_gift}, "ID")
+    loop {SKILL::%{_category}%::%{_id}%::STAT::*}:
+      set {_value} to {SKILL::%{_category}%::%{_id}%::%loop-value%}
+      set {_item} to item_nbt_set_stat({_item}, loop-value, {_value})
+    return {_item}
   return {_item}

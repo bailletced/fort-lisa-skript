@@ -1,7 +1,9 @@
 #Give a skill to the player
-function skill_give(p: player, category: text, id: text) :: item:
+function skill_give(p: player, category: text, id: text, uuid: text = "") :: item:
   set {_skill} to item_create({_p}, "SKILL", {_category}, {_id})
   item_store_stat_set({_skill}, "CD", 0)
+  if {_uuid} is not "":
+    set {_skill} to item_nbt_set_tag({_skill}, "UUID", {_uuid})
   player_store_skill_give({_p}, {_skill})
   skill_mana({_p}, {_skill})
   return {_skill}

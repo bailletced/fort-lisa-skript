@@ -9,13 +9,14 @@ function item_utility_create(p: player, category: text, id: text) :: item:
 
 function item_utility_gift_create(p: player, item: item, category: text) :: item:
   if {_category} is "INTELLECT":
+    set {_toto::*} to item_nbt_get_list({_item}, "WILL")
     if size of item_nbt_get_list({_item}, "WILL") < 1:
       return item_utility_create({_p}, "GIFT", "WILL_REQUIRED")
 
   set {_categoryMax} to item_nbt_get_stat({_item}, "%{_category}%_MAX")
   set {_currentGiftAmount} to size of item_nbt_get_list({_item}, {_category})
   if {_categoryMax} > 0:
-    if {_categoryMax} < {_currentGiftAmount}:
+    if {_categoryMax} > {_currentGiftAmount}:
       return item_utility_create({_p}, "GIFT", {_category})
     else:
       return item_utility_create({_p}, "GIFT", "MAXIMUM_REACHED")
