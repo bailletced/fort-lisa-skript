@@ -11,7 +11,13 @@ ALL:
   ATTACK:
     ICON: "🗡"
     COLOR: "§6"
+  ATTACK_MULTIPLIER:
+    ICON: "🗡"
+    COLOR: "§6"
   POWER:
+    ICON: "🗡"
+    COLOR: "§d"
+  POWER_MULTIPLIER:
     ICON: "🗡"
     COLOR: "§d"
   DEFENCE:

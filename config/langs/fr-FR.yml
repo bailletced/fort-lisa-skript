@@ -53,7 +53,7 @@ SKILL:
       LORE: "Le souffle du dragon repousse les ennemis avant d'infliger des dégâts en bout de course, infligeant {_POWER} dans un rayon de {_RADIUS}"
   STAFF:
     DRAGON_BREATH:
-      LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE}, rayon {_RADIUS} et infligeant {_POWER}"
+      LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE}, rayon {_RADIUS} et infligeant {_POWER}"      
 GIFT:
   MEMORY:
     TITLE: "Mémoire"

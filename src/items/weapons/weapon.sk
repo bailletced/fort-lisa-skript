@@ -5,9 +5,10 @@ function weapon_category_get(category: text) :: text:
         error("WEAPON of category %{_category}% does not exist")
 
 #Give a weapon to the player
-function weapon_give(p: player, category: text, id: text):
+function weapon_give(p: player, category: text, id: text) :: item:
     set {_weapon} to item_create({_p}, "WEAPON", {_category}, {_id})    
     player_store_weapon_give({_p}, {_weapon})
+    return {_weapon}
 
 #Called when the player equips the weapon 
 #   p : player

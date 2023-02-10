@@ -112,7 +112,6 @@ function test_item_nbt(p: player):
   it "Test item add stat":
     set {_item} to diamond sword
     set {_statRef1} to "ATTACK"
-
     set {_statVal1} to 10
 
     set {_item} to item_nbt_set_stat({_item}, {_statRef1}, {_statVal1})
@@ -133,8 +132,8 @@ function test_item_nbt(p: player):
     set {_powerMultiplier} to item_nbt_get_stat({_item}, "POWER_MULTIPLIER")
     set {_finalPower} to {_power} + {_power} * {_powerMultiplier}
 
-    assert if {_power} is {WEAPON::STAFF::LIMB_OF_WISDOM::POWER} with message "power should be %{WEAPON::STAFF::LIMB_OF_WISDOM::POWER}%. Got %{_power}%"
-    assert if "%{_powerMultiplier}%" is "%{WEAPON::STAFF::LIMB_OF_WISDOM::POWER_MULTIPLIER}%" with message "powerMultiplier should be %{WEAPON::STAFF::LIMB_OF_WISDOM::POWER_MULTIPLIER}%. Got %{_powerMultiplier}%"
+    assert if {_power} is {WEAPON::STAFF::TEST::POWER} with message "power should be %{WEAPON::STAFF::TEST::POWER}%. Got %{_power}%"
+    assert if "%{_powerMultiplier}%" is "%{WEAPON::STAFF::TEST::POWER_MULTIPLIER}%" with message "powerMultiplier should be %{WEAPON::STAFF::TEST::POWER_MULTIPLIER}%. Got %{_powerMultiplier}%"
     assert if the line 2 of lore of {_item} contains "%{_finalPower}%" with message "lore should contain a final power of %{_finalPower}%. Got %line 2 of lore of {_item}%"
 
     it "Test item nbt list":
