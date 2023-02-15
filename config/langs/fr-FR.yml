@@ -50,7 +50,7 @@ SKILL:
       LORE: "Le souffle du dragon repousse les ennemis avant d'infliger des dégâts en bout de course, infligeant {_POWER} dans un rayon de {_RADIUS}"
     DRAGON_BREATH:
       TITLE: "Le souffle du dragon"
-      LORE: "Le souffle du dragon repousse les ennemis avant d'infliger des dégâts en bout de course, infligeant {_POWER} dans un rayon de {_RADIUS}"
+      LORE: "Le souffle du dragon repousse les ennemis avant d'infliger des dégâts en bout de course, infligeant {_POWER} dans un rayon de {_RADIUS}. Portée {_RANGE}"
   STAFF:
     DRAGON_BREATH:
       LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE}, rayon {_RADIUS} et infligeant {_POWER}"      
@@ -69,7 +69,10 @@ GIFT:
     TITLE: "Intelligence"
     RANGE_1:
       TITLE: "Intelligence conceptuelle"
-      LORE: "Octroie {_RANGE} de portée supplémentaire sur l'équipement appliqué"
+      LORE: "Octroie {_RANGE} de portée supplémentaire sur le don de volonté associé"
+    RADIUS_1:
+      TITLE: "Impact amélioré"
+      LORE: "Octroie {_RADIUS} de zone d'effet supplémentaire sur le don de volonté associé"
 ATTRIBUTE:
   RADIUS: "AOE"
   RANGE: "Portée"

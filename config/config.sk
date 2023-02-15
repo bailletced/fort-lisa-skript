@@ -199,12 +199,11 @@ function config_load(world: world):
   set {GAME::STATUS} to "WAITING_FOR_START"
   set {NaN} to -999
   set {EQUIPMENT::CATEGORY::*} to "HELMET", "LEGGING", "BOOT", and "CHESTPLATE"
+  set {PLAYER::LISTENER::*} to "STAT" and "list"
 
   # Initialize players. TODO : to be triggered when game starts
   loop all players:
     set {_p} to loop-value
     player_store_weapon_delete_all({_p})
     player_store_skill_delete_all({_p})
-    player_store_setting_set({_p}, "INGAME", false)
-    wait 20 ticks
-    player_store_setting_set({_p}, "INGAME", true)
+    player_listener_stat({_p})

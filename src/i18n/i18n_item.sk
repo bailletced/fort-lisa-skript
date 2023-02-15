@@ -45,6 +45,16 @@ function i18n_item_skill_lore(p: player, it: item) :: texts:
         set {_nameSkill} to i18n({_p}, "SKILL.%{_category}%.%{_will}%.TITLE")
         return "" and "§3%{_nameSkill}%"
 
+function i18n_item_intellect_lore(p: player, it: item) :: texts:
+    set {_intellect::*} to item_nbt_get_list({_it}, "INTELLECT")
+    if size of {_intellect::*} > 0:
+        delete {_res::*}
+        loop {_intellect::*}:
+            set {_id} to loop-value
+            set {_titleIntellect} to i18n({_p}, "GIFT.INTELLECT.%{_id}%.TITLE", "§6")
+            add {_titleIntellect} to {_res::*}
+        return {_res::*}
+
 function i18n_item_stat_lore(p: player, it: item) :: texts:
     set {_type} to item_nbt_get_tag({_it}, "TYPE")
     if {_type} is "EQUIPMENT":
@@ -109,9 +119,10 @@ function i18n_item(p: player, it: item) :: item:
     set {_loreGifts::*} to i18n_item_gift_lore({_p}, {_it})
     set {_loreAttributes} to i18n_item_attribute_lore({_p}, {_it})
     set {_loreSkill::*} to i18n_item_skill_lore({_p}, {_it})
+    set {_loreIntellect::*} to i18n_item_intellect_lore({_p}, {_it})
     set {_loreStats::*} to i18n_item_stat_lore({_p}, {_it})
     set {_finalLore::*} to i18n_item_lore_to_list({_lore})
-    set {_lores::*} to {_loreGifts::*}, {_loreAttributes}, {_loreSkill::*}, {_loreStats::*} and {_finalLore::*}
+    set {_lores::*} to {_loreGifts::*}, {_loreAttributes}, {_loreSkill::*}, {_loreIntellect::*}, {_loreStats::*} and {_finalLore::*}
     if {_lores::*} is not "":
         set lore of {_it} to {_lores::*}    
     set name of {_it} to {_title}

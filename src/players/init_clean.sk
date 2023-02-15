@@ -5,8 +5,8 @@ function player_init():
     wait 10 ticks
     execute console command "/mv confirm"
     player_clean({_p})
-    player_store_stat_set({_p}, "ATTACK", 3)
-    player_store_stat_set({_p}, "POWER", 3)
+    player_store_stat_set({_p}, "ATTACK", 0)
+    player_store_stat_set({_p}, "POWER", 0)
     player_store_stat_set({_p}, "DEFENCE", 0)
     player_store_stat_set({_p}, "MR", 0)
     player_store_stat_set({_p}, "MANA", 100)
@@ -19,7 +19,7 @@ function player_init():
     # Listeners
     skill_give({_p}, "STAFF", "DRAGON_BREATH")
     item_give({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM")
-    player_listener_mana({_p})
+    player_listener_stat({_p})
     set gamemode of {_p} to adventure
     teleport {_p} to {LOCATION::CASTLE::THRONE}
 

@@ -8,6 +8,7 @@ function skill_give(p: player, category: text, id: text, linkedEquipment: item =
     loop {_intellect::*}:
       set {_intellectGift} to item_create({_p}, "GIFT", "INTELLECT", loop-value)
       set {_skill} to item_merge_stats({_intellectGift}, {_skill})
+    set {_skill} to item_nbt_set_list({_skill}, "INTELLECT", {_intellect::*})
     set {_skill} to item_nbt_set_tag({_skill}, "UUID", {_uuid})
     set {_skill} to i18n_item({_p}, {_skill})
   player_store_skill_give({_p}, {_skill})

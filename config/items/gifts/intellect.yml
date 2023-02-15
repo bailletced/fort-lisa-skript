@@ -2,7 +2,7 @@ RANGE_1:
   TIER: 1
   ITEM: arrow
   ATTRIBUTES:
-    - RANGE
+    - PROJECTILE
   STATS:
     RANGE: 10
 RADIUS_1:

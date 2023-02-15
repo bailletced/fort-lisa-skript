@@ -21,6 +21,15 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
         player_init()
       else if arg-2 is "clean":
         player_clean(player)
+      else if arg-2 is "listener":
+        if arg-3 is set:
+          if arg-3 is "list":
+            set {_all::*} to player_store_listener_get_all({_p})
+            broadcast "%{_all::*}%"
+          else if arg-3 is "STAT":
+            player_listener_stat(player)
+          if arg-4 is "off":
+            player_store_listener_delete(player, arg-3)
     
     else if arg-1 is "weapon":
       set {_category} to arg-2
@@ -89,12 +98,16 @@ on tab complete of "/admin":
     set tab completions for position 2 to "reset"
 
   else if tab arg-1 is "player":
-    set tab completions for position 2 to "stat", "clean" and "init"
+    set tab completions for position 2 to "stat", "listener", "clean" and "init"
     if tab arg-2 is "stat":
       set tab completions for position 3 to "get" and "set"
       if tab arg-3 is set:
         set tab completions for position 4 to {STAT::PLAYER::*}
-  
+    else if tab arg-2 is "listener":
+      set tab completions for position 3 to {PLAYER::LISTENER::*}
+      if tab arg-3 is set:
+        set tab completions for position 4 to "on" and "off"
+
   else if tab arg-1 is "weapon":
     set tab completions for position 2 to {WEAPON::CATEGORY::*}
     if tab arg-2 is set:

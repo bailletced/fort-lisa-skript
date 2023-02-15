@@ -7,7 +7,7 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/npc/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/events/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/game/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/game/":
