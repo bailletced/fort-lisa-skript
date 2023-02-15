@@ -107,3 +107,6 @@ UTILITY:
     WILL_REQUIRED:
       TITLE: "Slot non disponible"
       LORE: "Intelligence sans volonté ne rime à rien"
+    NO_GIFT:
+      TITLE: "Slot non disponible"
+      LORE: "Vous n'avez pas de don {_CATEGORY} dans votre inventaire"

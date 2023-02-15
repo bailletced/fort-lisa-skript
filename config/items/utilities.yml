@@ -19,3 +19,5 @@ GIFT:
     ITEM: barrier
   WILL_REQUIRED:
     ITEM: barrier
+  NO_GIFT:
+    ITEM: barrier

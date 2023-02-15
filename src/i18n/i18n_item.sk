@@ -4,7 +4,8 @@ function i18n_item_attr(p: player, item: item, attr: text) :: text:
     set {_category} to item_nbt_get_tag({_item}, "CATEGORY")
     set {_id} to item_nbt_get_tag({_item}, "ID")
     set {_will::*} to item_nbt_get_list({_item}, "WILL")
-    return i18n({_p}, "%{_type}%.%{_category}%.%{_id}%.%{_attr}%")
+    set {_varTrads::*} to item_nbt_get_list({_item}, "VAR_TRAD")
+    return i18n({_p}, "%{_type}%.%{_category}%.%{_id}%.%{_attr}%", "", {_varTrads::*})
 
 function i18n_item_title(p: player, it: item) :: text:
     set {_title} to i18n_item_attr({_p}, {_it}, "TITLE")

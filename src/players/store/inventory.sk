@@ -1,8 +1,10 @@
 function player_store_inventory_backup(p: player):
-  loop all items in inventory of {_p}:
-    set {_item} to loop-value
-    add loop-value to {players::%{_p}%::inventory::items::*}
-  clear inventory of {_p}
+  set {_it} to 0
+  loop 36 times:
+    set {_item} to slot {_it} of inventory of {_p}
+    add {_item} to {players::%{_p}%::inventory::items::*}
+    add 1 to {_it}
+  player_store_inventory_clear({_p})
 
 function player_store_inventory_restore(p: player):
   loop {players::%{_p}%::inventory::items::*}:
@@ -19,9 +21,15 @@ function player_store_inventory_remove(p: player, item: item):
 function player_store_inventory_add(p: player, item: item):
   add {_item} to {players::%{_p}%::inventory::items::*}
 
+function player_store_inventory_clear(p: player):
+  set {_it} to 0
+  loop 36 times:
+    set slot {_it} of inventory of {_p} to air
+    add 1 to {_it}
+
 function player_store_inventory_filter(p: player, types: texts = "", categories: texts = "", ids: texts = ""):
   set {_index} to 0
-  clear inventory of {_p}
+  player_store_inventory_clear({_p})
   delete {_res::*}
   loop {players::%{_p}%::inventory::items::*}:
     set {_found} to false
@@ -45,3 +53,22 @@ function player_store_inventory_filter(p: player, types: texts = "", categories:
   loop {_res::*}:
     set slot {_index} of {_p} to loop-value
     add 1 to {_index}
+
+
+function player_store_inventory_count_filtered(p: player, types: texts = "", categories: texts = "", ids: texts = "") :: number:
+  set {_res} to 0
+  loop {players::%{_p}%::inventory::items::*}:
+    set {_item} to loop-value
+    if {_ids::*} is not "":
+      set {_id} to item_nbt_get_tag({_item}, "ID")
+      if {_ids::*} contains {_id}:
+        add 1 to {_res}
+    else if {_categories::*} is not "":
+      set {_category} to item_nbt_get_tag({_item}, "CATEGORY")
+      if {_categories::*} contains {_category}:
+        add 1 to {_res}
+    else if {_types::*} is not "":
+      set {_type} to item_nbt_get_tag({_item}, "TYPE")
+      if {_types::*} contains {_type}:
+        add 1 to {_res}
+  return {_res}

@@ -1,15 +1,21 @@
-function item_utility_create(p: player, category: text, id: text) :: item:
+function item_utility_create(p: player, category: text, id: text, variables: texts = "") :: item:
   delete {_lore}
   set {_item} to {UTILITY::%{_category}%::%{_id}%::ITEM}
   set {_item} to item_nbt_set_tag({_item}, "TYPE", "UTILITY")
   set {_item} to item_nbt_set_tag({_item}, "CATEGORY", {_category})
   set {_item} to item_nbt_set_tag({_item}, "ID", {_id})
+  if {_variables::*} is not "":
+    set {_item} to item_nbt_set_list({_item}, "VAR_TRAD", {_variables::*})
   set {_item} to i18n_item({_p}, {_item})
   return {_item}
 
 function item_utility_gift_create(p: player, item: item, category: text) :: item:
+  set {_categoryCount} to player_store_inventory_count_filtered({_p}, "GIFT", {_category})
+  if {_categoryCount} is 0:
+    set {_i18nCategory} to i18n({_p}, "GIFT.%{_category}%.TITLE")
+    return item_utility_create({_p}, "GIFT", "NO_GIFT", {_i18nCategory})
+  
   if {_category} is "INTELLECT":
-    set {_toto::*} to item_nbt_get_list({_item}, "WILL")
     if size of item_nbt_get_list({_item}, "WILL") < 1:
       return item_utility_create({_p}, "GIFT", "WILL_REQUIRED")
 
