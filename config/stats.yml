@@ -65,6 +65,13 @@ ALL:
   PROJECTILE_AMOUNT:
     ICON: "۝"
     COLOR: "§c"
+  EFFECT_DURATION:
+    ICON: ""
+    COLOR: "§c"
+  EFFECT_FREQUENCY:
+    ICON: ""
+    COLOR: "§c"
+
 
 PLAYER:
   - "HEALTH"

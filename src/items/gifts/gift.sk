@@ -6,17 +6,18 @@ function gift_give(p: player, type: text, category: text, id: text) :: item:
   set {_name} to name of {_gift}
   set {_tierTxt} to parser_tier({_tier})
   set name of {_gift} to "%{_name}% %{_tierTxt}%"
-  player_store_gift_give({_p}, {_gift})
+  give 1 of {_gift} to {_p}
   return {_gift}
 
 function gift_consecrate(p: player, gift: item, item: item) :: item:
   set {_category} to item_nbt_get_tag({_gift}, "CATEGORY")
+  set {_id} to item_nbt_get_tag({_gift}, "ID")
+  set {_categoryItem} to item_nbt_get_tag({_item}, "CATEGORY")
   if {_category} is "WILL":
     set {_item} to gift_will_consecrate({_p}, {_gift}, {_item})
-    set {_item} to item_merge_attributes({_gift}, {_item})
+    set {_item} to item_nbt_set_list({_item}, "ATTRIBUTE", {SKILL::%{_categoryItem}%::%{_id}%::ATTRIBUTE::*})
   else:
     set {_item} to item_merge_stats({_gift}, {_item})
-  set {_id} to item_nbt_get_tag({_gift}, "ID")
   set {_item} to item_nbt_add_list({_item}, {_category}, {_id})
   set {_item} to i18n_item({_p}, {_item})
   return {_item}

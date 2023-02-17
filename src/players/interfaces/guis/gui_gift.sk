@@ -16,6 +16,7 @@ function gui_gift_move_to_inventory(p: player, guiInventory: inventory, slot: nu
       player_store_gui_delete_slot({_p}, {_guiId}, {_slot})
       give {_item} to {_p}
       set slot {_slot} of {_guiInventory} to air
+      set slot 2 of {_guiInventory} to air
     else if {_slot} is 2:
       if item_nbt_isset_tag({_item}, "TYPE") is true:
         player_store_inventory_remove({_p}, slot 0 of {_guiInventory})

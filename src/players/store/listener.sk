@@ -1,9 +1,8 @@
 function player_store_listener_add(p: player, listener: text):
   if player_store_listener_isset({_p}, {_listener}) is false:
     add {_listener} to {players::%{_p}%::listener::*}
-
-function player_store_listener_delete(p: player, listener: text):
-  remove {_listener} from {players::%{_p}%::listener::*}
+    if {_listener} is "STAT":
+      player_listener_stat({_p})
 
 function player_store_listener_isset(p: player, listener: text) :: boolean:
   if {players::%{_p}%::listener::*} contains {_listener}:
@@ -12,3 +11,9 @@ function player_store_listener_isset(p: player, listener: text) :: boolean:
 
 function player_store_listener_get_all(p: player) :: texts:
   return {players::%{_p}%::listener::*}
+
+function player_store_listener_remove(p: player, listener: text):
+  remove {_listener} from {players::%{_p}%::listener::*}
+
+function player_store_listener_delete_all(p: player):
+  delete {players::%{_p}%::listener::*}

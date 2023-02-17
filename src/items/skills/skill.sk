@@ -47,6 +47,8 @@ function skill_cast(p: player, skill: item) :: boolean:
     # CAST THE SKILL
     if {_category} is "HELMET":
       helmet_cast({_p}, {_skill})
+    else if {_category} is "CHESTPLATE":
+      chestplate_cast({_p}, {_skill})
   return {_canCast}
 
 

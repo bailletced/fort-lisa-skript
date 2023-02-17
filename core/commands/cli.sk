@@ -26,11 +26,12 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
           if arg-3 is "list":
             set {_all::*} to player_store_listener_get_all({_p})
             broadcast "%{_all::*}%"
-          else if arg-3 is "STAT":
-            player_listener_stat(player)
-          if arg-4 is "off":
-            player_store_listener_delete(player, arg-3)
-    
+          else:
+            if arg-4 is "off":
+              player_store_listener_remove(player, arg-3)
+            else if arg-4 is "on":
+              player_store_listener_add({_p}, arg-3)
+
     else if arg-1 is "weapon":
       set {_category} to arg-2
       set {_id} to arg-3

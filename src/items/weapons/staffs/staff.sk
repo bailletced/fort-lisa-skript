@@ -10,10 +10,10 @@ function staff_hit(p: player, projectile: entity):
 
 function staff_cast_skill(p: player, staff: item):
   set {_idSkill} to first element of item_nbt_get_list({_staff}, "WILL")
-  if {_idSkill} is "DRAGON_BREATH":
-    staff_dragon_breath_cast({_p}, {_staff})
+  if {_idSkill} is "BURNING_HEART":
+    staff_burning_heart_cast({_p}, {_staff})
 
 function staff_hit_skill(p: player, projectile: entity):
   set {_idSkill} to first element of entity_nbt_get_list({_projectile}, "WILL")
-  if {_idSkill} is "DRAGON_BREATH":
-    staff_dragon_breath_hit({_p}, {_projectile})
+  if {_idSkill} is "BURNING_HEART":
+    staff_burning_heart_hit({_p}, {_projectile})

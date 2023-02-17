@@ -30,7 +30,7 @@ function config_load(world: world):
       set {_id} to loop-key-2
       add {_id} to {SKILL::%{_category}%::*}
       set {SKILL::%{_category}%::%{_id}%::ITEM} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-SKILLS" parsed as item
-      set {SKILL::%{_category}%::%{_id}%::ATTRIBUTE::*} to yaml list "%{_id}%.ATTRIBUTES" from "YAML-GIFT-WILL"
+      set {SKILL::%{_category}%::%{_id}%::ATTRIBUTE::*} to yaml list "%{_category}%.%{_id}%.ATTRIBUTES" from "YAML-SKILLS"
       loop yaml node keys "%{_category}%.%{_id}%.STATS" of "YAML-SKILLS":
         add loop-key-3 to {SKILL::%{_category}%::%{_id}%::STAT::*}
         set {SKILL::%{_category}%::%{_id}%::%loop-key-3%} to yaml value "%{_category}%.%{_id}%.STATS.%loop-key-3%" from "YAML-SKILLS"
@@ -149,7 +149,6 @@ function config_load(world: world):
     set {_id} to loop-value
     add {_id} to {GIFT::%{_category}%::ID::*}
     set {GIFT::%{_category}%::%{_id}%::ITEM} to yaml value "%{_id}%.ITEM" from "YAML-GIFT-MEMORY" parsed as item
-    set {GIFT::%{_category}%::%{_id}%::TIER} to yaml value "%{_id}%.TIER" from "YAML-GIFT-MEMORY"
     loop node keys "%{_id}%.STATS" from "YAML-GIFT-MEMORY":
       set {GIFT::%{_category}%::%{_id}%::%loop-key-2%} to yaml value "%{_id}%.STATS.%loop-key-2%" from "YAML-GIFT-MEMORY"
   #WILL
@@ -159,10 +158,8 @@ function config_load(world: world):
     set {_id} to loop-value
     add {_id} to {GIFT::%{_category}%::ID::*}
     set {GIFT::%{_category}%::%{_id}%::ITEM} to yaml value "%{_id}%.ITEM" from "YAML-GIFT-WILL" parsed as item
-    set {GIFT::%{_category}%::%{_id}%::TIER} to yaml value "%{_id}%.TIER" from "YAML-GIFT-WILL"
     loop node keys "%{_id}%.STATS" from "YAML-GIFT-WILL":
       set {GIFT::%{_category}%::%{_id}%::%loop-key-2%} to yaml value "%{_id}%.STATS.%loop-key-2%" from "YAML-GIFT-WILL"
-    set {GIFT::%{_category}%::%{_id}%::ATTRIBUTE::*} to yaml list "%{_id}%.ATTRIBUTES" from "YAML-GIFT-WILL"
   #INTELLECT
   load yaml "plugins/Skript/scripts/fort-lisa/config/items/gifts/intellect.yml" as "YAML-GIFT-INTELLECT"
   loop node keys "" from "YAML-GIFT-INTELLECT":
@@ -170,7 +167,6 @@ function config_load(world: world):
     set {_id} to loop-value
     add {_id} to {GIFT::%{_category}%::ID::*}
     set {GIFT::%{_category}%::%{_id}%::ITEM} to yaml value "%{_id}%.ITEM" from "YAML-GIFT-INTELLECT" parsed as item
-    set {GIFT::%{_category}%::%{_id}%::TIER} to yaml value "%{_id}%.TIER" from "YAML-GIFT-INTELLECT"
     loop node keys "%{_id}%.STATS" from "YAML-GIFT-INTELLECT":
       set {GIFT::%{_category}%::%{_id}%::%loop-key-2%} to yaml value "%{_id}%.STATS.%loop-key-2%" from "YAML-GIFT-INTELLECT"
     set {GIFT::%{_category}%::%{_id}%::ATTRIBUTE::*} to yaml list "%{_id}%.ATTRIBUTES" from "YAML-GIFT-INTELLECT"
@@ -206,4 +202,4 @@ function config_load(world: world):
     set {_p} to loop-value
     player_store_weapon_delete_all({_p})
     player_store_skill_delete_all({_p})
-    player_listener_stat({_p})
+    player_store_listener_add({_p}, "STAT")

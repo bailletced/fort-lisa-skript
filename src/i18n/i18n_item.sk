@@ -5,6 +5,11 @@ function i18n_item_attr(p: player, item: item, attr: text) :: text:
     set {_id} to item_nbt_get_tag({_item}, "ID")
     set {_will::*} to item_nbt_get_list({_item}, "WILL")
     set {_varTrads::*} to item_nbt_get_list({_item}, "VAR_TRAD")
+    if size of {_will::*} > 0:
+        if {_type} is "WEAPON":
+            if {_attr} is "LORE":
+                set {_skillId} to first element of {_will::*}
+                return i18n({_p}, "SKILL.%{_category}%.%{_skillId}%.%{_attr}%", "", {_varTrads::*})
     return i18n({_p}, "%{_type}%.%{_category}%.%{_id}%.%{_attr}%", "", {_varTrads::*})
 
 function i18n_item_title(p: player, it: item) :: text:
@@ -38,12 +43,11 @@ function i18n_item_attribute_lore(p: player, it: item) :: text:
         return {_res}
 
 function i18n_item_skill_lore(p: player, it: item) :: texts:
+    set {_type} to item_nbt_get_tag({_it}, "TYPE") 
     set {_will::*} to item_nbt_get_list({_it}, "WILL")
     if size of {_will::*} > 0:
-        set {_category} to item_nbt_get_tag({_it}, "CATEGORY")
         set {_will} to first element of {_will::*}
-        set {_nameSkill} to i18n({_p}, "SKILL.%{_category}%.%{_will}%.TITLE")
-        return "" and "§3%{_nameSkill}%"
+        return "" and i18n({_p}, "GIFT.WILL.%{_will}%.TITLE", "§3")
 
 function i18n_item_intellect_lore(p: player, it: item) :: texts:
     set {_intellect::*} to item_nbt_get_list({_it}, "INTELLECT")
@@ -84,6 +88,10 @@ function i18n_item_lore(p: player, it: item) :: text:
         set {_color} to {STAT::%{_key}%::COLOR}
         set {_icon} to {STAT::%{_key}%::ICON}
         set {_valueFinal} to {_value} + {_playerStat} * {_multiplier}
+        set {_typeKey::*} to {_key} split at "_"
+        set {_typeKey} to the last element of {_typeKey::*}
+        if "DURATION" and "FREQUENCY" contains {_typeKey}:
+            set {_valueFinal} to "%floor({_value}/20)%sec"
         replace "{_%{_key}%}" in {_lore} with "%{_color}%%{_icon}%%{_valueFinal}%§f"
     return {_lore}
 

@@ -19,7 +19,7 @@ function player_init():
     # Listeners
     skill_give({_p}, "STAFF", "DRAGON_BREATH")
     item_give({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM")
-    player_listener_stat({_p})
+    player_store_listener_add({_p}, "STAT")
     set gamemode of {_p} to adventure
     teleport {_p} to {LOCATION::CASTLE::THRONE}
 

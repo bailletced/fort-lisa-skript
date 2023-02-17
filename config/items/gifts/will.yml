@@ -1,6 +1,4 @@
-DRAGON_BREATH:
-  TIER: 1
-  ITEM: allium
-  ATTRIBUTES:
-    - RADIUS
-    - PROJECTILE
+BURNING_HEART:
+  ITEM: torch
+MOUNTAIN:
+  ITEM: dirt
