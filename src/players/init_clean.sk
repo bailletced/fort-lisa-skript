@@ -1,9 +1,7 @@
 function player_init():
   loop all players:
     set {_p} to loop-value
-    execute console command "/mvtp %{_p}% flat_world"
-    wait 10 ticks
-    execute console command "/mv confirm"
+    teleport {_p} to location(130, -27, 2, world "flat_world")
     player_clean({_p})
     player_store_stat_set({_p}, "ATTACK", 0)
     player_store_stat_set({_p}, "POWER", 0)
@@ -21,7 +19,6 @@ function player_init():
     item_give({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM")
     player_store_listener_add({_p}, "STAT")
     set gamemode of {_p} to adventure
-    teleport {_p} to {LOCATION::CASTLE::THRONE}
 
 function player_clean(p: player):
   player_store_gui_delete_all({_p})
