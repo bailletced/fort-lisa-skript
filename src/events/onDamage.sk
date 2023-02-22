@@ -9,7 +9,11 @@ on damage:
       if {_type} is "SKILL":
         skill_cast({_p}, {_item})
     else:
-      cancel event
+      if armor stand and item frame does not contain type of victim:
+        cancel event
+      else:
+        if game mode of {_p} is not creative:
+          cancel event
   else:
     set {_type} to entity_nbt_get_tag(attacker, "TYPE")
     if {_type} is "MOB":

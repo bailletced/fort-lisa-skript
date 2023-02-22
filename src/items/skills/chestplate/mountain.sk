@@ -8,5 +8,5 @@ function chestplate_mountain_cast(p: player, skill: item):
         if {_type} is "MOB":
             set {_world} to world of loop-entity
             teleport loop-entity to the location 0.5 meter under loop-entity
-            entity_effect_root(loop-entity, {_effectDuration})
+            entity_effect_stun(loop-entity, {_effectDuration})
             entity_effect_damage({_p}, loop-entity, {_attack}, 0)

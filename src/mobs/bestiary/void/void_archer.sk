@@ -1,0 +1,3 @@
+function void_archer_summon(location: location):
+  set {_loc} to loc_to_mythicApi({_location})
+  execute console command "mythicApi summon VoidArcher %{_loc}%"

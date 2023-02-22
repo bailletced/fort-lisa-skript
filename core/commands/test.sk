@@ -110,3 +110,9 @@ command /chestplate:
         add nbt compound of "{AttributeName:""generic.max_health"",Amount:10,Operation:0,Slot:chest,UUID:[I;-1201124,10148,125632,-20296],Name:""generic.max_health""}" to {_a::*}
         set compound list tag "AttributeModifiers" of {_n} to {_a::*}
         give {_i} to player
+
+command /mythicVOidArcher:
+    trigger:
+        set {_loc} to location of player
+        set {_world} to world of player
+        make player execute command "mm m spawn VoidArcher world,12,-28,-2"

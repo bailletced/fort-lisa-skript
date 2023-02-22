@@ -75,6 +75,7 @@ function config_load(world: world):
   #MOBS
   load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/mobs.yml" as "YAML-MOB"
   load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/zombies.yml" as "YAML-MOB-ZOMBIE"
+  load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/void/archer.yml" as "YAML-MOB-VOID_ARCHER"
   delete {MOB::*}
   loop yaml list "CATEGORIES" from "YAML-MOB":
     set {_category} to loop-value
@@ -88,6 +89,7 @@ function config_load(world: world):
           set {MOB::%{_category}%::%{_id}%::%{_attribute}%::%{_key}%} to {_value}
   unload yaml "YAML-MOB"
   unload yaml "YAML-MOB-ZOMBIE"
+  unload yaml "YAML-MOB-VOID_ARCHER"
 
   #LOCATIONS
   load yaml "plugins/Skript/scripts/fort-lisa/config/locations/dragonland.yml" as "YAML-LOCATION-DRAGONLAND"

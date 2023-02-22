@@ -1,4 +1,4 @@
-function entity_effect_root(target: entity, duration: number):
+function entity_effect_stun(target: entity, duration: number):
   set {_duration} to "%{_duration}% ticks" parsed as timespan
   if {_target} is a player:
     apply jump 128 without particles to {_target} for {_duration}
