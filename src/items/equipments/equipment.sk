@@ -1,0 +1,45 @@
+function equipment_give(p: player, category: text, id: text) :: item:
+  set {_equipment} to item_create({_p}, "EQUIPMENT", {_category}, {_id})
+  set {_equipment} to item_nbt_set_tag_native({_equipment}, "{HideFlags:2}")
+  set {_nbt} to nbt compound of {_equipment}
+  set {_attrModifiers::*} to compound list tag "AttributeModifiers" of {_nbt}
+  add nbt compound of "{AttributeName:""generic.armor"",Amount:0,Operation:0,UUID:[I;-12319,22491,191450,-44982],Name:""generic.armor""}" to {_attrModifiers::*}
+  set compound list tag "AttributeModifiers" of {_nbt} to {_attrModifiers::*}
+  give 1 of {_equipment} to {_p}
+  return {_equipment}
+
+function equipment_equip(p: player, oldEquipment: item, newEquipment: item):
+  equipment_merge_stat({_p}, {_oldEquipment}, {_newEquipment})
+  equipment_give_skill({_p}, {_oldEquipment}, {_newEquipment})
+
+function equipment_merge_stat(p: player, oldEquipment: item, newEquipment: item):
+  loop {STAT::ALL::*}:
+    set {_stat} to loop-value
+    if item_nbt_isset_stat({_newEquipment}, {_stat}) is true:
+      set {_oldStat} to item_nbt_get_stat({_oldEquipment}, {_stat})
+      set {_newStat} to item_nbt_get_stat({_newEquipment}, {_stat})
+      player_store_stat_add_lazy({_p}, {_stat}, -1*{_oldStat} + {_newStat})
+    else if item_nbt_isset_stat({_oldEquipment}, {_stat}) is true:
+      #old equipment had stat. New onen does not
+      set {_oldStat} to item_nbt_get_stat({_oldEquipment}, {_stat})
+      player_store_stat_add_lazy({_p}, {_stat}, -1*{_oldStat})
+  player_store_stat_render({_p})
+
+function equipment_give_skill(p: player, oldEquipment: item, newEquipment: item):
+  set {_oldWill::*} to item_nbt_get_list({_oldEquipment}, "WILL")
+  set {_newWill::*} to item_nbt_get_list({_newEquipment}, "WILL")
+  if size of {_oldWill::*} > 0:
+    # old equipment has will. We remove it
+    set {_oldUuid} to item_nbt_get_tag({_oldEquipment}, "UUID")
+    loop inventory of {_p}:
+      if item_nbt_get_tag(loop-value, "TYPE") is "SKILL":
+        set {_uuid} to item_nbt_get_tag(loop-value, "UUID")
+        if {_uuid} is {_oldUuid}:
+          remove loop-value from inventory of {_p}
+          stop
+
+  if size of {_newWill::*} > 0:
+    set {_newUuid} to item_nbt_get_tag({_newEquipment}, "UUID")
+    set {_newWill} to first element of {_newWill::*}
+    set {_category} to item_nbt_get_tag({_newEquipment}, "CATEGORY")
+    set {_skill} to skill_give({_p}, {_category}, {_newWill}, {_newEquipment})

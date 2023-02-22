@@ -1,0 +1,150 @@
+function test_item_nbt(p: player):
+  send "§5Testing items item" to the console 
+  it "Test item get/set/isset stat":
+    set {_equipment} to diamond sword
+
+    set {_statRef1} to "ATTACK"
+    set {_statRef2} to "COOLDOWN_REDUCTION"
+    set {_statRef3} to "MANA_MAX"
+    set {_statRef4} to "WEIGHT"
+    set {_attackRef} to 10
+    set {_cdrRef} to "toto"
+    set {_weightRef} to 250
+
+    set {_equipment} to item_nbt_set_stat({_equipment}, {_statRef1}, {_attackRef})
+    set {_equipment} to item_nbt_set_stat({_equipment}, {_statRef2}, {_cdrRef})
+    set {_equipment} to item_nbt_set_stat({_equipment}, {_statRef4}, {_weightRef})
+
+    set {_attack} to item_nbt_get_stat({_equipment}, {_statRef1})
+    set {_cdr} to item_nbt_get_stat({_equipment}, {_statRef2})
+    set {_weight} to item_nbt_get_stat({_equipment}, {_statRef4})
+
+    set {_isset1} to item_nbt_isset_stat({_equipment}, {_statRef1})
+    set {_isset2} to item_nbt_isset_stat({_equipment}, {_statRef2})
+    set {_isset3} to item_nbt_isset_stat({_equipment}, {_statRef3})
+    set {_isset4} to item_nbt_isset_stat({_equipment}, {_statRef4})
+
+    assert if {_attack} is {_attackRef} with message "Stat should be %{_attackRef}%. Got %{_attack}%"
+    assert if {_weight} is {_weightRef} with message "Stat should be %{_weightRef}%. Got %{_weight}%"
+    assert if {_isset1} is true with message "Stat %{_statRef1}% should be defined. Got %{_isset1}%"
+    assert if {_isset2} is false with message "Stat %{_statRef2}% should not be defined because not a number. Got %{_isset2}%"
+    assert if {_isset3} is false with message "Stat %{_statRef3}% should be not be defined. Got %{_isset3}%"
+    assert if {_isset4} is true with message "Stat %{_statRef4}% should be not be defined. Got %{_isset4}%"
+
+  it "Test item get/set/isset tag":
+    set {_item} to diamond sword
+
+    set {_tagRef1} to "CATEGORY"
+    set {_tagRef2} to "TYPE"
+    set {_tagRef3} to "TEST"
+
+    set {_tagVal1} to "SOMETHING"
+    set {_tagVal2} to "OTHER"
+    set {_tagVal3} to 10
+
+    set {_item} to item_nbt_set_tag({_item}, {_tagRef1}, {_tagVal1})
+    set {_item} to item_nbt_set_tag({_item}, {_tagRef2}, {_tagVal2})
+    set {_item} to item_nbt_set_tag({_item}, {_tagRef3}, {_tagVal3})
+
+    set {_getTag1} to item_nbt_get_tag({_item}, {_tagRef1})
+    set {_getTag2} to item_nbt_get_tag({_item}, {_tagRef2})
+    set {_getTag3} to item_nbt_get_tag({_item}, {_tagRef3})
+
+    set {_isset1} to item_nbt_isset_tag({_item}, {_tagRef1})
+    set {_isset2} to item_nbt_isset_tag({_item}, {_tagRef2})
+    set {_isset3} to item_nbt_isset_tag({_item}, {_tagRef3})
+    set {_isset4} to item_nbt_isset_tag({_item}, "FAKE")
+
+    assert if {_getTag1} is {_tagVal1} with message "tag %{_tagRef1}% should be %{_tagVal1}%. Got %{_getTag1}%"
+    assert if {_getTag2} is {_tagVal2} with message "tag %{_tagRef2}% should be %{_tagVal2}%. Got %{_getTag2}%"
+    assert if {_getTag3} is not set with message "tag %{_tagRef3}% should be not be set. Got %{_getTag3}%"
+    assert if {_isset1} is true with message "tag %{_tagRef1}% should be defined."
+    assert if {_isset2} is true with message "tag %{_tagRef2}% should be defined."
+    assert if {_isset3} is false with message "tag %{_tagRef3}% should not be defined."
+    assert if {_isset4} is false with message "Unexisting tag should not be found.."
+
+  it "Test item get all stats":
+    set {_item} to diamond sword
+    set {_statRef1} to "ATTACK"
+    set {_statRef2} to "COOLDOWN_REDUCTION"
+    set {_statRef3} to "MANA_MAX"
+    set {_statRef4} to "WEIGHT"
+
+    set {_statVal1} to 10
+    set {_statVal2} to 1
+    set {_statVal3} to 60
+    set {_statVal4} to 100
+
+    set {_item} to item_nbt_set_stat({_item}, {_statRef1}, {_statVal1})
+    set {_item} to item_nbt_set_stat({_item}, {_statRef2}, {_statVal2})
+    set {_item} to item_nbt_set_stat({_item}, {_statRef3}, {_statVal3})
+    set {_item} to item_nbt_set_stat({_item}, {_statRef4}, {_statVal4})
+
+    set {_stats::*} to item_nbt_get_stats({_item})
+    assert if {_stats::*} contains {_statRef1} with message "%{_statRef1}% stat should be found. Got %{_stats::*}%"
+    assert if {_stats::*} contains {_statRef2} with message "%{_statRef2}% stat should be found. Got %{_stats::*}%"
+    assert if {_stats::*} contains {_statRef3} with message "%{_statRef3}% stat should be found. Got %{_stats::*}%"
+    assert if {_stats::*} does not contain {_statRef4} with message "%{_statRef4}% stat should not be found. Got %{_stats::*}%"
+
+  it "Test item get stats superior to":
+    set {_item} to diamond sword
+    set {_statRef1} to "ATTACK"
+    set {_statRef2} to "COOLDOWN_REDUCTION"
+    set {_statRef3} to "MANA_MAX"
+    set {_statRef4} to "WEIGHT"
+
+    set {_statVal1} to 10
+    set {_statVal2} to 1
+    set {_statVal3} to 60
+    set {_statVal4} to 100
+
+    set {_item} to item_nbt_set_stat({_item}, {_statRef1}, {_statVal1})
+    set {_item} to item_nbt_set_stat({_item}, {_statRef2}, {_statVal2})
+    set {_item} to item_nbt_set_stat({_item}, {_statRef3}, {_statVal3})
+    set {_item} to item_nbt_set_stat({_item}, {_statRef4}, {_statVal4})
+
+    set {_stats::*} to item_nbt_get_stats_superior_to({_item}, 9)
+    assert if {_stats::*} contains {_statRef1} with message "%{_statRef1}% stat should be found. Got %{_stats::*}%"
+    assert if {_stats::*} does not contain {_statRef2} with message "%{_statRef2}% stat should not be found. Got %{_stats::*}%"
+    assert if {_stats::*} contains {_statRef3} with message "%{_statRef3}% stat should be found. Got %{_stats::*}%"
+    assert if {_stats::*} does not contain {_statRef4} with message "%{_statRef4}% stat should not be found. Got %{_stats::*}%"
+
+  it "Test item add stat":
+    set {_item} to diamond sword
+    set {_statRef1} to "ATTACK"
+    set {_statVal1} to 10
+
+    set {_item} to item_nbt_set_stat({_item}, {_statRef1}, {_statVal1})
+    set {_item} to item_nbt_add_stat({_item}, {_statRef1}, 10)
+
+    set {_get1} to item_nbt_get_stat({_item}, {_statRef1})
+    set {_item} to item_nbt_add_stat({_item}, {_statRef1}, -20)
+    set {_get2} to item_nbt_get_stat({_item}, {_statRef1})
+
+    assert if {_get1} is 20 with message "stat %{_statRef1}% should be 20. Got %{_get1}%"
+    assert if {_get2} is 0 with message "stat %{_statRef1}% should be 0. Got %{_get2}%"
+
+
+  it "Test item create":
+    player_store_stat_set({_p}, "POWER", 10)
+    set {_item} to item_create({_p}, "WEAPON", "STAFF", "TEST")
+    set {_power} to item_nbt_get_stat({_item}, "POWER")
+    set {_powerMultiplier} to item_nbt_get_stat({_item}, "POWER_MULTIPLIER")
+    set {_finalPower} to {_power} + {_power} * {_powerMultiplier}
+
+    assert if {_power} is {WEAPON::STAFF::TEST::POWER} with message "power should be %{WEAPON::STAFF::TEST::POWER}%. Got %{_power}%"
+    assert if "%{_powerMultiplier}%" is "%{WEAPON::STAFF::TEST::POWER_MULTIPLIER}%" with message "powerMultiplier should be %{WEAPON::STAFF::TEST::POWER_MULTIPLIER}%. Got %{_powerMultiplier}%"
+    assert if the line 2 of lore of {_item} contains "%{_finalPower}%" with message "lore should contain a final power of %{_finalPower}%. Got %line 2 of lore of {_item}%"
+
+    it "Test item nbt list":
+      set {_item} to item_create({_p}, "WEAPON", "STAFF", "TEST")
+      set {_list::*} to "toto" and "tata"
+      set {_item} to item_nbt_set_list({_item}, "ATTRIBUTE", {_list::*})
+      
+      set {_listRes::*} to item_nbt_get_list({_item}, "ATTRIBUTE")
+      set {_issetListRes} to item_nbt_isset_list({_item}, "ATTRIBUTE")
+      set {_issetFake} to item_nbt_isset_list({_item}, "FAKE")
+
+      assert if size of {_listRes::*} is size of {_list::*} with message "{_listRes::*} should be %{_list::*}%. Got %{_listRes::*}%"
+      assert if {_issetListRes} is true with message "{_issetListRes} should be true. Got %{_issetListRes}%"
+      assert if {_issetFake} is false with message "{_issetFake} should be false. Got %{_issetFake}%"

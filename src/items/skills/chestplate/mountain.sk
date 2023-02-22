@@ -1,0 +1,12 @@
+function chestplate_mountain_cast(p: player, skill: item):
+    set {_radius} to player_stat_item({_p}, {_skill}, "RADIUS")
+    set {_effectDuration} to player_stat_item({_p}, {_skill}, "EFFECT_DURATION")
+    set {_attack} to player_stat_item({_p}, {_skill}, "ATTACK")
+    drawDot count 40*{_radius}, particle "itemcrack", material dirt, XYZ 0.3*{_radius}, 0, 0.3*{_radius}, center location of {_p}, visibleRange 32, pulseDelay 1, keepFor 10 ticks
+    loop entities in radius {_radius} of {_p}:
+        set {_type} to entity_nbt_get_tag(loop-entity, "TYPE")
+        if {_type} is "MOB":
+            set {_world} to world of loop-entity
+            teleport loop-entity to the location 0.5 meter under loop-entity
+            entity_effect_stun(loop-entity, {_effectDuration})
+            entity_effect_damage({_p}, loop-entity, {_attack}, 0)

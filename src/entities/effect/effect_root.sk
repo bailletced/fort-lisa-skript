@@ -1,0 +1,10 @@
+function entity_effect_stun(target: entity, duration: number):
+  set {_duration} to "%{_duration}% ticks" parsed as timespan
+  if {_target} is a player:
+    apply jump 128 without particles to {_target} for {_duration}
+  else:
+    set {_type} to entity_nbt_get_tag({_target}, "TYPE")
+    if {_type} is "MOB":
+      entity_nbt_set_tag_native({_target}, "{NoAI:1b}")
+      wait {_duration}
+      entity_nbt_set_tag_native({_target}, "{NoAI:0b}")

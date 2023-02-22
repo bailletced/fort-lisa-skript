@@ -1,0 +1,44 @@
+function player_store_gui_get_all(p: player) :: texts:
+  return {players::%{_p}%::guis::*}
+
+function player_store_gui_isset(p: player, gui: text) :: boolean:
+  if {players::%{_p}%::guis::*} contains {_gui}:
+    return true
+  return false
+
+function player_store_gui_get_first(p: player) :: text:
+  return first element of {players::%{_p}%::guis::*}
+
+function player_store_gui_get_last(p: player) :: text:
+  return last element of {players::%{_p}%::guis::*}
+
+function player_store_gui_add(p: player, gui: text):
+  add {_gui} to {players::%{_p}%::guis::*}
+
+function player_store_gui_count(p: player) :: number:
+  return size of {players::%{_p}%::guis::*}
+
+function player_store_gui_get_slot(p: player, gui: text, slot: number) :: item:
+  return {players::%{_p}%::guis::%{_gui}%::%{_slot}%::item}
+
+function player_store_gui_get_slot_all(p: player, gui: text) :: items:
+  delete {_res::*}
+  loop {players::%{_p}%::guis::%{_gui}%::slots::*}:
+    set {_slot} to loop-value
+    add {players::%{_p}%::guis::%{_gui}%::%{_slot}%::item} to {_res::*}
+  return {_res::*}
+
+function player_store_gui_set_slot(p: player, gui: text, slot: number, item: item):
+  set {players::%{_p}%::guis::%{_gui}%::%{_slot}%::item} to {_item}
+  add {_slot} to {players::%{_p}%::guis::%{_gui}%::slots::*}
+
+function player_store_gui_delete_slot(p: player, gui: text, slot: number):
+  delete {players::%{_p}%::guis::%{_gui}%::%{_slot}%::*}
+  remove {_slot} from {players::%{_p}%::guis::%{_gui}%::slots::*}
+
+function player_store_gui_delete(p: player, gui: text):
+  remove {_gui} from {players::%{_p}%::guis::*}
+  delete {players::%{_p}%::guis::%{_gui}%::*}
+
+function player_store_gui_delete_all(p: player):
+  delete {players::%{_p}%::guis::*}

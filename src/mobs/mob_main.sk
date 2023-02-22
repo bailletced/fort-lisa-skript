@@ -14,19 +14,23 @@ function mob_set_equipments(mob: entity):
   set {_category} to entity_nbt_get_tag({_mob}, "CATEGORY")
   set {_id} to entity_nbt_get_tag({_mob}, "ID")
   loop {EQUIPMENT::CATEGORY::*}:
-    broadcast "%{MOB::%{_category}%::%{_id}%::EQUIPMENT::%loop-value%}% %loop-value%"
     if {MOB::%{_category}%::%{_id}%::EQUIPMENT::%loop-value%} is set:
       equip {_mob} with {MOB::%{_category}%::%{_id}%::EQUIPMENT::%loop-value%} parsed as item
 
-
-function mob_summon(category: text, id: text, location: location) :: entity:
-  if {_category} is "ZOMBIE":
-    set {_mob} to zombie_summon({_id}, {_location})
-
+function mob_initialize(mob: entity):
   entity_nbt_set_tag({_mob}, "TYPE", "MOB")
   entity_nbt_set_tag({_mob}, "CATEGORY", {_category})
   entity_nbt_set_tag({_mob}, "ID", {_id})
   mob_set_stats({_mob})
   mob_set_equipments({_mob})
   mob_store_add({_mob})
-  return {_mob}
+
+function mob_summon(category: text, id: text, location: location) :: entity:
+  if {_category} is "ZOMBIE":
+    set {_mob} to zombie_summon({_location})
+  else if {_category} is "VOID_ARCHER":
+    void_archer_summon({_location})
+
+  if {_mob} is set:
+    mob_initialize({_mob})
+    return {_mob}

@@ -3,9 +3,12 @@ on right click:
   set {_targetName} to name of target
   if {_targetName} is {NPC::LISA::NAME}:
     lisa_rightClick()
-  # else:
-  #   set {_item} to tool
-  #   set {_itemType} to item_nbt_get_tag({_item}, "TYPE")
-  #   if {_itemType} is "SKILL":
-  #     skill_cast({_p}, {_item})
-  #     cancel event
+  else:
+    if block is set:
+      set {_type} to block_nbt_get_tag(block, "TYPE")
+      if {_type} is "GUI":
+        if player_store_gui_count({_p}) is 0:
+          set {_category} to block_nbt_get_tag(block, "CATEGORY")
+          set {_id} to block_nbt_get_tag(block, "ID")
+          gui_open({_p}, {_category}, {_id})
+          cancel event

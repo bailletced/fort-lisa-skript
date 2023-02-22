@@ -1,4 +1,23 @@
-CD:
-  ITEM: gunpowder
-NOMANA:
-  ITEM: barrier
+MAIN:
+  CD:
+    ITEM: gunpowder
+  NOMANA:
+    ITEM: barrier
+GUI:
+  UNAVAILABLE:
+    ITEM: barrier
+GIFT:
+  MEMORY:
+    ITEM: yellow wool
+  INTELLECT:
+    ITEM: red wool
+  WILL:
+    ITEM: purple wool
+  UNAVAILABLE:
+    ITEM: barrier
+  MAXIMUM_REACHED:
+    ITEM: barrier
+  WILL_REQUIRED:
+    ITEM: barrier
+  NO_GIFT:
+    ITEM: barrier

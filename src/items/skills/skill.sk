@@ -1,15 +1,21 @@
-
-
-
-#Give a weapon to the player
-function skill_give(p: player, category: text, id: text) :: item:
+#Give a skill to the player
+function skill_give(p: player, category: text, id: text, linkedEquipment: item = stone) :: item:
   set {_skill} to item_create({_p}, "SKILL", {_category}, {_id})
   item_store_stat_set({_skill}, "CD", 0)
+  set {_uuid} to item_nbt_get_tag({_linkedEquipment}, "UUID")
+  if {_uuid} is not "":
+    set {_intellect::*} to item_nbt_get_list({_linkedEquipment}, "INTELLECT")
+    loop {_intellect::*}:
+      set {_intellectGift} to item_create({_p}, "GIFT", "INTELLECT", loop-value)
+      set {_skill} to item_merge_stats({_intellectGift}, {_skill})
+    set {_skill} to item_nbt_set_list({_skill}, "INTELLECT", {_intellect::*})
+    set {_skill} to item_nbt_set_tag({_skill}, "UUID", {_uuid})
+    set {_skill} to i18n_item({_p}, {_skill})
   player_store_skill_give({_p}, {_skill})
   skill_mana({_p}, {_skill})
   return {_skill}
 
-function skill_cast(p: player, skill: item):
+function skill_cast(p: player, skill: item) :: boolean:
   set {_canCast} to true
   set {_category} to item_nbt_get_tag({_skill}, "CATEGORY")
   set {_requiredMana} to item_nbt_get_stat({_skill}, "MANA")
@@ -39,9 +45,12 @@ function skill_cast(p: player, skill: item):
     skill_cooldown({_p}, {_skill})
 
     # CAST THE SKILL
-    if {_category} is "MAGE":
-      mage_cast({_p}, {_skill})
-    
+    if {_category} is "HELMET":
+      helmet_cast({_p}, {_skill})
+    else if {_category} is "CHESTPLATE":
+      chestplate_cast({_p}, {_skill})
+  return {_canCast}
+
 
 # Handle whether skill is not in CD
 function skill_cooldown(p: player, skill: item):
@@ -106,8 +115,3 @@ function skill_copy(source: item, dest: item) :: item:
     set name of {_dest} to name of {_source}
     set lore of {_dest} to lore of {_source}
   return {_dest}
-
-# #Called when the player hit a block/entity with a projectile skill
-# function skill_hit(p: player, category: text, id: text, location: location):
-#     if {_category} is "MAGE":
-#         staff_hit({_p}, {_id}, {_location})

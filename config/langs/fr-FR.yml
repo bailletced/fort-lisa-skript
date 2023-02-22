@@ -10,6 +10,27 @@ MESSAGE:
         IN_PROGRESS: "Ce sort est en cooldown"
 WAVE:
   TITLE: "Vague"
+STAT:
+  ATTACK:
+    NORMAL: "Attaque"
+  POWER:
+    NORMAL: "Puissance"
+  DEFENCE:
+    NORMAL: "Défense"
+  MR:
+    NORMAL: "Res.Magique"
+  HEALTH:
+    NORMAL: "PV"
+  HEALTH_MAX:
+    NORMAL: "PV.Max"
+  HEALTH_REGEN:
+    NORMAL: "PV.Regen"
+  MANA:
+    NORMAL: "Mana"
+  MANA_MAX:
+    NORMAL: "Mana.Max"
+  MANA_REGEN:
+    NORMAL: "Mana.Regen"
 WEAPON:
   STAFF:
     TEST:
@@ -17,18 +38,83 @@ WEAPON:
       LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE} infligeant {_POWER}."
     LIMB_OF_WISDOM:
       TITLE: "L'Abattis de Sagesse"
-      LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE}, rayon {_RADIUS} et infligeant {_POWER}"
+      LORE: "Projette une boule de portée {_RANGE} et infligeant {_POWER}"
+EQUIPMENT:
+  HELMET:
+    LAUREL_CROWN:
+      TITLE: "La couronne de laurier {_TIER}"
 SKILL:
-  MAGE:
+  HELMET:
     TEST:
       TITLE: "Le souffle du dragon"
       LORE: "Le souffle du dragon repousse les ennemis avant d'infliger des dégâts en bout de course, infligeant {_POWER} dans un rayon de {_RADIUS}"
-    DRAGON_BREATH:
+    BURNING_HEART:
       TITLE: "Le souffle du dragon"
-      LORE: "Le souffle du dragon repousse les ennemis avant d'infliger des dégâts en bout de course, infligeant {_POWER} dans un rayon de {_RADIUS}"
+      LORE: "Le souffle du dragon inflige {_POWER} tous les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION} pour chaque ennemi traversé dans un rayon de {_RADIUS}. Portée {_RANGE}"
+  CHESTPLATE:
+    MOUNTAIN:
+      TITLE: "L'écrasement"
+      LORE: "L'écrasement inflige {_ATTACK} à tous les ennemis dans un rayon de {_RADIUS}. Les ennemis touchés sont enfoncés dans le sol pendant {_EFFECT_DURATION}"
+  STAFF:
+    BURNING_HEART:
+      LORE: "Projette une boule de feu qui inflige {_POWER} tous les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION} dans un rayon de {_RADIUS}. Portée {_RANGE}"
+GIFT:
+  MEMORY:
+    TITLE: "Mémoire"
+    DAMAGE_1:
+      TITLE: "Mémoire offensive"
+      LORE: "Octroie {_ATTACK} et {_POWER}"
+  WILL:
+    TITLE: "Volonté"
+    BURNING_HEART:
+      TITLE: "Volonté du coeur brûlant"
+    MOUNTAIN:
+      TITLE: "Volonté de la montagne"
+  INTELLECT:
+    TITLE: "Intelligence"
+    RANGE_1:
+      TITLE: "Intelligence conceptuelle"
+      LORE: "Octroie {_RANGE} de portée supplémentaire sur le don de volonté associé"
+    RADIUS_1:
+      TITLE: "Impact amélioré"
+      LORE: "Octroie {_RADIUS} de zone d'effet supplémentaire sur le don de volonté associé"
+ATTRIBUTE:
+  RADIUS: "AOE"
+  EFFECT: "Effet"
+  PROJECTILE: "Projectile"
+GUI:
+  GIFT:
+    ALTAR:
+      INITIAL:
+        TITLE: "Equipement / Arme"
+      CHOOSE_CATEGORY:
+        TITLE: "Fructifier les dons"
+      CONSECRATE:
+        TITLE: "Don : {_category}"
 UTILITY:
   MAIN:
     CD:
       TITLE: "Cooldown"
     NOMANA:
       TITLE: "Pas assez de mana"
+  GUI:
+    UNAVAILABLE:
+      TITLE: "Slot non disponible"
+  GIFT:
+    MEMORY:
+      TITLE: "Don de mémoire"
+    INTELLECT:
+      TITLE: "Don d'intelligence"
+    WILL:
+      TITLE: "Don de volonté"
+    UNAVAILABLE:
+      TITLE: "Slot non disponible"
+    MAXIMUM_REACHED:
+      TITLE: "Slot non disponible"
+      LORE: "Impossible d'ajouter un don supplémentaire"
+    WILL_REQUIRED:
+      TITLE: "Slot non disponible"
+      LORE: "Intelligence sans volonté ne rime à rien"
+    NO_GIFT:
+      TITLE: "Slot non disponible"
+      LORE: "Vous n'avez pas de don {_CATEGORY} dans votre inventaire"

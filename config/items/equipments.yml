@@ -1,0 +1,30 @@
+HELMET:
+  TEST:
+    TIER: 1
+    ITEM: leather helmet
+    GIFTS:
+      WILL_MAX: 1
+      INTELLECT_MAX: 1
+      MEMORY_MAX: 1
+    STATS:
+      DEFENCE: 2
+      HEALTH_MAX: 3
+  LAUREL_CROWN:
+    TIER: 1
+    ITEM: leather helmet
+    GIFTS:
+      WILL_MAX: 1
+      INTELLECT_MAX: 1
+      MEMORY_MAX: 1
+    STATS:
+      DEFENCE: 1
+CHESTPLATE:
+  CHAINMAIL:
+    TIER: 1
+    ITEM: leather chestplate
+    GIFTS:
+      WILL_MAX: 1
+      INTELLECT_MAX: 1
+      MEMORY_MAX: 1
+    STATS:
+      HEALTH_MAX: 4

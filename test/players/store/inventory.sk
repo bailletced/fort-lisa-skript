@@ -1,0 +1,35 @@
+function test_players_store_inventory(p: player):
+  send "§5Testing store inventory" to the console 
+  it "test backup/restore":
+    clear inventory of {_p}
+    give 5 of stone to {_p}
+    give 5 of diamond sword to {_p}
+    assert if slot 0 of {_p} is 5 of stone with message "slot 0 of %{_p}% should be 5 stone. Got %slot 0 of {_p}%"
+    assert if inventory of {_p} contains 5 diamond sword with message "inventory of %{_p}% should contain 5 diamond sword."
+
+    player_store_inventory_backup({_p})
+    set {_count} to player_store_inventory_count({_p})
+    assert if slot 0 of {_p} is air with message "slot 0 of %{_p}% should be air. Got %slot 0 of {_p}%"
+    assert if inventory of {_p} does not contain 5 diamond sword with message "inventory of %{_p}% should not contain 5 diamond sword."
+    assert if {_count} is 6 with message "count inventory of %{_p}% should be 6. Got %{_count}%"
+
+    player_store_inventory_restore({_p})
+    set {_count} to player_store_inventory_count({_p})
+    assert if slot 0 of {_p} is 5 of stone with message "slot 0 of %{_p}% should be 5 stone. Got %slot 0 of {_p}%"
+    assert if inventory of {_p} contains 5 diamond sword with message "inventory of %{_p}% should contain 5 diamond sword."
+    assert if {_count} is 0 with message "count inventory of %{_p}% should be 0. Got %{_count}%"
+
+  it "test filter by categories":
+    clear inventory of {_p}
+    give stone to {_p}
+    item_give({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM")
+    set {_item1} to slot 1 of {_p}
+    item_give({_p}, "GIFT", "MEMORY", "DAMAGE_1")
+    set {_item2} to slot 2 of {_p}
+    player_store_inventory_backup({_p})
+    player_store_inventory_filter({_p}, "", ("STAFF" and "MEMORY"))
+    assert if slot 0 of {_p} is {_item1} with message "slot 0 of %{_p}% should be %{_item1}%. Got %slot 0 of {_p}%"
+    assert if slot 1 of {_p} is {_item2} with message "slot 1 of %{_p}% should be %{_item2}%. Got %slot 1 of {_p}%"
+    assert if inventory of {_p} does not contain stone with message "inventory of %{_p}% should not contain stone"
+    player_store_inventory_restore({_p})
+  clear inventory of {_p}

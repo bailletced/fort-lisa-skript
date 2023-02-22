@@ -1,8 +1,23 @@
 ALL:
+  HEALTH_MAX:
+    ICON: "۝"
+    COLOR: "§c"
+  HEALTH:
+    ICON: "❤"
+    COLOR: "§c"
+  HEALTH_REGEN:
+    ICON: "۝"
+    COLOR: "§c"
   ATTACK:
     ICON: "🗡"
     COLOR: "§6"
+  ATTACK_MULTIPLIER:
+    ICON: "🗡"
+    COLOR: "§6"
   POWER:
+    ICON: "🗡"
+    COLOR: "§d"
+  POWER_MULTIPLIER:
     ICON: "🗡"
     COLOR: "§d"
   DEFENCE:
@@ -13,7 +28,7 @@ ALL:
     COLOR: "§d"
   RANGE:
     ICON: "➝"
-    COLOR: "§e"
+    COLOR: "§f"
   RADIUS:
     ICON: "۞"
     COLOR: "§d"
@@ -44,15 +59,19 @@ ALL:
   DURATION:
     ICON: "۝"
     COLOR: "§9"
-  HEALTH_MAX:
+  PROJECTILE_SPEED:
     ICON: "۝"
     COLOR: "§c"
-  HEALTH:
-    ICON: "❤"
-    COLOR: "§c"
-  HEALTH_REGEN:
+  PROJECTILE_AMOUNT:
     ICON: "۝"
     COLOR: "§c"
+  EFFECT_DURATION:
+    ICON: ""
+    COLOR: "§c"
+  EFFECT_FREQUENCY:
+    ICON: ""
+    COLOR: "§c"
+
 
 PLAYER:
   - "HEALTH"
@@ -74,6 +93,8 @@ WEAPON:
   - "MANA"
   - "RADIUS"
   - "RANGE"
+  - PROJECTILE_SPEED
+  - PROJECTILE_AMOUNT
 
 SKILL:
   - "ATTACK"
@@ -85,6 +106,24 @@ SKILL:
   - "MANA"
   - "COOLDOWN"
   - "DURATION"
+  - PROJECTILE_SPEED
+  - PROJECTILE_AMOUNT
+
+GIFT:
+  - "ATTACK"
+  - "POWER"
+  - "MANA"
+  - "MANA_REGEN"
+  - "HEALTH"
+  - "HEALTH_REGEN"
+  - "DEFENCE"
+  - "MR"
+  - "COOLDOWN"
+  - "RANGE"
+  - "RADIUS"
+  - "PROJECTILE"
+  - PROJECTILE_SPEED
+  - PROJECTILE_AMOUNT
 
 MOB:
   - "HEALTH"

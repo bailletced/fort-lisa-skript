@@ -1,17 +1,13 @@
 function player_stat_item(p: player, item: item, stat: text) :: number:
-  set {_type} to item_nbt_get_tag({_item}, "TYPE")
-  set {_category} to item_nbt_get_tag({_item}, "CATEGORY")
-  set {_id} to item_nbt_get_tag({_item}, "ID")
-  return player_stat_item_details({_p}, {_type}, {_category}, {_id}, {_stat})
-
-function player_stat_item_details(p: player, type: text, category: text, id: text, stat: text) :: number:
   set {_playerStat} to 0
   set {_keyMultiplier} to "%{_stat}%_MULTIPLIER"
-  set {_statMultiplier} to {%{_type}%::%{_category}%::%{_id}%::%{_keyMultiplier}%}
-  set {_itemStat} to {%{_type}%::%{_category}%::%{_id}%::%{_stat}%}
+  set {_statMultiplier} to item_nbt_get_stat({_item}, {_keyMultiplier})
+  set {_itemStat} to item_nbt_get_stat({_item}, {_stat})
 
   if {_statMultiplier} is not set:
     set {_statMultiplier} to 1
   if player_store_stat_isset({_p}, {_stat}) is true:
     set {_playerStat} to player_store_stat_get({_p}, {_stat})
   return {_itemStat} + {_statMultiplier} * {_playerStat}
+
+  

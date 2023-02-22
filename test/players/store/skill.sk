@@ -6,12 +6,12 @@ function test_players_store_skill(p: player):
     player_store_stat_set({_p}, "POWER", 10)
 
     set slot 0 of {_p} to stone
-    set {_skill1} to skill_give({_p}, "MAGE", "TEST")
+    set {_skill1} to skill_give({_p}, "HELMET", "TEST")
     set {_slot} to player_store_skill_slot({_p}, {_skill1})
     assert if {_slot} is 0 with message "skill should be given in slot 0. Got %{_slot}%"
     assert if slot 1 of {_p} is stone with message "slot 1 of player should be stone block. Got %slot 1 of {_p}%"
 
-    set {_skill2} to skill_give({_p}, "MAGE", "TEST")
+    set {_skill2} to skill_give({_p}, "HELMET", "TEST")
     set {_slotSkill1} to player_store_skill_slot({_p}, {_skill1})
     set {_slotSkill2} to player_store_skill_slot({_p}, {_skill2})
     
@@ -22,7 +22,7 @@ function test_players_store_skill(p: player):
   it "test skill reload":
     clear inventory of {_p}
     player_store_skill_delete_all({_p})
-    set {_skill} to skill_give({_p}, "MAGE", "TEST")
+    set {_skill} to skill_give({_p}, "HELMET", "TEST")
     set {_slot} to player_store_skill_slot({_p}, {_skill})
     player_store_stat_set({_p}, "POWER", 100)
 
@@ -35,9 +35,9 @@ function test_players_store_skill(p: player):
   it "test get all skills":
     clear inventory of {_p}
     player_store_skill_delete_all({_p})
-    skill_give({_p}, "MAGE", "TEST")
-    skill_give({_p}, "MAGE", "TEST")
-    skill_give({_p}, "MAGE", "TEST")
+    skill_give({_p}, "HELMET", "TEST")
+    skill_give({_p}, "HELMET", "TEST")
+    skill_give({_p}, "HELMET", "TEST")
     delete {_skill::*}
     set {_skill::*} to player_store_skills({_p})
     assert if size of {_skill::*} is 3 with message "player_store_skills should return 3 skills. Got %size of {_skill::*}%"

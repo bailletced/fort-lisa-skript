@@ -1,9 +1,15 @@
 # get translation
-function i18n(p: player, path: text, color: text = "") :: text:
+function i18n(p: player, path: text, color: text = "", variables: texts = "") :: text:
   set {_lang} to player_store_setting_get({_p}, "lang")
   if {_lang} is not set:
     set {_lang} to {LANG_FALLBACK}
-  set {_text} to yaml value {_path} in upper case from "YAML-LANG-%{_lang}%"
-  if {_text} is set:
+  if yaml path {_path} in "YAML-LANG-%{_lang}%" exists:
+    set {_text} to yaml value {_path} in upper case from "YAML-LANG-%{_lang}%"
+    if {_variables::*} is not "":
+      loop {_variables::*}:
+        set {_start} to first index of "{_" in {_text}
+        set {_end} to first index of "}" in {_text}
+        set {_substr} to subtext of {_text} from characters {_start} to {_end}
+        replace "%{_substr}%" in {_text} with "%loop-value%"
     return "%{_color}%%{_text}%"
   return ""

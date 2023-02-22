@@ -1,10 +1,11 @@
 function test_player_stat_item(p: player):
   send "§5Testing player stat item" to the console
   it "Test player_stat_item":
+    set {_item} to weapon_give({_p}, "STAFF", "TEST")
     set {_powerPlayer} to 10
     player_store_stat_set({_p}, "POWER", {_powerPlayer})
-    set {_finalpower} to player_stat_item_details({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM", "POWER")
-    set {_statMultiplierItem} to {WEAPON::STAFF::LIMB_OF_WISDOM::POWER_MULTIPLIER}
-    set {_statItem} to {WEAPON::STAFF::LIMB_OF_WISDOM::POWER}
+    set {_finalpower} to player_stat_item({_p}, {_item}, "POWER")
+    set {_statMultiplierItem} to {WEAPON::STAFF::TEST::POWER_MULTIPLIER}
+    set {_statItem} to {WEAPON::STAFF::TEST::POWER}
     set {_expectedRes} to {_statItem} + {_powerPlayer} * {_statMultiplierItem}
-    assert if {_expectedRes} is {_finalpower} with message "stat should be %{_expectedRes}%. Got %{_finalpower}%"
+    assert if "%{_expectedRes}%" is "%{_finalpower}%" with message "stat should be %{_expectedRes}%. Got %{_finalpower}%"

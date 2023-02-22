@@ -3,8 +3,9 @@ function mob_store_target_set(mob: entity, target: text):
   set {mobs::%{_uuid}%::target} to {_target}
 
 function mob_store_target_get(mob: entity) :: text:
-  set {_uuid} to uuid of {_mob}
-  return {mobs::%{_uuid}%::target}
+  if {_mob} is alive:
+    set {_uuid} to uuid of {_mob}
+    return {mobs::%{_uuid}%::target}
 
 function mob_store_target_player_get(mob: entity) :: player:
   set {_uuid} to uuid of {_mob}

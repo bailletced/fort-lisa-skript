@@ -1,4 +1,4 @@
-function test_player_action_damage(p: player):
+function test_entity_effect_damage(p: player):
   send "§5Testing player action damage" to the console
   it "test damage MOB":
     set {_location} to location of {_p}
@@ -6,7 +6,7 @@ function test_player_action_damage(p: player):
     set {_currHealth} to health of {_zombie}
     entity_nbt_set_stat({_zombie}, "MR", 5)
     set {_mr} to entity_nbt_get_stat({_zombie}, "MR")
-    player_action_damage({_p}, {_zombie}, 0, 10)
+    entity_effect_damage({_p}, {_zombie}, 0, 10)
     set {_afterHealth} to health of {_zombie}
     assert if {_afterHealth} is {_currHealth} - (10 - {_mr}) with message "health of zombie should be %{_currHealth} - (10 - {_mr})%. Got %{_afterHealth}%"
     kill {_zombie}

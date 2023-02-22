@@ -1,4 +1,4 @@
-function zombie_summon(id: text, location: location) :: entity:
+function zombie_summon(location: location) :: entity:
   summon adult zombie at {_location}
   set {_zombie} to last spawned entity
   mob_ai_init({_zombie})

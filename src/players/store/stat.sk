@@ -1,26 +1,16 @@
-#Set stat to a a player 
-#Params: 
-#   p : player The player to give the skill
-#   key : text The stat to set
-#   value : object The value to set 
-function player_store_stat_set(p: player, key: text, value: number):
-    set {_reload} to true
-    set {players::%{_p}%::stat::%{_key}%} to {_value}
-    if "HEALTH_MAX", "HEALTH" and "MANA" contains {_key}:
-        set {_reload} to false
-    else if {_key} is "HEALTH_MAX":
+function player_store_stat_sideEffect(p: player, key: text, value: number):
+    if {_key} is "HEALTH_MAX":
         set max health of {_p} to {_value}
-        set {_reload} to false
     else if {_key} is "HEALTH":
         set health of {_p} to {_value}
-        set {_reload} to false
     else if {_key} is "MANA_MAX":
         set level of {_p} to {_value}
 
-    if {_reload} is true:
-        player_store_weapon_reload_all({_p})
-        player_store_skill_reload_all({_p})
-        player_interface_tablist_player({_p})
+function player_store_stat_set(p: player, key: text, value: number):
+    set {players::%{_p}%::stat::%{_key}%} to {_value}
+    player_store_stat_sideEffect({_p}, {_key}, {_value})
+    if {_key} is not "MANA":
+        player_store_stat_render({_p})
 
 #Add a stat to a a player 
 #Params: 
@@ -30,8 +20,23 @@ function player_store_stat_set(p: player, key: text, value: number):
 function player_store_stat_add(p: player, key: text, value: number):
     if player_store_stat_isset({_p}, {_key}) is true:
         add {_value} to {players::%{_p}%::stat::%{_key}%}
-        player_store_weapon_reload_all({_p})
-        player_interface_tablist_player({_p})
+    else:
+        set {players::%{_p}%::stat::%{_key}%} to {_value}
+    player_store_stat_sideEffect({_p}, {_key}, {players::%{_p}%::stat::%{_key}%})
+    if {_key} is not "MANA":
+        player_store_stat_render({_p})
+
+function player_store_stat_add_lazy(p: player, key: text, value: number):
+    if player_store_stat_isset({_p}, {_key}) is true:
+        add {_value} to {players::%{_p}%::stat::%{_key}%}
+    else:
+        set {players::%{_p}%::stat::%{_key}%} to {_value}
+    player_store_stat_sideEffect({_p}, {_key}, {players::%{_p}%::stat::%{_key}%})
+
+function player_store_stat_render(p: player):
+    player_store_weapon_reload_all({_p})
+    player_store_skill_reload_all({_p})
+    player_interface_tablist_player({_p})
 
 #Set stat to a a player 
 #Params: 

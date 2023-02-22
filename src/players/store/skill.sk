@@ -10,13 +10,14 @@ function player_store_skills(p: player) :: items:
   return {_res::*} 
 
 function player_store_skill_give(p: player, skill: item):
-  set {_count} to size of {players::%{_p}%::skill::*}
-  if slot {_count} of {_p} is not air:
-    set {_tmp} to slot {_count} of {_p}
-    set slot {_count} of {_p} to {_skill}
-    give {_tmp} to {_p}
-  else:
-    set slot {_count} of {_p} to {_skill}
+  # set {_count} to size of {players::%{_p}%::skill::*}
+  # if slot {_count} of {_p} is not air:
+  #   set {_tmp} to slot {_count} of {_p}
+  #   set slot {_count} of {_p} to {_skill}
+  #   give {_tmp} to {_p}
+  # else:
+  #   set slot {_count} of {_p} to {_skill}
+  give 1 of {_skill} to {_p}
   set {_uuid} to item_nbt_get_tag({_skill}, "UUID")
   add {_uuid} to {players::%{_p}%::skill::*}
 

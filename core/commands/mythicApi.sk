@@ -1,0 +1,19 @@
+function loc_to_mythicApi(location: location) :: text:
+  set {_x} to x coordinate of {_location}
+  set {_y} to y coordinate of {_location}
+  set {_z} to z coordinate of {_location}
+  set {_world} to world of {_location}
+  return "%{_world}%,%{_x}%,%{_y}%,%{_z}%"
+
+command /mythicApi [<text>] [<text>] [<text>] [<text>] [<text>]:
+  trigger:
+    set {_p} to player
+    if arg-1 is "summon":
+      set {_mobId} to arg-2
+      set {_location} to arg-3
+      execute console command "mm m spawn %{_mobId}% 1 %{_location}%"
+    else if arg-1 is "register":
+      set {_mobUuid} to arg-2
+      set {_mob} to {_mobUuid} parsed as entity
+      mob_initialize({_mob})
+      mob_ai_init({_mob})

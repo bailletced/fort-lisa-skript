@@ -17,21 +17,45 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
             player_store_stat_set({_p}, arg-4, arg-5 parsed as number)
         else if arg-3 is "get":
           set {_stat} to player_store_stat_get({_p}, arg-4)
-          broadcast "%arg-4% %{_stat}%"
       else if arg-2 is "init":
         player_init()
       else if arg-2 is "clean":
         player_clean(player)
-    
+      else if arg-2 is "listener":
+        if arg-3 is set:
+          if arg-3 is "list":
+            set {_all::*} to player_store_listener_get_all({_p})
+            broadcast "%{_all::*}%"
+          else:
+            if arg-4 is "off":
+              player_store_listener_remove(player, arg-3)
+            else if arg-4 is "on":
+              player_store_listener_add({_p}, arg-3)
+
     else if arg-1 is "weapon":
       set {_category} to arg-2
       set {_id} to arg-3
       item_give(player, "WEAPON", {_category}, {_id})
 
+    else if arg-1 is "equipment":
+      set {_category} to arg-2
+      set {_id} to arg-3
+      item_give(player, "EQUIPMENT", {_category}, {_id})
+
     else if arg-1 is "skill":
       set {_category} to arg-2
       set {_id} to arg-3
       item_give(player, "SKILL", {_category}, {_id})
+    
+    else if arg-1 is "gift":
+      set {_category} to arg-2
+      set {_id} to arg-3
+      item_give(player, "GIFT", {_category}, {_id})
+
+    else if arg-1 is "gui":
+      set {_category} to arg-2
+      set {_id} to arg-3
+      gui_summon({_category}, {_id}, location of {_p})
 
     else if arg-1 is "settings":
       if arg-2 is "INGAME":
@@ -45,6 +69,10 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
         game_start()
       else:
         game_end()
+
+    else if arg-1 is "wave":
+      if arg-2 is "start":
+        wave_start(arg-3 parsed as number)
 
     else if arg-1 is "test":
       if arg-2 is "all":
@@ -69,18 +97,22 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
         test_mob_main(player)
 
 on tab complete of "/admin":
-  set tab completions for position 1 to "init", "hmr", "stat", "player", "weapon", "skill", "settings", "game" and "test"
+  set tab completions for position 1 to "init", "hmr", "stat", "player", "weapon", "equipment", "skill", "settings", "game", "gift", "gui", "wave" and "test"
 
   if tab arg-1 is "hmr":
     set tab completions for position 2 to "reset"
 
   else if tab arg-1 is "player":
-    set tab completions for position 2 to "stat", "clean" and "init"
+    set tab completions for position 2 to "stat", "listener", "clean" and "init"
     if tab arg-2 is "stat":
       set tab completions for position 3 to "get" and "set"
       if tab arg-3 is set:
         set tab completions for position 4 to {STAT::PLAYER::*}
-  
+    else if tab arg-2 is "listener":
+      set tab completions for position 3 to {PLAYER::LISTENER::*}
+      if tab arg-3 is set:
+        set tab completions for position 4 to "on" and "off"
+
   else if tab arg-1 is "weapon":
     set tab completions for position 2 to {WEAPON::CATEGORY::*}
     if tab arg-2 is set:
@@ -88,12 +120,30 @@ on tab complete of "/admin":
       remove "TEST" from {_weapons::*}
       set tab completions for position 3 to {_weapons::*}
   
+  else if tab arg-1 is "equipment":
+    set tab completions for position 2 to {EQUIPMENT::CATEGORY::*}
+    if tab arg-2 is set:
+      set {_equipments::*} to {EQUIPMENT::%tab arg-2%::*}
+      remove "TEST" from {_equipments::*}
+      set tab completions for position 3 to {_equipments::*}
+  
   else if tab arg-1 is "skill":
     set tab completions for position 2 to {SKILL::CATEGORY::*}
     if tab arg-2 is set:
       set {_skills::*} to {SKILL::%tab arg-2%::*}
       remove "TEST" from {_skills::*}
       set tab completions for position 3 to {_skills::*}
+
+  else if tab arg-1 is "gift":
+    set tab completions for position 2 to "MEMORY", "WILL" and "INTELLECT"
+    if tab arg-2 is set:
+      set {_id::*} to {GIFT::%tab arg-2%::ID::*}
+      set tab completions for position 3 to {_id::*}
+
+  else if tab arg-1 is "gui":
+    set tab completions for position 2 to {GUI::CATEGORY::*}
+    if tab arg-2 is set:
+      set tab completions for position 3 to {GUI::%tab arg-2%::ID::*}
   
   else if tab arg-1 is "settings":
     set tab completions for position 2 to "INGAME"
@@ -102,10 +152,13 @@ on tab complete of "/admin":
   
   else if tab arg-1 is "game":
     set tab completions for position 2 to "start" and "stop"
+
+  else if tab arg-1 is "wave":
+    set tab completions for position 2 to "start"
   
   else if tab arg-1 is "test":
     set tab completions for position 2 to "items", "i18n", "player", "mob" and "all"
     if tab arg-2 is "items":
-      set tab completions for position 3 to "weapon", "skill" and "item"
+      set tab completions for position 3 to "weapon", "skill", "gift" and "item"
     else if tab arg-2 is "player":
       set tab completions for position 3 to "store", "action" and "stat"

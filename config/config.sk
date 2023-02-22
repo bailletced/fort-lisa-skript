@@ -4,6 +4,7 @@ function config_load(world: world):
   delete {STAT::*}
   set {STAT::WEAPON::*} to yaml list "WEAPON" from "YAML-STATS"
   set {STAT::SKILL::*} to yaml list "SKILL" from "YAML-STATS"
+  set {STAT::GIFT::*} to yaml list "GIFT" from "YAML-STATS"
   set {STAT::PLAYER::*} to yaml list "PLAYER" from "YAML-STATS"
   set {STAT::MOB::*} to yaml list "MOB" from "YAML-STATS"
   set {STAT::NPC::*} to yaml list "NPC" from "YAML-STATS"
@@ -14,19 +15,27 @@ function config_load(world: world):
     set {STAT::%loop-value%::COLOR} to yaml value "ALL.%loop-value%.COLOR" from "YAML-STATS"
   unload yaml "YAML-STATS"
 
+  #ATTRIBUTES
+  load yaml "plugins/Skript/scripts/fort-lisa/config/attributes.yml" as "YAML-ATTRIBUTES"
+  delete {ATTRIBUTE::*}
+  set {ATTRIBUTE::*} to yaml list "ATTRIBUTES" from "YAML-ATTRIBUTES"
+
   #SKILLS
   load yaml "plugins/Skript/scripts/fort-lisa/config/items/skills.yml" as "YAML-SKILLS"
+  load yaml "plugins/Skript/scripts/fort-lisa/config/items/gifts/will.yml" as "YAML-GIFT-WILL"
   delete {SKILL::*}
   loop yaml node keys "" of "YAML-SKILLS":
     set {_category} to loop-value
-    add {_category} to {SKILL::CATEGORY::*}
     loop yaml node keys "%{_category}%" of "YAML-SKILLS":
       set {_id} to loop-key-2
       add {_id} to {SKILL::%{_category}%::*}
       set {SKILL::%{_category}%::%{_id}%::ITEM} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-SKILLS" parsed as item
+      set {SKILL::%{_category}%::%{_id}%::ATTRIBUTE::*} to yaml list "%{_category}%.%{_id}%.ATTRIBUTES" from "YAML-SKILLS"
       loop yaml node keys "%{_category}%.%{_id}%.STATS" of "YAML-SKILLS":
+        add loop-key-3 to {SKILL::%{_category}%::%{_id}%::STAT::*}
         set {SKILL::%{_category}%::%{_id}%::%loop-key-3%} to yaml value "%{_category}%.%{_id}%.STATS.%loop-key-3%" from "YAML-SKILLS"
   unload yaml "YAML-SKILLS"
+  unload yaml "YAML-GIFT-WILL"
 
   #WEAPONS
   load yaml "plugins/Skript/scripts/fort-lisa/config/items/weapons.yml" as "YAML-WEAPONS"
@@ -39,13 +48,34 @@ function config_load(world: world):
       set {_id} to loop-key-2
       add {_id} to {WEAPON::%{_category}%::*}
       set {WEAPON::%{_category}%::%{_id}%::ITEM} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-WEAPONS" parsed as item
+      set {WEAPON::%{_category}%::%{_id}%::ATTRIBUTE::*} to yaml list "%{_category}%.%{_id}%.ATTRIBUTES" from "YAML-WEAPONS"
       loop yaml node keys "%{_category}%.%{_id}%.STATS" of "YAML-WEAPONS":
         set {WEAPON::%{_category}%::%{_id}%::%loop-key-3%} to yaml value "%{_category}%.%{_id}%.STATS.%loop-key-3%" from "YAML-WEAPONS"
+      loop yaml node keys "%{_category}%.%{_id}%.GIFTS" of "YAML-WEAPONS":
+        set {WEAPON::%{_category}%::%{_id}%::%loop-key-3%} to yaml value "%{_category}%.%{_id}%.GIFTS.%loop-key-3%" from "YAML-WEAPONS"
   unload yaml "YAML-WEAPONS"
+
+  #EQUIPMENTS
+  load yaml "plugins/Skript/scripts/fort-lisa/config/items/equipments.yml" as "YAML-EQUIPMENTS"
+  delete {EQUIPMENT::*}
+  loop yaml node keys "" of "YAML-EQUIPMENTS":
+    set {_category} to loop-value
+    add {_category} to {EQUIPMENT::CATEGORY::*}
+    loop yaml node keys "%{_category}%" of "YAML-EQUIPMENTS":
+      set {_id} to loop-key-2
+      add {_id} to {EQUIPMENT::%{_category}%::*}
+      set {EQUIPMENT::%{_category}%::%{_id}%::ITEM} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-EQUIPMENTS" parsed as item
+      set {EQUIPMENT::%{_category}%::%{_id}%::TIER} to yaml value "%{_category}%.%{_id}%.TIER" from "YAML-EQUIPMENTS"
+      loop yaml node keys "%{_category}%.%{_id}%.STATS" of "YAML-EQUIPMENTS":
+        set {EQUIPMENT::%{_category}%::%{_id}%::%loop-key-3%} to yaml value "%{_category}%.%{_id}%.STATS.%loop-key-3%" from "YAML-EQUIPMENTS"
+      loop yaml node keys "%{_category}%.%{_id}%.GIFTS" of "YAML-EQUIPMENTS":
+        set {EQUIPMENT::%{_category}%::%{_id}%::%loop-key-3%} to yaml value "%{_category}%.%{_id}%.GIFTS.%loop-key-3%" from "YAML-EQUIPMENTS"
+  unload yaml "YAML-EQUIPMENTS"
 
   #MOBS
   load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/mobs.yml" as "YAML-MOB"
   load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/zombies.yml" as "YAML-MOB-ZOMBIE"
+  load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/void/archer.yml" as "YAML-MOB-VOID_ARCHER"
   delete {MOB::*}
   loop yaml list "CATEGORIES" from "YAML-MOB":
     set {_category} to loop-value
@@ -59,6 +89,7 @@ function config_load(world: world):
           set {MOB::%{_category}%::%{_id}%::%{_attribute}%::%{_key}%} to {_value}
   unload yaml "YAML-MOB"
   unload yaml "YAML-MOB-ZOMBIE"
+  unload yaml "YAML-MOB-VOID_ARCHER"
 
   #LOCATIONS
   load yaml "plugins/Skript/scripts/fort-lisa/config/locations/dragonland.yml" as "YAML-LOCATION-DRAGONLAND"
@@ -81,10 +112,24 @@ function config_load(world: world):
     add {_location} to {LOCATION::CASTLE::ENTRANCE::*}
   unload yaml "YAML-LOCATION-DRAGONLAND"
 
-  # BLOCKS
+  #BLOCKS
   load yaml "plugins/Skript/scripts/fort-lisa/config/blocks/nocollision.yml" as "YAML-BLOCK-NOCOLLISION"
   delete {BLOCK::*}
   set {BLOCK::NOCOLLISION::*} to yaml list "NOCOLLISION" from "YAML-BLOCK-NOCOLLISION"
+  unload yaml "YAML-BLOCK-NOCOLLISION"
+  
+  #GUIS
+  load yaml "plugins/Skript/scripts/fort-lisa/config/blocks/guis.yml" as "YAML-GUIS"
+  delete {GUI::*}
+  loop node keys "" from "YAML-GUIS":
+    set {_category} to loop-value
+    add {_category} to {GUI::CATEGORY::*}
+    loop node keys "%{_category}%" from "YAML-GUIS":
+      set {_id} to loop-value-2
+      add {_id} to {GUI::%{_category}%::ID::*}
+      set {GUI::%{_category}%::%{_id}%::ITEM} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-GUIS" parsed as item
+  unload yaml "YAML-GUIS"
+
 
   #NPCS
   load yaml "plugins/Skript/scripts/fort-lisa/config/npcs.yml" as "YAML-NPC"
@@ -96,12 +141,49 @@ function config_load(world: world):
       set {NPC::%{_id}%::%{_key}%} to yaml value "%{_id}%.%{_key}%" from "YAML-NPC"
   unload yaml "YAML-NPC"
 
+  #GIFTS
+  delete {GIFT::*}
+  set {GIFT::*} to "WILL", "INTELLECT" and "MEMORY"
+  #MEMORY
+  load yaml "plugins/Skript/scripts/fort-lisa/config/items/gifts/memory.yml" as "YAML-GIFT-MEMORY"
+  set {_category} to "MEMORY"
+  loop node keys "" from "YAML-GIFT-MEMORY":
+    set {_id} to loop-value
+    add {_id} to {GIFT::%{_category}%::ID::*}
+    set {GIFT::%{_category}%::%{_id}%::ITEM} to yaml value "%{_id}%.ITEM" from "YAML-GIFT-MEMORY" parsed as item
+    loop node keys "%{_id}%.STATS" from "YAML-GIFT-MEMORY":
+      set {GIFT::%{_category}%::%{_id}%::%loop-key-2%} to yaml value "%{_id}%.STATS.%loop-key-2%" from "YAML-GIFT-MEMORY"
+  #WILL
+  load yaml "plugins/Skript/scripts/fort-lisa/config/items/gifts/will.yml" as "YAML-GIFT-WILL"
+  loop node keys "" from "YAML-GIFT-WILL":
+    set {_category} to "WILL"
+    set {_id} to loop-value
+    add {_id} to {GIFT::%{_category}%::ID::*}
+    set {GIFT::%{_category}%::%{_id}%::ITEM} to yaml value "%{_id}%.ITEM" from "YAML-GIFT-WILL" parsed as item
+    loop node keys "%{_id}%.STATS" from "YAML-GIFT-WILL":
+      set {GIFT::%{_category}%::%{_id}%::%loop-key-2%} to yaml value "%{_id}%.STATS.%loop-key-2%" from "YAML-GIFT-WILL"
+  #INTELLECT
+  load yaml "plugins/Skript/scripts/fort-lisa/config/items/gifts/intellect.yml" as "YAML-GIFT-INTELLECT"
+  loop node keys "" from "YAML-GIFT-INTELLECT":
+    set {_category} to "INTELLECT"
+    set {_id} to loop-value
+    add {_id} to {GIFT::%{_category}%::ID::*}
+    set {GIFT::%{_category}%::%{_id}%::ITEM} to yaml value "%{_id}%.ITEM" from "YAML-GIFT-INTELLECT" parsed as item
+    loop node keys "%{_id}%.STATS" from "YAML-GIFT-INTELLECT":
+      set {GIFT::%{_category}%::%{_id}%::%loop-key-2%} to yaml value "%{_id}%.STATS.%loop-key-2%" from "YAML-GIFT-INTELLECT"
+    set {GIFT::%{_category}%::%{_id}%::ATTRIBUTE::*} to yaml list "%{_id}%.ATTRIBUTES" from "YAML-GIFT-INTELLECT"
+  unload yaml "YAML-GIFT-MEMORY"
+  unload yaml "YAML-GIFT-WILL"
+  unload yaml "YAML-GIFT-INTELLECT"
+
   #UTILITIES
   load yaml "plugins/Skript/scripts/fort-lisa/config/items/utilities.yml" as "YAML-UTILITIES"
   delete {UTILITY::*}
   loop yaml node keys "" from "YAML-UTILITIES":
-    set {_id} to loop-value
-    set {UTILITY::MAIN::%{_id}%::ITEM} to yaml value "%{_id}%.ITEM" from "YAML-UTILITIES" parsed as item
+    set {_category} to loop-value
+    loop yaml node keys "%{_category}%" from "YAML-UTILITIES":
+      set {_id} to loop-value-2
+      set {UTILITY::%{_category}%::%{_id}%::ITEM} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-UTILITIES" parsed as item
   unload yaml "YAML-UTILITIES"
 
   #LANGS
@@ -115,12 +197,11 @@ function config_load(world: world):
   set {GAME::STATUS} to "WAITING_FOR_START"
   set {NaN} to -999
   set {EQUIPMENT::CATEGORY::*} to "HELMET", "LEGGING", "BOOT", and "CHESTPLATE"
+  set {PLAYER::LISTENER::*} to "STAT" and "list"
 
   # Initialize players. TODO : to be triggered when game starts
   loop all players:
     set {_p} to loop-value
     player_store_weapon_delete_all({_p})
     player_store_skill_delete_all({_p})
-    player_store_setting_set({_p}, "INGAME", false)
-    wait 20 ticks
-    player_store_setting_set({_p}, "INGAME", true)
+    player_store_listener_add({_p}, "STAT")

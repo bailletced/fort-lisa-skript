@@ -1,0 +1,53 @@
+function test_players_store_gui(p: player):
+  send "§5Testing store gui" to the console 
+  it "test get/set/delete guis":
+    player_store_gui_delete_all({_p})
+    set {_count} to player_store_gui_count({_p})
+    assert if {_count} is 0 with message "gui amount should be 0. Got %{_count}%"
+    player_store_gui_add({_p}, "GUITEST")
+    set {_count} to player_store_gui_count({_p})
+    assert if {_count} is 1 with message "gui amount should be 1. Got %{_count}%"
+    player_store_gui_delete_all({_p})
+    set {_count} to player_store_gui_count({_p})
+    assert if {_count} is 0 with message "gui amount should be 0. Got %{_count}%"
+    player_store_gui_add({_p}, "GUITEST")
+    player_store_gui_add({_p}, "GUITEST2")
+    set {_guis::*} to player_store_gui_get_all({_p})
+    assert if size of {_guis::*} is 2 with message "There should be 2 guis. Got %size of {_guis::*}%"
+    assert if {_guis::*} contains "GUITEST" with message "all guis should contain GUITEST. Got %{_guis::*}%"
+    assert if {_guis::*} contains "GUITEST2" with message "all guis should contain GUITEST2. Got %{_guis::*}%"
+
+  it "test get/set/delete item":
+    player_store_gui_delete_all({_p})
+    player_store_gui_add({_p}, "GUITEST")
+    player_store_gui_add({_p}, "GUITEST2")
+    set {_item1} to stone
+    set {_item2} to diamond sword
+    set {_item3} to diamond block
+    player_store_gui_set_slot({_p}, "GUITEST", 0, {_item1})
+    player_store_gui_set_slot({_p}, "GUITEST", 1, {_item2})
+    player_store_gui_set_slot({_p}, "GUITEST2", 1, {_item3})
+    set {_items::*} to player_store_gui_get_slot_all({_p}, "GUITEST")
+    assert if size of {_items::*} is 2 with message "there should be 2 items in gui GUITEST. Got %size of {_items::*}%"
+    assert if {_items::*} contains {_item1} with message "%{_item1}% should be found in GUITEST. Got %{_items::*}%"
+    assert if {_items::*} contains {_item2} with message "%{_item2}% should be found in GUITEST. Got %{_items::*}%"
+    set {_items::*} to player_store_gui_get_slot_all({_p}, "GUITEST2")
+    assert if size of {_items::*} is 1 with message "there should be 1 items in gui GUITEST2. Got %size of {_items::*}%"
+    assert if {_items::*} contains {_item3} with message "%{_item3}% should be found in GUITEST2. Got %{_items::*}%"
+    
+    player_store_gui_delete({_p}, "GUITEST")
+    set {_items::*} to player_store_gui_get_slot_all({_p}, "GUITEST")
+    assert if size of {_items::*} is 0 with message "there should be 0 items in gui GUITEST. Got %size of {_items::*}%"
+    set {_items::*} to player_store_gui_get_slot_all({_p}, "GUITEST2")
+    assert if size of {_items::*} is 1 with message "there should be 1 items in gui GUITEST2. Got %size of {_items::*}%"
+    assert if {_items::*} contains {_item3} with message "%{_item3}% should be found in GUITEST2. Got %{_items::*}%"
+    
+    set {_toto} to player_store_gui_get_slot({_p}, "GUITEST2", 1)
+    assert if {_toto} is {_item3} with message "slot 1 GUITEST2 should be %{_item3}%. Got %{_toto}%"
+    set {_toto} to player_store_gui_get_slot({_p}, "GUITEST2", 0)
+    assert if {_toto} is not set with message "slot 0 GUITEST2 should be none. Got %{_toto}%"
+    player_store_gui_delete_slot({_p}, "GUITEST2", 1)
+    set {_items::*} to player_store_gui_get_slot_all({_p}, "GUITEST2")
+    assert if size of {_items::*} is 0 with message "there should be 0 items in gui GUITEST2. Got %size of {_items::*}%"
+
+  player_store_gui_delete_all({_p})

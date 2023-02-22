@@ -1,0 +1,11 @@
+function entity_effect_burn(source: entity, target: entity, attack: number, power: number, duration: number, frequency: number):
+  if {_target} is a player:
+    set {_type} to "PLAYER"
+  else:
+    set {_type} to "MOB"
+ 
+  set {_amount} to floor({_duration} / {_frequency})
+  set {_target} on fire for "%{_duration}% ticks" parsed as timespan
+  loop {_amount} times:
+    entity_effect_damage({_source}, {_target}, {_attack}, {_power})
+    wait "%{_frequency}% ticks" parsed as timespan

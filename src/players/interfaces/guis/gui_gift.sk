@@ -1,0 +1,116 @@
+function gui_gift_open(p: player, id: text):
+  if {_id} is "INITIAL":
+    gui_gift_altar_initial({_p})
+
+function gui_gift_move_to_inventory(p: player, guiInventory: inventory, slot: number):
+  set {_guiId} to player_store_gui_get_last({_p})
+  if {_guiId} contains "INITIAL":
+    if {_slot} is 4:
+      player_store_gui_delete_slot({_p}, {_guiId}, {_slot})
+      set {_item} to slot {_slot} of {_guiInventory}
+      give {_item} to {_p}
+      set slot {_slot} of {_guiInventory} to air
+  else if {_guiId} contains "CONSECRATE":
+    set {_item} to slot {_slot} of {_guiInventory}
+    if {_slot} is 1:
+      player_store_gui_delete_slot({_p}, {_guiId}, {_slot})
+      give {_item} to {_p}
+      set slot {_slot} of {_guiInventory} to air
+      set slot 2 of {_guiInventory} to air
+    else if {_slot} is 2:
+      if item_nbt_isset_tag({_item}, "TYPE") is true:
+        player_store_inventory_remove({_p}, slot 0 of {_guiInventory})
+        player_store_inventory_remove({_p}, slot 1 of {_guiInventory})
+        set {_type} to item_nbt_get_tag({_item}, "TYPE")
+        if {_type} is "SKILL":
+          # If a skill is clicked, it means we are trying to consecrate
+          # an intellect gift on an equipment.
+          set {_equipment} to player_store_gui_get_slot({_p}, "EQUIPMENT.GIFT.INITIAL", 0)
+          set {_gift} to slot 1 of {_guiInventory}
+          set {_item} to gift_consecrate_intellect_equipment({_p}, {_gift}, {_equipment})
+          player_store_inventory_remove({_p}, {_equipment})
+        player_store_inventory_add({_p}, {_item})
+        close inventory of {_p}
+
+function gui_gift_move_to_gui(p: player, guiInventory: inventory, slot: number):
+  set {_guiId} to player_store_gui_get_last({_p})
+  set {_item} to slot {_slot} of inventory of {_p}
+  if {_guiId} contains "INITIAL": 
+    set {_type} to item_nbt_get_tag({_item}, "TYPE")
+    if "WEAPON" and "EQUIPMENT" contains {_type}:
+      player_store_gui_set_slot({_p}, "EQUIPMENT.GIFT.INITIAL", 0, {_item})
+      set slot 4 of {_guiInventory} to {_item}
+      set slot {_slot} of inventory of {_p} to air
+      gui_gift_altar_choose_category({_p}, {_item})
+  else if {_guiId} contains "CONSECRATE":
+    if slot 1 of {_guiInventory} is air:
+      set slot 1 of {_guiInventory} to {_item}
+      set slot {_slot} of inventory of {_p} to air
+      set {_equipment} to slot 0 of {_guiInventory}
+      set {_boostedEquipment} to gift_consecrate({_p}, {_item}, {_equipment})
+      set slot 2 of {_guiInventory} to {_boostedEquipment}
+
+function gui_gift_altar_initial(p: player):
+  player_store_gui_add({_p}, "GIFT.INITIAL")
+  set {_name} to i18n({_p}, "GUI.GIFT.ALTAR.INITIAL.TITLE")
+  set {_unavailableSlot} to {UTILITY::GUI::UNAVAILABLE::ITEM}
+  set {_unavailableSlotName} to i18n({_p}, "UTILITY.GUI.UNAVAILABLE.TITLE")
+  player_store_inventory_backup({_p})
+  player_store_inventory_filter({_p}, ("EQUIPMENT" and "WEAPON"))
+  create a gui with virtual chest inventory with 1 row named {_name} and shape "xxxx1xxxx":
+    make gui slot "x" with {_unavailableSlot} named {_unavailableSlotName}
+    run on gui close:
+      player_store_gui_delete({_p}, "GIFT.INITIAL")
+      if player_store_gui_isset({_p}, "GIFT.CHOOSE_CATEGORY") is false:
+        player_store_inventory_clear({_p})
+        player_store_inventory_restore({_p})    
+  open the last gui to {_p}
+
+function gui_gift_altar_choose_category(p: player, item: item):
+  player_store_gui_add({_p}, "GIFT.CHOOSE_CATEGORY")
+  set {_name} to i18n({_p}, "GUI.GIFT.ALTAR.CHOOSE_CATEGORY.TITLE")
+  set {_unavailableSlot} to {UTILITY::GUI::UNAVAILABLE::ITEM}
+  set {_unavailableSlotName} to i18n({_p}, "UTILITY.GUI.UNAVAILABLE.TITLE")
+  
+  set {_willItem} to item_utility_gift_create({_p}, {_item}, "WILL")
+  set {_intellectItem} to item_utility_gift_create({_p}, {_item}, "INTELLECT")
+  set {_memoryItem} to item_utility_gift_create({_p}, {_item}, "MEMORY")
+  create a gui with brewing stand inventory named {_name}:
+    make gui slot 0 with {_memoryItem}:
+      if item_nbt_get_tag({_memoryItem}, "ID") is "MEMORY":
+        gui_gift_consecrate({_p}, {_memoryItem}, {_item})
+    make gui slot 1 with {_willItem}:
+      if item_nbt_get_tag({_willItem}, "ID") is "WILL":
+        gui_gift_consecrate({_p}, {_willItem}, {_item})
+    make gui slot 2 with {_intellectItem}:
+      if item_nbt_get_tag({_intellectItem}, "ID") is "INTELLECT":
+        gui_gift_consecrate({_p}, {_intellectItem}, {_item})
+    make gui slot 3 with {_item}
+    make gui slot 4 with {_unavailableSlot} named {_unavailableSlotName}
+    run on gui close:
+      player_store_gui_delete({_p}, "GIFT.CHOOSE_CATEGORY")
+      if player_store_gui_isset({_p}, "GIFT.CONSECRATE") is false:
+        player_store_inventory_clear({_p})
+        player_store_inventory_restore({_p})    
+  open the last gui to {_p}
+
+function gui_gift_consecrate(p: player, gift: item, item: item):
+  player_store_gui_add({_p}, "GIFT.CONSECRATE")
+  set {_categoryGift} to item_nbt_get_tag({_gift}, "ID")
+  set {_guiId} to player_store_gui_get_last({_p})
+  set {_id} to item_nbt_get_tag({_gift}, "ID")
+  set {_name} to i18n({_p}, "GUI.GIFT.ALTAR.CONSECRATE.TITLE", "", i18n({_p}, "GIFT.%{_id}%.TITLE"))
+  player_store_inventory_filter({_p}, "GIFT", {_id})
+  if {_categoryGift} is "INTELLECT":
+    set {_type} to item_nbt_get_tag({_item}, "TYPE")
+    if {_type} is "EQUIPMENT":
+      set {_skillId} to first element of item_nbt_get_list({_item}, "WILL")
+      set {_category} to item_nbt_get_tag({_item}, "CATEGORY")
+      set {_item} to item_create({_p}, "SKILL", {_category}, {_skillId})
+  create a gui with furnace inventory named {_name}:
+    make gui slot 0 with {_item}
+    run on gui close:
+      player_store_gui_delete({_p}, "GIFT.CONSECRATE")
+      player_store_inventory_clear({_p})
+      player_store_inventory_restore({_p})  
+  open the last gui to {_p}

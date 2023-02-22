@@ -2,13 +2,28 @@
 function item_stat_initialize(p: player, type: text, item: item) :: item:
   set {_category} to item_nbt_get_tag({_item}, "CATEGORY")
   set {_id} to item_nbt_get_tag({_item}, "ID")
-  loop {STAT::%{_type}%::*}:
+  loop {STAT::ALL::*}:
     set {_stat} to loop-value
     set {_value} to {%{_type}%::%{_category}%::%{_id}%::%loop-value%}
     if {_value} is set:
       set {_item} to item_nbt_set_stat({_item}, {_stat}, {_value})
   set {_item} to item_nbt_set_stat({_item}, "CD_NORMAL", 0)
   set {_item} to item_nbt_set_stat({_item}, "CD_SPECIAL", 0)
+  return {_item}
+
+function item_attribute_initialize(p: player, item: item) :: item:
+  set {_type} to item_nbt_get_tag({_item}, "TYPE")
+  set {_category} to item_nbt_get_tag({_item}, "CATEGORY")
+  set {_id} to item_nbt_get_tag({_item}, "ID")
+  set {_item} to item_nbt_set_list({_item}, "ATTRIBUTE", {%{_type}%::%{_category}%::%{_id}%::ATTRIBUTE::*})
+  return {_item}
+
+function item_gift_initialize(p: player, item: item) :: item:
+  set {_type} to item_nbt_get_tag({_item}, "TYPE")
+  set {_category} to item_nbt_get_tag({_item}, "CATEGORY")
+  set {_id} to item_nbt_get_tag({_item}, "ID")
+  loop {GIFT::*}:
+    set {_item} to item_nbt_set_stat({_item}, "%loop-value%_MAX", {%{_type}%::%{_category}%::%{_id}%::%loop-value%_MAX})
   return {_item}
 
 function item_create(p: player, type: text, category: text, id: text) :: item:
@@ -18,7 +33,10 @@ function item_create(p: player, type: text, category: text, id: text) :: item:
   set {_item} to item_nbt_set_tag({_item}, "CATEGORY", {_category})
   set {_item} to item_nbt_set_tag({_item}, "ID", {_id})
   set {_item} to item_nbt_set_tag({_item}, "UUID", {_uuid})
+  set {_item} to item_nbt_set_stat({_item}, "TIER", {%{_type}%::%{_category}%::%{_id}%::TIER})
   set {_item} to item_stat_initialize({_p}, {_type}, {_item})
+  set {_item} to item_attribute_initialize({_p}, {_item})
+  set {_item} to item_gift_initialize({_p}, {_item})
   set {_item} to i18n_item({_p}, {_item})
   return {_item}
 
@@ -29,7 +47,27 @@ function item_generate_uuid(type: text, category: text, id: text) :: text:
 function item_give(p: player, type: text, category: text, id: text):
   if {_type} is "WEAPON":
     weapon_give({_p}, {_category}, {_id})
+  else if {_type} is "EQUIPMENT":
+    equipment_give({_p}, {_category}, {_id})
   else if {_type} is "SKILL":
     skill_give({_p}, {_category}, {_id})
+  else if {_type} is "GIFT":
+    gift_give({_p}, {_type}, {_category}, {_id})
   else:
     error("ITEM GIVE ERROR : %{_type}% NOT FOUND")
+
+function item_merge_stats(source: item, destination: item) :: item:
+  loop {STAT::ALL::*}:
+    set {_stat} to loop-value
+    if item_nbt_isset_stat({_source}, {_stat}) is true:
+      set {_value} to item_nbt_get_stat({_source}, {_stat})
+      set {_destination} to item_nbt_add_stat({_destination}, {_stat}, {_value})
+  return {_destination}
+
+function item_merge_attributes(source: item, destination: item) :: item:
+  set {_attrs::*} to item_nbt_get_list({_source}, "ATTRIBUTE")
+  set {_destAttrs::*} to item_nbt_get_list({_destination}, "ATTRIBUTE")
+  loop {_attrs::*}:
+    if {_destAttrs::*} does not contain loop-value:
+      set {_destination} to item_nbt_add_list({_destination}, "ATTRIBUTE", loop-value)
+  return {_destination}
