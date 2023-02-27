@@ -34,6 +34,19 @@ HELMET:
       RADIUS: 5
       MANA: 70
   BURNING_HEART:
+    TRIGGER: "MANUAL"
+    ITEM: redstone torch
+    ATTRIBUTES:
+      - EFFECT
+    STATS:
+      ATTACK: 20
+      ATTACK_MULTIPLIER: 0.5
+      COOLDOWN: 80
+      MANA: 1
+      EFFECT_DURATION: 100
+      EFFECT_FREQUENCY: 20
+CHESTPLATE:
+  BURNING_HEART:
     ITEM: lava bucket
     ATTRIBUTES:
       - RADIUS
@@ -47,7 +60,6 @@ HELMET:
       MANA: 100
       EFFECT_DURATION: 100
       EFFECT_FREQUENCY: 20
-CHESTPLATE:
   MOUNTAIN:
     ITEM: Oak Sapling
     ATTRIBUTES:

@@ -20,7 +20,7 @@ function test_item_skill(p: player):
     skill_give({_p}, "HELMET", "TEST")
     set {_skill} to slot 0 of inventory of {_p}
     set {_cdBefore} to item_store_stat_get({_skill}, "CD")
-    set {_isCasted} to skill_cast({_p}, {_skill})
+    set {_isCasted} to skill_cast_condition({_p}, {_skill})
     set {_cdAfter} to item_store_stat_get({_skill}, "CD")
     assert if {_cdBeofre} is not set with message "skill CD not be set if not casted. Got %{_cdBefore}%"
     assert if {_isCasted} is true with message "skill should be casted. Got CD %{_isCasted}%"
@@ -34,7 +34,7 @@ function test_item_skill(p: player):
     player_store_stat_set({_p}, "MANA", 10)
     set {_playerMana} to player_store_stat_get({_p}, "MANA")
     set {_requiredMana} to item_nbt_get_stat({_skill}, "MANA")
-    set {_skillCasted} to skill_cast({_p}, {_skill})
+    set {_skillCasted} to skill_cast_condition({_p}, {_skill})
     set {_cd} to item_store_stat_get({_skill}, "CD")
     assert if {_playerMana} < {_requiredMana} with message "player mana should be inferior than %{_requiredMana}%. Got %{_playerMana}%."
     assert if {_skillCasted} is false with message "skill should not be casted because not enough mana. Got %{_skillCasted}%"
@@ -48,7 +48,7 @@ function test_item_skill(p: player):
     set {_slot} to player_store_skill_slot({_p}, {_skill})
     set {_expectedType} to type of {UTILITY::MAIN::CD::ITEM}
     set {_initialCount} to player_store_skill_count({_p})
-    skill_cast({_p}, {_skill})
+    skill_cast_condition({_p}, {_skill})
     set {_type} to type of slot {_slot} of {_p}
     set {_finalCount} to player_store_skill_count({_p})
     set {_expectedName} to name of {_skill}

@@ -7,8 +7,8 @@ function player_init():
     player_store_stat_set({_p}, "POWER", 0)
     player_store_stat_set({_p}, "DEFENCE", 0)
     player_store_stat_set({_p}, "MR", 0)
-    player_store_stat_set({_p}, "MANA", 100)
     player_store_stat_set({_p}, "MANA_MAX", 100)
+    player_store_stat_set({_p}, "MANA", 100)
     player_store_stat_set({_p}, "MANA_REGEN", 3)
     player_store_setting_set({_p}, "INGAME", true)
     set max health of {_p} to 20

@@ -71,6 +71,9 @@ ALL:
   EFFECT_FREQUENCY:
     ICON: ""
     COLOR: "§c"
+  DEFENCE_FALLING:
+    ICON: ""
+    COLOR: "§c"
 
 
 PLAYER:
