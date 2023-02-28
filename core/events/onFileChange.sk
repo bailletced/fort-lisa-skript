@@ -40,6 +40,9 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/chestplate/":
    reload script file fileManager_getRelativePath(event-path)
 
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/crossbow/":
+   reload script file fileManager_getRelativePath(event-path)
+
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/helmet/":
    reload script file fileManager_getRelativePath(event-path)
 
@@ -50,6 +53,9 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/store/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/":
+   reload script file fileManager_getRelativePath(event-path)
+
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/crossbow/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/staffs/":

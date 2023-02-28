@@ -18,6 +18,24 @@ function player_store_weapon_reload_all(p: player):
       remove {_originWeapon} from {players::%{_p}%::weapon::*}
       add {_weapon} to {players::%{_p}%::weapon::*}
 
+# Called to give an arrow to the player when using bows
+function player_store_weapon_give_arrow(p: player):
+  if player_store_weapon_isset_arrow({_p}) is false:
+    set {_slot} to 35
+    set {players::%{_p}%::weaponArrow} to slot {_slot} of {_p}
+    set slot {_slot} of {_p} to arrow
+
+function player_store_weapon_isset_arrow(p: player) :: boolean:
+  if {players::%{_p}%::weaponArrow} is set:
+    return true
+  return false
+
+# Called to give an arrow to the player when using bows
+function player_store_weapon_remove_arrow(p: player):
+  set {_slot} to 35
+  set slot {_slot} of {_p} to {players::%{_p}%::weaponArrow}
+  delete {players::%{_p}%::weaponArrow}
+
 function player_store_weapon_count(p: player) :: number:
   return size of {players::%{_p}%::weapon::*}
 

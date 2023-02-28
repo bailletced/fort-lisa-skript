@@ -2,7 +2,7 @@ command /testplanet:
     trigger:
         set {_loc} to location 1 meter above event-location
         set {_p} to event-player
-        drawPlanet particle1 "redstone", RGB 0, 0, 0, particle2 "redstone", RGB2 0, 0, 0, center {_loc}, id "%{_p}%", radius 0.25, density 150, precision 100, bumpHeight 0.25, visibleRange 30, tps 1, second 2
+        drawPlanet particle1 "soul flame", RGB 0, 0, 0, particle2 "flame", RGB2 0, 0, 0, center {_loc}, id "%{_p}%", radius 0.25, density 150, precision 100, bumpHeight 0.25, visibleRange 30, tps 1, second 2
         wait 5 seconds
         stopEffect "%{_p}%"
 
@@ -116,3 +116,27 @@ command /mythicVOidArcher:
         set {_loc} to location of player
         set {_world} to world of player
         make player execute command "mm m spawn VoidArcher world,12,-28,-2"
+
+
+function rgbb(r: number, g: number, b: number, locs: locations):
+    loop {_locs::*}:
+        draw 1 flame at loop-value with extra 0
+
+function rainbow(h: number, locs: locations):
+    set {_r} to 200
+    set {_g} to 140
+    set {_b} to 90
+    rgbb({_r}, {_g}, {_b}, {_locs::*})
+    
+command /testrings:
+    trigger:
+        set {_p} to player
+        set {_yaw} to yaw of {_p}
+        set {_pitch} to pitch of {_p}
+        set {_frame} to frame with yaw 90 and pitch 0
+        set {_circle::*} to circle with radius 5 and density 5 in {_frame}
+        set {_loc} to location 1 meter above {_p}
+        loop 100 times:
+            loop {_circle::*}:
+                draw 1 flame at location 1 meter above {_p} offset by loop-value-2 with extra 0
+            wait 1 tick

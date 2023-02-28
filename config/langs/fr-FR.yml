@@ -61,6 +61,9 @@ SKILL:
   STAFF:
     BURNING_HEART:
       LORE: "Projette une boule de feu qui inflige {_POWER} tous les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION} dans un rayon de {_RADIUS}. Portée {_RANGE}"
+  CROSSBOW:
+    BURNING_HEART:
+      LORE: "Le carreau inflige {_ATTACK} tous les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION} pour chaque ennemi traversé dans un rayon de {_RADIUS}"
 GIFT:
   MEMORY:
     TITLE: "Mémoire"
