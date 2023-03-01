@@ -28,4 +28,5 @@ function crossbow_burning_heart_cast(p: player, projectile: entity):
 
 function crossbow_burning_heart_hit(p: player, victim: entity, projectile: entity):
   set {_attack} to player_stat_projectile({_p}, {_projectile}, "ATTACK")
+  entity_effect_burn({_p}, loop-value, {_attack}, 0, {_effectDuration}, {_effectFrequency})
   entity_effect_damage({_p}, {_victim}, {_attack}, 0)
