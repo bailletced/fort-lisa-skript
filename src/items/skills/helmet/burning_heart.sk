@@ -1,22 +1,23 @@
 function helmet_burning_heart_cast(p: player, skill: item):
   set {_attack} to player_stat_item({_p}, {_skill}, "ATTACK")
-  set {_effectDuration} to player_stat_item({_p}, {_skill}, "EFFECT_DURATION")
-  set {_effectFrequency} to player_stat_item({_p}, {_skill}, "EFFECT_FREQUENCY")
+  set {_range} to player_stat_item({_p}, {_skill}, "RANGE")
+  set {_loc} to location of {_p}
 
   set {_triggerCasted} to false
   # Target entites in cone
-  set {_block} to 0
+  set {_block} to 1
   set {_cone} to 0
-  loop 3 times:
+  loop 4 times:
     add 1 to {_block}
     add 2 to {_cone}
     set {_getBlock} to block {_block} blocks infront of {_p}
     loop all entities in radius {_cone} of {_getBlock}:
       if entity_nbt_get_tag(loop-entity, "TYPE") is "MOB":
-        set {_triggerCasted} to true
-        set {_loc} to location of loop-entity
-        set {_target} to loop-entity
-        stop loop
+        if distance between {loc} and loop-entity <= {_range}:
+          set {_triggerCasted} to true
+          set {_loc} to location of loop-entity
+          set {_target} to loop-entity
+          stop loop
 
   if {_triggerCasted} is true:
     set yaw of {_loc} to yaw of {_p}

@@ -134,9 +134,13 @@ command /testrings:
         set {_yaw} to yaw of {_p}
         set {_pitch} to pitch of {_p}
         set {_frame} to frame with yaw 90 and pitch 0
+        set {_frame2} to frame with yaw 0 and pitch 0
         set {_circle::*} to circle with radius 5 and density 5 in {_frame}
+        set {_circle2::*} to circle with radius 5 and density 5 in {_frame2}
         set {_loc} to location 1 meter above {_p}
         loop 100 times:
             loop {_circle::*}:
+                draw 1 flame at location 1 meter above {_p} offset by loop-value-2 with extra 0
+            loop {_circle2::*}:
                 draw 1 flame at location 1 meter above {_p} offset by loop-value-2 with extra 0
             wait 1 tick

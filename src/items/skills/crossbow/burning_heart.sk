@@ -1,32 +1,34 @@
 function crossbow_burning_heart_cast(p: player, projectile: entity):
-  set {_radius} to player_stat_projectile({_p}, {_projectile}, "RADIUS")
-  set {_attack} to player_stat_projectile({_p}, {_projectile}, "ATTACK")
-  set {_effectDuration} to player_stat_projectile({_p}, {_projectile}, "EFFECT_DURATION")
-  set {_effectFrequency} to player_stat_projectile({_p}, {_projectile}, "EFFECT_FREQUENCY")
-
   set {_yaw} to yaw of {_p}
   set {_pitch} to pitch of {_p} + 90
   set {_frame} to frame with yaw {_yaw} and pitch {_pitch}
-  set {_circle::*} to circle with radius {_radius}/2 and density 5 in {_frame}
+  set {_circle::*} to circle with radius 0.5 and density 5 in {_frame}
   delete {_victim::*}
-  
   while {_projectile} is alive:
     set {_loc} to location of {_projectile}
     loop {_circle::*}:
-      loop all entities in radius {_radius}+2 of {_loc}:
-        set {_type} to entity_nbt_get_tag(loop-entity, "TYPE")
-        if {_type} is "MOB":
-          if {_victim::*} does not contain loop-entity:
-            set {_dist} to distance between {_projectile} and loop-entity
-            if {_dist} <= {_radius}+2:
-              add loop-entity to {_victim::*}
-      drawDot count 1, particle "flame", RGB 0, 0, 0, center {_loc} offset by loop-value, rainbowMode true, visibleRange 100, pulseDelay 0, keepFor 20 ticks
+      drawDot count 1, particle "flame", RGB 0, 0, 0, center {_loc} offset by loop-value, visibleRange 150, pulseDelay 0, keepFor 20 ticks
     wait 1 tick
 
+function crossbow_burning_heart_hit(p: player, victim: entity, projectile: entity):
+  delete {_victim::*}
+  set {_attack} to player_stat_projectile({_p}, {_projectile}, "ATTACK")
+  set {_effectDuration} to player_stat_projectile({_p}, {_projectile}, "EFFECT_DURATION")
+  set {_effectFrequency} to player_stat_projectile({_p}, {_projectile}, "EFFECT_FREQUENCY")
+  set {_radius} to player_stat_projectile({_p}, {_projectile}, "RADIUS")
+  if {_victim} is set:
+    set {_loc} to location 1 meter above {_victim}
+    set {_victim::*} to {_victim}
+    entity_effect_damage({_p}, {_victim}, {_attack}, 0)
+  else:
+    set {_loc} to location of {_projectile}
+  drawDot count 8*{_radius}, particle "flame", RGB 0.3*{_radius}, 0.3*{_radius}, 0.3*{_radius}, center {_loc}, visibleRange 150, pulseDelay 0, keepFor 20 ticks
+  
+  loop all entities in radius {_radius} of {_loc}:
+    set {_type} to entity_nbt_get_tag(loop-entity, "TYPE")
+    if {_type} is "MOB":
+      if {_victim::*} does not contain loop-entity:
+        add loop-entity to {_victim::*}
+  
   loop {_victim::*}:
     entity_effect_burn({_p}, loop-value, {_attack}, 0, {_effectDuration}, {_effectFrequency})
-
-function crossbow_burning_heart_hit(p: player, victim: entity, projectile: entity):
-  set {_attack} to player_stat_projectile({_p}, {_projectile}, "ATTACK")
-  entity_effect_burn({_p}, loop-value, {_attack}, 0, {_effectDuration}, {_effectFrequency})
-  entity_effect_damage({_p}, {_victim}, {_attack}, 0)

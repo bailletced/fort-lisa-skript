@@ -39,6 +39,10 @@ WEAPON:
     LIMB_OF_WISDOM:
       TITLE: "L'Abattis de Sagesse"
       LORE: "Projette une boule de portée {_RANGE} et infligeant {_POWER}"
+  CROSSBOW:
+    ARMADILLO:
+      TITLE: "Armadillo"
+      LORE: "Projette un carreau qui inflige {_ATTACK}."
 EQUIPMENT:
   HELMET:
     LAUREL_CROWN:
@@ -49,8 +53,8 @@ SKILL:
       TITLE: "Le souffle du dragon"
       LORE: "Le souffle du dragon repousse les ennemis avant d'infliger des dégâts en bout de course, infligeant {_POWER} dans un rayon de {_RADIUS}"
     BURNING_HEART:
-      TITLE: "Tête brûlante"
-      LORE: "Vous Foncez vers l'ennemi le plus proche dans votre direction, lui infligeant {_ATTACK}, et repoussant les ennemis sur son sillage."
+      TITLE: "Tête brûlée"
+      LORE: "Vous Foncez vers l'ennemi le plus proche dans votre direction, lui infligeant {_ATTACK} et repoussant les ennemis proches. Les ennemis repoussés sont brûlés et subissent {_EFFECT_ATTACK} toutes les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION}. Portée maximale : {_RANGE}"
   CHESTPLATE:
     BURNING_HEART:
       TITLE: "Le souffle du dragon"
@@ -63,7 +67,7 @@ SKILL:
       LORE: "Projette une boule de feu qui inflige {_POWER} tous les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION} dans un rayon de {_RADIUS}. Portée {_RANGE}"
   CROSSBOW:
     BURNING_HEART:
-      LORE: "Le carreau inflige {_ATTACK} tous les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION} pour chaque ennemi traversé dans un rayon de {_RADIUS}"
+      LORE: "Le carreau inflige {_ATTACK} avant de provoquer une déflagration dans un rayon de {_RADIUS}. Les ennemis touchés sont brûlés, subissant {_EFFECT_ATTACK} toutes les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION}"
 GIFT:
   MEMORY:
     TITLE: "Mémoire"
