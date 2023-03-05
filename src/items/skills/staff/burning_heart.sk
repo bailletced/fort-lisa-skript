@@ -21,4 +21,4 @@ function staff_burning_heart_hit(p: player, projectile: entity):
   loop all entities in radius {_radius} of {_location}:
     set {_type} to entity_nbt_get_tag(loop-entity, "TYPE")
     if {_type} is "MOB":
-      entity_effect_burn({_p}, loop-entity, 0, {_power}, {_effectDuration}, {_effectFrequency})
+      entity_effect_burn({_p}, loop-entity, {_power}, {_effectDuration}, {_effectFrequency})

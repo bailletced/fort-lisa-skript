@@ -1,20 +1,14 @@
 function chestplate_burning_heart_cast(p: player, skill: item):
   set {_radius} to player_stat_item({_p}, {_skill}, "RADIUS")
   set {_attack} to player_stat_item({_p}, {_skill}, "ATTACK")
+  set {_effectAttack} to player_stat_item({_p}, {_skill}, "EFFECT_ATTACK")
   set {_effectDuration} to player_stat_item({_p}, {_skill}, "EFFECT_DURATION")
   set {_effectFrequency} to player_stat_item({_p}, {_skill}, "EFFECT_FREQUENCY")
-  set {_tick} to "%{_effectFrequency}% tick" parsed as timespan
 
-  set {_it} to 0
-  loop {_effectDuration} times:
-    if {_it} is 0:
-      draw {_radius}*70 flame at {_p} with offset vector({_radius}*0.0, {_radius}*0.0, {_radius}*0.0) with extra {_radius}*0.1
-      loop all entities in radius {_radius} of {_p}:
-        if entity_nbt_get_tag(loop-entity, "TYPE") is "MOB":
-          broadcast "FOUND loop-entity"
-      set {_it} to {_effectFrequency}
-    wait 1 tick
-    remove 1 from {_it}
-
-  loop {_victim::*}:
-    entity_effect_burn({_p}, loop-value, 0, {_power}, {_effectDuration}, {_effectFrequency})
+  loop ceil({_effectDuration}/20) times:
+    draw {_radius}*70 flame at {_p} with offset vector({_radius}*0.0, {_radius}*0.0, {_radius}*0.0) with extra {_radius}*0.1
+    loop all entities in radius {_radius} of {_p}:
+      if entity_nbt_get_tag(loop-entity, "TYPE") is "MOB":
+        entity_effect_burn({_p}, loop-entity, {_effectAttack}, {_effectDuration}, {_effectFrequency}, "UNIQUE")
+        entity_effect_damage({_p}, loop-entity, {_attack})
+    wait 20 tick

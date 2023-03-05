@@ -6,6 +6,8 @@ function player_stat_item(p: player, item: item, stat: text) :: number:
 
   if {_statMultiplier} is not set:
     set {_statMultiplier} to 1
+  if {_stat} contains "EFFECT":
+    replace "EFFECT_" with "" in {_stat}
   if player_store_stat_isset({_p}, {_stat}) is true:
     set {_playerStat} to player_store_stat_get({_p}, {_stat})
   return {_itemStat} + {_statMultiplier} * {_playerStat}

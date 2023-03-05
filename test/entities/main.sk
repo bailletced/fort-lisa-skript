@@ -1,0 +1,5 @@
+function test_entity_main(p: player):
+  test_entity_store({_p})
+
+function test_entity_store(p: player):
+  test_entity_store_effect({_p})
