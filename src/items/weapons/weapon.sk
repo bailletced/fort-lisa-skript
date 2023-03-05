@@ -87,6 +87,10 @@ function weapon_hit_projectile(p: player, projectile: entity, victim: entity):
     if size of {_will::*} > 0:
         if {_category} is "CROSSBOW":
             crossbow_hit_skill({_p}, {_projectile}, {_victim})
+        else if {_category} is "BOW":
+            bow_hit_skill({_p}, {_projectile}, {_victim})
     else:
         if {_category} is "CROSSBOW":
             crossbow_hit({_p}, {_projectile}, {_victim})
+        else if {_category} is "BOW":
+            bow_hit({_p}, {_projectile}, {_victim})

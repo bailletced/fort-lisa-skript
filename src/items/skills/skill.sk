@@ -50,7 +50,6 @@ function skill_cast(p: player, skill: item):
     chestplate_cast({_p}, {_skill})
   else if {_category} is "LEGGING":
     legging_cast({_p}, {_skill})
-    
 
 function skill_cost(p: player, skill: item) :: boolean:
   # APPLY EFFECTS ON CAST

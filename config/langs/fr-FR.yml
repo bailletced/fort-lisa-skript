@@ -68,6 +68,9 @@ SKILL:
   CROSSBOW:
     BURNING_HEART:
       LORE: "Le carreau inflige {_ATTACK} avant de provoquer une déflagration dans un rayon de {_RADIUS}. Les ennemis touchés sont brûlés, subissant {_EFFECT_ATTACK} toutes les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION}"
+  BOW:
+    BURNING_HEART:
+      LORE: "La flèche inflige {_ATTACK} et brûle la cible, infligeant {_EFFECT_ATTACK} tous les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION}. Si la cible est déjà brûlée, les ennemis dans un rayon de {_RADIUS} le sont aussi. Si la cible est touchée de nouveau, elle subit le double de dégâts."
 GIFT:
   MEMORY:
     TITLE: "Mémoire"

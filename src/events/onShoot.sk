@@ -11,3 +11,5 @@ on shoot:
         if size of entity_nbt_get_list(projectile, "WILL") > 0:
           if {_category} is "CROSSBOW":
             crossbow_cast_skill({_p}, {_helditem}, projectile)
+          else:
+            bow_cast_skill({_p}, {_helditem}, projectile)
