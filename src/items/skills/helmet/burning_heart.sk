@@ -1,5 +1,8 @@
 function helmet_burning_heart_cast(p: player, skill: item):
   set {_attack} to player_stat_item({_p}, {_skill}, "ATTACK")
+  set {_effectAttack} to player_stat_item({_p}, {_skill}, "EFFECT_ATTACK")
+  set {_effectDuration} to player_stat_item({_p}, {_skill}, "EFFECT_DURATION")
+  set {_effectFrequency} to player_stat_item({_p}, {_skill}, "EFFECT_FREQUENCY")
   set {_range} to player_stat_item({_p}, {_skill}, "RANGE")
   set {_loc} to location of {_p}
 
@@ -13,13 +16,14 @@ function helmet_burning_heart_cast(p: player, skill: item):
     set {_getBlock} to block {_block} blocks infront of {_p}
     loop all entities in radius {_cone} of {_getBlock}:
       if entity_nbt_get_tag(loop-entity, "TYPE") is "MOB":
-        if distance between {loc} and loop-entity <= {_range}:
+        if distance between {_loc} and loop-entity <= {_range}:
           set {_triggerCasted} to true
           set {_loc} to location of loop-entity
           set {_target} to loop-entity
           stop loop
 
   if {_triggerCasted} is true:
+    set {_victims::*} to {_target}
     set yaw of {_loc} to yaw of {_p}
     set pitch of {_loc} to pitch of {_p}
     teleport {_p} to {_loc}
@@ -28,9 +32,11 @@ function helmet_burning_heart_cast(p: player, skill: item):
     # We push entities behind the target
     loop all entities in radius 1.5 of {_p}:
       if entity_nbt_get_tag(loop-entity, "TYPE") is "MOB":
+        add loop-entity to {_victims::*}
         push loop-entity in direction of {_p} with speed 2
 
     drawDot count 5, particle "flame", RGB 0.2, 1, 0.2, center {_target}, rainbowMode true, visibleRange 32, pulseDelay 0, keepFor 20 ticks
-    set {_attack} to player_stat_item({_p}, {_skill}, "ATTACK")
     entity_effect_damage({_p}, {_target}, {_attack}, 0)
+    loop {_victims::*}:
+      entity_effect_burn({_p}, loop-value, {_effectAttack}, {_effectDuration}, {_effectFrequency})
     skill_cost({_p}, {_skill})

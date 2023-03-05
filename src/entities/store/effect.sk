@@ -3,6 +3,7 @@ function entity_store_effect_set(entity: entity, effect: text, duration: number,
   if entity_store_effect_isset({_entity}, {_effect}) is false:
     add {_effect} to {entities::%{_uuid}%::effects::*}
     set {entities::%{_uuid}%::effects::%{_effect}%::duration} to {_duration}
+    set {entities::%{_uuid}%::effects::%{_effect}%::amount} to 1
     if {_damage} > 0:
       set {entities::%{_uuid}%::effects::%{_effect}%::damage} to {_damage}
 

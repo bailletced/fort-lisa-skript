@@ -144,3 +144,9 @@ command /testrings:
             loop {_circle2::*}:
                 draw 1 flame at location 1 meter above {_p} offset by loop-value-2 with extra 0
             wait 1 tick
+
+
+command /iaskriptgetitem <text> [<number=1>]:
+    trigger:
+        set {_item} to customitem "coeur_vaillant"
+        give 1 of {_item} to player

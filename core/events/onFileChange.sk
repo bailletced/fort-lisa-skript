@@ -49,6 +49,9 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/cross
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/helmet/":
    reload script file fileManager_getRelativePath(event-path)
 
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/legging/":
+   reload script file fileManager_getRelativePath(event-path)
+
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/staff/":
    reload script file fileManager_getRelativePath(event-path)
 
