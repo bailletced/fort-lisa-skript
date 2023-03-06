@@ -103,6 +103,11 @@ function item_nbt_set_tag_native(it: item, value: text) :: item:
   add nbt compound of {_value} to nbt compound of {_it}
   return {_it}
 
+function item_nbt_delete(it: item, key: text) :: item:
+  set {_nbt} to full nbt compound of {_it}
+  delete tag "tag;%{_key}%" of {_nbt}
+  return item from nbt {_nbt}
+
 function item_nbt_copyToEntity(it: item, entity: entity):
   set {_type} to item_nbt_get_tag({_it}, "TYPE")
   set {_category} to item_nbt_get_tag({_it}, "CATEGORY")

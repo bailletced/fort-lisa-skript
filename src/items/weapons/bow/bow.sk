@@ -1,0 +1,14 @@
+function bow_cast_skill(p: player, bow: item, projectile: entity):
+  set {_idSkill} to first element of entity_nbt_get_list({_projectile}, "WILL")
+  if {_idSkill} is "BURNING_HEART":
+    bow_burning_heart_cast({_p}, {_projectile})
+
+function bow_hit(p: player, projectile: entity, victim: entity):
+  set {_id} to entity_nbt_get_tag({_projectile}, "ID")
+  if {_id} is "ARROWSPIKE":
+    arrowspike_hit({_p}, {_projectile}, {_victim})
+
+function bow_hit_skill(p: player, projectile: entity, victim: entity):
+  set {_idSkill} to first element of entity_nbt_get_list({_projectile}, "WILL")
+  if {_idSkill} is "BURNING_HEART":
+    bow_burning_heart_hit({_p}, {_victim}, {_projectile})

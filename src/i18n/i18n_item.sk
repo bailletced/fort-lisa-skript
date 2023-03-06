@@ -80,18 +80,21 @@ function i18n_item_lore(p: player, it: item) :: text:
         set {_multiplier} to 0
         set {_playerStat} to 0
         set {_key} to loop-value
+        set {_pureStat} to loop-value
         set {_value} to item_nbt_get_stat({_it}, {_key})
         if item_nbt_isset_stat({_it}, "%{_key}%_MULTIPLIER") is true:
-            if player_store_stat_isset({_p}, {_key}) is true:
+            if {_key} contains "EFFECT":
+                replace "EFFECT_" with "" in {_pureStat}
+            if player_store_stat_isset({_p}, {_pureStat}) is true:
                 set {_multiplier} to item_nbt_get_stat({_it}, "%{_key}%_MULTIPLIER")
-                set {_playerStat} to player_store_stat_get({_p}, {_key})
-        set {_color} to {STAT::%{_key}%::COLOR}
-        set {_icon} to {STAT::%{_key}%::ICON}
+                set {_playerStat} to player_store_stat_get({_p}, {_pureStat})
+        set {_color} to {STAT::%{_pureStat}%::COLOR}
+        set {_icon} to {STAT::%{_pureStat}%::ICON}
         set {_valueFinal} to {_value} + {_playerStat} * {_multiplier}
-        set {_typeKey::*} to {_key} split at "_"
+        set {_typeKey::*} to {_pureStat} split at "_"
         set {_typeKey} to the last element of {_typeKey::*}
         if "DURATION" and "FREQUENCY" contains {_typeKey}:
-            set {_valueFinal} to "%floor({_value}/20)%sec"
+            set {_valueFinal} to "%{_value}/20%sec"
         replace "{_%{_key}%}" in {_lore} with "%{_color}%%{_icon}%%{_valueFinal}%§f"
     return {_lore}
 

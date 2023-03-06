@@ -2,3 +2,5 @@ function chestplate_cast(p: player, skill: item):
   set {_id} to item_nbt_get_tag({_skill}, "ID")
   if {_id} is "MOUNTAIN":
     chestplate_mountain_cast({_p}, {_skill})
+  else if {_id} is "BURNING_HEART":
+    chestplate_burning_heart_cast({_p}, {_skill})

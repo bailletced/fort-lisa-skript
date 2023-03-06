@@ -1,0 +1,26 @@
+function test_entity_store_effect(p: player):
+  send "§5Testing entity store effect" to the console
+  summon pig at location of {_p}
+  set {_entity} to last spawned entity
+  it "test set effect":
+    set {_isset1} to entity_store_effect_isset({_entity}, "BURN")
+    entity_store_effect_set({_entity}, "BURN", 20, 5)
+    set {_isset2} to entity_store_effect_isset({_entity}, "BURN")
+    set {_damage} to entity_store_effect_get({_entity}, "BURN", "damage")
+    set {_duration} to entity_store_effect_get({_entity}, "BURN", "duration")
+    assert if {_isset1} is false with message "Effect burn should not be set. Got %{_isset1}%"
+    assert if {_isset2} is true with message "Effect burn should be set. Got %{_isset2}%"
+    assert if {_damage} is 5 with message "Effect burn damage should be 5. Got %{_damage}%"
+    assert if {_duration} is 20 with message "Effect burn duration should be 20. Got %{_duration}%"
+
+    entity_store_effect_extend({_entity}, "BURN", -20, -3)
+    set {_isset} to entity_store_effect_isset({_entity}, "BURN")
+    assert if {_isset} is false with message "Effect burn should not be set. Got %{_isset1}%"
+    
+    entity_store_effect_set({_entity}, "BURN", 30, 15)
+    entity_store_effect_extend({_entity}, "BURN", 20, 5)
+    set {_damage} to entity_store_effect_get({_entity}, "BURN", "damage")
+    set {_duration} to entity_store_effect_get({_entity}, "BURN", "duration")
+    assert if {_damage} is 20 with message "Effect burn damage should be 20. Got %{_damage}%"
+    assert if {_duration} is 50 with message "Effect burn duration should be 50. Got %{_duration}%"
+  kill {_entity}

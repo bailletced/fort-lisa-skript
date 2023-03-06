@@ -5,4 +5,6 @@ on projectile hit:
     set {_p} to entity_nbt_get_tag({_projectile}, "ATTACKER") parsed as player
     set {_type} to entity_nbt_get_tag({_projectile}, "TYPE")
     if {_type} is "WEAPON":
-      weapon_hit({_p}, {_projectile})
+      weapon_hit_projectile({_p}, {_projectile}, victim)
+      cancel event
+    kill {_projectile}

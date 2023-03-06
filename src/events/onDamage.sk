@@ -6,8 +6,8 @@ on damage:
     if entity_nbt_get_tag(victim, "TYPE") is "MOB":
       if {_type} is "WEAPON":
         weapon_leftClick({_p}, {_item})
-      if {_type} is "SKILL":
-        skill_cast({_p}, {_item})
+      else if {_type} is "SKILL":
+        skill_cast_condition({_p}, {_item})
     else:
       if armor stand and item frame does not contain type of victim:
         cancel event
@@ -19,3 +19,12 @@ on damage:
     if {_type} is "MOB":
       mob_action_damage(attacker, victim)
       cancel event
+    else:
+      if damage cause is fall:
+        if entity_nbt_get_stat(victim, "IMMUNITY_FALLING") > 0:
+          if entity_nbt_get_stat(victim, "IMMUNITY_FALLING_AMOUNT") > 0:
+            entity_nbt_add_stat(victim, "IMMUNITY_FALLING_AMOUNT", -1)
+            cancel event
+          else:
+            entity_nbt_delete(victim, "IMMUNITY_FALLING")
+            entity_nbt_delete(victim, "IMMUNITY_FALLING_AMOUNT")

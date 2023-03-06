@@ -7,3 +7,5 @@ function test_main(p: player):
   test_player_main({_p})
   send "§3Testing mobs" to the console 
   test_mob_main({_p})
+  send "§3Testing entities" to the console 
+  test_entity_main({_p})

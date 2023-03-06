@@ -6,12 +6,24 @@ function entity_nbt_set_tag(entity: entity, key: text, value: text):
   set {_nbt} to nbt compound of {_entity}
   set tag "custom;%{_key}%" of {_nbt} to {_value}
 
+function entity_nbt_isset_tag(entity: entity, key: text) :: boolean:
+  set {_nbt} to full nbt compound of {_entity}
+  set {_res} to string tag "custom;%{_key}%" of {_nbt}
+  if {_res} is not "":
+    return true
+  return false
+
 function entity_nbt_set_tag_native(entity: entity, value: text):
   add nbt compound of {_value} to nbt compound of {_entity}
 
 function entity_nbt_set_stat(entity: entity, key: text, value: number):
   set {_nbt} to nbt compound of {_entity}
   set float tag "custom;%{_key}%" of {_nbt} to {_value}
+
+function entity_nbt_add_stat(entity: entity, key: text, value: number):
+  set {_nbt} to nbt compound of {_entity}
+  set {_currentValue} to float tag "custom;%{_key}%" of {_nbt}
+  set float tag "custom;%{_key}%" of {_nbt} to {_currentValue} + {_value}
 
 function entity_nbt_get_stat(entity: entity, key: text) :: number:
   set {_res} to float tag "custom;%{_key}%" of nbt compound of {_entity}
@@ -24,3 +36,7 @@ function entity_nbt_get_list(entity: entity, key: text) :: texts:
 function entity_nbt_set_list(entity: entity, key: text, value: texts):
   set {_nbt} to full nbt compound of {_entity}
   set string list tag "custom;%{_key}%" of {_nbt} to {_value::*}
+
+function entity_nbt_delete(entity: entity, key: text):
+  set {_nbt} to nbt compound of {_entity}
+  delete tag "custom;%{_key}%" of {_nbt}

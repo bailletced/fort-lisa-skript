@@ -25,13 +25,10 @@ function gift_consecrate(p: player, gift: item, item: item) :: item:
 function gift_will_consecrate(p: player, gift: item, item: item) :: item:
   set {_type} to item_nbt_get_tag({_item}, "TYPE")
   if {_type} is "WEAPON":
-    # We associate a skill to a weapon
-    set {_category} to item_nbt_get_tag({_item}, "CATEGORY")
+    # We associate a skill to a weapon.
+    # We first have to remove all stats of the weapon
     set {_id} to item_nbt_get_tag({_gift}, "ID")
-    loop {SKILL::%{_category}%::%{_id}%::STAT::*}:
-      set {_value} to {SKILL::%{_category}%::%{_id}%::%loop-value%}
-      set {_item} to item_nbt_set_stat({_item}, loop-value, {_value})
-    return {_item}
+    return weapon_will_stat({_p}, {_item}, {_id})
   return {_item}
 
 function gift_consecrate_intellect_equipment(p: player, gift: item, item: item) :: item:

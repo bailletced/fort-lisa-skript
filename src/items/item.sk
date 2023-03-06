@@ -28,7 +28,10 @@ function item_gift_initialize(p: player, item: item) :: item:
 
 function item_create(p: player, type: text, category: text, id: text) :: item:
   set {_uuid} to item_generate_uuid({_type}, {_category}, {_id})
-  set {_item} to {%{_type}%::%{_category}%::%{_id}%::ITEM}
+  if {%{_type}%::%{_category}%::%{_id}%::CUSTOM_ITEM} is set:
+    set {_item} to customitem {%{_type}%::%{_category}%::%{_id}%::CUSTOM_ITEM}
+  else:
+    set {_item} to {%{_type}%::%{_category}%::%{_id}%::ITEM}
   set {_item} to item_nbt_set_tag({_item}, "TYPE", {_type})
   set {_item} to item_nbt_set_tag({_item}, "CATEGORY", {_category})
   set {_item} to item_nbt_set_tag({_item}, "ID", {_id})

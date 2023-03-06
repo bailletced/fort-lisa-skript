@@ -1,0 +1,14 @@
+function crossbow_cast_skill(p: player, crossbow: item, projectile: entity):
+  set {_idSkill} to first element of entity_nbt_get_list({_projectile}, "WILL")
+  if {_idSkill} is "BURNING_HEART":
+    crossbow_burning_heart_cast({_p}, {_projectile})
+
+function crossbow_hit(p: player, projectile: entity, victim: entity):
+  set {_id} to entity_nbt_get_tag({_projectile}, "ID")
+  if {_id} is "ARMADILLO":
+    armadillo_hit({_p}, {_projectile}, {_victim})
+
+function crossbow_hit_skill(p: player, projectile: entity, victim: entity):
+  set {_idSkill} to first element of entity_nbt_get_list({_projectile}, "WILL")
+  if {_idSkill} is "BURNING_HEART":
+    crossbow_burning_heart_hit({_p}, {_victim}, {_projectile})

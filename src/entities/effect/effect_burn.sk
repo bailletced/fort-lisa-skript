@@ -1,11 +1,20 @@
-function entity_effect_burn(source: entity, target: entity, attack: number, power: number, duration: number, frequency: number):
-  if {_target} is a player:
-    set {_type} to "PLAYER"
-  else:
-    set {_type} to "MOB"
- 
+function entity_effect_burn(source: entity, target: entity, attack: number, duration: number, frequency: number, option: text = "UNIQUE"):
   set {_amount} to floor({_duration} / {_frequency})
-  set {_target} on fire for "%{_duration}% ticks" parsed as timespan
-  loop {_amount} times:
-    entity_effect_damage({_source}, {_target}, {_attack}, {_power})
-    wait "%{_frequency}% ticks" parsed as timespan
+  if entity_store_effect_isset({_target}, "BURN") is false:
+    entity_store_effect_set({_target}, "BURN", {_duration}, ({_attack})*{_amount})
+    entity_effect_burn_consume({_source}, {_target}, {_attack}, {_frequency})
+  else:
+    if {_option} is "EXTEND":
+      entity_store_effect_extend({_target}, "BURN", {_duration}, {_attack})
+    else if {_option} is "ADD":
+      broadcast "ADDING"
+      entity_store_effect_extend({_target}, "BURN", {_duration}, {_attack})
+      entity_effect_burn_consume({_source}, {_target}, {_attack}, {_frequency})
+
+function entity_effect_burn_consume(source: entity, target: entity, attack: number, delay: number):
+  while entity_store_effect_isset({_target}, "BURN") is true:
+    set {_uuid} to uuid of {_target}
+    set {_target} on fire for "%{_delay}% ticks" parsed as timespan
+    entity_store_effect_extend({_target}, "BURN", -1*{_delay}, -1*({_attack}))
+    entity_effect_damage({_source}, {_target}, {_attack})
+    wait "%{_delay}% ticks" parsed as timespan

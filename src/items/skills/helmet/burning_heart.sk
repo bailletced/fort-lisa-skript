@@ -1,33 +1,42 @@
 function helmet_burning_heart_cast(p: player, skill: item):
-  set {_range} to player_stat_item({_p}, {_skill}, "RANGE")
-  set {_radius} to player_stat_item({_p}, {_skill}, "RADIUS")
-  set {_power} to player_stat_item({_p}, {_skill}, "POWER")
+  set {_attack} to player_stat_item({_p}, {_skill}, "ATTACK")
+  set {_effectAttack} to player_stat_item({_p}, {_skill}, "EFFECT_ATTACK")
   set {_effectDuration} to player_stat_item({_p}, {_skill}, "EFFECT_DURATION")
   set {_effectFrequency} to player_stat_item({_p}, {_skill}, "EFFECT_FREQUENCY")
+  set {_range} to player_stat_item({_p}, {_skill}, "RANGE")
+  set {_loc} to location of {_p}
 
-  set {_factor} to {_range} / 0.7
-  set {_it} to 0
-  set {_startPoint} to head of {_p}
-  set {_yaw} to yaw of {_p}
-  set {_pitch} to pitch of {_p} + 90
-  set {_frame} to frame with yaw {_yaw} and pitch {_pitch}
-  set {_circle::*} to circle with radius {_radius}/2 and density 5 in {_frame}
-  delete {_victim::*}
-  
-  loop ceil({_factor}) times:
-    set {_loc} to location {_it} in front of {_startPoint}
-    if {BLOCK::NOCOLLISION::*} does not contain "%type of block at {_loc}%":
-      stop loop
-    add 0.7 to {_it}
-    loop {_circle::*}:
-      loop all entities in radius {_radius} of {_loc}:
-        set {_type} to entity_nbt_get_tag(loop-entity, "TYPE")
-        if {_type} is "MOB":
-          if {_victim::*} does not contain loop-entity:
-            add loop-entity to {_victim::*}
-      draw 1 flame at {_loc} offset by loop-value-2 with extra 0
-      # draw 5 of dust using dustOption(rgb(255,0,0), 0.5) at {_loc} offset by loop-value-2
-    wait 1 tick
+  set {_triggerCasted} to false
+  # Target entites in cone
+  set {_block} to 1
+  set {_cone} to 0
+  loop 4 times:
+    add 1 to {_block}
+    add 2 to {_cone}
+    set {_getBlock} to block {_block} blocks infront of {_p}
+    loop all entities in radius {_cone} of {_getBlock}:
+      if entity_nbt_get_tag(loop-entity, "TYPE") is "MOB":
+        if distance between {_loc} and loop-entity <= {_range}:
+          set {_triggerCasted} to true
+          set {_loc} to location of loop-entity
+          set {_target} to loop-entity
+          stop loop
 
-  loop {_victim::*}:
-    entity_effect_burn({_p}, loop-value, 0, {_power}, {_effectDuration}, {_effectFrequency})
+  if {_triggerCasted} is true:
+    set {_victims::*} to {_target}
+    set yaw of {_loc} to yaw of {_p}
+    set pitch of {_loc} to pitch of {_p}
+    teleport {_p} to {_loc}
+    push {_target} in direction of {_p} with speed 2
+
+    # We push entities behind the target
+    loop all entities in radius 1.5 of {_p}:
+      if entity_nbt_get_tag(loop-entity, "TYPE") is "MOB":
+        add loop-entity to {_victims::*}
+        push loop-entity in direction of {_p} with speed 2
+
+    drawDot count 5, particle "flame", RGB 0.2, 1, 0.2, center {_target}, rainbowMode true, visibleRange 32, pulseDelay 0, keepFor 20 ticks
+    entity_effect_damage({_p}, {_target}, {_attack}, 0)
+    loop {_victims::*}:
+      entity_effect_burn({_p}, loop-value, {_effectAttack}, {_effectDuration}, {_effectFrequency})
+    skill_cost({_p}, {_skill})

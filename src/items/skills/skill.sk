@@ -1,6 +1,7 @@
 #Give a skill to the player
 function skill_give(p: player, category: text, id: text, linkedEquipment: item = stone) :: item:
   set {_skill} to item_create({_p}, "SKILL", {_category}, {_id})
+  set {_skill} to item_nbt_set_tag({_skill}, "TRIGGER", {SKILL::%{_category}%::%{_id}%::TRIGGER})
   item_store_stat_set({_skill}, "CD", 0)
   set {_uuid} to item_nbt_get_tag({_linkedEquipment}, "UUID")
   if {_uuid} is not "":
@@ -12,19 +13,18 @@ function skill_give(p: player, category: text, id: text, linkedEquipment: item =
     set {_skill} to item_nbt_set_tag({_skill}, "UUID", {_uuid})
     set {_skill} to i18n_item({_p}, {_skill})
   player_store_skill_give({_p}, {_skill})
-  skill_mana({_p}, {_skill})
+  # skill_mana({_p}, {_skill})
   return {_skill}
 
-function skill_cast(p: player, skill: item) :: boolean:
+function skill_cast_condition(p: player, skill: item) :: boolean:
   set {_canCast} to true
-  set {_category} to item_nbt_get_tag({_skill}, "CATEGORY")
-  set {_requiredMana} to item_nbt_get_stat({_skill}, "MANA")
-  set {_playerMana} to player_store_stat_get({_p}, "MANA")
-
+  
   # Condition MANA
-  if {_playerMana} < {_requiredMana}:
-    error_player({_p}, i18n({_p}, "MESSAGE.PLAYER.MANA.NOT_ENOUGH"))
-    set {_canCast} to false
+  # set {_requiredMana} to item_nbt_get_stat({_skill}, "MANA")
+  # set {_playerMana} to player_store_stat_get({_p}, "MANA")
+  # if {_playerMana} < {_requiredMana}:
+  #   error_player({_p}, i18n({_p}, "MESSAGE.PLAYER.MANA.NOT_ENOUGH"))
+  #   set {_canCast} to false
 
   # Condition CD
   if item_store_stat_isset({_skill}, "CD") is true:
@@ -33,24 +33,32 @@ function skill_cast(p: player, skill: item) :: boolean:
       error_player({_p}, i18n({_p}, "MESSAGE.PLAYER.CD.SKILL.IN_PROGRESS"))
       set {_canCast} to false
 
-  # CAST SKILLS
   if {_canCast} is true:
+    skill_cast({_p}, {_skill})
 
-    # APPLY EFFECTS AFTER CAST
-    set {_cooldown} to item_nbt_get_stat({_skill}, "COOLDOWN")
-    item_store_stat_set({_skill}, "CD", {_cooldown})
-    player_store_stat_add({_p}, "MANA", -1*{_requiredMana})
-    loop player_store_skills({_p}):
-      skill_mana({_p}, loop-value)
-    skill_cooldown({_p}, {_skill})
+function skill_cast(p: player, skill: item):
+  set {_toto} to item_nbt_get_tag({_skill}, "TRIGGER")
+  #Apply skill cost
+  if item_nbt_get_tag({_skill}, "TRIGGER") is not "MANUAL":
+    skill_cost({_p}, {_skill})
 
-    # CAST THE SKILL
-    if {_category} is "HELMET":
-      helmet_cast({_p}, {_skill})
-    else if {_category} is "CHESTPLATE":
-      chestplate_cast({_p}, {_skill})
-  return {_canCast}
+  # CAST THE SKILL
+  set {_category} to item_nbt_get_tag({_skill}, "CATEGORY")
+  if {_category} is "HELMET":
+    helmet_cast({_p}, {_skill})
+  else if {_category} is "CHESTPLATE":
+    chestplate_cast({_p}, {_skill})
+  else if {_category} is "LEGGING":
+    legging_cast({_p}, {_skill})
 
+function skill_cost(p: player, skill: item) :: boolean:
+  # APPLY EFFECTS ON CAST
+  set {_cooldown} to item_nbt_get_stat({_skill}, "COOLDOWN")
+  item_store_stat_set({_skill}, "CD", {_cooldown})
+  # player_store_stat_add({_p}, "MANA", -1*{_requiredMana})
+  # loop player_store_skills({_p}):
+  #   skill_mana({_p}, loop-value)
+  skill_cooldown({_p}, {_skill})
 
 # Handle whether skill is not in CD
 function skill_cooldown(p: player, skill: item):
@@ -68,39 +76,39 @@ function skill_cooldown(p: player, skill: item):
       player_interface_title({_p}, "%{_cd} / 20%", "", 1 second)
 
   # End of CD
-  set {_requiredMana} to item_nbt_get_stat({_skill}, "MANA")
-  set {_playerMana} to player_store_stat_get({_p}, "MANA")
-  if {_playerMana} < {_requiredMana}:
-    skill_mana({_p}, {_skill})
-  else:
-    set {_skill} to skill_copy({_cdItem}, {_skill})
-    set slot {_slot} of {_p} to {_skill}
+  # set {_requiredMana} to item_nbt_get_stat({_skill}, "MANA")
+  # set {_playerMana} to player_store_stat_get({_p}, "MANA")
+  # if {_playerMana} < {_requiredMana}:
+  #   skill_mana({_p}, {_skill})
+  # else:
+  set {_skill} to skill_copy({_cdItem}, {_skill})
+  set slot {_slot} of {_p} to {_skill}
 
 # Handle whether player has enough mana
-function skill_mana(p: player, skill: item):
-  set {_cd} to item_store_stat_get({_skill}, "CD")
-  if {_cd} is 0:
-    # Skill must not be under cd
-    set {_requiredMana} to item_nbt_get_stat({_skill}, "MANA")
-    set {_playerMana} to player_store_stat_get({_p}, "MANA")
-    set {_slot} to player_store_skill_slot({_p}, {_skill})
-    if {_playerMana} < {_requiredMana}:
-      set {_manaItem} to skill_mana_item({_p}, {_skill})
-      set slot {_slot} of {_p} to {_manaItem}
-      while {_playerMana} < {_requiredMana}:
-        set {_playerMana} to player_store_stat_get({_p}, "MANA")
-        wait 5 ticks
-      # Player has enough mana
-      set {_skill} to skill_copy({_manaItem}, {_skill})
-      set slot {_slot} of {_p} to {_skill}
+# function skill_mana(p: player, skill: item):
+#   set {_cd} to item_store_stat_get({_skill}, "CD")
+#   if {_cd} is 0:
+#     # Skill must not be under cd
+#     set {_requiredMana} to item_nbt_get_stat({_skill}, "MANA")
+#     set {_playerMana} to player_store_stat_get({_p}, "MANA")
+#     set {_slot} to player_store_skill_slot({_p}, {_skill})
+#     if {_playerMana} < {_requiredMana}:
+#       set {_manaItem} to skill_mana_item({_p}, {_skill})
+#       set slot {_slot} of {_p} to {_manaItem}
+#       while {_playerMana} < {_requiredMana}:
+#         set {_playerMana} to player_store_stat_get({_p}, "MANA")
+#         wait 5 ticks
+#       # Player has enough mana
+#       set {_skill} to skill_copy({_manaItem}, {_skill})
+#       set slot {_slot} of {_p} to {_skill}
 
 function skill_cooldown_item(p: player, skill: item) :: item:
   set {_cdItem} to {UTILITY::MAIN::CD::ITEM}
   return skill_copy({_skill}, {_cdItem})
 
-function skill_mana_item(p: player, skill: item) :: item:
-  set {_cdItem} to {UTILITY::MAIN::NOMANA::ITEM}
-  return skill_copy({_skill}, {_cdItem})
+# function skill_mana_item(p: player, skill: item) :: item:
+#   set {_cdItem} to {UTILITY::MAIN::NOMANA::ITEM}
+#   return skill_copy({_skill}, {_cdItem})
 
 function skill_copy(source: item, dest: item) :: item:
   loop {STAT::SKILL::*}:
@@ -112,6 +120,8 @@ function skill_copy(source: item, dest: item) :: item:
     set {_dest} to item_nbt_set_tag({_dest}, "TYPE", item_nbt_get_tag({_source}, "TYPE"))
     set {_dest} to item_nbt_set_tag({_dest}, "CATEGORY", item_nbt_get_tag({_source}, "CATEGORY"))
     set {_dest} to item_nbt_set_tag({_dest}, "ID", item_nbt_get_tag({_source}, "ID"))
+    set {_dest} to item_nbt_set_tag({_dest}, "TRIGGER", item_nbt_get_tag({_source}, "TRIGGER"))
+
     set name of {_dest} to name of {_source}
     set lore of {_dest} to lore of {_source}
   return {_dest}
