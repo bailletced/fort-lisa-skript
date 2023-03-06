@@ -1,0 +1,6 @@
+function entity_effect_immunity(entity: entity, type: text, duration: number, option: text = "UNIQUE"):
+  entity_store_effect_set({_entity}, "IMMUNITY_%{_type}%", {_duration})
+  while entity_store_effect_get({_entity}, "IMMUNITY_%{_type}%", "duration") > 0:
+    entity_store_effect_add({_entity}, "IMMUNITY_%{_type}%", "duration", -5)
+    wait 5 ticks
+  entity_store_effect_delete({_entity}, "IMMUNITY_%{_type}%")

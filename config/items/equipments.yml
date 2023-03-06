@@ -28,3 +28,13 @@ CHESTPLATE:
       MEMORY_MAX: 1
     STATS:
       HEALTH_MAX: 4
+LEGGING:
+  LEATHER_JOGGING:
+    TIER: 1
+    ITEM: leather leggings
+    GIFTS:
+      WILL_MAX: 1
+      INTELLECT_MAX: 1
+      MEMORY_MAX: 1
+    STATS:
+      CHARITY: 2

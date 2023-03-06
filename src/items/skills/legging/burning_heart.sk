@@ -2,3 +2,4 @@ function legging_burning_heart_cast(p: player, skill: item):
   set {_attack} to player_stat_item({_p}, {_skill}, "ATTACK")
   set {_effectAttack} to player_stat_item({_p}, {_skill}, "EFFECT_ATTACK")
   set {_effectDuration} to player_stat_item({_p}, {_skill}, "EFFECT_DURATION")
+  entity_effect_immunity({_p}, "TRYNDAMERE", {_effectDuration})

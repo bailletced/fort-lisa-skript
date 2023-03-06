@@ -23,12 +23,12 @@ function entity_store_effect_extend(entity: entity, effect: text, duration: numb
 
 function entity_store_effect_add(entity: entity, effect: text, key: text, value: number):
   set {_uuid} to uuid of {_entity}
-  if "duration" and "damage" does not contain {_key}:
-    if entity_store_effect_isset({_entity}, {_effect}) is true:
-      add {_value} to {entities::%{_uuid}%::effects::%{_effect}%::%{_key}%}
+  if entity_store_effect_isset({_entity}, {_effect}) is true:
+    add {_value} to {entities::%{_uuid}%::effects::%{_effect}%::%{_key}%}
 
 function entity_store_effect_get(entity: entity, effect: text, key: text) :: object:
   set {_uuid} to uuid of {_entity}
+  broadcast "%{_uuid}% %{_effect}%"
   if entity_store_effect_isset({_entity}, {_effect}) is true:
     return {entities::%{_uuid}%::effects::%{_effect}%::%{_key}%}
 

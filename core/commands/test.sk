@@ -152,3 +152,8 @@ command /iaskriptgetitem <text> [<number=1>]:
     trigger:
         set {_item} to customitem "coeur_vaillant"
         give 1 of {_item} to player
+
+command /nbt_test <text>:
+    trigger:
+        set {_item} to stone
+        broadcast "%full nbt compound of {_item}%"

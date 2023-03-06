@@ -76,7 +76,9 @@ ALL:
   DEFENCE_FALLING:
     ICON: ""
     COLOR: "§c"
-
+  CHARITY:
+    ICON: ""
+    COLOR: "§c"
 
 PLAYER:
   - "HEALTH"
