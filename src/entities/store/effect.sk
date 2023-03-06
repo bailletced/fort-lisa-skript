@@ -35,6 +35,7 @@ function entity_store_effect_set(entity: entity, effect: text, key: text, value:
 
 function entity_store_effect_get(entity: entity, effect: text, key: text) :: object:
   set {_uuid} to uuid of {_entity}
+  broadcast "%{_uuid}% %{_effect}%"
   if entity_store_effect_isset({_entity}, {_effect}) is true:
     return {entities::%{_uuid}%::effects::%{_effect}%::%{_key}%}
 
