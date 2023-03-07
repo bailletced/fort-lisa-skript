@@ -17,6 +17,7 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
             player_store_stat_set({_p}, arg-4, arg-5 parsed as number)
         else if arg-3 is "get":
           set {_stat} to player_store_stat_get({_p}, arg-4)
+          broadcast "%arg-4% %{_stat}%"
       else if arg-2 is "init":
         player_init()
       else if arg-2 is "clean":

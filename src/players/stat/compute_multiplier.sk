@@ -10,7 +10,7 @@ function player_stat_item(p: player, item: item, stat: text) :: number:
   set {_keyMultiplier} to "%{_stat}%_MULTIPLIER"
   set {_statMultiplier} to item_nbt_get_stat({_item}, {_keyMultiplier})
   set {_itemStat} to item_nbt_get_stat({_item}, {_stat})
-  if {_statMultiplier} is not set:
+  if {_statMultiplier} is 0:
     set {_statMultiplier} to 1
   return compute_multiplier({_p}, {_stat}, {_itemStat}, {_statMultiplier})
 
