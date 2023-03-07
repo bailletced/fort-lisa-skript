@@ -4,7 +4,7 @@ function test_entity_store_effect(p: player):
   set {_entity} to last spawned entity
   it "test set effect":
     set {_isset1} to entity_store_effect_isset({_entity}, "BURN")
-    entity_store_effect_set({_entity}, "BURN", 20, 5)
+    entity_store_effect_init({_entity}, "BURN", 20, 5)
     set {_isset2} to entity_store_effect_isset({_entity}, "BURN")
     set {_damage} to entity_store_effect_get({_entity}, "BURN", "damage")
     set {_duration} to entity_store_effect_get({_entity}, "BURN", "duration")
@@ -17,7 +17,7 @@ function test_entity_store_effect(p: player):
     set {_isset} to entity_store_effect_isset({_entity}, "BURN")
     assert if {_isset} is false with message "Effect burn should not be set. Got %{_isset1}%"
     
-    entity_store_effect_set({_entity}, "BURN", 30, 15)
+    entity_store_effect_init({_entity}, "BURN", 30, 15)
     entity_store_effect_extend({_entity}, "BURN", 20, 5)
     set {_damage} to entity_store_effect_get({_entity}, "BURN", "damage")
     set {_duration} to entity_store_effect_get({_entity}, "BURN", "duration")

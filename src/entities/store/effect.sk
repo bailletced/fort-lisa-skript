@@ -1,11 +1,13 @@
-function entity_store_effect_set(entity: entity, effect: text, duration: number, damage: number = 0):
+function entity_store_effect_init(entity: entity, effect: text, duration: number):
   set {_uuid} to uuid of {_entity}
   if entity_store_effect_isset({_entity}, {_effect}) is false:
     add {_effect} to {entities::%{_uuid}%::effects::*}
     set {entities::%{_uuid}%::effects::%{_effect}%::duration} to {_duration}
     set {entities::%{_uuid}%::effects::%{_effect}%::amount} to 1
-    if {_damage} > 0:
-      set {entities::%{_uuid}%::effects::%{_effect}%::damage} to {_damage}
+
+function entity_store_effect_count(entity: entity) :: number:
+  set {_uuid} to uuid of {_entity}
+  return size of {entities::%{_uuid}%::effects::*}
 
 function entity_store_effect_isset(entity: entity, effect: text) :: boolean:
   set {_uuid} to uuid of {_entity}
@@ -13,22 +15,26 @@ function entity_store_effect_isset(entity: entity, effect: text) :: boolean:
     return true
   return false
 
-function entity_store_effect_extend(entity: entity, effect: text, duration: number, damage: number = 0):
-  set {_uuid} to uuid of {_entity}
-  if entity_store_effect_isset({_entity}, {_effect}) is true:
-    add {_duration} to {entities::%{_uuid}%::effects::%{_effect}%::duration}
-    add {_damage} to {entities::%{_uuid}%::effects::%{_effect}%::damage}
-    if {entities::%{_uuid}%::effects::%{_effect}%::duration} <= 0:
-      entity_store_effect_delete({_entity}, {_effect})
-
 function entity_store_effect_add(entity: entity, effect: text, key: text, value: number):
   set {_uuid} to uuid of {_entity}
   if entity_store_effect_isset({_entity}, {_effect}) is true:
+    if {entities::%{_uuid}%::effects::%{_effect}%::%{_key}%} is not set:
+      set {entities::%{_uuid}%::effects::%{_effect}%::%{_key}%} to 0
     add {_value} to {entities::%{_uuid}%::effects::%{_effect}%::%{_key}%}
+    if {_key} is "duration":
+      if {entities::%{_uuid}%::effects::%{_effect}%::%{_key}%} <= 0:
+        entity_store_effect_delete({_entity}, {_effect})
+
+function entity_store_effect_set(entity: entity, effect: text, key: text, value: object):
+  set {_uuid} to uuid of {_entity}
+  if entity_store_effect_isset({_entity}, {_effect}) is true:
+    set {entities::%{_uuid}%::effects::%{_effect}%::%{_key}%} to {_value}
+    if {_key} is "duration":
+      if {entities::%{_uuid}%::effects::%{_effect}%::%{_key}%} <= 0:
+        entity_store_effect_delete({_entity}, {_effect})
 
 function entity_store_effect_get(entity: entity, effect: text, key: text) :: object:
   set {_uuid} to uuid of {_entity}
-  broadcast "%{_uuid}% %{_effect}%"
   if entity_store_effect_isset({_entity}, {_effect}) is true:
     return {entities::%{_uuid}%::effects::%{_effect}%::%{_key}%}
 
