@@ -1,0 +1,7 @@
+# ALL, TRYNDAMERE, FALL, BURN, LAVA
+function entity_effect_immunity(entity: entity, type: text, duration: number, option: text = "UNIQUE"):
+  replace "IMMINUTY_" with "" in {_type}
+  entity_store_effect_init({_entity}, "IMMUNITY_%{_type}%", {_duration})
+  while entity_store_effect_isset({_entity}, "IMMUNITY_%{_type}%") is true:
+    entity_store_effect_add({_entity}, "IMMUNITY_%{_type}%", "duration", -5)
+    wait 5 ticks

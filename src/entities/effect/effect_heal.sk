@@ -1,0 +1,2 @@
+function entity_effect_heal(target: entity, charity: number):
+  set health of {_target} to health of {_target} + {_charity}

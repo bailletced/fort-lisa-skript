@@ -1,4 +1,35 @@
 function legging_burning_heart_cast(p: player, skill: item):
   set {_attack} to player_stat_item({_p}, {_skill}, "ATTACK")
+  set {_charity} to player_stat_item({_p}, {_skill}, "CHARITY")
+  set {_radius} to player_stat_item({_p}, {_skill}, "RADIUS")
   set {_effectAttack} to player_stat_item({_p}, {_skill}, "EFFECT_ATTACK")
   set {_effectDuration} to player_stat_item({_p}, {_skill}, "EFFECT_DURATION")
+  set {_effectFrequency} to player_stat_item({_p}, {_skill}, "EFFECT_FREQUENCY")
+  set {_effectDurationTicks} to "%{_effectDuration}% ticks" parsed as timespan
+  entity_effect_immunity({_p}, "TRYNDAMERE", {_effectDuration})
+  entity_effect_immunity({_p}, "BURN", {_effectDuration})
+  ignite {_p} for {_effectDurationTicks}
+
+  if health of {_p} is 0.5:
+    set health of {_p} to 1
+
+  while entity_store_effect_isset({_p}, "IMMUNITY_TRYNDAMERE") is true:
+    if health of {_p} <= 0.5:
+      set {_shouldHaveDied} to true
+      stop loop
+    wait 2 ticks
+
+  if {_shouldHaveDied} is true:
+    entity_store_effect_set({_p}, "IMMUNITY_TRYNDAMERE", "duration", 50)
+    entity_effect_immunity({_p}, "FALL", 80)
+    apply potion of levitation 3 without particles to {_p} for 2 seconds
+    wait 2 seconds
+
+    draw {_radius}*100 flame at {_p} with offset vector({_radius}*0.1, {_radius}*0.1, {_radius}*0.1) with extra {_radius}*0.1
+    loop all entities in radius {_radius} of {_p}:
+      if entity_nbt_get_tag(loop-entity, "TYPE") is "MOB":
+        entity_effect_damage({_p}, loop-entity, {_attack})
+        entity_effect_burn({_p}, loop-entity, {_effectAttack}, {_effectDuration}, {_effectFrequency})
+    
+    set {_healAmount} to {_charity} + ceil((max health of {_p})*0.2)
+    entity_effect_heal({_p}, {_healAmount})

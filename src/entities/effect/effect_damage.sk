@@ -1,21 +1,16 @@
-function entity_effect_damage(source: entity, target: entity, attack: number, power: number = 0):
+function entity_effect_damage(source: entity, target: entity, attack: number, power: number = 0): 
   if {_target} is a player:
-    set {_type} to "PLAYER"
+    set {_defence} to player_store_stat_get({_victim}, "DEFENCE")
   else:
-    set {_type} to "MOB"
- 
-  if {_type} is "MOB":
     set {_defence} to entity_nbt_get_stat({_target}, "DEFENCE")
-    set {_mr} to entity_nbt_get_stat({_target}, "MR")
-    if {_defence} is not set:
-      set {_defence} to 0
-    if {_mr} is not set:
-      set {_mr} to 0
+  if {_defence} is not set:
+    set {_defence} to 0
 
-    set {_attackDmg} to max(0, {_attack} - {_defence})
-    set {_powerDmg} to max(0, {_power} - {_mr})
-    set {_finalDmg} to {_attackDmg} + {_powerDmg}
-
-    damage {_target} by {_finalDmg}
-    # if {_target} is not alive:
-    #   broadcast "TODO : define killer"
+  set {_finalDmg} to max(0, {_attack} - {_defence})
+  set {_targetHealth} to health of {_target}
+  set {_duration} to entity_store_effect_get({_target}, "IMMUNITY_TRYNDAMERE", "duration")
+  if entity_store_effect_isset({_target}, "IMMUNITY_TRYNDAMERE") is true:
+    if {_targetHealth} - {_finalDmg} <= 0:
+      set {_finalDmg} to 0
+      set health of {_target} to 0.5
+  damage {_target} by {_finalDmg}

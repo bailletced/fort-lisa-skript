@@ -1,7 +1,0 @@
-function effect_immunity_falling(entity: entity, duration: number, maxImmunityAmount: number = 999):
-  entity_nbt_set_stat({_entity}, "IMMUNITY_FALLING", {_duration})
-  entity_nbt_set_stat({_entity}, "IMMUNITY_FALLING_AMOUNT", {_maxImmunityAmount})
-  while entity_nbt_get_stat({_entity}, "IMMUNITY_FALLING") > 0:
-    wait 10 ticks
-    entity_nbt_add_stat({_entity}, "IMMUNITY_FALLING", -10)
-  entity_nbt_delete({_entity}, "IMMUNITY_FALLING")

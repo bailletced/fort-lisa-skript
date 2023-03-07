@@ -1,26 +1,3 @@
 function mob_action_damage(mob: entity, victim: entity):
-  if type of {_victim} is player:
-    set {_attack} to entity_nbt_get_stat({_mob}, "ATTACK")
-    set {_power} to entity_nbt_get_stat({_mob}, "POWER")
-    set {_defence} to player_store_stat_get({_victim}, "DEFENCE")
-    set {_mr} to player_store_stat_get({_victim}, "MR")
-  else:
-    set {_attack} to entity_nbt_get_stat({_mob}, "ATTACK")
-    set {_power} to entity_nbt_get_stat({_mob}, "POWER")
-    set {_defence} to entity_nbt_get_stat({_victim}, "DEFENCE")
-    set {_mr} to entity_nbt_get_stat({_victim}, "MR")
-
-  if {_defence} is not set:
-    set {_defence} to 0
-  if {_mr} is not set:
-    set {_mr} to 0
-  if {_attack} is not set:
-    set {_attack} to 0
-  if {_power} is not set:
-    set {_power} to 0
-
-  set {_attackDmg} to max(0, {_attack} - {_defence})
-  set {_powerDmg} to max(0, {_power} - {_mr})
-  set {_finalDmg} to {_attackDmg} + {_powerDmg}
-
-  damage {_victim} by {_finalDmg}
+  set {_attack} to entity_nbt_get_stat({_mob}, "ATTACK")
+  entity_effect_damage({_mob}, {_victim}, {_attack})

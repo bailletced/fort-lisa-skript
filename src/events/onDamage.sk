@@ -1,4 +1,20 @@
 on damage:
+  if entity_store_effect_count(victim) > 0:
+    if entity_store_effect_isset(victim, "IMMUNITY_TRYNDAMERE") is true:
+      if health of victim - damage <= 0:
+        set damage to 0
+    if entity_store_effect_isset(victim, "IMMUNITY_ALL") is true:
+      cancel event
+    else if damage cause is burn:
+      if entity_store_effect_isset(victim, "IMMUNITY_BURN") is true:
+        cancel event
+    else if damage cause is lava:
+      if entity_store_effect_isset(victim, "IMMUNITY_LAVA") is true:
+        cancel event
+    else if damage cause is fall:
+      if entity_store_effect_isset(victim, "IMMUNITY_FALL") is true:
+        cancel event
+
   if type of attacker is player:
     set {_p} to attacker
     set {_item} to held item of {_p}
@@ -19,12 +35,3 @@ on damage:
     if {_type} is "MOB":
       mob_action_damage(attacker, victim)
       cancel event
-    else:
-      if damage cause is fall:
-        if entity_nbt_get_stat(victim, "IMMUNITY_FALLING") > 0:
-          if entity_nbt_get_stat(victim, "IMMUNITY_FALLING_AMOUNT") > 0:
-            entity_nbt_add_stat(victim, "IMMUNITY_FALLING_AMOUNT", -1)
-            cancel event
-          else:
-            entity_nbt_delete(victim, "IMMUNITY_FALLING")
-            entity_nbt_delete(victim, "IMMUNITY_FALLING_AMOUNT")

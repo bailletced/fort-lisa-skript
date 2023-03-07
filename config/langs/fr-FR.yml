@@ -47,6 +47,12 @@ EQUIPMENT:
   HELMET:
     LAUREL_CROWN:
       TITLE: "La couronne de laurier {_TIER}"
+  CHESTPLATE:
+    CHAINMAIL:
+      TITLE: "Le plastron de cuir {_TIER}"
+  LEGGING:
+    LEATHER_JOGGING:
+      TITLE: "Le jogging de cuir {_TIER}"
 SKILL:
   HELMET:
     TEST:
@@ -62,6 +68,10 @@ SKILL:
     MOUNTAIN:
       TITLE: "L'écrasement"
       LORE: "L'écrasement inflige {_ATTACK} à tous les ennemis dans un rayon de {_RADIUS}. Les ennemis touchés sont enfoncés dans le sol pendant {_EFFECT_DURATION}"
+  LEGGING:
+    BURNING_HEART:
+      TITLE: "Flamme renouvelée"
+      LORE: "Pendant {_EFFECT_DURATION}, les dégâts qui devaient vous infliger la mort sont annulés. Si vous deviez-mourrir, vous vous immobilisez pendant une courte durée, avant de vous enflammer, infligeant {_ATTACK} dans un rayon de {_RADIUS}, brûlant les ennemis qui subissent {_EFFECT_ATTACK} pendant {_EFFECT_DURATION} toutes les {_EFFECT_FREQUENCY}."
   STAFF:
     BURNING_HEART:
       LORE: "Projette une boule de feu qui inflige {_POWER} tous les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION} dans un rayon de {_RADIUS}. Portée {_RANGE}"
@@ -80,7 +90,7 @@ GIFT:
   WILL:
     TITLE: "Volonté"
     BURNING_HEART:
-      TITLE: "Volonté du coeur brûlant"
+      TITLE: "Volonté de Mathieu"
     MOUNTAIN:
       TITLE: "Volonté de la montagne"
   INTELLECT:
