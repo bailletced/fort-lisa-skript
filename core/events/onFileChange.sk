@@ -13,6 +13,9 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/npc/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/store/":
    reload script file fileManager_getRelativePath(event-path)
 
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/targets/":
+   reload script file fileManager_getRelativePath(event-path)
+
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/events/":
    reload script file fileManager_getRelativePath(event-path)
 

@@ -6,12 +6,12 @@ function staff_burning_heart_cast(p: player, staff: item):
   set {_range} to player_stat_item({_p}, {_staff}, "RANGE")
   while {_projectile} is alive:
     if distance between {_projectile} and {_loc} > {_range}:
-      staff_burning_heart_hit({_p}, {_projectile})
+      staff_burning_heart_hit({_p}, {_projectile}, {_projectile})
       stop loop
     wait 5 ticks
   kill {_projectile}
 
-function staff_burning_heart_hit(p: player, projectile: entity):
+function staff_burning_heart_hit(p: player, projectile: entity, victim: entity):
   set {_location} to location of {_projectile}
   set {_power} to player_stat_projectile({_p}, {_projectile}, "POWER")
   set {_radius} to player_stat_projectile({_p}, {_projectile}, "RADIUS")
@@ -22,3 +22,21 @@ function staff_burning_heart_hit(p: player, projectile: entity):
     set {_type} to entity_nbt_get_tag(loop-entity, "TYPE")
     if {_type} is "MOB":
       entity_effect_burn({_p}, loop-entity, {_power}, {_effectDuration}, {_effectFrequency})
+
+function staff_burning_heart_special(p: player, staff: item):
+  set {_attack} to player_stat_item({_p}, {_staff}, "ATTACK")
+  set {_radius} to player_stat_item({_p}, {_staff}, "RADIUS")
+  set {_effectDuration} to player_stat_item({_p}, {_staff}, "EFFECT_DURATION")
+  set {_effectFrequency} to player_stat_item({_p}, {_staff}, "EFFECT_FREQUENCY")
+
+  set {_loc} to location of {_p}
+  set {_it} to 0
+  set {_uuid} to item_nbt_get_tag({_staff}, "UUID")
+  loop 20 times:
+    set {_it} to min(8, {_it}+0.5)
+    drawCylinder particle "flame", speed 0, center {_loc}, id "%{_uuid}%-%{_it}%", randomRotation false, isSolid false, radius {_radius}-0.5, density ({_radius}-0.5)*50, height {_radius}, sideRatio 0, visibleRange 30
+    set {_loc} to location 1 meter in front of {_loc}
+    loop target_radius({_loc}, {_radius}):
+      entity_effect_burn({_p}, loop-entity, {_attack}*3, {_effectDuration}*3, {_effectFrequency})
+    wait 5 ticks
+    stopEffect "%{_uuid}%-%{_it}%"

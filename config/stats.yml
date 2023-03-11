@@ -11,54 +11,27 @@ ALL:
   ATTACK:
     ICON: "🗡"
     COLOR: "§6"
+  ATTACK-2:
+    ICON: "🗡"
+    COLOR: "§6"
   ATTACK_MULTIPLIER:
     ICON: "🗡"
     COLOR: "§6"
-  POWER:
-    ICON: "🗡"
-    COLOR: "§d"
-  POWER_MULTIPLIER:
-    ICON: "🗡"
-    COLOR: "§d"
   DEFENCE:
     ICON: "🛡"
     COLOR: "§6"
-  MR:
-    ICON: "🛡"
-    COLOR: "§d"
   RANGE:
     ICON: "➝"
     COLOR: "§f"
   RADIUS:
     ICON: "۞"
     COLOR: "§d"
-  TARGET:
-    ICON: "☠"
-    COLOR: "§b"
   COOLDOWN:
     ICON: "◕"
     COLOR: "§7"
   COOLDOWN_REDUCTION:
     ICON: "◕"
     COLOR: "§d"
-  MANA:
-    ICON: "☄"
-    COLOR: "§b"
-  MANA_MAX:
-    ICON: "☄"
-    COLOR: "§b"
-  MANA_REGEN:
-    ICON: "☄"
-    COLOR: "§b"
-  MANA_COST:
-    ICON: "☄"
-    COLOR: "§3"
-  MANA_REGEN:
-    ICON: "☄"
-    COLOR: "§b"
-  DURATION:
-    ICON: "۝"
-    COLOR: "§9"
   PROJECTILE_SPEED:
     ICON: "۝"
     COLOR: "§c"
@@ -72,8 +45,9 @@ ALL:
     ICON: ""
     COLOR: "§c"
   EFFECT_ATTACK:
+    ICON: ""
+    COLOR: "§c"
   EFFECT_ATTACK_MULTIPLIER:
-  DEFENCE_FALLING:
     ICON: ""
     COLOR: "§c"
   CHARITY:

@@ -5,7 +5,7 @@ on damage:
         set damage to 0
     if entity_store_effect_isset(victim, "IMMUNITY_ALL") is true:
       cancel event
-    else if damage cause is burn:
+    else if "fire", "burning" and "burn" contains "%damage cause%":
       if entity_store_effect_isset(victim, "IMMUNITY_BURN") is true:
         cancel event
     else if damage cause is lava:

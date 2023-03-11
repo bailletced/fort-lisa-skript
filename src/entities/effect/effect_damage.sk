@@ -1,8 +1,9 @@
 function entity_effect_damage(source: entity, target: entity, attack: number, power: number = 0): 
   if {_target} is a player:
-    set {_defence} to player_store_stat_get({_victim}, "DEFENCE")
+    set {_defence} to player_store_stat_get({_target}, "DEFENCE")
   else:
     set {_defence} to entity_nbt_get_stat({_target}, "DEFENCE")
+
   if {_defence} is not set:
     set {_defence} to 0
 

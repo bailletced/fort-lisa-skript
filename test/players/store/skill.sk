@@ -8,16 +8,16 @@ function test_players_store_skill(p: player):
     set slot 0 of {_p} to stone
     set {_skill1} to skill_give({_p}, "HELMET", "TEST")
     set {_slot} to player_store_skill_slot({_p}, {_skill1})
-    assert if {_slot} is 0 with message "skill should be given in slot 0. Got %{_slot}%"
-    assert if slot 1 of {_p} is stone with message "slot 1 of player should be stone block. Got %slot 1 of {_p}%"
+    assert if {_slot} is 1 with message "skill should be given in slot 1. Got %{_slot}%"
+    assert if slot 0 of {_p} is stone with message "slot 0 of player should be stone block. Got %slot 0 of {_p}%"
 
     set {_skill2} to skill_give({_p}, "HELMET", "TEST")
     set {_slotSkill1} to player_store_skill_slot({_p}, {_skill1})
     set {_slotSkill2} to player_store_skill_slot({_p}, {_skill2})
     
-    assert if {_slotSkill1} is 0 with message "skill1 should be given in slot 0. Got %{_slotSkill1}%"
-    assert if {_slotSkill2} is 1 with message "skill2 should be given in slot 1. Got %{_slotSkill2}%"
-    assert if slot 2 of {_p} is stone with message "slot 2 of player should be stone block. Got %slot 2 of {_p}%"
+    assert if {_slotSkill1} is 1 with message "skill1 should be given in slot 1. Got %{_slotSkill1}%"
+    assert if {_slotSkill2} is 2 with message "skill2 should be given in slot 2. Got %{_slotSkill2}%"
+    assert if slot 0 of {_p} is stone with message "slot 0 of player should be stone block. Got %slot 0 of {_p}%"
 
   it "test skill reload":
     clear inventory of {_p}

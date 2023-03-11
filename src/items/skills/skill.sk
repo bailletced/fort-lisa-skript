@@ -4,7 +4,7 @@ function skill_give(p: player, category: text, id: text, linkedEquipment: item =
   set {_skill} to item_nbt_set_tag({_skill}, "TRIGGER", {SKILL::%{_category}%::%{_id}%::TRIGGER})
   item_store_stat_set({_skill}, "CD", 0)
   set {_uuid} to item_nbt_get_tag({_linkedEquipment}, "UUID")
-  if {_uuid} is not "":
+  if {_uuid} is set:
     set {_intellect::*} to item_nbt_get_list({_linkedEquipment}, "INTELLECT")
     loop {_intellect::*}:
       set {_intellectGift} to item_create({_p}, "GIFT", "INTELLECT", loop-value)
@@ -13,12 +13,10 @@ function skill_give(p: player, category: text, id: text, linkedEquipment: item =
     set {_skill} to item_nbt_set_tag({_skill}, "UUID", {_uuid})
     set {_skill} to i18n_item({_p}, {_skill})
   player_store_skill_give({_p}, {_skill})
-  # skill_mana({_p}, {_skill})
   return {_skill}
 
 function skill_cast_condition(p: player, skill: item) :: boolean:
   set {_canCast} to true
-  
   # Condition MANA
   # set {_requiredMana} to item_nbt_get_stat({_skill}, "MANA")
   # set {_playerMana} to player_store_stat_get({_p}, "MANA")
@@ -32,12 +30,11 @@ function skill_cast_condition(p: player, skill: item) :: boolean:
     if max({_cd}, 0) > 0:
       error_player({_p}, i18n({_p}, "MESSAGE.PLAYER.CD.SKILL.IN_PROGRESS"))
       set {_canCast} to false
-
   if {_canCast} is true:
     skill_cast({_p}, {_skill})
+  return {_canCast}
 
 function skill_cast(p: player, skill: item):
-  set {_toto} to item_nbt_get_tag({_skill}, "TRIGGER")
   #Apply skill cost
   if item_nbt_get_tag({_skill}, "TRIGGER") is not "MANUAL":
     skill_cost({_p}, {_skill})
@@ -111,17 +108,15 @@ function skill_cooldown_item(p: player, skill: item) :: item:
 #   return skill_copy({_skill}, {_cdItem})
 
 function skill_copy(source: item, dest: item) :: item:
-  loop {STAT::SKILL::*}:
-    # copy stats
+  loop item_nbt_get_list({_source}, "STAT"):
     set {_key} to loop-value
     set {_value} to item_nbt_get_stat({_source}, {_key})
     set {_dest} to item_nbt_set_stat({_dest}, {_key}, {_value})
-    set {_dest} to item_nbt_set_tag({_dest}, "UUID", item_nbt_get_tag({_source}, "UUID"))
-    set {_dest} to item_nbt_set_tag({_dest}, "TYPE", item_nbt_get_tag({_source}, "TYPE"))
-    set {_dest} to item_nbt_set_tag({_dest}, "CATEGORY", item_nbt_get_tag({_source}, "CATEGORY"))
-    set {_dest} to item_nbt_set_tag({_dest}, "ID", item_nbt_get_tag({_source}, "ID"))
-    set {_dest} to item_nbt_set_tag({_dest}, "TRIGGER", item_nbt_get_tag({_source}, "TRIGGER"))
-
-    set name of {_dest} to name of {_source}
-    set lore of {_dest} to lore of {_source}
+  set {_dest} to item_nbt_set_tag({_dest}, "UUID", item_nbt_get_tag({_source}, "UUID"))
+  set {_dest} to item_nbt_set_tag({_dest}, "TYPE", item_nbt_get_tag({_source}, "TYPE"))
+  set {_dest} to item_nbt_set_tag({_dest}, "CATEGORY", item_nbt_get_tag({_source}, "CATEGORY"))
+  set {_dest} to item_nbt_set_tag({_dest}, "ID", item_nbt_get_tag({_source}, "ID"))
+  set {_dest} to item_nbt_set_tag({_dest}, "TRIGGER", item_nbt_get_tag({_source}, "TRIGGER"))
+  set name of {_dest} to name of {_source}
+  set lore of {_dest} to lore of {_source}
   return {_dest}
