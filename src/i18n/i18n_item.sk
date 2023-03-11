@@ -103,7 +103,7 @@ function i18n_item_lore(p: player, it: item) :: text:
     return {_lore}
 
 #transform a lore to list to make sure it will be visible once set to an item
-function i18n_item_lore_to_list(lore: text) :: texts:    
+function i18n_transform_description(lore: text) :: texts:   
     if {_lore} is "":
         stop
     set {_lores::*} to {_lore} split at " "
@@ -127,6 +127,13 @@ function i18n_item_lore_to_list(lore: text) :: texts:
         add 1 to {_idx}
     return {_res::*}
 
+function i18n_item_lore_to_list(lore: text) :: texts:
+    delete {_res::*}
+    set {_lore::*} to {_lore} split at newline
+    loop {_lore::*}:
+        add i18n_transform_description(loop-value) to {_res::*}
+    return {_res::*}
+
 # internationalize an item
 function i18n_item(p: player, it: item) :: item:
     set {_title} to i18n_item_title({_p}, {_it})
@@ -136,8 +143,8 @@ function i18n_item(p: player, it: item) :: item:
     set {_loreSkill::*} to i18n_item_skill_lore({_p}, {_it})
     set {_loreIntellect::*} to i18n_item_intellect_lore({_p}, {_it})
     set {_loreStats::*} to i18n_item_stat_lore({_p}, {_it})
-    set {_finalLore::*} to i18n_item_lore_to_list({_lore})
-    set {_lores::*} to {_loreGifts::*}, {_loreAttributes}, {_loreSkill::*}, {_loreIntellect::*}, {_loreStats::*} and {_finalLore::*}
+    set {_loreDescription::*} to i18n_item_lore_to_list({_lore})
+    set {_lores::*} to {_loreGifts::*}, {_loreAttributes}, {_loreSkill::*}, {_loreIntellect::*}, {_loreStats::*} and {_loreDescription::*}
     if {_lores::*} is not "":
         set lore of {_it} to {_lores::*}    
     set name of {_it} to {_title}

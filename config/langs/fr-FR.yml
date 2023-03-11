@@ -38,7 +38,7 @@ WEAPON:
       LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE} infligeant {_POWER}."
     LIMB_OF_WISDOM:
       TITLE: "L'Abattis de Sagesse"
-      LORE: "Projette une boule de portée {_RANGE} et infligeant {_POWER}"
+      LORE: "Projette une boule de portée {_RANGE} et infligeant {_ATTACK}"
   CROSSBOW:
     ARMADILLO:
       TITLE: "Armadillo"
@@ -74,7 +74,7 @@ SKILL:
       LORE: "Pendant {_EFFECT_DURATION}, les dégâts qui devaient vous infliger la mort sont annulés. Si vous deviez-mourrir, vous vous immobilisez pendant une courte durée, avant de vous enflammer, infligeant {_ATTACK} dans un rayon de {_RADIUS}, brûlant les ennemis qui subissent {_EFFECT_ATTACK} pendant {_EFFECT_DURATION} toutes les {_EFFECT_FREQUENCY}."
   STAFF:
     BURNING_HEART:
-      LORE: "Projette une boule de feu qui inflige {_ATTACK} tous les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION} dans un rayon de {_RADIUS}. Peut aussi {_ATTACK-2}"
+      LORE: "Projette une boule de feu qui inflige {_ATTACK} tous les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION} dans un rayon de {_RADIUS}. \nPeut aussi {_ATTACK-2}"
   CROSSBOW:
     BURNING_HEART:
       LORE: "Le carreau inflige {_ATTACK} avant de provoquer une déflagration dans un rayon de {_RADIUS}. Les ennemis touchés sont brûlés, subissant {_EFFECT_ATTACK} toutes les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION}"
