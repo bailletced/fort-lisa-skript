@@ -1,0 +1,15 @@
+function test_entity_nbt_main(p: player):
+  send "§5Testing entity nbt" to the console
+  summon pig at location of {_p}
+  set {_entity} to last spawned entity
+  it "test set entity stat":
+    set {_stats::*} to entity_nbt_get_list({_entity}, "STAT")
+    assert if size of {_stats::*} is 0 with message "entity should not have any stat. Got %{_stats::*}%"
+
+    entity_nbt_add_stat({_entity}, "ATTACK", 10)
+    entity_nbt_add_stat({_entity}, "CHARITY", 10)
+    set {_stats::*} to entity_nbt_get_list({_entity}, "STAT")
+    assert if {_stats::*} contains "ATTACK" with message "entity list stat should contain ATTACK. Got %{_stats::*}%"
+    assert if {_stats::*} contains "CHARITY" with message "entity list stat should contain CHARITY. Got %{_stats::*}%"
+
+  kill {_entity}

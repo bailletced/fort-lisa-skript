@@ -11,9 +11,6 @@ ALL:
   ATTACK:
     ICON: "🗡"
     COLOR: "§6"
-  ATTACK-2:
-    ICON: "🗡"
-    COLOR: "§6"
   ATTACK_MULTIPLIER:
     ICON: "🗡"
     COLOR: "§6"
@@ -44,69 +41,11 @@ ALL:
   EFFECT_FREQUENCY:
     ICON: ""
     COLOR: "§c"
-  EFFECT_ATTACK:
-    ICON: ""
-    COLOR: "§c"
-  EFFECT_ATTACK_MULTIPLIER:
-    ICON: ""
-    COLOR: "§c"
   CHARITY:
     ICON: ""
     COLOR: "§c"
 
-PLAYER:
-  - HEALTH
-  - HEALTH_MAX
-  - ATTACK
-  - DEFENCE
-  - CHARITY
-
-WEAPON:
-  - COOLDOWN
-  - ATTACK
-  - ATTACK_MULTIPLIER
-  - RADIUS
-  - RANGE
-  - PROJECTILE_SPEED
-  - PROJECTILE_AMOUNT
-  - CHARITY
-
-SKILL:
-  - ATTACK
-  - ATTACK_MULTIPLIER
-  - RADIUS
-  - RANGE
-  - COOLDOWN
-  - "DURATION"
-  - PROJECTILE_SPEED
-  - PROJECTILE_AMOUNT
-  - CHARITY
-
-GIFT:
-  - "ATTACK"
-  - "POWER"
-  - "MANA"
-  - "MANA_REGEN"
-  - "HEALTH"
-  - "HEALTH_REGEN"
-  - "DEFENCE"
-  - "MR"
-  - "COOLDOWN"
-  - "RANGE"
-  - "RADIUS"
-  - "PROJECTILE"
-  - PROJECTILE_SPEED
-  - PROJECTILE_AMOUNT
-
 MOB:
-  - "HEALTH"
-  - "DEFENCE"
-  - "MR"
-  - "ATTACK"
-  - "POWER"
-  - "SPEED"
-
-NPC:
   - "HEALTH"
   - "DEFENCE"
   - "MR"

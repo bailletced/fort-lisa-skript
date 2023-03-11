@@ -18,16 +18,28 @@ function entity_nbt_set_tag_native(entity: entity, value: text):
 
 function entity_nbt_set_stat(entity: entity, key: text, value: number):
   set {_nbt} to nbt compound of {_entity}
+  if entity_nbt_get_list({_entity}, "STAT") does not contain {_key}:
+    entity_nbt_add_list({_entity}, "STAT", {_key})
   set float tag "custom;%{_key}%" of {_nbt} to {_value}
 
 function entity_nbt_add_stat(entity: entity, key: text, value: number):
-  set {_nbt} to nbt compound of {_entity}
-  set {_currentValue} to float tag "custom;%{_key}%" of {_nbt}
-  set float tag "custom;%{_key}%" of {_nbt} to {_currentValue} + {_value}
+  if entity_nbt_isset_stat({_entity}, {_key}) is true:
+    set {_currentAmount} to entity_nbt_get_stat({_entity}, {_key})
+    set {_finalAmount} to {_currentAmount} + {_amount}
+    entity_nbt_set_stat({_entity}, {_key}, {_finalAmount})
+  else:
+    entity_nbt_set_stat({_entity}, {_key}, {_amount})
 
 function entity_nbt_get_stat(entity: entity, key: text) :: number:
   set {_res} to float tag "custom;%{_key}%" of nbt compound of {_entity}
   return {_res}
+
+function entity_nbt_isset_stat(entity: entity, key: text) :: boolean:
+  set {_nbt} to full nbt compound of {_entity}
+  set {_res} to tag "custom;%{_key}%" of {_nbt}
+  if {_res} is set:
+    return true
+  return false
 
 function entity_nbt_get_list(entity: entity, key: text) :: texts:
   set {_res::*} to string list tag "custom;%{_key}%" of nbt compound of {_entity}
@@ -36,6 +48,21 @@ function entity_nbt_get_list(entity: entity, key: text) :: texts:
 function entity_nbt_set_list(entity: entity, key: text, value: texts):
   set {_nbt} to full nbt compound of {_entity}
   set string list tag "custom;%{_key}%" of {_nbt} to {_value::*}
+
+function entity_nbt_isset_list(entity: entity, key: text) :: boolean:
+  set {_nbt} to full nbt compound of {_entity}
+  set {_res::*} to string list tag "custom;%{_key}%" of {_nbt}
+  if size of {_res::*} > 0:
+    return true
+  return false
+
+function entity_nbt_add_list(entity: entity, key: text, value: texts):
+  set {_nbt} to full nbt compound of {_entity}
+  if entity_nbt_isset_list({_entity}, {_key}) is true:
+    set {_currList::*} to entity_nbt_get_list({_entity}, {_key})
+    entity_nbt_set_list({_entity}, {_key}, ({_currList::*} and {_value::*}))
+  else:
+    entity_nbt_set_list({_entity}, {_key}, {_value::*})
 
 function entity_nbt_delete(entity: entity, key: text):
   set {_nbt} to nbt compound of {_entity}

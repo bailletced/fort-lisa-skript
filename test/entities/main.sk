@@ -1,5 +1,9 @@
 function test_entity_main(p: player):
   test_entity_store({_p})
+  test_entity_nbt({_p})
 
 function test_entity_store(p: player):
   test_entity_store_effect({_p})
+
+function test_entity_nbt(p: player):
+  test_entity_nbt_main({_p})

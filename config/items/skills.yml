@@ -14,8 +14,10 @@ STAFF:
       - EFFECT
       - RADIUS
     STATS:
-      POWER: 3
-      POWER_MULTIPLIER: 0.5
+      ATTACK: 3
+      ATTACK_MULTIPLIER: 0.5
+      ATTACK-2: 10
+      ATTACK-2_MULTIPLIER: 0.9
       COOLDOWN: 30
       RANGE: 5
       RADIUS: 1.5

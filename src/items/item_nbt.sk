@@ -20,15 +20,6 @@ function item_nbt_set_list(it: item, key: text, value: texts) :: item:
   set string list tag "tag;%{_key}%" of {_nbt} to {_value::*}
   return item from nbt {_nbt}
 
-function item_nbt_list_append(it: item, key: text, value: texts) :: item:
-  set {_list::*} to item_nbt_get_list({_it}, {_key})
-  if size of {_list::*} > 0:
-    set {_list::*} to {_list::*} and {_value::*}
-    set {_nbt} to full nbt compound of {_it}
-    set string list tag "tag;%{_key}%" of {_nbt} to {_list::*}
-    return item from nbt {_nbt}
-  return {_it}
-
 function item_nbt_isset_tag(it: item, key: text) :: boolean:
   set {_nbt} to full nbt compound of {_it}
   set {_res} to string tag "tag;%{_key}%" of {_nbt}
@@ -58,7 +49,7 @@ function item_nbt_set_stat(it: item, key: text, value: number) :: item:
     set float tag "tag;%{_key}%" of {_nbt} to {_value}
     if item_nbt_get_list({_it}, "STAT") does not contain {_key}:
       set {_it} to item from nbt {_nbt}
-      return item_nbt_list_append({_it}, "STAT", {_key})
+      return item_nbt_add_list({_it}, "STAT", {_key})
     return item from nbt {_nbt}
   return {_it}
 

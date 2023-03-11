@@ -1,6 +1,9 @@
 function compute_multiplier(p: player, statKey: text, statFixed: number, statMultiplier: number) :: number:
   if {_statKey} contains "EFFECT":
     replace "EFFECT_" with "" in {_statKey}
+  if size of {_statKey} split at "-" > 1:
+    set {_splited::*} to {_statKey} split at "-"
+    set {_statKey} to {_splited::1}
   if player_store_stat_isset({_p}, {_statKey}) is true:
     set {_playerStat} to player_store_stat_get({_p}, {_statKey})
   return {_statFixed} + {_statMultiplier} * {_playerStat}
