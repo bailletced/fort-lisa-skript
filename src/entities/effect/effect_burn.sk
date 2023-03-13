@@ -1,4 +1,4 @@
-function entity_effect_burn(source: entity, target: entity, attack: number, duration: number, frequency: number, option: text = "UNIQUE"):
+function entity_effect_burn(source: entity, target: entity, attack: number, duration: number, frequency: number, option: text = "ADD"):
   set {_amount} to floor({_duration} / {_frequency})
   if entity_store_effect_isset({_target}, "BURN") is false:
     entity_store_effect_init({_target}, "BURN", {_duration})

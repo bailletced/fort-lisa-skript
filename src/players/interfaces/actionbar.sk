@@ -1,3 +1,5 @@
-function player_interface_actionbar(p: player):
-  set {_statTxt} to player_stat_tostring({_p}, "medium")
-  send action bar {_statTxt} to {_p} 
+function player_interface_actionbar(p: player, text: text):
+  send action bar {_text} to {_p} 
+
+function player_interface_actionbar_clear(p: player):
+  send action bar " " to {_p}

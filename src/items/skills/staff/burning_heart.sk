@@ -24,19 +24,32 @@ function staff_burning_heart_hit(p: player, projectile: entity, victim: entity):
       entity_effect_burn({_p}, loop-entity, {_power}, {_effectDuration}, {_effectFrequency})
 
 function staff_burning_heart_special(p: player, staff: item):
-  set {_attack} to player_stat_item({_p}, {_staff}, "ATTACK")
   set {_radius} to player_stat_item({_p}, {_staff}, "RADIUS")
-  set {_effectDuration} to player_stat_item({_p}, {_staff}, "EFFECT_DURATION")
-  set {_effectFrequency} to player_stat_item({_p}, {_staff}, "EFFECT_FREQUENCY")
+  set {_attack} to player_stat_item({_p}, {_staff}, "ATTACK-2")
+  set {_effectAttack} to player_stat_item({_p}, {_staff}, "EFFECT_ATTACK-2")
+  set {_effectDuration} to player_stat_item({_p}, {_staff}, "EFFECT_DURATION-2")
+  set {_effectFrequency} to player_stat_item({_p}, {_staff}, "EFFECT_FREQUENCY-2")
 
   set {_loc} to location of {_p}
   set {_it} to 0
   set {_uuid} to item_nbt_get_tag({_staff}, "UUID")
-  loop 20 times:
-    set {_it} to min(8, {_it}+0.5)
-    drawCylinder particle "flame", speed 0, center {_loc}, id "%{_uuid}%-%{_it}%", randomRotation false, isSolid false, radius {_radius}-0.5, density ({_radius}-0.5)*50, height {_radius}, sideRatio 0, visibleRange 30
+  set {_height} to 12
+  loop 12 times:
+    drawCylinder particle "flame", speed 0, center {_loc}, id "%{_uuid}%-%{_it}%", randomRotation false, isSolid false, radius {_radius}-0.5, density ({_radius}-1)*320, height {_height}, sideRatio 0, visibleRange 30
+    delete {_victims::*}
+    loop 10 times:
+      loop target_radius({_loc}, max({_height}/2, ({_radius}+0.5)/2)):
+        set {_loc1} to location(x coordinate of {_loc}, 0, z coordinate of {_loc})
+        set {_loc2} to location(x coordinate of loop-entity, 0, z coordinate of loop-entity)
+        set {_dist} to distance between {_loc1} and {_loc2}
+        if {_dist} <= ({_radius}+0.5):
+          if {_victims::*} does not contain loop-entity:
+            add loop-entity to {_victims::*}
+            entity_effect_burn({_p}, loop-entity, {_effectAttack}, {_effectDuration}, {_effectFrequency}, "UNIQUE")
+            # Closest to the center the entity is, more damage it takes.
+            entity_effect_damage({_p}, loop-entity, {_attack}*(1/({_dist}+1)))
+      wait 2 ticks
+
     set {_loc} to location 1 meter in front of {_loc}
-    loop target_radius({_loc}, {_radius}):
-      entity_effect_burn({_p}, loop-entity, {_attack}*3, {_effectDuration}*3, {_effectFrequency})
-    wait 5 ticks
     stopEffect "%{_uuid}%-%{_it}%"
+    add 1 to {_it}

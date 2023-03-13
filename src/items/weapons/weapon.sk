@@ -1,14 +1,10 @@
-function weapon_category_get(category: text) :: text:
-    if {WEAPON::%{_category}%} is set:
-        return {_category}
-    else:
-        error("WEAPON of category %{_category}% does not exist")
-
 #Give a weapon to the player
 function weapon_give(p: player, category: text, id: text) :: item:
     set {_weapon} to item_create({_p}, "WEAPON", {_category}, {_id})  
-    set {_weapon} to item_nbt_set_tag_native({_weapon}, "{Unbreakable:1,HideFlags:4}")  
+    set {_weapon} to item_nbt_set_tag_native({_weapon}, "{Unbreakable:1,HideFlags:4}")
     player_store_weapon_give({_p}, {_weapon})
+    item_store_stat_set({_weapon}, "CD_NORMAL", 0) #We do not use nbt here because to refresh nbt on item, we have to regenerate it
+    item_store_stat_set({_weapon}, "CD_SPECIAL", 0) #We do not use nbt here because to refresh nbt on item, we have to regenerate it
     return {_weapon}
 
 function weapon_stat_reload(p: player, weapon: item) :: item:
@@ -31,23 +27,7 @@ function weapon_will_stat(p: player, weapon: item, idWill: text) :: item:
 function weapon_onEquip(p: player, weapon: item):
     player_store_weapon_equip({_p}, {_weapon})
 
-# #Called when left clicking with a weapon. 
 function weapon_leftClick(p: player, weapon: item):
-    weapon_cast({_p}, {_weapon})
-
-# #Called when right clicking with a weapon. 
-function weapon_rightClick(p: player, weapon: item):
-    set {_category} to item_nbt_get_tag({_weapon}, "CATEGORY")
-    if "BOW" and "CROSSBOW" contains {_category}:
-        player_store_weapon_give_arrow({_p})
-    else if {_category} is "STAFF":
-        set {_will::*} to item_nbt_get_list({_weapon}, "WILL")
-        if size of {_will::*} > 0:
-            staff_skill_rightClick({_p}, {_weapon})
-        else:
-            staff_rightClick({_p}, {_weapon})
-
-function weapon_cast(p: player, weapon: item):
     set {_category} to item_nbt_get_tag({_weapon}, "CATEGORY")
     if item_store_stat_isset({_weapon}, "CD_NORMAL") is true:
         set {_cd} to item_store_stat_get({_weapon}, "CD_NORMAL")
@@ -65,7 +45,24 @@ function weapon_cast(p: player, weapon: item):
         else:
             staff_cast({_p}, {_weapon})
         weapon_cooldown({_p}, {_weapon})
-        
+
+#Called when right clicking with a weapon. 
+function weapon_rightClick(p: player, weapon: item):
+    set {_category} to item_nbt_get_tag({_weapon}, "CATEGORY")
+    if {_category} is "STAFF":
+        if item_store_stat_isset({_weapon}, "CD_SPECIAL") is true:
+            set {_cd} to item_store_stat_get({_weapon}, "CD_SPECIAL")
+            if {_cd} is 0:
+                set {_will::*} to item_nbt_get_list({_weapon}, "WILL")
+                if size of {_will::*} > 0:
+                    staff_skill_rightClick({_p}, {_weapon})
+                else:
+                    staff_rightClick({_p}, {_weapon})
+                weapon_cooldown_special({_p}, {_weapon})
+            else:
+                error_player({_p}, i18n({_p}, "MESSAGE.PLAYER.CD.SKILL.IN_PROGRESS"))
+    else if "BOW" and "CROSSBOW" contains {_category}:
+        player_store_weapon_give_arrow({_p})
 
 function weapon_cooldown(p: player, weapon: item):
     set {_cooldown} to item_nbt_get_stat({_weapon}, "COOLDOWN")
@@ -74,6 +71,19 @@ function weapon_cooldown(p: player, weapon: item):
     while {_cdNormal} > 0:
         set {_cdNormal} to {_cdNormal} - 5
         item_store_stat_set({_weapon}, "CD_NORMAL", {_cdNormal})
+        wait 5 tick
+
+function weapon_cooldown_special(p: player, weapon: item):
+    set {_cooldown} to item_nbt_get_stat({_weapon}, "COOLDOWN-SPECIAL")
+    item_store_stat_set({_weapon}, "CD_SPECIAL", {_cooldown})
+    set {_cdSpecial} to item_store_stat_get({_weapon}, "CD_SPECIAL")
+    while {_cdSpecial} > 0:
+        set {_cdSpecial} to {_cdSpecial} - 5
+        item_store_stat_set({_weapon}, "CD_SPECIAL", {_cdSpecial})
+        if tool of {_p} is {_weapon}:
+            player_interface_actionbar({_p}, "%ceil({_cdSpecial} / 20)%")
+        else:
+            player_interface_actionbar_clear({_p})
         wait 5 tick
 
 #Called when the player hit a block/entity with his weapon

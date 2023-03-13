@@ -34,10 +34,10 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/i18n/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/gifts/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/equipments/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/gifts/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/":
@@ -73,7 +73,7 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/bow/
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/crossbow/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/location/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/staffs/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/location/":
@@ -100,9 +100,6 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/store/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/action/":
-   reload script file fileManager_getRelativePath(event-path)
-
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/interfaces/":
    reload script file fileManager_getRelativePath(event-path)
 
@@ -112,10 +109,13 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/interfaces
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/interfaces/menus/":
    reload script file fileManager_getRelativePath(event-path)
 
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/interfaces/menus/":
+   reload script file fileManager_getRelativePath(event-path)
+
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/stat/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/store/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/waves/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/waves/":

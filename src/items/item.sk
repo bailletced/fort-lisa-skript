@@ -7,8 +7,6 @@ function item_stat_initialize(p: player, type: text, item: item) :: item:
     set {_value} to {%{_type}%::%{_category}%::%{_id}%::%loop-value%}
     set {_item} to item_nbt_set_stat({_item}, {_stat}, {_value})
   set {_item} to item_nbt_set_list({_item}, "STAT", {%{_type}%::%{_category}%::%{_id}%::STAT::*})
-  set {_item} to item_nbt_set_stat({_item}, "CD_NORMAL", 0)
-  set {_item} to item_nbt_set_stat({_item}, "CD_SPECIAL", 0)
   return {_item}
 
 function item_attribute_initialize(p: player, item: item) :: item:
@@ -28,9 +26,8 @@ function item_gift_initialize(p: player, item: item) :: item:
 
 function item_create(p: player, type: text, category: text, id: text) :: item:
   set {_uuid} to item_generate_uuid({_type}, {_category}, {_id})
-  if {%{_type}%::%{_category}%::%{_id}%::CUSTOM_ITEM} is set:
-    set {_item} to customitem {%{_type}%::%{_category}%::%{_id}%::CUSTOM_ITEM}
-  else:
+  set {_item} to customitem {%{_type}%::%{_category}%::%{_id}%::CUSTOM_ITEM}
+  if {_item} is not set:
     set {_item} to {%{_type}%::%{_category}%::%{_id}%::ITEM}
   set {_item} to item_nbt_set_tag({_item}, "TYPE", {_type})
   set {_item} to item_nbt_set_tag({_item}, "CATEGORY", {_category})
