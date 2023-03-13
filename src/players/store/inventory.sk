@@ -2,7 +2,8 @@ function player_store_inventory_backup(p: player):
   set {_it} to 0
   loop 36 times:
     set {_item} to slot {_it} of inventory of {_p}
-    add {_item} to {players::%{_p}%::inventory::items::*}
+    if {_item} is not air:
+      add {_item} to {players::%{_p}%::inventory::items::*}
     add 1 to {_it}
   player_store_inventory_clear({_p})
 

@@ -18,9 +18,6 @@ function mob_set_equipments(mob: entity):
       equip {_mob} with {MOB::%{_category}%::%{_id}%::EQUIPMENT::%loop-value%} parsed as item
 
 function mob_initialize(mob: entity):
-  entity_nbt_set_tag({_mob}, "TYPE", "MOB")
-  entity_nbt_set_tag({_mob}, "CATEGORY", {_category})
-  entity_nbt_set_tag({_mob}, "ID", {_id})
   mob_set_stats({_mob})
   mob_set_equipments({_mob})
   mob_store_add({_mob})
@@ -32,5 +29,8 @@ function mob_summon(category: text, id: text, location: location) :: entity:
     void_archer_summon({_location})
 
   if {_mob} is set:
+    entity_nbt_set_tag({_mob}, "TYPE", "MOB")
+    entity_nbt_set_tag({_mob}, "CATEGORY", {_category})
+    entity_nbt_set_tag({_mob}, "ID", {_id})
     mob_initialize({_mob})
     return {_mob}

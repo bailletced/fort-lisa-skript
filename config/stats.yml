@@ -14,51 +14,21 @@ ALL:
   ATTACK_MULTIPLIER:
     ICON: "🗡"
     COLOR: "§6"
-  POWER:
-    ICON: "🗡"
-    COLOR: "§d"
-  POWER_MULTIPLIER:
-    ICON: "🗡"
-    COLOR: "§d"
   DEFENCE:
     ICON: "🛡"
     COLOR: "§6"
-  MR:
-    ICON: "🛡"
-    COLOR: "§d"
   RANGE:
     ICON: "➝"
     COLOR: "§f"
   RADIUS:
     ICON: "۞"
     COLOR: "§d"
-  TARGET:
-    ICON: "☠"
-    COLOR: "§b"
   COOLDOWN:
     ICON: "◕"
     COLOR: "§7"
   COOLDOWN_REDUCTION:
     ICON: "◕"
     COLOR: "§d"
-  MANA:
-    ICON: "☄"
-    COLOR: "§b"
-  MANA_MAX:
-    ICON: "☄"
-    COLOR: "§b"
-  MANA_REGEN:
-    ICON: "☄"
-    COLOR: "§b"
-  MANA_COST:
-    ICON: "☄"
-    COLOR: "§3"
-  MANA_REGEN:
-    ICON: "☄"
-    COLOR: "§b"
-  DURATION:
-    ICON: "۝"
-    COLOR: "§9"
   PROJECTILE_SPEED:
     ICON: "۝"
     COLOR: "§c"
@@ -71,68 +41,11 @@ ALL:
   EFFECT_FREQUENCY:
     ICON: ""
     COLOR: "§c"
-  EFFECT_ATTACK:
-  EFFECT_ATTACK_MULTIPLIER:
-  DEFENCE_FALLING:
-    ICON: ""
-    COLOR: "§c"
   CHARITY:
     ICON: ""
     COLOR: "§c"
 
-PLAYER:
-  - HEALTH
-  - HEALTH_MAX
-  - ATTACK
-  - DEFENCE
-  - CHARITY
-
-WEAPON:
-  - COOLDOWN
-  - ATTACK
-  - ATTACK_MULTIPLIER
-  - RADIUS
-  - RANGE
-  - PROJECTILE_SPEED
-  - PROJECTILE_AMOUNT
-  - CHARITY
-
-SKILL:
-  - ATTACK
-  - ATTACK_MULTIPLIER
-  - RADIUS
-  - RANGE
-  - COOLDOWN
-  - "DURATION"
-  - PROJECTILE_SPEED
-  - PROJECTILE_AMOUNT
-  - CHARITY
-
-GIFT:
-  - "ATTACK"
-  - "POWER"
-  - "MANA"
-  - "MANA_REGEN"
-  - "HEALTH"
-  - "HEALTH_REGEN"
-  - "DEFENCE"
-  - "MR"
-  - "COOLDOWN"
-  - "RANGE"
-  - "RADIUS"
-  - "PROJECTILE"
-  - PROJECTILE_SPEED
-  - PROJECTILE_AMOUNT
-
 MOB:
-  - "HEALTH"
-  - "DEFENCE"
-  - "MR"
-  - "ATTACK"
-  - "POWER"
-  - "SPEED"
-
-NPC:
   - "HEALTH"
   - "DEFENCE"
   - "MR"

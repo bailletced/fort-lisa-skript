@@ -153,7 +153,19 @@ command /iaskriptgetitem <text> [<number=1>]:
         set {_item} to customitem "coeur_vaillant"
         give 1 of {_item} to player
 
-command /nbt_test <text>:
+command /burn_block <text>:
     trigger:
-        set {_item} to stone
-        broadcast "%full nbt compound of {_item}%"
+        set block at player to fire
+
+command /cylinder:
+    trigger:
+        drawCylinder particle "flame", speed 0.02, center location of player, id "test", randomRotation false, isSolid false, radius 0.5, density 50, height 2, sideRatio 0, visibleRange 30
+        wait 5 seconds
+        stopEffect "test"
+
+command /line-keepgoing:
+    trigger:
+        set {_line::*} to vector line from vector 0, 0, 0 to vector 0, {_it}, 0 with density 3
+        loop {_line::*}:
+            drawDot count 1, particle "flame", RGB 0, 0, 0, center {_loc} offset by loop-value-2, visibleRange 32, pulseDelay 0, keepFor 10 ticks
+

@@ -16,7 +16,7 @@ function parser_tier(tier: number) :: text:
   else:
     return ""
 
-function color_number(stat: number) :: text:
+function color_stat(stat: number) :: text:
   if {_stat} > 0:
     return "§2+%{_stat}%"
   else:

@@ -13,16 +13,24 @@ function equipment_equip(p: player, oldEquipment: item, newEquipment: item):
   equipment_give_skill({_p}, {_oldEquipment}, {_newEquipment})
 
 function equipment_merge_stat(p: player, oldEquipment: item, newEquipment: item):
-  loop {STAT::ALL::*}:
+  # We remove old stats
+  loop item_nbt_get_list({_oldEquipment}, "STAT"):
     set {_stat} to loop-value
+    set {_oldStat} to item_nbt_get_stat({_oldEquipment}, {_stat})
     if item_nbt_isset_stat({_newEquipment}, {_stat}) is true:
-      set {_oldStat} to item_nbt_get_stat({_oldEquipment}, {_stat})
       set {_newStat} to item_nbt_get_stat({_newEquipment}, {_stat})
       player_store_stat_add_lazy({_p}, {_stat}, -1*{_oldStat} + {_newStat})
-    else if item_nbt_isset_stat({_oldEquipment}, {_stat}) is true:
-      #old equipment had stat. New onen does not
-      set {_oldStat} to item_nbt_get_stat({_oldEquipment}, {_stat})
+    else:
       player_store_stat_add_lazy({_p}, {_stat}, -1*{_oldStat})
+
+  # We add new stats
+  loop item_nbt_get_list({_newEquipment}, "STAT"):
+    set {_stat} to loop-value
+    if item_nbt_isset_stat({_oldEquipment}, {_stat}) is false:
+      set {_newStat} to item_nbt_get_stat({_newEquipment}, {_stat})
+      player_store_stat_add_lazy({_p}, {_stat}, {_newStat})
+      
+  #Finally, we render stats for player
   player_store_stat_render({_p})
 
 function equipment_give_skill(p: player, oldEquipment: item, newEquipment: item):

@@ -4,9 +4,9 @@ function test_entity_effect_damage(p: player):
     set {_location} to location of {_p}
     set {_zombie} to mob_summon("ZOMBIE", "1", {_location})
     set {_currHealth} to health of {_zombie}
-    entity_nbt_set_stat({_zombie}, "MR", 5)
-    set {_mr} to entity_nbt_get_stat({_zombie}, "MR")
-    entity_effect_damage({_p}, {_zombie}, 0, 10)
+    entity_nbt_set_stat({_zombie}, "DEFENCE", 5)
+    set {_defence} to entity_nbt_get_stat({_zombie}, "DEFENCE")
+    entity_effect_damage({_p}, {_zombie}, 10)
     set {_afterHealth} to health of {_zombie}
-    assert if {_afterHealth} is {_currHealth} - (10 - {_mr}) with message "health of zombie should be %{_currHealth} - (10 - {_mr})%. Got %{_afterHealth}%"
+    assert if {_afterHealth} is {_currHealth} - (10 - {_defence}) with message "health of zombie should be %{_currHealth} - (10 - {_mr})%. Got %{_afterHealth}%"
     kill {_zombie}
