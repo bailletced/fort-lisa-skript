@@ -24,4 +24,4 @@ function staff_skill_rightClick(p: player, staff: item):
     staff_burning_heart_special({_p}, {_staff})
 
 function staff_rightClick(p: player, staff: item):
-  broadcast "TODO: right click"
+  broadcast ""
