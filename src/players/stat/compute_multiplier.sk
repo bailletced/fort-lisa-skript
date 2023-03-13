@@ -1,27 +1,33 @@
-function compute_multiplier(p: player, statKey: text, statFixed: number, statMultiplier: number) :: number:
-  if {_statKey} contains "EFFECT":
-    replace "EFFECT_" with "" in {_statKey}
-  if size of {_statKey} split at "-" > 1:
-    set {_splited::*} to {_statKey} split at "-"
-    set {_statKey} to {_splited::1}
-  if player_store_stat_isset({_p}, {_statKey}) is true:
-    set {_playerStat} to player_store_stat_get({_p}, {_statKey})
-  return {_statFixed} + {_statMultiplier} * {_playerStat}
+function getPureStat(stat: text) :: text:
+  if size of {_stat} split at "-" > 1:
+    set {_spitted::*} to {_stat} split at "-"
+    set {_pureStat} to {_spitted::1}
+  else:
+    set {_pureStat} to {_stat}
+  if {_stat} contains "EFFECT":
+    replace "EFFECT_" with "" in {_pureStat}
+  return {_pureStat}
 
 function player_stat_item(p: player, item: item, stat: text) :: number:
   set {_playerStat} to 0
-  set {_keyMultiplier} to "%{_stat}%_MULTIPLIER"
-  set {_statMultiplier} to item_nbt_get_stat({_item}, {_keyMultiplier})
+  set {_pureStat} to getPureStat({_stat})
   set {_itemStat} to item_nbt_get_stat({_item}, {_stat})
-  if {_statMultiplier} is 0:
-    set {_statMultiplier} to 1
-  return compute_multiplier({_p}, {_stat}, {_itemStat}, {_statMultiplier})
+
+  if player_store_stat_isset({_p}, {_pureStat}) is true:
+    set {_multiplier} to item_nbt_get_stat({_item}, "%{_stat}%_MULTIPLIER")
+    set {_playerStat} to player_store_stat_get({_p}, {_pureStat})
+  if {_multiplier} is not set:
+    set {_multiplier} to 1
+  return {_itemStat} + {_playerStat} * {_multiplier}
 
 function player_stat_projectile(p: player, projectile: entity, stat: text) :: number:
   set {_playerStat} to 0
-  set {_keyMultiplier} to "%{_stat}%_MULTIPLIER"
-  set {_statMultiplier} to entity_nbt_get_stat({_projectile}, {_keyMultiplier})
+  set {_pureStat} to getPureStat({_stat})
   set {_projectileStat} to entity_nbt_get_stat({_projectile}, {_stat})
-  if {_statMultiplier} is not set:
-    set {_statMultiplier} to 1
-  return compute_multiplier({_p}, {_stat}, {_projectileStat}, {_statMultiplier})
+
+  if player_store_stat_isset({_p}, {_pureStat}) is true:
+    set {_multiplier} to entity_nbt_get_stat({_projectile}, "%{_stat}%_MULTIPLIER")
+    set {_playerStat} to player_store_stat_get({_p}, {_pureStat})
+  if {_multiplier} is not set:
+    set {_multiplier} to 1
+  return {_projectileStat} + {_playerStat} * {_multiplier}
