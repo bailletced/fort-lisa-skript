@@ -2,7 +2,7 @@ function limb_of_wisdom_cast(p: player, staff: item):
   players_action_shootProjectile({_p}, {_staff}, snowball, 1, false)
   set {_projectile} to last shot projectile
   set {_loc} to location of {_p}
-  set {_range} to player_stat_item({_p}, {_staff}, "RANGE")
+  set {_range} to player_stat_compute({_p}, {_staff}, "RANGE")
   while {_projectile} is alive:
     drawDot count 1, particle "smoke", RGB 0.2, 0.2, 0.2, center {_projectile}, visibleRange 152, pulseDelay 0, keepFor 10 ticks
     if distance between {_projectile} and {_loc} > {_range}:
@@ -13,6 +13,6 @@ function limb_of_wisdom_cast(p: player, staff: item):
 
 function limb_of_wisdom_hit(p: player, projectile: entity):
   set {_location} to location of {_projectile}
-  set {_power} to player_stat_projectile({_p}, {_projectile}, "POWER")
+  set {_power} to player_stat_compute({_p}, {_projectile}, "POWER")
   loop all entities in radius 1 of {_location}:
     entity_effect_damage({_p}, loop-entity, 0, {_power})

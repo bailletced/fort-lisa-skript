@@ -1,0 +1,33 @@
+function test_entity_effect_burn(p: player):
+  send "§5Testing entity effect burn" to the console
+
+  it "test set effect burn UNIQUE/ADD":
+    summon pig at location of {_p}
+    set {_entity} to last spawned entity
+    entity_effect_burn({_p}, {_entity}, 2, 20, 20, "UNIQUE")
+    entity_effect_burn({_p}, {_entity}, 10, 20, 10, "UNIQUE")
+    set {_damageBurn} to entity_store_effect_get({_entity}, "BURN", "damage")
+    assert if {_damageBurn} is 2 with message "total burn damage should be 2. Got %{_damageBurn}%"
+    
+    entity_effect_burn({_p}, {_entity}, 10, 20, 10)
+    set {_expectedTotalDmgBurn} to 10*2 + 2
+    set {_expectedDurationBurn} to 20 + 20
+    set {_totalDmgBurn} to entity_store_effect_get({_entity}, "BURN", "damage")
+    set {_durationBurn} to entity_store_effect_get({_entity}, "BURN", "duration")
+    assert if {_totalDmgBurn} is {_expectedTotalDmgBurn} with message "total burn damage should be %{_expectedTotalDmgBurn}%. Got %{_totalDmgBurn}%"
+    assert if {_durationBurn} is {_expectedDurationBurn} with message "total burn duration should be %{_expectedDurationBurn}%. Got %{_durationBurn}%"
+    kill {_entity}
+
+  it "test set effect burn EXTEND":
+    summon pig at location of {_p}
+    set {_entity} to last spawned entity
+    entity_effect_burn({_p}, {_entity}, 2, 20, 10, "UNIQUE")
+    entity_effect_burn({_p}, {_entity}, 5, 20, 10, "EXTEND")
+    set {_expectedTotalDmgBurn} to 2*2 + 5*2
+    set {_expectedDurationBurn} to 20 + 20
+    set {_totalDmgBurn} to entity_store_effect_get({_entity}, "BURN", "damage")
+    set {_durationBurn} to entity_store_effect_get({_entity}, "BURN", "duration")
+    assert if {_totalDmgBurn} is {_expectedTotalDmgBurn} with message "total burn damage should be %{_expectedTotalDmgBurn}%. Got %{_totalDmgBurn}%"
+    assert if {_durationBurn} is {_expectedDurationBurn} with message "total burn damage should be %{_expectedDurationBurn}%. Got %{_durationBurn}%"
+
+    kill {_entity}

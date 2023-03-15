@@ -26,12 +26,12 @@ In `.yml` files, this can be done by declaring `EFFECT_ATTACK`. Indeed, a core s
   EFFECT_ATTACK_MULTIPLIER: 0.5
 ```
 
-When coding the skill, if we use `player_stat_item` on ATTACK stat, following computation will be performed:  
+When coding the skill, if we use `player_stat_compute` on ATTACK stat, following computation will be performed:  
 **\<baseSkillAttack> + \<playerAttack>*\<skillAttackMultiplier>**  
  = 15 + 10*0.8  
  = 23**
 
-If we use `player_stat_item` on EFFECT_ATTACK stat, following computation will be performed:  
+If we use `player_stat_compute` on EFFECT_ATTACK stat, following computation will be performed:  
 **\<baseSkillEffectAttack> + \<playerAttack>*\<skillEffectAttackMultiplier>**  
  = 3 + 10*0.5   
  = 8
@@ -47,7 +47,7 @@ If we use `player_stat_item` on EFFECT_ATTACK stat, following computation will b
   ATTACK-2: 10
   ATTACK-2_MULTIPLIER: 0.5
 ```
-If we use `player_stat_item` on ATTACK-2 stat, following computation will be performed:  
+If we use `player_stat_compute` on ATTACK-2 stat, following computation will be performed:  
 **\<baseSkillAttack-2> + \<playerAttack>*\<skillAttack-2Multiplier>**  
  = 10 + 10*0.5   
  = 15

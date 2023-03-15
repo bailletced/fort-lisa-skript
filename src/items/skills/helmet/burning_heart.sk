@@ -1,9 +1,9 @@
 function helmet_burning_heart_cast(p: player, skill: item):
-  set {_attack} to player_stat_item({_p}, {_skill}, "ATTACK")
-  set {_effectAttack} to player_stat_item({_p}, {_skill}, "EFFECT_ATTACK")
-  set {_effectDuration} to player_stat_item({_p}, {_skill}, "EFFECT_DURATION")
-  set {_effectFrequency} to player_stat_item({_p}, {_skill}, "EFFECT_FREQUENCY")
-  set {_range} to player_stat_item({_p}, {_skill}, "RANGE")
+  set {_attack} to player_stat_compute({_p}, {_skill}, "ATTACK")
+  set {_effectAttack} to player_stat_compute({_p}, {_skill}, "EFFECT_ATTACK")
+  set {_effectDuration} to player_stat_compute({_p}, {_skill}, "EFFECT_DURATION")
+  set {_effectFrequency} to player_stat_compute({_p}, {_skill}, "EFFECT_FREQUENCY")
+  set {_range} to player_stat_compute({_p}, {_skill}, "RANGE")
   set {_loc} to location of {_p}
 
   set {_triggerCasted} to false

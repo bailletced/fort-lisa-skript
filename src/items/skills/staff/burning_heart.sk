@@ -1,9 +1,10 @@
 function staff_burning_heart_cast(p: player, staff: item):
+  set {_range} to player_stat_compute({_p}, {_staff}, "POWER")
   players_action_shootProjectile({_p}, {_staff}, snowball, 1, false)
   set {_projectile} to last shot projectile
   ignite {_projectile}
   set {_loc} to location of {_p}
-  set {_range} to player_stat_item({_p}, {_staff}, "RANGE")
+  set {_range} to player_stat_compute({_p}, {_staff}, "RANGE")
   while {_projectile} is alive:
     if distance between {_projectile} and {_loc} > {_range}:
       staff_burning_heart_hit({_p}, {_projectile}, {_projectile})
@@ -13,10 +14,10 @@ function staff_burning_heart_cast(p: player, staff: item):
 
 function staff_burning_heart_hit(p: player, projectile: entity, victim: entity):
   set {_location} to location of {_projectile}
-  set {_power} to player_stat_projectile({_p}, {_projectile}, "POWER")
-  set {_radius} to player_stat_projectile({_p}, {_projectile}, "RADIUS")
-  set {_effectDuration} to player_stat_projectile({_p}, {_projectile}, "EFFECT_DURATION")
-  set {_effectFrequency} to player_stat_projectile({_p}, {_projectile}, "EFFECT_FREQUENCY")
+  set {_power} to player_stat_compute({_p}, {_projectile}, "POWER")
+  set {_radius} to player_stat_compute({_p}, {_projectile}, "RADIUS")
+  set {_effectDuration} to player_stat_compute({_p}, {_projectile}, "EFFECT_DURATION")
+  set {_effectFrequency} to player_stat_compute({_p}, {_projectile}, "EFFECT_FREQUENCY")
   draw 20 flame at {_projectile} with offset vector(0.1, 0.1, 0.1) with extra 0.04
   loop all entities in radius {_radius} of {_location}:
     set {_type} to entity_nbt_get_tag(loop-entity, "TYPE")
@@ -24,11 +25,11 @@ function staff_burning_heart_hit(p: player, projectile: entity, victim: entity):
       entity_effect_burn({_p}, loop-entity, {_power}, {_effectDuration}, {_effectFrequency})
 
 function staff_burning_heart_special(p: player, staff: item):
-  set {_radius} to player_stat_item({_p}, {_staff}, "RADIUS")
-  set {_attack} to player_stat_item({_p}, {_staff}, "ATTACK-2")
-  set {_effectAttack} to player_stat_item({_p}, {_staff}, "EFFECT_ATTACK-2")
-  set {_effectDuration} to player_stat_item({_p}, {_staff}, "EFFECT_DURATION-2")
-  set {_effectFrequency} to player_stat_item({_p}, {_staff}, "EFFECT_FREQUENCY-2")
+  set {_radius} to player_stat_compute({_p}, {_staff}, "RADIUS")
+  set {_attack} to player_stat_compute({_p}, {_staff}, "ATTACK-2")
+  set {_effectAttack} to player_stat_compute({_p}, {_staff}, "EFFECT_ATTACK-2")
+  set {_effectDuration} to player_stat_compute({_p}, {_staff}, "EFFECT_DURATION-2")
+  set {_effectFrequency} to player_stat_compute({_p}, {_staff}, "EFFECT_FREQUENCY-2")
 
   set {_loc} to location of {_p}
   set {_it} to 0

@@ -12,11 +12,11 @@ function crossbow_burning_heart_cast(p: player, projectile: entity):
 
 function crossbow_burning_heart_hit(p: player, victim: entity, projectile: entity):
   delete {_victim::*}
-  set {_attack} to player_stat_projectile({_p}, {_projectile}, "ATTACK")
-  set {_effectAttack} to player_stat_projectile({_p}, {_projectile}, "EFFECT_ATTACK")
-  set {_effectDuration} to player_stat_projectile({_p}, {_projectile}, "EFFECT_DURATION")
-  set {_effectFrequency} to player_stat_projectile({_p}, {_projectile}, "EFFECT_FREQUENCY")
-  set {_radius} to player_stat_projectile({_p}, {_projectile}, "RADIUS")
+  set {_attack} to player_stat_compute({_p}, {_projectile}, "ATTACK")
+  set {_effectAttack} to player_stat_compute({_p}, {_projectile}, "EFFECT_ATTACK")
+  set {_effectDuration} to player_stat_compute({_p}, {_projectile}, "EFFECT_DURATION")
+  set {_effectFrequency} to player_stat_compute({_p}, {_projectile}, "EFFECT_FREQUENCY")
+  set {_radius} to player_stat_compute({_p}, {_projectile}, "RADIUS")
   if {_victim} is set:
     set {_loc} to location 1 meter above {_victim}
     set {_victim::*} to {_victim}

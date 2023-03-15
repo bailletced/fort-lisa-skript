@@ -1,3 +1,3 @@
 function arrowspike_hit(p: player, projectile: entity, victim: entity):
-  set {_attack} to player_stat_projectile({_p}, {_projectile}, "ATTACK")
+  set {_attack} to player_stat_compute({_p}, {_projectile}, "ATTACK")
   entity_effect_damage({_p}, {_victim}, {_attack}, 0)

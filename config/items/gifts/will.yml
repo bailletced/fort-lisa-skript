@@ -3,3 +3,5 @@ BURNING_HEART:
   CUSTOM_ITEM: coeur_vaillant
 MOUNTAIN:
   ITEM: dirt
+LIGHTNING:
+  ITEM: ghast tear

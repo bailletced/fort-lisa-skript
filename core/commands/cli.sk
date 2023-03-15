@@ -106,6 +106,8 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
           test_entity_store(player)
         else if arg-3 is "nbt":
           test_entity_nbt(player)
+        else if arg-3 is "effect":
+          test_entity_effect(player)
         else:
           test_entity_main(player)
 
@@ -176,4 +178,4 @@ on tab complete of "/admin":
     else if tab arg-2 is "player":
       set tab completions for position 3 to "store", "action" and "stat"
     else if tab arg-2 is "entity":
-      set tab completions for position 3 to "store" and "nbt"
+      set tab completions for position 3 to "effect", "store" and "nbt"
