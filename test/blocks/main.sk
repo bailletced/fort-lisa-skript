@@ -1,0 +1,2 @@
+function test_block_main(p: player):
+  test_block_store({_p})

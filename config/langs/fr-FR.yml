@@ -72,6 +72,10 @@ SKILL:
     BURNING_HEART:
       TITLE: "Flamme renouvelée"
       LORE: "Pendant {_EFFECT_DURATION}, les dégâts qui devaient vous infliger la mort sont annulés. Si vous deviez-mourrir, vous vous immobilisez pendant une courte durée, avant de vous enflammer, infligeant {_ATTACK} dans un rayon de {_RADIUS}, brûlant les ennemis qui subissent {_EFFECT_ATTACK} pendant {_EFFECT_DURATION} toutes les {_EFFECT_FREQUENCY}."
+  BOOT:
+    BURNING_HEART:
+      TITLE: "Désir ardent"
+      LORE: "Pendant {_DURATION}, votre vitesse est augmentée, vous êtes insensible aux flammes et vous laissez une trainée de feu derrière vous de {_BLOCK_AMOUNT} brûlant le sol pendant {_EFFECT_DURATION}. Les ennemis passant dans cette trainée subissent {_EFFECT_ATTACK} toutes les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION}."
   STAFF:
     BURNING_HEART:
       LORE: "Projette une boule de feu qui inflige {_POWER} tous les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION} dans un rayon de {_RADIUS}. Portée {_RANGE}"

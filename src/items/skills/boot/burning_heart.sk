@@ -1,0 +1,29 @@
+function boot_burning_heart_cast(p: player, skill: item):
+  set {_attack} to player_stat_item({_p}, {_skill}, "ATTACK")
+  set {_charity} to player_stat_item({_p}, {_skill}, "CHARITY")
+  set {_radius} to player_stat_item({_p}, {_skill}, "RADIUS")
+  set {_blockAmount} to player_stat_item({_p}, {_skill}, "BLOCK_AMOUNT")
+  set {_effectAttack} to player_stat_item({_p}, {_skill}, "EFFECT_ATTACK")
+  set {_duration} to player_stat_item({_p}, {_skill}, "DURATION")
+  set {_effectDuration} to player_stat_item({_p}, {_skill}, "EFFECT_DURATION")
+  set {_effectFrequency} to player_stat_item({_p}, {_skill}, "EFFECT_FREQUENCY")
+  set {_effectDurationTicks} to "%{_effectDuration}% ticks" parsed as timespan
+
+  # broadcast "PASSE %{_effectDurationTicks}%"
+  apply swiftness 1 without particles to {_p} for {_effectDurationTicks}
+  entity_effect_immunity({_p}, "BURN", {_effectDuration} + {_duration})
+
+  # Stocker dans une liste la position des blocks où le joueur à marché dans une limite définie
+  while {_duration} > 0:
+    broadcast "%block_store_count()%"
+    if block_store_count() < {_blockAmount}:
+      block_store_set(block at location of {_p}, {_effectDuration}, "fire" parsed as itemtype)
+    else:
+      block_store_delete_first()
+      block_store_set(block at location of {_p}, {_effectDuration}, "fire" parsed as itemtype)
+    wait 10 ticks
+    remove 10 from {_duration}
+
+  wait {_effectDurationTicks}
+  block_store_set(block at location of {_p}, {_effectDuration}, air)
+  extinguish {_p}

@@ -38,3 +38,13 @@ LEGGING:
       MEMORY_MAX: 1
     STATS:
       CHARITY: 2
+BOOT:
+  LEATHER_BOOT:
+    TIER: 1
+    ITEM: leather boots
+    GIFTS:
+      WILL_MAX: 1
+      INTELLECT_MAX: 1
+      MEMORY_MAX: 1
+    STATS:
+      CHARITY: 2

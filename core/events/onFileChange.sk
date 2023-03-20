@@ -1,6 +1,9 @@
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/blocks/":
    reload script file fileManager_getRelativePath(event-path)
 
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/blocks/store/":
+   reload script file fileManager_getRelativePath(event-path)
+
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/":
    reload script file fileManager_getRelativePath(event-path)
 
@@ -40,6 +43,9 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/gifts/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/":
    reload script file fileManager_getRelativePath(event-path)
 
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/boot/":
+   reload script file fileManager_getRelativePath(event-path)
+
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/bow/":
    reload script file fileManager_getRelativePath(event-path)
 
@@ -52,10 +58,10 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/cross
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/helmet/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/legging/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/staff/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/staff/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/legging/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/store/":
@@ -67,16 +73,16 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/bow/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/crossbow/":
-   reload script file fileManager_getRelativePath(event-path)
-
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/staffs/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/location/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/crossbow/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/":
+   reload script file fileManager_getRelativePath(event-path)
+
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/location/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/action/":
@@ -103,16 +109,16 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/action/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/interfaces/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/interfaces/guis/":
-   reload script file fileManager_getRelativePath(event-path)
-
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/interfaces/menus/":
-   reload script file fileManager_getRelativePath(event-path)
-
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/stat/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/store/":
+   reload script file fileManager_getRelativePath(event-path)
+
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/waves/":
+   reload script file fileManager_getRelativePath(event-path)
+
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/waves/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/waves/":

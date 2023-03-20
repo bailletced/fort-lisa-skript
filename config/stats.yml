@@ -72,11 +72,21 @@ ALL:
     ICON: ""
     COLOR: "§c"
   EFFECT_ATTACK:
+    ICON: ""
+    COLOR: "§c"
   EFFECT_ATTACK_MULTIPLIER:
+    ICON: ""
+    COLOR: "§c"
   DEFENCE_FALLING:
     ICON: ""
     COLOR: "§c"
   CHARITY:
+    ICON: ""
+    COLOR: "§c"
+  DURATION:
+    ICON: ""
+    COLOR: "§c"
+  BLOCK_AMOUNT:
     ICON: ""
     COLOR: "§c"
 

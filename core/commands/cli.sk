@@ -98,6 +98,8 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
         test_mob_main(player)
       else if arg-2 is "entity":
         test_entity_main(player)
+      else if arg-2 is "block":
+        test_block_main(player)
 
 on tab complete of "/admin":
   set tab completions for position 1 to "init", "hmr", "stat", "player", "weapon", "equipment", "skill", "settings", "game", "gift", "gui", "wave" and "test"
@@ -160,8 +162,10 @@ on tab complete of "/admin":
     set tab completions for position 2 to "start"
   
   else if tab arg-1 is "test":
-    set tab completions for position 2 to "items", "i18n", "player", "mob", "entity" and "all"
+    set tab completions for position 2 to "items", "i18n", "player", "mob", "entity", "block" and "all"
     if tab arg-2 is "items":
       set tab completions for position 3 to "weapon", "skill", "gift" and "item"
     else if tab arg-2 is "player":
       set tab completions for position 3 to "store", "action" and "stat"
+    else if tab arg-2 is "block":
+      set tab completions for position 3 to "store"
