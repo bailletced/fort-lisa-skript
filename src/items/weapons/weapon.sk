@@ -21,11 +21,8 @@ function weapon_will_stat(p: player, weapon: item, idWill: text) :: item:
         set {_value} to {SKILL::%{_category}%::%{_idWill}%::%loop-value%}
         set {_weapon} to item_nbt_delete({_weapon}, {_stat})
         if {_value} is set:
-            set {_weapon} to item_nbt_set_stat({_weapon}, loop-value, {_value})
+            set {_weapon} to item_nbt_set_stat({_weapon}, loop-value, {_value}, true)
     return {_weapon}
-
-function weapon_onEquip(p: player, weapon: item):
-    player_store_weapon_equip({_p}, {_weapon})
 
 function weapon_leftClick(p: player, weapon: item):
     set {_category} to item_nbt_get_tag({_weapon}, "CATEGORY")
@@ -63,6 +60,8 @@ function weapon_rightClick(p: player, weapon: item):
                 error_player({_p}, i18n({_p}, "MESSAGE.PLAYER.CD.SKILL.IN_PROGRESS"))
     else if "BOW" and "CROSSBOW" contains {_category}:
         player_store_weapon_give_arrow({_p})
+        if {_category} is "BOW":
+            bow_rightClick({_p}, {_weapon})
 
 function weapon_cooldown(p: player, weapon: item):
     set {_cooldown} to item_nbt_get_stat({_weapon}, "COOLDOWN")

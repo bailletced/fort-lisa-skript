@@ -114,7 +114,7 @@ function skill_copy(source: item, dest: item) :: item:
   loop item_nbt_get_list({_source}, "STAT"):
     set {_key} to loop-value
     set {_value} to item_nbt_get_stat({_source}, {_key})
-    set {_dest} to item_nbt_set_stat({_dest}, {_key}, {_value})
+    set {_dest} to item_nbt_set_stat({_dest}, {_key}, {_value}, true)
   set {_dest} to item_nbt_set_tag({_dest}, "UUID", item_nbt_get_tag({_source}, "UUID"))
   set {_dest} to item_nbt_set_tag({_dest}, "TYPE", item_nbt_get_tag({_source}, "TYPE"))
   set {_dest} to item_nbt_set_tag({_dest}, "CATEGORY", item_nbt_get_tag({_source}, "CATEGORY"))

@@ -77,7 +77,6 @@ function i18n_item_lore(p: player, it: item) :: text:
     set {_id} to item_nbt_get_tag({_it}, "ID")
     set {_lore} to i18n_item_attr({_p}, {_it}, "LORE")
     loop item_nbt_get_list({_it}, "STAT"):
-        
         set {_multiplier} to 0
         set {_playerStat} to 0
         set {_key} to loop-value

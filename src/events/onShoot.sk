@@ -12,4 +12,8 @@ on shoot:
           if {_category} is "CROSSBOW":
             crossbow_cast_skill({_p}, {_helditem}, projectile)
           else:
+            item_store_stat_delete({_helditem}, "CHARGING_DURATION")
+            if item_store_stat_isset({_helditem}, "FULLY_CHARGED") is true:
+              entity_nbt_set_stat(projectile, "FULLY_CHARGED", 1)
+              item_store_stat_delete({_helditem}, "FULLY_CHARGED")
             bow_cast_skill({_p}, {_helditem}, projectile)

@@ -6,6 +6,8 @@ function helmet_burning_heart_cast(p: player, skill: item):
   set {_range} to player_stat_compute({_p}, {_skill}, "RANGE")
   set {_loc} to location of {_p}
 
+  entity_effect_immunity({_p}, "ALL", 20)
+
   set {_triggerCasted} to false
   # Target entites in cone
   set {_block} to 1

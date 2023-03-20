@@ -5,8 +5,7 @@ function item_stat_initialize(p: player, type: text, item: item) :: item:
   loop {%{_type}%::%{_category}%::%{_id}%::STAT::*}:
     set {_stat} to loop-value
     set {_value} to {%{_type}%::%{_category}%::%{_id}%::%loop-value%}
-    set {_item} to item_nbt_set_stat({_item}, {_stat}, {_value})
-  set {_item} to item_nbt_set_list({_item}, "STAT", {%{_type}%::%{_category}%::%{_id}%::STAT::*})
+    set {_item} to item_nbt_set_stat({_item}, {_stat}, {_value}, true)
   return {_item}
 
 function item_attribute_initialize(p: player, item: item) :: item:

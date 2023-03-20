@@ -9,10 +9,10 @@ function test_player_compute_multiplier(p: player):
     set {_attack2ItemMultiplier} to 1
     player_store_stat_set({_p}, "ATTACK", {_attackPlayer})
     
-    set {_item} to item_nbt_set_stat({_item}, "ATTACK", {_attackItem})
-    set {_item} to item_nbt_set_stat({_item}, "ATTACK_MULTIPLIER", {_attackItemMultiplier})
-    set {_item} to item_nbt_set_stat({_item}, "ATTACK-2", {_attack2Item})
-    set {_item} to item_nbt_set_stat({_item}, "ATTACK-2_MULTIPLIER", {_attack2ItemMultiplier})
+    set {_item} to item_nbt_set_stat({_item}, "ATTACK", {_attackItem}, true)
+    set {_item} to item_nbt_set_stat({_item}, "ATTACK_MULTIPLIER", {_attackItemMultiplier}, true)
+    set {_item} to item_nbt_set_stat({_item}, "ATTACK-2", {_attack2Item}, true)
+    set {_item} to item_nbt_set_stat({_item}, "ATTACK-2_MULTIPLIER", {_attack2ItemMultiplier}, true)
 
     set {_finalattack} to player_stat_compute({_p}, {_item}, "ATTACK")
     set {_finalattack2} to player_stat_compute({_p}, {_item}, "ATTACK-2")

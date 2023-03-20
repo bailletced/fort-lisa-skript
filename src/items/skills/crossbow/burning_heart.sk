@@ -32,4 +32,4 @@ function crossbow_burning_heart_hit(p: player, victim: entity, projectile: entit
         add loop-entity to {_victim::*}
   
   loop {_victim::*}:
-    entity_effect_burn({_p}, loop-value, {_attack}, {_effectDuration}, {_effectAttack})
+    entity_effect_burn({_p}, loop-value, {_attack}, {_effectDuration}, {_effectFrequency})

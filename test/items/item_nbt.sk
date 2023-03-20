@@ -11,9 +11,9 @@ function test_item_nbt(p: player):
     set {_cdrRef} to "toto"
     set {_weightRef} to 250
 
-    set {_equipment} to item_nbt_set_stat({_equipment}, {_statRef1}, {_attackRef})
-    set {_equipment} to item_nbt_set_stat({_equipment}, {_statRef2}, {_cdrRef})
-    set {_equipment} to item_nbt_set_stat({_equipment}, {_statRef4}, {_weightRef})
+    set {_equipment} to item_nbt_set_stat({_equipment}, {_statRef1}, {_attackRef}, true)
+    set {_equipment} to item_nbt_set_stat({_equipment}, {_statRef2}, {_cdrRef}, true)
+    set {_equipment} to item_nbt_set_stat({_equipment}, {_statRef4}, {_weightRef}, true)
 
     set {_attack} to item_nbt_get_stat({_equipment}, {_statRef1})
     set {_cdr} to item_nbt_get_stat({_equipment}, {_statRef2})
@@ -76,10 +76,10 @@ function test_item_nbt(p: player):
     set {_statVal3} to 60
     set {_statVal4} to 100
 
-    set {_item} to item_nbt_set_stat({_item}, {_statRef1}, {_statVal1})
-    set {_item} to item_nbt_set_stat({_item}, {_statRef2}, {_statVal2})
-    set {_item} to item_nbt_set_stat({_item}, {_statRef3}, {_statVal3})
-    set {_item} to item_nbt_set_stat({_item}, {_statRef4}, {_statVal4})
+    set {_item} to item_nbt_set_stat({_item}, {_statRef1}, {_statVal1}, true)
+    set {_item} to item_nbt_set_stat({_item}, {_statRef2}, {_statVal2}, true)
+    set {_item} to item_nbt_set_stat({_item}, {_statRef3}, {_statVal3}, true)
+    set {_item} to item_nbt_set_stat({_item}, {_statRef4}, {_statVal4}, true)
 
     set {_stats::*} to item_nbt_get_list({_item}, "STAT")
     assert if {_stats::*} contains {_statRef1} with message "%{_statRef1}% stat should be found. Got %{_stats::*}%"
@@ -115,7 +115,7 @@ function test_item_nbt(p: player):
     set {_statRef1} to "ATTACK"
     set {_statVal1} to 10
 
-    set {_item} to item_nbt_set_stat({_item}, {_statRef1}, {_statVal1})
+    set {_item} to item_nbt_set_stat({_item}, {_statRef1}, {_statVal1}, true)
     set {_item} to item_nbt_add_stat({_item}, {_statRef1}, 10)
 
     set {_get1} to item_nbt_get_stat({_item}, {_statRef1})
