@@ -6,13 +6,13 @@ function limb_of_wisdom_cast(p: player, staff: item):
   while {_projectile} is alive:
     drawDot count 1, particle "smoke", RGB 0.2, 0.2, 0.2, center {_projectile}, visibleRange 152, pulseDelay 0, keepFor 10 ticks
     if distance between {_projectile} and {_loc} > {_range}:
-      limb_of_wisdom_hit({_p}, {_projectile})
+      limb_of_wisdom_hit({_p}, {_projectile}, {_projectile})
       stop loop
     wait 5 ticks
   kill {_projectile}
 
-function limb_of_wisdom_hit(p: player, projectile: entity):
-  set {_location} to location of {_projectile}
+function limb_of_wisdom_hit(p: player, projectile: entity, victim: entity):
+  set {_location} to location of {_victim}
   set {_power} to player_stat_compute({_p}, {_projectile}, "POWER")
   loop all entities in radius 1 of {_location}:
     entity_effect_damage({_p}, loop-entity, 0, {_power})

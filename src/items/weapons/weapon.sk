@@ -1,10 +1,14 @@
-#Give a weapon to the player
-function weapon_give(p: player, category: text, id: text) :: item:
+function weapon_create(p: player, category: text, id: text) :: item:
     set {_weapon} to item_create({_p}, "WEAPON", {_category}, {_id})  
     set {_weapon} to item_nbt_set_tag_native({_weapon}, "{Unbreakable:1,HideFlags:4}")
-    player_store_weapon_give({_p}, {_weapon})
     item_store_stat_set({_weapon}, "CD_NORMAL", 0) #We do not use nbt here because to refresh nbt on item, we have to regenerate it
     item_store_stat_set({_weapon}, "CD_SPECIAL", 0) #We do not use nbt here because to refresh nbt on item, we have to regenerate it
+    return {_weapon}
+
+#Give a weapon to the player
+function weapon_give(p: player, category: text, id: text) :: item:
+    set {_weapon} to weapon_create({_p}, {_category}, {_id})
+    player_store_weapon_give({_p}, {_weapon})
     return {_weapon}
 
 function weapon_stat_reload(p: player, weapon: item) :: item:
@@ -85,17 +89,6 @@ function weapon_cooldown_special(p: player, weapon: item):
             player_interface_actionbar_clear({_p})
         wait 5 tick
 
-#Called when the player hit a block/entity with his weapon
-function weapon_hit(p: player, projectile: entity):
-    set {_category} to entity_nbt_get_tag({_projectile}, "CATEGORY")
-    set {_will::*} to entity_nbt_get_list({_projectile}, "WILL")
-    if size of {_will::*} > 0:
-        if {_category} is "STAFF":
-            staff_hit_skill({_p}, {_projectile}, {_projectile})
-    else:
-        if {_category} is "STAFF":
-            staff_hit({_p}, {_projectile})
-
 function weapon_hit_projectile(p: player, projectile: entity, victim: entity):
     set {_category} to entity_nbt_get_tag({_projectile}, "CATEGORY")
     set {_will::*} to entity_nbt_get_list({_projectile}, "WILL")
@@ -111,3 +104,5 @@ function weapon_hit_projectile(p: player, projectile: entity, victim: entity):
             crossbow_hit({_p}, {_projectile}, {_victim})
         else if {_category} is "BOW":
             bow_hit({_p}, {_projectile}, {_victim})
+        else if {_category} is "STAFF":
+            staff_hit({_p}, {_projectile}, {_victim})

@@ -165,7 +165,11 @@ command /cylinder:
 
 command /line-keepgoing:
     trigger:
-        set {_line::*} to vector line from vector 0, 0, 0 to vector 0, {_it}, 0 with density 3
-        loop {_line::*}:
-            drawDot count 1, particle "flame", RGB 0, 0, 0, center {_loc} offset by loop-value-2, visibleRange 32, pulseDelay 0, keepFor 10 ticks
+        gui_gameStart(player)
 
+command /loopblock:
+    trigger:
+        set {_blocks::*} to 1, 2 and 5
+        set {_idx} to index of first element of {_blocks::*}
+        delete {_blocks::1}
+        broadcast "%{_blocks::*}%"

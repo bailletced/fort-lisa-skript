@@ -19,10 +19,7 @@ function staff_burning_heart_hit(p: player, projectile: entity, victim: entity):
   set {_effectFrequency} to player_stat_compute({_p}, {_projectile}, "EFFECT_FREQUENCY")
   draw 20 flame at {_projectile} with offset vector(0.1, 0.1, 0.1) with extra 0.04
 
-  if {_victim} is not {_projectile}:
-    set {_location} to location of {_victim}
-  else:
-    set {_location} to location of {_projectile}
+  set {_location} to location of {_victim}
 
   loop all entities in radius {_radius} of {_location}:
     set {_type} to entity_nbt_get_tag(loop-entity, "TYPE")

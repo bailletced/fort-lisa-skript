@@ -43,6 +43,10 @@ WEAPON:
     ARMADILLO:
       TITLE: "Armadillo"
       LORE: "Projette un carreau qui inflige {_ATTACK}."
+  BOW:
+    ARROWSPIKE:
+      TITLE: "Arc fougueux"
+      LORE: "Projette une flèche qui inflige {_ATTACK}."
 EQUIPMENT:
   HELMET:
     LAUREL_CROWN:
@@ -114,6 +118,13 @@ GUI:
         TITLE: "Fructifier les dons"
       CONSECRATE:
         TITLE: "Don : {_category}"
+  GAME_START:
+    EQUIPMENT:
+      TITLE: "Choisissez une armure"
+    WEAPON:
+      TITLE: "Choisissez une arme"
+    GIFT:
+      TITLE: "Choisissez un don"
 UTILITY:
   MAIN:
     CD:

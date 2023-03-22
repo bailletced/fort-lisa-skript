@@ -23,7 +23,7 @@ function i18n_item_gift_lore(p: player, it: item) :: texts:
     set {_type} to item_nbt_get_tag({_it}, "TYPE")
     set {_category} to item_nbt_get_tag({_it}, "CATEGORY")
     set {_id} to item_nbt_get_tag({_it}, "ID")
-    loop {GIFT::*}:
+    loop {GIFT::CATEGORY::*}:
         set {_i18nGift} to i18n({_p}, "GIFT.%loop-value%.TITLE")
         set {_giftMaxValue} to item_nbt_get_stat({_it}, "%loop-value%_MAX")
         set {_giftCountValue} to size of item_nbt_get_list({_it}, loop-value)

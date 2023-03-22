@@ -68,10 +68,10 @@ function gui_gift_altar_initial(p: player):
 
 function gui_gift_altar_choose_category(p: player, item: item):
   player_store_gui_add({_p}, "GIFT.CHOOSE_CATEGORY")
+  player_store_inventory_filter({_p}, "GIFT", {_id})
   set {_name} to i18n({_p}, "GUI.GIFT.ALTAR.CHOOSE_CATEGORY.TITLE")
   set {_unavailableSlot} to {UTILITY::GUI::UNAVAILABLE::ITEM}
   set {_unavailableSlotName} to i18n({_p}, "UTILITY.GUI.UNAVAILABLE.TITLE")
-  
   set {_willItem} to item_utility_gift_create({_p}, {_item}, "WILL")
   set {_intellectItem} to item_utility_gift_create({_p}, {_item}, "INTELLECT")
   set {_memoryItem} to item_utility_gift_create({_p}, {_item}, "MEMORY")
