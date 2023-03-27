@@ -1,4 +1,4 @@
-function gui_gameStart_choose(p: player, type: text):
+function gui_gameStart_choose(gameUuid: text, p: player, type: text):
   set {_name} to i18n({_p}, "GUI.GIFT.GAME_START.%{_type}%.TITLE")
   player_store_gui_add({_p}, "GAMESTART_%{_type}%")
 
@@ -23,14 +23,14 @@ function gui_gameStart_choose(p: player, type: text):
         give {_item} to {_p}
         player_store_gui_delete({_p}, "GAMESTART_%{_type}%")
         close inventory of {_p}
-        gui_gameStart_chooseNext({_p}, {_type})
+        gui_gameStart_chooseNext({_gameUuid}, {_p}, {_type})
 
       run on gui close:
         if player_store_gui_isset({_p}, "GAMESTART_%{_type}%") is true:
           cancel gui close
   open the last gui to {_p}
 
-function gui_gameStart_chooseNext(p: player, currentType: text):
+function gui_gameStart_chooseNext(gameUuid: text, p: player, currentType: text):
   set {_index} to 1
   set {_types::*} to "EQUIPMENT", "WEAPON" and "GIFT"
   loop {_types::*}:
@@ -38,8 +38,11 @@ function gui_gameStart_chooseNext(p: player, currentType: text):
     if loop-value is {_currentType}:
       stop loop
   if {_index} <= size of {_types::*}:
-    gui_gameStart_choose({_p}, {_types::%{_index}%})
+    gui_gameStart_choose({_gameUuid}, {_p}, {_types::%{_index}%})
+  else:
+    # Player has finished to choose stuff
+    player_store_game_set({_p}, "STATUS", "PLAYING")
 
-function gui_gameStart(p: player):
+function gui_gameStart(gameUuid: text, p: player):
   player_store_gui_delete_all({_p})
-  gui_gameStart_choose({_p}, "EQUIPMENT")
+  gui_gameStart_choose({_gameUuid}, {_p}, "EQUIPMENT")

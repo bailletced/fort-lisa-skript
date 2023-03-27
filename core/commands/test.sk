@@ -43,10 +43,11 @@ command /zombie:
         entity_nbt_set_tag({_zombie}, "TYPE", "MOB")
         entity_nbt_set_stat({_zombie}, "ATTACK", 10)
 
-command /percent:
+command /lisa:
     trigger:
-        set {_ok} to "%%"
-        broadcast "%%"
+        set {_location} to {LOCATION::CASTLE::THRONE}
+        # create a citizen named "toto" at player's location as a villager
+        create citizen named {NPC::LISA::NAME} at {_location}
 
 command /tag:
     trigger:
@@ -162,10 +163,6 @@ command /cylinder:
         drawCylinder particle "flame", speed 0.02, center location of player, id "test", randomRotation false, isSolid false, radius 0.5, density 50, height 2, sideRatio 0, visibleRange 30
         wait 5 seconds
         stopEffect "test"
-
-command /line-keepgoing:
-    trigger:
-        gui_gameStart(player)
 
 command /loopblock:
     trigger:

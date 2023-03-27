@@ -18,20 +18,18 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
         else if arg-3 is "get":
           set {_stat} to player_store_stat_get({_p}, arg-4)
           broadcast "%arg-4% %{_stat}%"
-      else if arg-2 is "init":
-        player_init()
       else if arg-2 is "clean":
         player_clean(player)
-      else if arg-2 is "listener":
-        if arg-3 is set:
-          if arg-3 is "list":
-            set {_all::*} to player_store_listener_get_all({_p})
-            broadcast "%{_all::*}%"
-          else:
-            if arg-4 is "off":
-              player_store_listener_remove(player, arg-3)
-            else if arg-4 is "on":
-              player_store_listener_add({_p}, arg-3)
+      # else if arg-2 is "listener":
+      #   if arg-3 is set:
+      #     if arg-3 is "list":
+      #       set {_all::*} to player_store_listener_get_all({_p})
+      #       broadcast "%{_all::*}%"
+      #     else:
+      #       if arg-4 is "off":
+      #         player_store_listener_remove(player, arg-3)
+      #       else if arg-4 is "on":
+      #         player_store_listener_add({_p}, arg-3)
 
     else if arg-1 is "weapon":
       set {_category} to arg-2
@@ -67,9 +65,10 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
 
     else if arg-1 is "game":
       if arg-2 is "start":
-        game_start()
+        game_start(world of {_p})
       else:
-        game_end()
+        set {_gameUuid} to entity_nbt_get_tag({_p}, "GAME_UUID")
+        game_end({_gameUuid})
 
     else if arg-1 is "wave":
       if arg-2 is "start":
@@ -118,7 +117,7 @@ on tab complete of "/admin":
     set tab completions for position 2 to "reset"
 
   else if tab arg-1 is "player":
-    set tab completions for position 2 to "stat", "listener", "clean" and "init"
+    set tab completions for position 2 to "stat", "listener" and "clean"
     if tab arg-2 is "stat":
       set tab completions for position 3 to "get" and "set"
       if tab arg-3 is set:

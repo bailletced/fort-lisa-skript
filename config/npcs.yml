@@ -2,6 +2,5 @@ LISA:
     NAME: Lisa
     SKIN: https://www.minecraftskins.com/uploads/skins/2021/03/10/princess-lisa-17075200.png?v302
     ID: 166
-    HEALTH: 30
-    DEFENCE: 2
-    MR: 2
+    HEALTH: 1
+    DEFENCE: 0

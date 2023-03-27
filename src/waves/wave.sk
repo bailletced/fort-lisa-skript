@@ -1,21 +1,21 @@
-function wave_init():
+function wave_init(gameUuid: text):
   wave_start(1)
-  wave_listener()
+  wave_listener({_gameUuid})
 
-function wave_listener():
+function wave_listener(gameUuid: text):
   game_store_wave_set_current_timer(0)
   set {_waveNumber} to game_store_wave_get_current()
   set {_waveDuration} to game_store_wave_get_current_duration()
-  while game_isset() is true:
+  while game_store_get({_gameUuid}, "STATUS") is "RUNNING":
     set {_waveTimer} to game_store_wave_get_current_timer()
     wave_tablist({_waveNumber}, {_waveDuration}, {_waveTimer})
     game_store_wave_set_current_timer({_waveTimer} + 40)
     # If no mobs anymore
     if mob_count() is 0:
-      wave_next()
+      wave_next({_gameUuid})
     # If timer, go to next wave
     if {_waveTimer} >= {_waveDuration}:
-      wave_next()
+      wave_next({_gameUuid})
       set {_waveNumber} to game_store_wave_get_current()
       set {_waveDuration} to game_store_wave_get_current_duration()
     wait 2 seconds
@@ -29,13 +29,13 @@ function wave_tablist(waveNumber: number, waveDuration: number, waveTimer: numbe
     set {_waveTxt} to i18n({_p}, "WAVE.TITLE")
     set tab list footer of {_p} to "%{_waveTxt}% %{_waveNumber}% - %min(100, ceil(({_waveTimer}/{_waveDuration})*100))%%%"
 
-function wave_next():
+function wave_next(gameUuid: text):
   set {_waveNumber} to game_store_wave_get_current()
   set {_nextWave} to game_store_wave_set_next() #Go next wave
   if {_nextWave} is {_waveNumber}:
     if mob_count() is 0:
       broadcast "END OF GAME : No next wave AND NO MOBS"
-      game_end()
+      game_end({_gameUuid})
   else:
     wave_start({_nextWave})
 

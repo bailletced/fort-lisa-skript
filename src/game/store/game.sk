@@ -1,0 +1,38 @@
+function game_store_get(uuid: text, key: text) :: object:
+  if game_store_isset({_uuid}) is true:
+    return {game::%{_uuid}%::%{_key}%}
+
+function game_store_set(uuid: text, key: text, value: object):
+  set {game::%{_uuid}%::%{_key}%} to {_value}
+
+function game_store_isset(uuid: text) :: boolean:
+  if {game::*} contains {_uuid}:
+    return true
+  return false
+
+function game_store_create() :: text:
+  set {_uuid} to random uuid
+  add {_uuid} to {game::*}
+  return {_uuid}
+
+function game_store_start(uuid: text):
+  game_store_set({_uuid}, "STATUS", "RUNNING")
+
+function game_store_delete(uuid: text) :: text:
+  delete {game::*}
+  remove {_uuid} from {game::*}
+  delete {game::%{_uuid}%::*}
+
+function game_store_player_add(uuid: text, p: player):
+  add {_p} to {game::%{_uuid}%::players::*}
+
+function game_store_player_isset(uuid: text, p: player) :: boolean:
+  if {game::%{_uuid}%::players::*} contains {_p}:
+    return true
+  return false
+
+function game_store_players(uuid: text) :: players:
+  return {game::%{_uuid}%::players::*}
+
+function game_store_player_count(uuid: text) :: number:
+  return size of {game::%{_uuid}%::players::*}

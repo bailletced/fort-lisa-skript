@@ -1,19 +1,13 @@
 on right click:
   set {_p} to player
-  set {_targetName} to name of target
-  if {_targetName} is {NPC::LISA::NAME}:
-    lisa_rightClick()
-  else:
-    set {_type} to item_nbt_get_tag(event-item, "TYPE")
-    if {_type} is "WEAPON":
-      weapon_rightClick({_p}, event-item)
-    else if block is set:
-      set {_type} to block_nbt_get_tag(block, "TYPE")
-      if {_type} is "GUI":
-        if player_store_gui_count({_p}) is 0:
-          set {_category} to block_nbt_get_tag(block, "CATEGORY")
-          set {_id} to block_nbt_get_tag(block, "ID")
-          gui_open({_p}, {_category}, {_id})
-          cancel event
-    else:
-      
+  set {_type} to item_nbt_get_tag(event-item, "TYPE")
+  if {_type} is "WEAPON":
+    weapon_rightClick({_p}, event-item)
+  else if block is set:
+    set {_type} to block_nbt_get_tag(block, "TYPE")
+    if {_type} is "GUI":
+      if player_store_gui_count({_p}) is 0:
+        set {_category} to block_nbt_get_tag(block, "CATEGORY")
+        set {_id} to block_nbt_get_tag(block, "ID")
+        gui_open({_p}, {_category}, {_id})
+        cancel event     

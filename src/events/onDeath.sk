@@ -7,4 +7,5 @@ on death:
   else:
     set {_victimName} to name of victim
     if {_victimName} is {NPC::LISA::NAME}:
-      game_end()
+      set {_gameUuid} to entity_nbt_get_tag(victim, "GAME_UUID")
+      game_end({_gameUuid})
