@@ -26,7 +26,6 @@ function lisa_listeners(lisa: entity):
 
 function lisa_listener_INGAME(lisa: entity):
   set {_gameUuid} to entity_nbt_get_tag({_lisa}, "GAME_UUID")
-  broadcast "LISA/ %{_gameUuid}% %{_lisa}%"
   set {_id} to citizen id of {_lisa}
   while game_store_get({_gameUuid}, "STATUS") is "RUNNING":
     loop all entities in radius 15 of {_lisa}:

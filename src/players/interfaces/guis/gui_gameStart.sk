@@ -41,7 +41,7 @@ function gui_gameStart_chooseNext(gameUuid: text, p: player, currentType: text):
     gui_gameStart_choose({_gameUuid}, {_p}, {_types::%{_index}%})
   else:
     # Player has finished to choose stuff
-    player_store_game_set({_p}, "STATUS", "PLAYING")
+    player_store_game_set({_p}, "STATUS", "RUNNING")
 
 function gui_gameStart(gameUuid: text, p: player):
   player_store_gui_delete_all({_p})
