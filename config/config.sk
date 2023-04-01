@@ -79,44 +79,26 @@ function config_load(world: world):
   unload yaml "YAML-EQUIPMENTS"
 
   #MOBS
-  load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/mobs.yml" as "YAML-MOB"
-  load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/zombies.yml" as "YAML-MOB-ZOMBIE"
-  load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/void/archer.yml" as "YAML-MOB-VOID_ARCHER"
+  load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/mob-categories.yml" as "YAML-MOB-CATEGORIES"
   delete {MOB::*}
-  loop yaml list "CATEGORIES" from "YAML-MOB":
+  loop node keys "" from "YAML-MOB-CATEGORIES":
     set {_category} to loop-value
-    loop node keys "" of "YAML-MOB-%{_category}%":
-      set {_id} to loop-value-2
-      loop yaml node keys "%{_id}%" of "YAML-MOB-%{_category}%":
-        set {_attribute} to loop-value-3
-        loop yaml node keys "%{_id}%.%{_attribute}%" of "YAML-MOB-%{_category}%":
-          set {_key} to loop-key-4
-          set {_value} to yaml value "%{_id}%.%{_attribute}%.%{_key}%" from "YAML-MOB-%{_category}%"
-          set {MOB::%{_category}%::%{_id}%::%{_attribute}%::%{_key}%} to {_value}
-  unload yaml "YAML-MOB"
-  unload yaml "YAML-MOB-ZOMBIE"
-  unload yaml "YAML-MOB-VOID_ARCHER"
+    add {_category} to {MOB::CATEGORY::*}
+    set {MOB::%{_category}%::*} to yaml list "%{_category}%" from "YAML-MOB-CATEGORIES"
+  unload yaml "YAML-MOB-CATEGORIES"
 
   #LOCATIONS
-  load yaml "plugins/Skript/scripts/fort-lisa/config/locations/dragonland.yml" as "YAML-LOCATION-DRAGONLAND"
+  load yaml "plugins/Skript/scripts/fort-lisa/config/locations.yml" as "YAML-LOCATION"
   delete {LOCATION::*}
-  set {LOCATION::CASTLE::THRONE} to location_text2Loc(yaml value "CASTLE.THRONE" from "YAML-LOCATION-DRAGONLAND", {_world})
-  
-  set {_spawnsFar::*} to yaml list "SPAWNS.FAR" from "YAML-LOCATION-DRAGONLAND"
-  loop {_spawnsFar::*}:
-    set {_location} to location_text2Loc(loop-value, {_world})
-    add {_location} to {LOCATION::SPAWN::FAR::*}
-
-  set {_spawnsMedium::*} to yaml list "SPAWNS.MEDIUM" from "YAML-LOCATION-DRAGONLAND"
-  loop {_spawnsMedium::*}:
-    set {_location} to location_text2Loc(loop-value, {_world})
-    add {_location} to {LOCATION::SPAWN::MEDIUM::*}
-
-  set {_castleEntrances::*} to yaml list "CASTLE.ENTRANCES" from "YAML-LOCATION-DRAGONLAND"
-  loop {_castleEntrances::*}:
-    set {_location} to location_text2Loc(loop-value, {_world})
-    add {_location} to {LOCATION::CASTLE::ENTRANCE::*}
-  unload yaml "YAML-LOCATION-DRAGONLAND"
+  loop node keys "" from "YAML-LOCATION":
+    set {_category} to loop-value
+    add {_category} to {LOCATION::CATEGORY::*}
+    loop node keys {_category} from "YAML-LOCATION":
+      set {_id} to loop-value-2
+      add {_id} to {LOCATION::%{_category}%::*}
+      set {_loc} to location_text2Loc(yaml value "%{_category}%.%{_id}%" from "YAML-LOCATION", {_world})
+      set {LOCATION::%{_category}%::%{_id}%} to {_loc}
+  unload yaml "YAML-LOCATION"
 
   #BLOCKS
   load yaml "plugins/Skript/scripts/fort-lisa/config/blocks/nocollision.yml" as "YAML-BLOCK-NOCOLLISION"
@@ -207,6 +189,14 @@ function config_load(world: world):
   set {NaN} to -999
   set {EQUIPMENT::CATEGORY::*} to "HELMET", "LEGGING", "BOOT", and "CHESTPLATE"
   set {PLAYER::LISTENER::*} to "STAT" and "list"
+
+  # LOAD CHUNKS
+  loop {LOCATION::CATEGORY::*}:
+    set {_category} to loop-value
+    loop {LOCATION::%{_category}%::*}:
+      set {_loc} to loop-value-2
+      set {_chunk} to chunk of {LOCATION::%{_category}%::%{_loc}%}
+      load {_chunk} with ticket
 
   # Initialize players. TODO : to be triggered when game starts
   loop all players:

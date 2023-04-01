@@ -1,0 +1,12 @@
+"1":
+  STAT:
+    HEALTH: 20
+    ATTACK: 5
+    DEFENCE: 0
+"2":
+  STAT:
+    HEALTH: 20
+    ATTACK: 8
+    DEFENCE: 0
+  EQUIPMENT:
+    HELMET: iron helmet

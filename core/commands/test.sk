@@ -35,7 +35,7 @@ command /pig:
 command /zombie:
     trigger:
         set {_p} to event-player
-        mob_summon("ZOMBIE", "1", location of {_p})
+        mob_summon("ZOMBIE", 1, "A", location of {_p})
         set {_zombie} to last spawned entity
         set max health of {_zombie} to 900
         set health of {_zombie} to 900
@@ -163,10 +163,8 @@ command /cylinder:
         drawCylinder particle "flame", speed 0.02, center location of player, id "test", randomRotation false, isSolid false, radius 0.5, density 50, height 2, sideRatio 0, visibleRange 30
         wait 5 seconds
         stopEffect "test"
-
-command /loopblock:
+        
+command /loopzombie:
     trigger:
-        set {_blocks::*} to 1, 2 and 5
-        set {_idx} to index of first element of {_blocks::*}
-        delete {_blocks::1}
-        broadcast "%{_blocks::*}%"
+        loop 50 times:
+            summon zombie

@@ -1,23 +1,22 @@
-function mob_ai_init(mob: entity):
-  set {_nearestEntrance} to location_castle_nearest_entrance({_mob})
-  mob_store_target_set({_mob}, "LOCATION")
-  mob_store_location_set({_mob}, ({_nearestEntrance} and {LOCATION::CASTLE::THRONE}))
-  mob_store_listener_set({_mob}, ("TARGET_PLAYER_RADIUS_SOFT" and "IN_WATER"))
-  mob_ai_main_thread({_mob})
+function mob_ai_init(mob: entity, ai: text):
+  if {_ai} is "A":
+    set {_nearestEntrance} to location_castle_nearest_entrance({_mob})
+    mob_store_target_set({_mob}, "LOCATION_DEACTIVATED")
+    mob_store_location_set({_mob}, ({_nearestEntrance}, {LOCATION::CASTLE::FOUNTAIN} and {LOCATION::CASTLE::ARTIFACT}))
+    mob_store_listener_set({_mob}, ("TARGET_PLAYER_RADIUS_SOFT" and "IN_WATER"))
+    mob_ai_main_thread({_mob})
 
 function mob_ai_main_thread(mob: entity):
   while {_mob} is alive:
     mob_ai_triggerListeners({_mob})
     if mob_store_target_isset({_mob}) is true:
-      if mob_store_target_get({_mob}) is "LOCATION":
+      if mob_store_target_get({_mob}) is "LOCATION_DEACTIVATED":
         mob_ai_targetLocation({_mob})
     else:
       # Mob has no target
       if mob_store_location_count({_mob}) is 0:
         mob_ai_target_findSomethingToDo({_mob})
-      else:
-        mob_ai_targetLocation({_mob})
-    wait 20 ticks
+    wait 5 seconds
 
 function mob_ai_triggerListeners(mob: entity):
   set {_disabledListeners::*} to mob_store_listener_get_all_disabled({_mob})

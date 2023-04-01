@@ -1,0 +1,4 @@
+function skeleton_summon(location: location) :: entity:
+  summon skeleton at {_location}
+  set {_skeleton} to last spawned entity
+  return {_skeleton}

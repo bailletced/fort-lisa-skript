@@ -35,7 +35,7 @@ WEAPON:
   STAFF:
     TEST:
       TITLE: "L'Abattis de Sagesse"
-      LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE} infligeant {_POWER}."
+      LORE: "Projette une boule d'énergie destructrice, de portée {_RANGE} infligeant {_ATTACK}."
     LIMB_OF_WISDOM:
       TITLE: "L'Abattis de Sagesse"
       LORE: "Projette une boule de portée {_RANGE} et infligeant {_ATTACK}"
@@ -78,7 +78,7 @@ SKILL:
       LORE: "Pendant {_EFFECT_DURATION}, les dégâts qui devaient vous infliger la mort sont annulés. Vous regénérez 20% de vos HP + {_CHARITY}"
   STAFF:
     BURNING_HEART:
-      LORE: "§eNormal :§f Projette une boule de feu qui inflige {_ATTACK} tous les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION} dans un rayon de {_RADIUS}. \n \n§eSpécial {_COOLDOWN-SPECIAL} : §fProjette une colonne de feu qui inflige jusqu'à {_ATTACK-2} par seconde et brûle tous les ennemis à proximité, infligeant {_EFFECT_ATTACK-2} pendant {_EFFECT_DURATION-2} toutes les {_EFFECT_FREQUENCY-2}. Plus l'ennemi est proche du centre, plus il subit de dégâts."
+      LORE: "§eNormal :§f Projette une boule de feu qui inflige {_EFFECT_ATTACK} tous les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION} dans un rayon de {_RADIUS}. \n \n§eSpécial {_COOLDOWN-SPECIAL} : §fProjette une colonne de feu qui inflige jusqu'à {_ATTACK-2} par seconde et brûle tous les ennemis à proximité, infligeant {_EFFECT_ATTACK-2} pendant {_EFFECT_DURATION-2} toutes les {_EFFECT_FREQUENCY-2}. Plus l'ennemi est proche du centre, plus il subit de dégâts."
   CROSSBOW:
     BURNING_HEART:
       LORE: "Le carreau inflige {_ATTACK} avant de provoquer une déflagration dans un rayon de {_RADIUS}. Les ennemis touchés sont brûlés, subissant {_EFFECT_ATTACK} toutes les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION}"
@@ -90,7 +90,7 @@ GIFT:
     TITLE: "Mémoire"
     DAMAGE_1:
       TITLE: "Mémoire offensive"
-      LORE: "Octroie {_ATTACK} et {_POWER}"
+      LORE: "Octroie {_ATTACK}"
   WILL:
     TITLE: "Volonté"
     BURNING_HEART:

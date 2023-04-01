@@ -1,36 +1,73 @@
-function mob_set_stats(mob: entity):
-  set {_category} to entity_nbt_get_tag({_mob}, "CATEGORY")
+function mob_load_yaml(mob: entity):
   set {_id} to entity_nbt_get_tag({_mob}, "ID")
-  loop {STAT::MOB::*}:
+  set {_idPath} to {_id} in lower case
+  replace "_" with "/" in {_idPath}
+  load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/%{_idPath}%.yml" as "YAML-MOB-%{_id}%"
+
+function mob_store_unload_yaml(mob: entity):
+  set {_id} to entity_nbt_get_tag({_mob}, "ID")
+  unload yaml "YAML-MOB-%{_id}%"
+
+function mob_set_stats(mob: entity, level: number):
+  set {_id} to entity_nbt_get_tag({_mob}, "ID")
+  loop node keys "STAT" of "YAML-MOB-%{_id}%":
     set {_key} to loop-value
-    set {_value} to {MOB::%{_category}%::%{_id}%::STAT::%{_key}%}
-    if {_value} is set:
-      entity_nbt_set_stat({_mob}, {_key}, {_value})
-      if {_key} is "HEALTH":
-        set maximum health of {_mob} to {_value}
-        set health of {_mob} to {_value}
+    set {_value} to yaml value "STAT.%{_key}%" from "YAML-MOB-%{_id}%"
+    if {_key} contains "_MULTIPLIER":
+      set {_stat} to {_key}
+      replace "_MULTIPLIER" with "" in {_stat}
+      entity_nbt_add_stat({_mob}, {_stat}, {_value}*{_level})
+    else:
+      entity_nbt_add_stat({_mob}, {_key}, {_value})
+    set {_health} to entity_nbt_get_stat({_mob}, "HEALTH")
+    set maximum health of {_mob} to {_health}
+    set health of {_mob} to {_health}       
 
-function mob_set_equipments(mob: entity):
-  set {_category} to entity_nbt_get_tag({_mob}, "CATEGORY")
+function mob_set_equipments(mob: entity, level: number):
   set {_id} to entity_nbt_get_tag({_mob}, "ID")
-  loop {EQUIPMENT::CATEGORY::*}:
-    if {MOB::%{_category}%::%{_id}%::EQUIPMENT::%loop-value%} is set:
-      equip {_mob} with {MOB::%{_category}%::%{_id}%::EQUIPMENT::%loop-value%} parsed as item
+  loop node keys "EQUIPMENT.%{_level}%" of "YAML-MOB-%{_id}%":
+    set {_key} to loop-value
+    set {_equipment} to yaml value "EQUIPMENT.%{_level}%.%{_key}%" from "YAML-MOB-%{_id}%" parsed as item
+    equip {_mob} with {_equipment}
 
-function mob_initialize(mob: entity):
-  mob_set_stats({_mob})
-  mob_set_equipments({_mob})
+function mob_initialize(mob: entity, level: number):
+  mob_set_stats({_mob}, {_level})
+  mob_set_equipments({_mob}, {_level})
   mob_store_add({_mob})
-
-function mob_summon(category: text, id: text, location: location) :: entity:
-  if {_category} is "ZOMBIE":
+  
+function mob_summon(id: text, level: number, ai: text, location: location) :: entity:
+  if {_id} is "ZOMBIE":
     set {_mob} to zombie_summon({_location})
-  else if {_category} is "VOID_ARCHER":
+  else if {_id} is "SKELETON":
+    set {_mob} to skeleton_summon({_location})
+  else if {_id} is "CREEPER":
+    set {_mob} to creeper_summon({_location})
+  else if {_id} is "VOID_ARCHER":
     void_archer_summon({_location})
-
+  
   if {_mob} is set:
     entity_nbt_set_tag({_mob}, "TYPE", "MOB")
-    entity_nbt_set_tag({_mob}, "CATEGORY", {_category})
+    entity_nbt_set_tag({_mob}, "CATEGORY", mob_getCategory({_id}))
     entity_nbt_set_tag({_mob}, "ID", {_id})
-    mob_initialize({_mob})
+    entity_nbt_set_tag_native({_mob}, "{PersistenceRequired:1b}")
+    
+    set {_secureLoad} to false
+
+    # Security if the file associated to the mob has not been loaded
+    if yaml file "YAML-MOB-%{_id}%" does not exist:
+      set {_secureLoad} to true
+      mob_load_yaml({_mob})
+
+    mob_initialize({_mob}, {_level})
+    mob_ai_init({_mob}, {_ai})
+
+    # Unload after security load
+    if {_secureLoad} is true:
+      mob_store_unload_yaml({_mob})
+
     return {_mob}
+
+function mob_getCategory(id: text) :: text:
+  loop {MOB::CATEGORY::*}:
+    if {MOB::%loop-value%::*} contains {_id}:
+      return loop-value

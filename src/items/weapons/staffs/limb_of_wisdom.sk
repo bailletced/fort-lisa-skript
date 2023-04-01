@@ -13,6 +13,6 @@ function limb_of_wisdom_cast(p: player, staff: item):
 
 function limb_of_wisdom_hit(p: player, projectile: entity, victim: entity):
   set {_location} to location of {_victim}
-  set {_power} to player_stat_compute({_p}, {_projectile}, "POWER")
+  set {_attack} to player_stat_compute({_p}, {_projectile}, "ATTACK")
   loop all entities in radius 1 of {_location}:
-    entity_effect_damage({_p}, loop-entity, 0, {_power})
+    entity_effect_damage({_p}, loop-entity, 0, {_attack})

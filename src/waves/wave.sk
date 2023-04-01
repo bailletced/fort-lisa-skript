@@ -43,14 +43,40 @@ function wave_start(waveNumber: number):
   game_store_wave_set_current({_waveNumber})
   game_store_wave_set_current_timer(0)
   load yaml "plugins/Skript/scripts/fort-lisa/config/waves/%{_waveNumber}%.yml" as "YAML-WAVE"
+  delete {_loadedIds::*}
   loop node keys "MOBS" of "YAML-WAVE":
-    set {_categoryId::*} to loop-key split at "-"
-    set {_category} to first element of {_categoryId::*}
-    set {_id} to 2nd element of {_categoryId::*}
-    set {_amount} to yaml value "MOBS.%loop-key%.AMOUNT" from "YAML-WAVE"
-    set {_locationType} to yaml value "MOBS.%loop-key%.LOCATION" from "YAML-WAVE"
+    set {_group} to loop-key
+    set {_id} to yaml value "MOBS.%{_group}%.ID" from "YAML-WAVE"
+    set {_level} to yaml value "MOBS.%{_group}%.LEVEL" from "YAML-WAVE"
+    set {_amount} to yaml value "MOBS.%{_group}%.AMOUNT" from "YAML-WAVE"
+    set {_delay} to yaml value "MOBS.%{_group}%.DELAY" from "YAML-WAVE"
+    set {_ai} to yaml value "MOBS.%{_group}%.AI" from "YAML-WAVE"
+    if yaml node "MOBS.%{_group}%.LOCATION" from "YAML-WAVE" has list:
+      set {_isRandomLoc} to true
+      set {_possibleLocs::*} to yaml list "MOBS.%{_group}%.LOCATION" from "YAML-WAVE"
+    else:
+      set {_location} to yaml value "MOBS.%{_group}%.LOCATION" from "YAML-WAVE"
+      set {_location::*} to {_location} split at "."
+      set {_location} to {LOCATION::%{_location::1}%::%{_location::2}%}
+
+    if {_loadedIds::*} does not contain {_id}:
+      add {_id} to {_loadedIds::*}
+      # We load yaml mob file
+      set {_idPath} to {_id} in lower case
+      replace "_" with "/" in {_idPath}
+      load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/%{_idPath}%.yml" as "YAML-MOB-%{_id}%"
 
     loop {_amount} times:
-      set {_location} to random element of {LOCATION::SPAWN::%{_locationType}%::*}
-      mob_summon({_category}, {_id}, {_location})
+      if {_isRandomLoc} is true:
+        set {_location} to random element of {_possibleLocs::*}
+        set {_location::*} to {_location} split at "."
+        set {_location} to {LOCATION::%{_location::1}%::%{_location::2}%}
+      broadcast "%{_location}%"
+      mob_summon({_id}, {_level}, {_ai}, {_location})
+      wait "%{_delay}% ticks" parsed as timespan
+  
+  # We unload yaml mob files
+  loop {_loadedIds::*}:
+    unload yaml "YAML-MOB-%loop-value%"
+
   unload YAML "YAML-WAVE"

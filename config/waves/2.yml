@@ -1,8 +1,26 @@
 DURATION: 1200
 MOBS:
-  ZOMBIE-2:
-    AMOUNT: 15
-    LOCATION: "MEDIUM"
-  VOID_ARCHER-1:
+  1:
+    ID: ZOMBIE
+    LEVEL: 1
     AMOUNT: 5
-    LOCATION: "MEDIUM"
+    AI: A
+    LOCATION:
+      - CASTLE.GATE_A
+    DELAY: 10
+  2:
+    ID: ZOMBIE
+    LEVEL: 1
+    AMOUNT: 5
+    AI: A
+    LOCATION:
+      - CASTLE.GATE_A
+    DELAY: 10
+  3:
+    ID: SKELETON
+    LEVEL: 0
+    AMOUNT: 5
+    AI: A
+    LOCATION:
+      - CASTLE.GATE_A
+    DELAY: 10

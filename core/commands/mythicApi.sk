@@ -15,5 +15,5 @@ command /mythicApi [<text>] [<text>] [<text>] [<text>] [<text>]:
     else if arg-1 is "register":
       set {_mobUuid} to arg-2
       set {_mob} to {_mobUuid} parsed as entity
-      mob_initialize({_mob})
-      mob_ai_init({_mob})
+      mob_initialize({_mob}, 1)
+      mob_ai_init({_mob}, "A")
