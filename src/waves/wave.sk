@@ -46,37 +46,35 @@ function wave_start(waveNumber: number):
   delete {_loadedIds::*}
   loop node keys "MOBS" of "YAML-WAVE":
     set {_group} to loop-key
-    set {_id} to yaml value "MOBS.%{_group}%.ID" from "YAML-WAVE"
-    set {_level} to yaml value "MOBS.%{_group}%.LEVEL" from "YAML-WAVE"
-    set {_amount} to yaml value "MOBS.%{_group}%.AMOUNT" from "YAML-WAVE"
-    set {_delay} to yaml value "MOBS.%{_group}%.DELAY" from "YAML-WAVE"
-    set {_ai} to yaml value "MOBS.%{_group}%.AI" from "YAML-WAVE"
-    if yaml node "MOBS.%{_group}%.LOCATION" from "YAML-WAVE" has list:
-      set {_isRandomLoc} to true
-      set {_possibleLocs::*} to yaml list "MOBS.%{_group}%.LOCATION" from "YAML-WAVE"
-    else:
-      set {_location} to yaml value "MOBS.%{_group}%.LOCATION" from "YAML-WAVE"
-      set {_location::*} to {_location} split at "."
-      set {_location} to {LOCATION::%{_location::1}%::%{_location::2}%}
-
-    if {_loadedIds::*} does not contain {_id}:
-      add {_id} to {_loadedIds::*}
-      # We load yaml mob file
-      set {_idPath} to {_id} in lower case
-      replace "_" with "/" in {_idPath}
-      load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/%{_idPath}%.yml" as "YAML-MOB-%{_id}%"
-
-    loop {_amount} times:
-      if {_isRandomLoc} is true:
-        set {_location} to random element of {_possibleLocs::*}
-        set {_location::*} to {_location} split at "."
-        set {_location} to {LOCATION::%{_location::1}%::%{_location::2}%}
-      broadcast "%{_location}%"
-      mob_summon({_id}, {_level}, {_ai}, {_location})
-      wait "%{_delay}% ticks" parsed as timespan
-  
-  # We unload yaml mob files
-  loop {_loadedIds::*}:
-    unload yaml "YAML-MOB-%loop-value%"
+    wave_summon({_group})
 
   unload YAML "YAML-WAVE"
+
+function wave_summon(group: text):
+  set {_id} to yaml value "MOBS.%{_group}%.ID" from "YAML-WAVE"
+  set {_level} to yaml value "MOBS.%{_group}%.LEVEL" from "YAML-WAVE"
+  set {_amount} to yaml value "MOBS.%{_group}%.AMOUNT" from "YAML-WAVE"
+  set {_delay} to yaml value "MOBS.%{_group}%.DELAY" from "YAML-WAVE"
+  set {_ai} to yaml value "MOBS.%{_group}%.AI" from "YAML-WAVE"
+  if yaml node "MOBS.%{_group}%.LOCATION" from "YAML-WAVE" has list:
+    set {_isRandomLoc} to true
+    set {_possibleLocs::*} to yaml list "MOBS.%{_group}%.LOCATION" from "YAML-WAVE"
+  else:
+    set {_location} to yaml value "MOBS.%{_group}%.LOCATION" from "YAML-WAVE"
+    set {_location::*} to {_location} split at "."
+    set {_location} to {LOCATION::%{_location::1}%::%{_location::2}%}
+
+  # We load yaml mob file
+  set {_idPath} to {_id} in lower case
+  replace "_" with "/" in {_idPath}
+  load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/%{_idPath}%.yml" as "YAML-MOB-%{_id}%"
+
+  loop {_amount} times:
+    if {_isRandomLoc} is true:
+      set {_location} to random element of {_possibleLocs::*}
+      set {_location::*} to {_location} split at "."
+      set {_location} to {LOCATION::%{_location::1}%::%{_location::2}%}
+    mob_summon({_id}, {_level}, {_ai}, {_location})
+    wait "%{_delay}% ticks" parsed as timespan
+
+  unload yaml "YAML-MOB-%{_id}%"

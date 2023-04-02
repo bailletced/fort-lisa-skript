@@ -19,9 +19,14 @@ function mob_set_stats(mob: entity, level: number):
       entity_nbt_add_stat({_mob}, {_stat}, {_value}*{_level})
     else:
       entity_nbt_add_stat({_mob}, {_key}, {_value})
-    set {_health} to entity_nbt_get_stat({_mob}, "HEALTH")
-    set maximum health of {_mob} to {_health}
-    set health of {_mob} to {_health}       
+
+  set {_health} to entity_nbt_get_stat({_mob}, "HEALTH")
+  set maximum health of {_mob} to {_health}
+  set health of {_mob} to {_health}
+
+  set {_speed} to entity_nbt_get_stat({_mob}, "SPEED")
+  apply potion of speed {_speed} without particles to {_mob} for 9999 seconds
+
 
 function mob_set_equipments(mob: entity, level: number):
   set {_id} to entity_nbt_get_tag({_mob}, "ID")

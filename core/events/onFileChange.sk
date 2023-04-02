@@ -97,19 +97,19 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/bestiary/void
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/store/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/":
-   reload script file fileManager_getRelativePath(event-path)
-
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/action/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/interfaces/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/interfaces/guis/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/interfaces/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/interfaces/menus/":
+   reload script file fileManager_getRelativePath(event-path)
+
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/stat/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/players/stat/":

@@ -1,11 +1,35 @@
 DURATION: 1200
 MOBS:
-  ZOMBIE-2:
+  1:
+    ID: ZOMBIE
+    LEVEL: 2
     AMOUNT: 10
-    LOCATION: "MEDIUM"
-  SKELETON-2:
-    AMOUNT: 4
-    LOCATION: "MEDIUM"
-  CREEPER-1:
-    AMOUNT: 2
-    LOCATION: "MEDIUM"
+    AI: A
+    LOCATION:
+      - CASTLE.GATE_A
+      - CASTLE.GATE_B
+      - CASTLE.GATE_C
+      - CASTLE.GATE_D
+    DELAY: 10
+  2:
+    ID: SKELETON
+    LEVEL: 2
+    AMOUNT: 10
+    AI: A
+    LOCATION:
+      - CASTLE.GATE_A
+      - CASTLE.GATE_B
+      - CASTLE.GATE_C
+      - CASTLE.GATE_D
+    DELAY: 10
+  3:
+    ID: CREEPER
+    LEVEL: 1
+    AMOUNT: 5
+    AI: A
+    LOCATION:
+      - CASTLE.GATE_A
+      - CASTLE.GATE_B
+      - CASTLE.GATE_C
+      - CASTLE.GATE_D
+    DELAY: 10

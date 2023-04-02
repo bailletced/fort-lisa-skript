@@ -39,7 +39,7 @@ function mob_ai_listener_IN_WATER(mob: entity):
   while mob_store_listener_isEnabled({_mob}, "IN_WATER") is true:
     # broadcast "IN WATER LISTENER"
     if {_mob} is in water:
-      broadcast "MOB IS IN WATERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
+      # broadcast "MOB IS IN WATERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
       apply potion of speed 10 without particles to {_mob} for 30 ticks
       # if mob_store_target_get({_mob}) is not "PLAYER":
       #   add 1 to {_inWater}

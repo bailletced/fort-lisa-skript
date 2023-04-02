@@ -1,12 +1,14 @@
-"1":
-  STAT:
-    HEALTH: 20
-    ATTACK: 5
-    DEFENCE: 0
-"2":
-  STAT:
-    HEALTH: 20
-    ATTACK: 8
-    DEFENCE: 0
-  EQUIPMENT:
+STAT:
+  HEALTH: 10
+  HEALTH_MULTIPLIER: 1
+  ATTACK: 8
+  ATTACK_MULTIPLIER: 5
+  DEFENCE: 0
+  SPEED: 1
+  SPEED_MULTIPLIER: 0.5
+EQUIPMENT:
+  2:
     HELMET: iron helmet
+  3:
+    HELMET: iron helmet
+    CHESTPLATE: iron chestplate
