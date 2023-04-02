@@ -1,9 +1,9 @@
 function chestplate_burning_heart_cast(p: player, skill: item):
-  set {_radius} to player_stat_item({_p}, {_skill}, "RADIUS")
-  set {_attack} to player_stat_item({_p}, {_skill}, "ATTACK")
-  set {_effectAttack} to player_stat_item({_p}, {_skill}, "EFFECT_ATTACK")
-  set {_effectDuration} to player_stat_item({_p}, {_skill}, "EFFECT_DURATION")
-  set {_effectFrequency} to player_stat_item({_p}, {_skill}, "EFFECT_FREQUENCY")
+  set {_radius} to player_stat_compute({_p}, {_skill}, "RADIUS")
+  set {_attack} to player_stat_compute({_p}, {_skill}, "ATTACK")
+  set {_effectAttack} to player_stat_compute({_p}, {_skill}, "EFFECT_ATTACK")
+  set {_effectDuration} to player_stat_compute({_p}, {_skill}, "EFFECT_DURATION")
+  set {_effectFrequency} to player_stat_compute({_p}, {_skill}, "EFFECT_FREQUENCY")
 
   loop ceil({_effectDuration}/20) times:
     draw {_radius}*70 flame at {_p} with offset vector({_radius}*0.0, {_radius}*0.0, {_radius}*0.0) with extra {_radius}*0.1

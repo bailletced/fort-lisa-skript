@@ -1,7 +1,3 @@
 on player's held item change:
   set {_p} to event-player
   set {_item} to tool
-
-  set {_type} to item_nbt_get_tag({_item}, "TYPE")
-  if {_type} is "WEAPON":
-    weapon_onEquip({_p}, {_item})

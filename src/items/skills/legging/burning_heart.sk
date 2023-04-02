@@ -1,10 +1,10 @@
 function legging_burning_heart_cast(p: player, skill: item):
-  set {_attack} to player_stat_item({_p}, {_skill}, "ATTACK")
-  set {_charity} to player_stat_item({_p}, {_skill}, "CHARITY")
-  set {_radius} to player_stat_item({_p}, {_skill}, "RADIUS")
-  set {_effectAttack} to player_stat_item({_p}, {_skill}, "EFFECT_ATTACK")
-  set {_effectDuration} to player_stat_item({_p}, {_skill}, "EFFECT_DURATION")
-  set {_effectFrequency} to player_stat_item({_p}, {_skill}, "EFFECT_FREQUENCY")
+  set {_attack} to player_stat_compute({_p}, {_skill}, "ATTACK")
+  set {_charity} to player_stat_compute({_p}, {_skill}, "CHARITY")
+  set {_radius} to player_stat_compute({_p}, {_skill}, "RADIUS")
+  set {_effectAttack} to player_stat_compute({_p}, {_skill}, "EFFECT_ATTACK")
+  set {_effectDuration} to player_stat_compute({_p}, {_skill}, "EFFECT_DURATION")
+  set {_effectFrequency} to player_stat_compute({_p}, {_skill}, "EFFECT_FREQUENCY")
   set {_effectDurationTicks} to "%{_effectDuration}% ticks" parsed as timespan
   entity_effect_immunity({_p}, "TRYNDAMERE", {_effectDuration})
   entity_effect_immunity({_p}, "BURN", {_effectDuration})

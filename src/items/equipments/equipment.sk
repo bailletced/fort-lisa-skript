@@ -1,10 +1,14 @@
-function equipment_give(p: player, category: text, id: text) :: item:
+function equipment_create(p: player, category: text, id: text) :: item:
   set {_equipment} to item_create({_p}, "EQUIPMENT", {_category}, {_id})
   set {_equipment} to item_nbt_set_tag_native({_equipment}, "{HideFlags:2}")
   set {_nbt} to nbt compound of {_equipment}
   set {_attrModifiers::*} to compound list tag "AttributeModifiers" of {_nbt}
   add nbt compound of "{AttributeName:""generic.armor"",Amount:0,Operation:0,UUID:[I;-12319,22491,191450,-44982],Name:""generic.armor""}" to {_attrModifiers::*}
   set compound list tag "AttributeModifiers" of {_nbt} to {_attrModifiers::*}
+  return {_equipment}
+
+function equipment_give(p: player, category: text, id: text) :: item:
+  set {_equipment} to equipment_create({_p}, {_category}, {_id})
   give 1 of {_equipment} to {_p}
   return {_equipment}
 

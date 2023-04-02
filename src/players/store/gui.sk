@@ -13,7 +13,8 @@ function player_store_gui_get_last(p: player) :: text:
   return last element of {players::%{_p}%::guis::*}
 
 function player_store_gui_add(p: player, gui: text):
-  add {_gui} to {players::%{_p}%::guis::*}
+  if player_store_gui_isset({_p}, {_gui}) is false:
+    add {_gui} to {players::%{_p}%::guis::*}
 
 function player_store_gui_count(p: player) :: number:
   return size of {players::%{_p}%::guis::*}

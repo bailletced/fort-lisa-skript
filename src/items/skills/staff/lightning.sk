@@ -1,0 +1,50 @@
+function staff_lightning_cast(p: player, staff: item):
+  broadcast "LIGNINGTHJGNTOTO"
+
+function staff_lightning_special(p: player, staff: item):
+  set {_loc} to location of {_p}
+  rootLine({_loc}, 3, 0)
+
+function rootLine(loc: location, density: number, forkAmount: number):
+  loop {_density} times:
+    set {_loc} to drawLine({_loc}, {_forkAmount})
+
+
+function drawLine(loc: location, forkAmount: number) :: location:
+  set {_randomLength} to random number between 25 and 60
+  set {_randomYaw} to random number between -30 and 30
+  set {_randomPitch} to random number between -10 and 10
+  set {_v} to vector from yaw yaw of {_loc} + {_randomYaw} and pitch pitch of {_loc} + {_randomPitch}
+  set standard length of {_v} to 0.5
+  set {_drawSmallCount} to 0
+
+  set {_it} to 0
+  loop {_randomLength} times:
+    add 0.25 to {_it}
+    set standard length of {_v} to {_it}
+    set {_tempLoc} to {_loc} ~ {_v}
+    draw 0 of soul_fire_flame at {_tempLoc} with extra 0
+
+    if loop-value >= 15: #allow fork if bolt reached some distance
+      set {_random} to random number between 0 and 10+10*{_forkAmount}
+      if {_random} <= 5:
+        if {_forkAmount} <= 2:
+          add 1 to {_forkAmount}
+          rootLine({_tempLoc}, 3-{_forkAmount}, {_forkAmount})
+      if {_random} >= 10:
+        if {_drawSmallCount} <= 2:
+          add 1 to {_drawSmallCount}
+          drawSmallLine({_tempLoc})
+  return {_tempLoc}
+
+function drawSmallLine(loc: location):
+  set {_randomYaw} to random number between -30 and 30
+  set {_randomPitch} to random number between -10 and 10
+  set {_randomLength} to random number between 5 and 15
+  set {_v} to vector from yaw yaw of {_loc} + {_randomYaw} and pitch pitch of {_loc} + {_randomPitch}
+  set {_it} to 0
+  loop {_randomLength} times:
+    add 0.25 to {_it}
+    set standard length of {_v} to {_it}
+    set {_tempLoc} to {_loc} ~ {_v}
+    draw 0 of soul_fire_flame at {_tempLoc} with extra 0

@@ -1,11 +1,14 @@
-#Give a skill to the player
-function gift_give(p: player, type: text, category: text, id: text) :: item:
-  set {_tier} to {%{_type}%::%{_category}%::%{_id}%::TIER}
-  set {_gift} to item_create({_p}, {_type}, {_category}, {_id})
+function gift_create(p: player, category: text, id: text) :: item:
+  set {_tier} to {GIFT::%{_category}%::%{_id}%::TIER}
+  set {_gift} to item_create({_p}, "GIFT", {_category}, {_id})
   set {_gift} to item_nbt_set_stat({_gift}, "TIER", {_tier})
   set {_name} to name of {_gift}
   set {_tierTxt} to parser_tier({_tier})
   set name of {_gift} to "%{_name}% %{_tierTxt}%"
+  return {_gift}
+
+function gift_give(p: player, category: text, id: text) :: item:
+  set {_gift} to gift_create({_p}, {_category}, {_id})
   give 1 of {_gift} to {_p}
   return {_gift}
 

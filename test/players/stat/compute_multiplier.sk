@@ -1,6 +1,6 @@
 function test_player_compute_multiplier(p: player):
   send "§5Testing player stat item" to the console
-  it "Test player_stat_item":
+  it "Test player_stat_compute on item":
     set {_item} to weapon_give({_p}, "STAFF", "TEST")
     set {_attackPlayer} to 10
     set {_attackItem} to 10
@@ -9,12 +9,33 @@ function test_player_compute_multiplier(p: player):
     set {_attack2ItemMultiplier} to 1
     player_store_stat_set({_p}, "ATTACK", {_attackPlayer})
     
-    set {_item} to item_nbt_set_stat({_item}, "ATTACK", {_attackItem})
-    set {_item} to item_nbt_set_stat({_item}, "ATTACK_MULTIPLIER", {_attackItemMultiplier})
-    set {_item} to item_nbt_set_stat({_item}, "ATTACK-2", {_attack2Item})
-    set {_item} to item_nbt_set_stat({_item}, "ATTACK-2_MULTIPLIER", {_attack2ItemMultiplier})
+    set {_item} to item_nbt_set_stat({_item}, "ATTACK", {_attackItem}, true)
+    set {_item} to item_nbt_set_stat({_item}, "ATTACK_MULTIPLIER", {_attackItemMultiplier}, true)
+    set {_item} to item_nbt_set_stat({_item}, "ATTACK-2", {_attack2Item}, true)
+    set {_item} to item_nbt_set_stat({_item}, "ATTACK-2_MULTIPLIER", {_attack2ItemMultiplier}, true)
 
-    set {_finalattack} to player_stat_item({_p}, {_item}, "ATTACK")
-    set {_finalattack2} to player_stat_item({_p}, {_item}, "ATTACK-2")
+    set {_finalattack} to player_stat_compute({_p}, {_item}, "ATTACK")
+    set {_finalattack2} to player_stat_compute({_p}, {_item}, "ATTACK-2")
     assert if {_finalattack} is {_attackItem} + {_attackItemMultiplier}*{_attackPlayer}  with message "ATTACK should be %{_attackItem} + {_attackItemMultiplier}*{_attackPlayer}%. Got %{_finalattack}%"
     assert if {_finalattack2} is {_attack2Item} + {_attack2ItemMultiplier}*{_attackPlayer}  with message "ATTACK-2 should be %{_attack2Item} + {_attack2ItemMultiplier}*{_attackPlayer}%. Got %{_finalattack2}%"
+
+  it "Test player_stat_compute on entity":
+    make {_p} shoot snowball at speed 3
+    set {_entity} to last shot projectile
+
+    set {_attackPlayer} to 10
+    set {_attackEntity} to 10
+    set {_attackEntityMultiplier} to 0.5
+    set {_attack2Entity} to 20
+    set {_attack2EntityMultiplier} to 1
+    player_store_stat_set({_p}, "ATTACK", {_attackPlayer})
+    
+    entity_nbt_set_stat({_entity}, "ATTACK", {_attackEntity})
+    entity_nbt_set_stat({_entity}, "ATTACK_MULTIPLIER", {_attackEntityMultiplier})
+    entity_nbt_set_stat({_entity}, "ATTACK-2", {_attack2Entity})
+    entity_nbt_set_stat({_entity}, "ATTACK-2_MULTIPLIER", {_attack2EntityMultiplier})
+
+    set {_finalattack} to player_stat_compute({_p}, {_entity}, "ATTACK")
+    set {_finalattack2} to player_stat_compute({_p}, {_entity}, "ATTACK-2")
+    assert if {_finalattack} is {_attackEntity} + {_attackEntityMultiplier}*{_attackPlayer}  with message "ATTACK should be %{_attackEntity} + {_attackEntityMultiplier}*{_attackPlayer}%. Got %{_finalattack}%"
+    assert if {_finalattack2} is {_attack2Entity} + {_attack2EntityMultiplier}*{_attackPlayer}  with message "ATTACK-2 should be %{_attack2Entity} + {_attack2EntityMultiplier}*{_attackPlayer}%. Got %{_finalattack2}%"

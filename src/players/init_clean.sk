@@ -1,24 +1,22 @@
-function player_init():
-  loop all players:
-    set {_p} to loop-value
-    teleport {_p} to location(130, -27, 2, world "flat_world")
-    player_clean({_p})
-    player_store_stat_set({_p}, "ATTACK", 0)
-    player_store_stat_set({_p}, "POWER", 0)
-    player_store_stat_set({_p}, "DEFENCE", 0)
-    player_store_stat_set({_p}, "MR", 0)
-    player_store_stat_set({_p}, "MANA_MAX", 100)
-    player_store_stat_set({_p}, "MANA", 100)
-    player_store_stat_set({_p}, "MANA_REGEN", 3)
-    player_store_setting_set({_p}, "INGAME", true)
-    set max health of {_p} to 20
-    set health of {_p} to 20
-    clear inventory of {_p}
-    # Listeners
-    skill_give({_p}, "STAFF", "DRAGON_BREATH")
-    item_give({_p}, "WEAPON", "STAFF", "LIMB_OF_WISDOM")
-    player_store_listener_add({_p}, "STAT")
-    set gamemode of {_p} to adventure
+function player_init(p: player, gameUuid: text):
+  teleport {_p} to {LOCATION::CASTLE::THRONE}
+  player_clean({_p})
+  player_store_stat_set({_p}, "ATTACK", 0)
+  player_store_stat_set({_p}, "POWER", 0)
+  player_store_stat_set({_p}, "DEFENCE", 0)
+  player_store_stat_set({_p}, "MR", 0)
+  player_store_stat_set({_p}, "MANA_MAX", 100)
+  player_store_stat_set({_p}, "MANA", 100)
+  player_store_stat_set({_p}, "MANA_REGEN", 3)
+  set max health of {_p} to 20
+  set health of {_p} to 20
+  set bed of {_p} to {LOCATION::CASTLE::THRONE}
+  clear inventory of {_p}
+  set gamemode of {_p} to adventure
+  # Start game interactions
+  gui_gameStart({gameUuid}, {_p})
+  player_store_game_set({_p}, "UUID", {_gameUuid})
+  player_store_game_set({_p}, "STATUS", "PREPARING")
 
 function player_clean(p: player):
   player_store_gui_delete_all({_p})

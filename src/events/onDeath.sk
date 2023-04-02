@@ -1,10 +1,15 @@
 on death:
   set {_entity} to victim
-  set {_type} to entity_nbt_get_tag({_entity}, "TYPE")
-  if {_type} is "MOB":
-    mob_store_clear_all({_entity})
-    mob_store_delete({_entity})
+  if {_entity} is a player:
+    if player_store_game_get({_entity}, "STATUS") is "RUNNING":
+      player_store_status_set({_entity}, "DEATH", location of {_entity})
   else:
-    set {_victimName} to name of victim
-    if {_victimName} is {NPC::LISA::NAME}:
-      game_end()
+    set {_type} to entity_nbt_get_tag({_entity}, "TYPE")
+    if {_type} is "MOB":
+      mob_store_clear_all({_entity})
+      mob_store_delete({_entity})
+    else:
+      set {_victimName} to name of victim
+      if {_victimName} is {NPC::LISA::NAME}:
+        set {_gameUuid} to entity_nbt_get_tag(victim, "GAME_UUID")
+        game_end({_gameUuid})

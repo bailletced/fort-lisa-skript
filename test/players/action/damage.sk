@@ -2,7 +2,7 @@ function test_entity_effect_damage(p: player):
   send "§5Testing player action damage" to the console
   it "test damage MOB":
     set {_location} to location of {_p}
-    set {_zombie} to mob_summon("ZOMBIE", "1", {_location})
+    set {_zombie} to mob_summon("ZOMBIE", 1, "A", {_location})
     set {_currHealth} to health of {_zombie}
     entity_nbt_set_stat({_zombie}, "DEFENCE", 5)
     set {_defence} to entity_nbt_get_stat({_zombie}, "DEFENCE")

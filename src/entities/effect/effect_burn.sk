@@ -3,21 +3,30 @@ function entity_effect_burn(source: entity, target: entity, attack: number, dura
   if entity_store_effect_isset({_target}, "BURN") is false:
     entity_store_effect_init({_target}, "BURN", {_duration})
     entity_store_effect_add({_target}, "BURN", "damage", {_attack}*{_amount})
-    entity_effect_burn_consume({_source}, {_target}, {_attack}, {_frequency})
+    entity_effect_burn_consume({_source}, {_target}, {_frequency})
   else:
     if {_option} is "EXTEND":
       entity_store_effect_add({_target}, "BURN", "duration", {_duration})
-      entity_store_effect_add({_target}, "BURN", "damage", {_attack})
+      entity_store_effect_add({_target}, "BURN", "damage", {_attack}*{_amount})
     else if {_option} is "ADD":
       entity_store_effect_add({_target}, "BURN", "duration", {_duration})
-      entity_store_effect_add({_target}, "BURN", "damage", {_attack})
-      entity_effect_burn_consume({_source}, {_target}, {_attack}, {_frequency})
+      entity_store_effect_add({_target}, "BURN", "damage", {_attack}*{_amount})
+      entity_effect_burn_consume({_source}, {_target}, {_frequency})
 
-function entity_effect_burn_consume(source: entity, target: entity, attack: number, delay: number):
+function entity_effect_burn_consume(source: entity, target: entity, frequency: number):
   while entity_store_effect_isset({_target}, "BURN") is true:
-    set {_uuid} to uuid of {_target}
-    set {_target} on fire for "%{_delay}% ticks" parsed as timespan
-    entity_store_effect_add({_target}, "BURN", "duration", -1*{_delay})
-    entity_store_effect_add({_target}, "BURN", "damage", -1*{_attack})
+    set {_durationBurn} to entity_store_effect_get({_target}, "BURN", "duration")
+    set {_totalDamage} to entity_store_effect_get({_target}, "BURN", "damage")
+    set {_amount} to floor({_durationBurn} / {_frequency})
+    set {_attack} to {_totalDamage}/{_amount}
+    set {_target} on fire for "%{_frequency}% ticks" parsed as timespan
     entity_effect_damage({_source}, {_target}, {_attack})
-    wait "%{_delay}% ticks" parsed as timespan
+    wait "%{_frequency}% ticks" parsed as timespan
+    entity_store_effect_add({_target}, "BURN", "duration", -1*{_frequency})
+    entity_store_effect_add({_target}, "BURN", "damage", -1*{_attack})
+
+function entity_effect_burn_consumeAll(source: entity, target: entity):
+  set {_totalDmg} to entity_store_effect_get({_target}, "BURN", "damage")
+  entity_effect_damage({_source}, {_target}, {_totalDmg})
+  entity_store_effect_delete({_target}, "BURN")
+  extinguish {_target}

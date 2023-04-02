@@ -1,58 +1,33 @@
-function lisa_get_id() :: number:
-  load yaml "plugins/Skript/scripts/fort-lisa/config/npcs.yml" as "YAML-NPC"
-  set {_id} to yaml value "LISA.ID" from "YAML-NPC"
-  unload yaml "YAML-NPC"
-  return {_id}
-
-function lisa_remove():
-  set {_id} to lisa_get_id()
-  remove citizen {_id}
-
-function lisa_isset() :: boolean:
-  set {_id} to lisa_get_id()
-  set {_lisa} to citizen {_id}
-  if {_lisa} is set:
-    return true
-  return false
-
-function lisa_rightClick():
-  if game_isset() is false:
-    game_start()
-
-function lisa_summon():
-  if lisa_isset() is false:
-    create citizen named {NPC::LISA::NAME} at {LOCATION::CASTLE::THRONE}
-    set {_id} to last created citizen
-    set {_lisa} to citizen {_id}
-    load yaml "plugins/Skript/scripts/fort-lisa/config/npcs.yml" as "YAML-NPC"
-    set yaml value "LISA.ID" from "YAML-NPC" to {_id}
-    save yaml "YAML-NPC"
-    unload yaml "YAML-NPC"
-    lisa_init()
-
-function lisa_init():
+function lisa_summon(gameUuid: text) :: entity:
+  set {_world} to game_store_get({_gameUuid}, "WORLD")
+  set {_location} to {LOCATION::CASTLE::THRONE}
+  set world of {_location} to {_world}
+  create citizen named {NPC::LISA::NAME} at {_location}
   set {_id} to last created citizen
   set {_lisa} to citizen {_id}
+  entity_nbt_set_tag({_lisa}, "GAME_UUID", {_gameUuid})
+  return lisa_init({_lisa})
+
+function lisa_init(lisa: entity) :: entity:
   set {_npcSkin} to {NPC::LISA::SKIN}
   execute console command "/npc select %{_id}%"
-  wait 1 tick
-
   execute console command "/npc skin --url %{_npcSkin}%" 
   execute console command "/npc lookclose --randomlook"
   execute console command "/npc targetable"
   execute console command "/npc vulnerable"
-  set maximum health of {_lisa} to 40
-  set health of {_lisa} to 40
-  entity_nbt_set_stat({_lisa}, "DEFENCE", 0)
-  entity_nbt_set_stat({_lisa}, "MR", 0)
+  set maximum health of {_lisa} to 1
+  set max health of {_lisa} to {NPC::LISA::HEALTH}
+  set health of {_lisa} to {NPC::LISA::HEALTH}
+  entity_nbt_set_stat({_lisa}, "DEFENCE", {NPC::LISA::DEFENCE})
+  return {_lisa}
 
-function lisa_listeners():
-  lisa_listener_INGAME()
+function lisa_listeners(lisa: entity):
+  lisa_listener_INGAME({_lisa})
 
-function lisa_listener_INGAME():
-  set {_id} to lisa_get_id()
-  set {_lisa} to citizen {_id}
-  while game_isset() is true:
+function lisa_listener_INGAME(lisa: entity):
+  set {_gameUuid} to entity_nbt_get_tag({_lisa}, "GAME_UUID")
+  set {_id} to citizen id of {_lisa}
+  while game_store_get({_gameUuid}, "STATUS") is "RUNNING":
     loop all entities in radius 15 of {_lisa}:
       if type of loop-entity is not player:
         if loop-entity is not {_lisa}:
@@ -63,4 +38,4 @@ function lisa_listener_INGAME():
           set target of loop-entity to {_lisa}
     move citizen {_id} to {LOCATION::CASTLE::THRONE}
     wait 2 seconds
-  game_end()    
+  game_end({_gameUuid})    

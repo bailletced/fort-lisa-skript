@@ -1,7 +1,7 @@
 function mob_ai_targetLocation(mob: entity):
-  mob_store_target_set({_mob}, "LOCATION")
+  mob_store_target_set({_mob}, "LOCATION_ACTIVATED")
   delete target of {_mob}
-  while mob_store_target_get({_mob}) is "LOCATION":
+  while mob_store_target_get({_mob}) is "LOCATION_ACTIVATED":
     set {_locationTarget} to mob_store_location_get({_mob})
     # broadcast "TARGET: %{_mob}% %{_locationTarget}%"
     set path targets of {_mob} to {_locationTarget}
@@ -22,5 +22,5 @@ function mob_ai_targetPlayer(mob: entity, p: player):
     wait 20 ticks
 
 function mob_ai_target_findSomethingToDo(mob: entity):
-  set {_ok} to true
+  stop
   # broadcast "TODO: make mob find something to do"

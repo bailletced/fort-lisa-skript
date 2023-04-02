@@ -12,3 +12,15 @@ function bow_hit_skill(p: player, projectile: entity, victim: entity):
   set {_idSkill} to first element of entity_nbt_get_list({_projectile}, "WILL")
   if {_idSkill} is "BURNING_HEART":
     bow_burning_heart_hit({_p}, {_victim}, {_projectile})
+
+function bow_rightClick(p: player, bow: item):
+  set {_cooldown} to item_nbt_get_stat({_bow}, "COOLDOWN")
+  item_store_stat_set({_bow}, "CHARGING_DURATION", 0)
+  if {_cooldown} is not 0: 
+    while item_store_stat_isset({_bow}, "CHARGING_DURATION") is true:
+      item_store_stat_add({_bow}, "CHARGING_DURATION", 5)
+      wait 5 tick
+      if item_store_stat_get({_bow}, "CHARGING_DURATION") >= {_cooldown}:
+        item_store_stat_delete({_bow}, "CHARGING_DURATION")
+        item_store_stat_set({_bow}, "FULLY_CHARGED", 1)
+        play sound "entity.experience_orb.pickup" with volume 0.5 to {_p}

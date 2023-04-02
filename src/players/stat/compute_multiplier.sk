@@ -8,26 +8,21 @@ function getPureStat(stat: text) :: text:
     replace "EFFECT_" with "" in {_pureStat}
   return {_pureStat}
 
-function player_stat_item(p: player, item: item, stat: text) :: number:
+function player_stat_compute(p: player, source: object, stat: text) :: number:
   set {_playerStat} to 0
   set {_pureStat} to getPureStat({_stat})
-  set {_itemStat} to item_nbt_get_stat({_item}, {_stat})
+  if {_source} is entity:
+    set {_sourceStat} to entity_nbt_get_stat({_source}, {_stat})
+  else:
+    set {_sourceStat} to item_nbt_get_stat({_source}, {_stat})
 
   if player_store_stat_isset({_p}, {_pureStat}) is true:
-    set {_multiplier} to item_nbt_get_stat({_item}, "%{_stat}%_MULTIPLIER")
     set {_playerStat} to player_store_stat_get({_p}, {_pureStat})
+    if {_source} is entity:
+      set {_multiplier} to entity_nbt_get_stat({_source}, "%{_stat}%_MULTIPLIER")
+    else:
+      set {_multiplier} to item_nbt_get_stat({_source}, "%{_stat}%_MULTIPLIER")
+
   if {_multiplier} is not set:
     set {_multiplier} to 1
-  return {_itemStat} + {_playerStat} * {_multiplier}
-
-function player_stat_projectile(p: player, projectile: entity, stat: text) :: number:
-  set {_playerStat} to 0
-  set {_pureStat} to getPureStat({_stat})
-  set {_projectileStat} to entity_nbt_get_stat({_projectile}, {_stat})
-
-  if player_store_stat_isset({_p}, {_pureStat}) is true:
-    set {_multiplier} to entity_nbt_get_stat({_projectile}, "%{_stat}%_MULTIPLIER")
-    set {_playerStat} to player_store_stat_get({_p}, {_pureStat})
-  if {_multiplier} is not set:
-    set {_multiplier} to 1
-  return {_projectileStat} + {_playerStat} * {_multiplier}
+  return {_sourceStat} + {_playerStat} * {_multiplier}

@@ -35,7 +35,7 @@ command /pig:
 command /zombie:
     trigger:
         set {_p} to event-player
-        mob_summon("ZOMBIE", "1", location of {_p})
+        mob_summon("ZOMBIE", 1, "A", location of {_p})
         set {_zombie} to last spawned entity
         set max health of {_zombie} to 900
         set health of {_zombie} to 900
@@ -43,10 +43,11 @@ command /zombie:
         entity_nbt_set_tag({_zombie}, "TYPE", "MOB")
         entity_nbt_set_stat({_zombie}, "ATTACK", 10)
 
-command /percent:
+command /lisa:
     trigger:
-        set {_ok} to "%%"
-        broadcast "%%"
+        set {_location} to {LOCATION::CASTLE::THRONE}
+        # create a citizen named "toto" at player's location as a villager
+        create citizen named {NPC::LISA::NAME} at {_location}
 
 command /tag:
     trigger:
@@ -162,10 +163,8 @@ command /cylinder:
         drawCylinder particle "flame", speed 0.02, center location of player, id "test", randomRotation false, isSolid false, radius 0.5, density 50, height 2, sideRatio 0, visibleRange 30
         wait 5 seconds
         stopEffect "test"
-
-command /line-keepgoing:
+        
+command /loopzombie:
     trigger:
-        set {_line::*} to vector line from vector 0, 0, 0 to vector 0, {_it}, 0 with density 3
-        loop {_line::*}:
-            drawDot count 1, particle "flame", RGB 0, 0, 0, center {_loc} offset by loop-value-2, visibleRange 32, pulseDelay 0, keepFor 10 ticks
-
+        loop 50 times:
+            summon zombie

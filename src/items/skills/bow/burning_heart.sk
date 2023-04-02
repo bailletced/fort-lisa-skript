@@ -1,26 +1,36 @@
 function bow_burning_heart_cast(p: player, projectile: entity):
-  ignite {_projectile}
+  if entity_nbt_isset_stat({_projectile}, "FULLY_CHARGED") is true:
+    ignite {_projectile}
+    while {_projectile} is alive:
+      drawDot count 3, particle "flame", RGB 0.1, 0.1, 0.1, center {_projectile}, visibleRange 150, pulseDelay 0, keepFor 1 ticks
+      wait 1 tick
+
 
 function bow_burning_heart_hit(p: player, victim: entity, projectile: entity):
   if {_victim} is set:
-    set {_attack} to player_stat_projectile({_p}, {_projectile}, "ATTACK")
-    set {_radius} to player_stat_projectile({_p}, {_projectile}, "RADIUS")
-    set {_effectAttack} to player_stat_projectile({_p}, {_projectile}, "EFFECT_ATTACK")
-    set {_effectDuration} to player_stat_projectile({_p}, {_projectile}, "EFFECT_DURATION")
-    set {_effectFrequency} to player_stat_projectile({_p}, {_projectile}, "EFFECT_FREQUENCY")
+    set {_attack} to player_stat_compute({_p}, {_projectile}, "ATTACK")
+    set {_radius} to player_stat_compute({_p}, {_projectile}, "RADIUS")
+    set {_effectAttack} to player_stat_compute({_p}, {_projectile}, "EFFECT_ATTACK")
+    set {_effectDuration} to player_stat_compute({_p}, {_projectile}, "EFFECT_DURATION")
+    set {_effectFrequency} to player_stat_compute({_p}, {_projectile}, "EFFECT_FREQUENCY")
+    set {_isFullyCharged} to entity_nbt_isset_stat({_projectile}, "FULLY_CHARGED")
 
     entity_effect_damage({_p}, {_victim}, {_attack})
-    entity_store_effect_add({_victim}, "BURN", "amount", 1)
-    set {_amount} to entity_store_effect_get({_victim}, "BURN", "amount")
-    if {_amount} is not set:
-      entity_effect_burn({_p}, {_victim}, {_effectAttack}, {_effectDuration}, {_effectFrequency})
-    else if {_amount} is 2:
-      entity_effect_burn({_p}, {_victim}, 0, 20, 20, "EXTEND")
-      drawDot count 8*{_radius}, particle "flame", RGB 0.3*{_radius}, 0.3*{_radius}, 0.3*{_radius}, center head of {_victim}, visibleRange 150, pulseDelay 0, keepFor 20 ticks
-      loop all entities in radius {_radius} of {_victim}:
-        if entity_nbt_get_tag(loop-entity, "TYPE") is "MOB":
+    
+    if {_isFullyCharged} is true:
+      entity_store_effect_add({_victim}, "BURN", "amount", 1)
+      set {_amount} to entity_store_effect_get({_victim}, "BURN", "amount")
+      if {_amount} is not set:
+        entity_effect_burn({_p}, {_victim}, {_effectAttack}, {_effectDuration}, {_effectFrequency})
+      else if {_amount} is 2:
+        entity_effect_burn({_p}, {_victim}, {_effectAttack}, 40, 20, "EXTEND")
+        drawDot count 5*{_radius}, particle "flame", RGB 0.3*{_radius}, 0.3*{_radius}, 0.3*{_radius}, center head of {_victim}, visibleRange 150, pulseDelay 0, keepFor 20 ticks
+        loop target_radius({_victim}, {_radius}):
           if loop-entity is not {_victim}:
             entity_effect_burn({_p}, loop-entity, {_effectAttack}, {_effectDuration}, {_effectFrequency})
-    else if {_amount} is 3:
-      drawDot count 8*{_radius}, particle "soul flame", RGB 0.3*{_radius}, 0.3*{_radius}, 0.3*{_radius}, center head of {_victim}, visibleRange 150, pulseDelay 0, keepFor 20 ticks
-      
+      else if {_amount} is 3:
+        draw 600 soul_fire_flame at {_victim} with extra 0.1
+        loop target_radius({_victim}, {_radius}+1):
+          entity_effect_burn({_p}, loop-entity, {_effectAttack}, {_effectDuration}*2, {_effectFrequency})
+          if loop-entity is {_victim}:
+            entity_effect_burn_consumeAll({_p}, {_victim})

@@ -16,7 +16,7 @@ function test_item_equipment(p: player):
 
     set {_helmet2} to equipment_give({_p}, "HELMET", "TEST")
     set {_defence2} to 10
-    set {_helmet2} to item_nbt_set_stat({_helmet2}, "DEFENCE", {_defence2})
+    set {_helmet2} to item_nbt_set_stat({_helmet2}, "DEFENCE", {_defence2}, true)
     equipment_equip({_p}, {_helmet1}, {_helmet2})
     set {_defencePlayerAfter} to player_store_stat_get({_p}, "DEFENCE")
     assert if {_defencePlayerAfter} is {_defence2} with message "player's defence should be %{_defence2}%. Got %{_defencePlayerAfter}%"

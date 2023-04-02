@@ -2,17 +2,30 @@ function test_mob(p: player):
   send "§5Testing mob_main" to the console
   set {_location} to location of {_p}
   it "Test mob summon":
-    set {_zombie} to mob_summon("ZOMBIE", "1", {_location})
-    loop {STAT::MOB::*}:
-      set {_stat} to loop-value
-      set {_value} to {MOB::ZOMBIE::1::%{_stat}%}
-      set {_current} to entity_nbt_get_stat({_zombie}, {_stat})
-      if {_value} is set:
-        assert if {_value} is {_current} with message "Mob %{_stat}% should be %{_value}%. Got %{_current}%"
-    set {_type} to entity_nbt_get_tag({_zombie}, "TYPE")
-    set {_category} to entity_nbt_get_tag({_zombie}, "CATEGORY")
-    set {_id} to entity_nbt_get_tag({_zombie}, "ID")
-    assert if {_type} is "MOB" with message "mob type should be MOB. Got %{_type}%"
-    assert if {_category} is "ZOMBIE" with message "mob category should be ZOMBIE. Got %{_category}%"
-    assert if {_id} is "1" with message "mob id should be 1. Got %{_id}%"
-    kill {_zombie}
+    load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/zombie.yml" as "YAML-MOB-ZOMBIE"
+    set {_mobConfigAttack} to yaml value "STAT.ATTACK" from "YAML-MOB-ZOMBIE"
+    set {_mobConfigAttackMultiplier} to yaml value "STAT.ATTACK_MULTIPLIER" from "YAML-MOB-ZOMBIE"
+    set {_mobConfigHealth} to yaml value "STAT.HEALTH" from "YAML-MOB-ZOMBIE"
+    set {_mobConfigHealthMultiplier} to yaml value "STAT.HEALTH_MULTIPLIER" from "YAML-MOB-ZOMBIE"
+
+    loop 2 times:
+      set {_level} to loop-value
+      set {_zombie} to mob_summon("ZOMBIE", {_level}, "A", {_location})
+      set {_attack} to entity_nbt_get_stat({_zombie}, "ATTACK")
+      set {_health} to entity_nbt_get_stat({_zombie}, "HEALTH")
+      set {_expectedAttack} to {_mobConfigAttack} + {_level} * {_mobConfigAttackMultiplier}
+      set {_expectedHealth} to {_mobConfigHealth} + {_level} * {_mobConfigHealthMultiplier}
+      assert if {_expectedAttack} is {_attack} with message "ATTACK should be %{_expectedAttack}% Got %{_attack}%"
+      assert if {_expectedHealth} is {_health} with message "HEALTH should be %{_expectedHealth}% Got %{_health}%"
+
+      set {_type} to entity_nbt_get_tag({_zombie}, "TYPE")
+      set {_category} to entity_nbt_get_tag({_zombie}, "CATEGORY")
+      set {_id} to entity_nbt_get_tag({_zombie}, "ID")
+      set {_expectedCategory} to mob_getCategory({_id})
+      assert if {_type} is "MOB" with message "mob type should be MOB. Got %{_type}%"
+      assert if {_category} is {_expectedCategory} with message "mob category should be %{_expectedCategory}%. Got %{_category}%"
+      assert if {_id} is "ZOMBIE" with message "mob id should be ZOMBIE. Got %{_id}%"
+      kill {_zombie}
+
+    unload yaml "YAML-MOB-ZOMBIE"
+   

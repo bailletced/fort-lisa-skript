@@ -3,7 +3,7 @@ function test_mob_store_location(p: player):
   set {_location} to location 1 meter in front of {_p}
   set {_location2} to location 2 meter in front of {_p}
   it "TEST location set/get/delete":
-    set {_mob} to mob_summon("ZOMBIE", "1", {_location})
+    set {_mob} to mob_summon("ZOMBIE", 1, "A", {_location})
     mob_store_location_set({_mob}, ({_location} and {_location2}))
     set {_firstMobLocation} to mob_store_location_get({_mob})
     set {_mobLocation::*} to mob_store_location_get_all({_mob})

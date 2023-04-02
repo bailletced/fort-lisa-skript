@@ -43,13 +43,14 @@ function item_nbt_add_list(it: item, key: text, value: texts) :: item:
     set {_it} to item_nbt_set_list({_it}, {_key}, {_value::*})
   return {_it}
 
-function item_nbt_set_stat(it: item, key: text, value: number) :: item:
+function item_nbt_set_stat(it: item, key: text, value: number, isPlayerStat: boolean = false) :: item:
   if {_value} is set:
     set {_nbt} to full nbt compound of {_it}
     set float tag "tag;%{_key}%" of {_nbt} to {_value}
     if item_nbt_get_list({_it}, "STAT") does not contain {_key}:
       set {_it} to item from nbt {_nbt}
-      return item_nbt_add_list({_it}, "STAT", {_key})
+      if {_isPlayerStat} is true:
+        return item_nbt_add_list({_it}, "STAT", {_key})
     return item from nbt {_nbt}
   return {_it}
 

@@ -17,9 +17,10 @@ function location_text2Loc(location: text, world: world) :: location:
   return location({_loc::1}, {_loc::2}, {_loc::3}, {_world}, {_loc::4}, {_loc::5})
   
 function location_castle_nearest_entrance(mob: entity) :: location:
-  set {_res} to random element of {LOCATION::CASTLE::ENTRANCE::*}
+  set {_locations::*} to {LOCATION::CASTLE::GATE::*}
+  set {_res} to random element of {_locations::*}
   set {_minDist} to distance between {_mob} and {_res}
-  loop {LOCATION::CASTLE::ENTRANCE::*}:
+  loop {_locations::*}:
     set {_dist} to distance between {_mob} and loop-value
     if {_dist} < {_minDist}:
       set {_minDist} to {_dist}

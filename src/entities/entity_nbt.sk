@@ -25,10 +25,10 @@ function entity_nbt_set_stat(entity: entity, key: text, value: number):
 function entity_nbt_add_stat(entity: entity, key: text, value: number):
   if entity_nbt_isset_stat({_entity}, {_key}) is true:
     set {_currentAmount} to entity_nbt_get_stat({_entity}, {_key})
-    set {_finalAmount} to {_currentAmount} + {_amount}
+    set {_finalAmount} to {_currentAmount} + {_value}
     entity_nbt_set_stat({_entity}, {_key}, {_finalAmount})
   else:
-    entity_nbt_set_stat({_entity}, {_key}, {_amount})
+    entity_nbt_set_stat({_entity}, {_key}, {_value})
 
 function entity_nbt_get_stat(entity: entity, key: text) :: number:
   set {_res} to float tag "custom;%{_key}%" of nbt compound of {_entity}

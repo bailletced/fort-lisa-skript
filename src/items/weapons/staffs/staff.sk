@@ -3,15 +3,17 @@ function staff_cast(p: player, staff: item):
   if {_id} is "LIMB_OF_WISDOM":
     limb_of_wisdom_cast({_p}, {_staff})
 
-function staff_hit(p: player, projectile: entity):
+function staff_hit(p: player, projectile: entity, victim: entity):
   set {_id} to entity_nbt_get_tag({_projectile}, "ID")
   if {_id} is "LIMB_OF_WISDOM":
-    limb_of_wisdom_hit({_p}, {_projectile})
+    limb_of_wisdom_hit({_p}, {_projectile}, {_victim})
 
 function staff_cast_skill(p: player, staff: item):
   set {_idSkill} to first element of item_nbt_get_list({_staff}, "WILL")
   if {_idSkill} is "BURNING_HEART":
     staff_burning_heart_cast({_p}, {_staff})
+  else if {_idSkill} is "LIGHTNING":
+    staff_lightning_cast({_p}, {_staff})
 
 function staff_hit_skill(p: player, projectile: entity, victim: entity):
   set {_idSkill} to first element of entity_nbt_get_list({_projectile}, "WILL")
@@ -22,6 +24,8 @@ function staff_skill_rightClick(p: player, staff: item):
   set {_idSkill} to first element of item_nbt_get_list({_staff}, "WILL")
   if {_idSkill} is "BURNING_HEART":
     staff_burning_heart_special({_p}, {_staff})
+  else if {_idSkill} is "LIGHTNING":
+    staff_lightning_special({_p}, {_staff})
 
 function staff_rightClick(p: player, staff: item):
-  broadcast ""
+  stop
