@@ -1,4 +1,0 @@
-function zombie_summon(location: location) :: entity:
-  summon adult zombie at {_location}
-  set {_zombie} to last spawned entity
-  return {_zombie}

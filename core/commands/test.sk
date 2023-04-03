@@ -116,10 +116,7 @@ command /chestplate:
 
 command /mythicVOidArcher:
     trigger:
-        set {_loc} to location of player
-        set {_world} to world of player
-        make player execute command "mm m spawn VoidArcher world,12,-28,-2"
-
+        mob_summon("VOID_ARCHER", 5, "A", location of player)
 
 function rgbb(r: number, g: number, b: number, locs: locations):
     loop {_locs::*}:

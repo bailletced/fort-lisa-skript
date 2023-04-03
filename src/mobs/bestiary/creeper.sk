@@ -1,4 +1,0 @@
-function creeper_summon(location: location) :: entity:
-  summon creeper at {_location}
-  set {_creeper} to last spawned entity
-  return {_creeper}

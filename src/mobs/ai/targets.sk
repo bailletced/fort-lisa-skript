@@ -1,7 +1,8 @@
 function mob_ai_targetLocation(mob: entity):
-  mob_store_target_set({_mob}, "LOCATION_ACTIVATED")
+  mob_store_target_set({_mob}, "LOCATION")
+  broadcast "PASSE LOCATION"
   delete target of {_mob}
-  while mob_store_target_get({_mob}) is "LOCATION_ACTIVATED":
+  while mob_store_target_get({_mob}) is "LOCATION":
     set {_locationTarget} to mob_store_location_get({_mob})
     # broadcast "TARGET: %{_mob}% %{_locationTarget}%"
     set path targets of {_mob} to {_locationTarget}

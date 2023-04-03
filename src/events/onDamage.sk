@@ -33,5 +33,5 @@ on damage:
   else:
     set {_type} to entity_nbt_get_tag(attacker, "TYPE")
     if {_type} is "MOB":
+      set damage to 0 #We do not cancel for Mythic Mobs ~OnAttack trigger
       mob_action_damage(attacker, victim)
-      cancel event

@@ -5,15 +5,32 @@ function loc_to_mythicApi(location: location) :: text:
   set {_world} to world of {_location}
   return "%{_world}%,%{_x}%,%{_y}%,%{_z}%"
 
+function mythicLocToLoc(location: text) :: location:
+  set {_loc::*} to {_location} parsed as "%text%,%num%,%num%,%num%"
+  return location({_loc::2}, {_loc::3}, {_loc::4}, {_loc::1})
+
+
 command /mythicApi [<text>] [<text>] [<text>] [<text>] [<text>]:
   trigger:
-    set {_p} to player
-    if arg-1 is "summon":
+    if arg-1 is "SUMMON":
+      #ACTION;MOBID;LOCATION;LEVEL;AI
       set {_mobId} to arg-2
       set {_location} to arg-3
+      set {_level} to arg-4 parsed as number
+      set {_ai} to arg-5
       execute console command "mm m spawn %{_mobId}% 1 %{_location}%"
-    else if arg-1 is "register":
-      set {_mobUuid} to arg-2
-      set {_mob} to {_mobUuid} parsed as entity
-      mob_initialize({_mob}, 1)
-      mob_ai_init({_mob}, "A")
+      set {_loc} to mythicLocToLoc({_location})
+      # We find the spanwed MM for register
+      loop all entities in radius 2 of {_loc}:
+        set {_mob} to loop-entity
+        if {_mob} is not a player:
+          if entity_nbt_isset_tag(loop-entity, "TYPE") is false:
+            mob_register({_mob}, {_mobId}, {_level}, {_ai})
+            stop
+    else if arg-1 is "DAMAGE":
+      #ACTION;SOURCE_UUID;TARGET_UUID;ATTACK_MULTIPLIER
+      set {_source} to arg-2 parsed as entity
+      set {_victim} to arg-3 parsed as entity
+      set {_damage} to entity_nbt_get_stat({_source}, "ATTACK")
+      set {_attackMultiplier} to arg-4 parsed as number
+      entity_effect_damage({_source}, {_victim}, {_damage}*{_attackMultiplier})
