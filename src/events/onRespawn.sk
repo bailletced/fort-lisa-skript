@@ -6,4 +6,4 @@ on respawn:
     wait 20 seconds
     set game mode of {_p} to adventure
     teleport {_p} to bed of {_p}
-    player_store_status_delete({_entity}, "DEATH")
+    player_store_status_delete({_p}, "DEATH")

@@ -1,0 +1,12 @@
+NORMAL_SPARTAN:
+  Type: ZOMBIE
+  Skills:
+  - model{mid=spartiate;n=false} @self ~onSpawn
+  - randomskill{skills=Spear3;sync=true} ~onAttack
+  Options:
+    NoDamageTicks: 10
+    AlwaysShowName: true
+    PreventSunburn: true
+    Collidable: true
+    Silent: true
+    PreventOtherDrops: true

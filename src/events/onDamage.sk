@@ -4,16 +4,16 @@ on damage:
       if health of victim - damage <= 0:
         set damage to 0
     if entity_store_effect_isset(victim, "IMMUNITY_ALL") is true:
-      cancel event
+      set damage to 0
     else if "fire", "burning" and "burn" contains "%damage cause%":
       if entity_store_effect_isset(victim, "IMMUNITY_BURN") is true:
-        cancel event
+        set damage to 0
     else if damage cause is lava:
       if entity_store_effect_isset(victim, "IMMUNITY_LAVA") is true:
-        cancel event
+        set damage to 0
     else if damage cause is fall:
       if entity_store_effect_isset(victim, "IMMUNITY_FALL") is true:
-        cancel event
+        set damage to 0
 
   if type of attacker is player:
     set {_p} to attacker

@@ -1,0 +1,28 @@
+#=================Skill Spartan========================= 
+Spear3:
+  Cooldown: 2
+  Conditions:
+  - offgcd
+  Skills:
+  - potion{type=SLOW;duration=15;level=6;p=false;force=true} @self
+  - look{headOnly=false;immediately=false;repeat=15;repeatInterval=1} @Target
+  - state{state=attack;li=2;lo=4;n=false;speed=1.4} @self
+  - delay 20
+  - skill{s=SkriptDamage;delay=1}
+ 
+Lunge:
+  Conditions:
+    - incombat
+  Skills:
+  - look{headOnly=true;immediately=true} @NearestPlayer{r=50}
+  - potion{type=SLOW;duration=15;level=6;p=false;force=true} @self
+  - jump {velocity=100}
+  - delay 3
+  - leap{velocity=800} @target 
+  - delay 20
+  - state{state=groundsmash;li=2;lo=4;n=false;speed=1.4} @self
+  - jump{velocity=-100}
+  - look{headOnly=true;immediately=true} @NearestPlayer{r=50}
+  - delay 3
+  - throw{velocity=5;velocityY=10} @PIR{r=11}
+  - blockwave{duration=20;material=grass_block;radius=10;radiusY=3;velocity=10;shape=sphere} @self

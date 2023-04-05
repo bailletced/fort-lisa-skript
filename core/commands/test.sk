@@ -114,9 +114,27 @@ command /chestplate:
         set compound list tag "AttributeModifiers" of {_n} to {_a::*}
         give {_i} to player
 
-command /mythicVOidArcher:
+command /mythicVoidArcher:
     trigger:
         mob_summon("VOID_ARCHER", 5, "A", location of player)
+command /mythicVoidWarrior:
+    trigger:
+        mob_summon("VOID_WARRIOR", 5, "A", location of player)
+command /mythicVoidWarriorCaptain:
+    trigger:
+        mob_summon("VOID_WARRIOR-CAPTAIN", 5, "A", location of player)
+command /mythicVoidWarriorFly:
+    trigger:
+        mob_summon("VOID_WARRIOR-FLY", 5, "A", location of player)
+command /mythicLavaWarrior:
+    trigger:
+        mob_summon("LAVA_WARRIOR", 5, "A", location of player)
+command /mythicSpartan:
+    trigger:
+        mob_summon("NORMAL_SPARTAN", 5, "A", location of player)
+command /mythicGouliath:
+    trigger:
+        mob_summon("BOSS_GOULIATH", 5, "A", location of player)
 
 function rgbb(r: number, g: number, b: number, locs: locations):
     loop {_locs::*}:
