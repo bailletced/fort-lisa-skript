@@ -29,7 +29,6 @@ function weapon_will_stat(p: player, weapon: item, idWill: text) :: item:
         set {_consacredWeapon} to item_nbt_delete({_consacredWeapon}, {_stat})
         if {_value} is set:
             set {_consacredWeapon} to item_nbt_set_stat({_consacredWeapon}, loop-value, {_value}, true)
-    broadcast "WEAPON: %{_consacredWeapon}%"
     return {_consacredWeapon}
 
 function weapon_leftClick(p: player, weapon: item):
