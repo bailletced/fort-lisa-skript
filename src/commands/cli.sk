@@ -121,7 +121,7 @@ on tab complete of "/admin":
     if tab arg-2 is "stat":
       set tab completions for position 3 to "get" and "set"
       if tab arg-3 is set:
-        set tab completions for position 4 to {STAT::PLAYER::*}
+        set tab completions for position 4 to {STAT::ALL::*}
     else if tab arg-2 is "listener":
       set tab completions for position 3 to {PLAYER::LISTENER::*}
       if tab arg-3 is set:
@@ -130,14 +130,14 @@ on tab complete of "/admin":
   else if tab arg-1 is "weapon":
     set tab completions for position 2 to {WEAPON::CATEGORY::*}
     if tab arg-2 is set:
-      set {_weapons::*} to {WEAPON::%tab arg-2%::*}
+      set {_weapons::*} to {WEAPON::%tab arg-2%::ID::*}
       remove "TEST" from {_weapons::*}
       set tab completions for position 3 to {_weapons::*}
   
   else if tab arg-1 is "equipment":
     set tab completions for position 2 to {EQUIPMENT::CATEGORY::*}
     if tab arg-2 is set:
-      set {_equipments::*} to {EQUIPMENT::%tab arg-2%::*}
+      set {_equipments::*} to {EQUIPMENT::%tab arg-2%::ID::*}
       remove "TEST" from {_equipments::*}
       set tab completions for position 3 to {_equipments::*}
   

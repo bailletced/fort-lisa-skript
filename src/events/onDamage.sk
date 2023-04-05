@@ -15,14 +15,16 @@ on damage:
       if entity_store_effect_isset(victim, "IMMUNITY_FALL") is true:
         set damage to 0
 
-  if type of attacker is player:
+  if attacker is a player:
     set {_p} to attacker
     set {_item} to held item of {_p}
-    set {_type} to item_nbt_get_tag({_item}, "TYPE")
+    set {_typeItem} to item_nbt_get_tag({_item}, "TYPE")
     if entity_nbt_get_tag(victim, "TYPE") is "MOB":
-      if {_type} is "WEAPON":
+      # A mob is hit.
+      mob_ai_listener_RECEIVE_PLAYER_DAMAGE(victim, attacker)
+      if {_typeItem} is "WEAPON":
         weapon_leftClick({_p}, {_item})
-      else if {_type} is "SKILL":
+      else if {_typeItem} is "SKILL":
         skill_cast_condition({_p}, {_item})
     else:
       if armor stand and item frame does not contain type of victim:
@@ -31,7 +33,7 @@ on damage:
         if game mode of {_p} is not creative:
           cancel event
   else:
-    set {_type} to entity_nbt_get_tag(attacker, "TYPE")
-    if {_type} is "MOB":
+    set {_typeAttacker} to entity_nbt_get_tag(attacker, "TYPE")
+    if {_typeAttacker} is "MOB":
       set damage to 0 #We do not cancel for Mythic Mobs ~OnAttack trigger
       mob_action_damage(attacker, victim)

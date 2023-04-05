@@ -45,9 +45,7 @@ command /zombie:
 
 command /lisa:
     trigger:
-        set {_location} to {LOCATION::CASTLE::THRONE}
-        # create a citizen named "toto" at player's location as a villager
-        create citizen named {NPC::LISA::NAME} at {_location}
+        lisa_summon(random uuid)
 
 command /tag:
     trigger:
@@ -135,16 +133,6 @@ command /mythicSpartan:
 command /mythicGouliath:
     trigger:
         mob_summon("BOSS_GOULIATH", 5, "A", location of player)
-
-function rgbb(r: number, g: number, b: number, locs: locations):
-    loop {_locs::*}:
-        draw 1 flame at loop-value with extra 0
-
-function rainbow(h: number, locs: locations):
-    set {_r} to 200
-    set {_g} to 140
-    set {_b} to 90
-    rgbb({_r}, {_g}, {_b}, {_locs::*})
     
 command /testrings:
     trigger:

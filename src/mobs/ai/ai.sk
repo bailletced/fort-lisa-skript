@@ -1,7 +1,7 @@
 function mob_ai_init(mob: entity, ai: text):
   if {_ai} is "A":
     set {_nearestEntrance} to location_castle_nearest_entrance({_mob})
-    mob_store_location_set({_mob}, ({_nearestEntrance}, {LOCATION::CASTLE::FOUNTAIN} and {LOCATION::CASTLE::ARTIFACT}))
+    mob_store_location_set({_mob}, ({_nearestEntrance}, {LOCATION::CASTLE::FOUNTAIN}, {LOCATION::CASTLE::DOOR} and {LOCATION::CASTLE::THRONE}))
     mob_store_listener_set({_mob}, ("TARGET_PLAYER_RADIUS_SOFT"))
     mob_ai_main_thread({_mob})
 

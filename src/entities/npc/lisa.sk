@@ -9,14 +9,14 @@ function lisa_summon(gameUuid: text) :: entity:
   return lisa_init({_lisa})
 
 function lisa_init(lisa: entity) :: entity:
+  set {_id} to citizen id of {_lisa}
   set {_npcSkin} to {NPC::LISA::SKIN}
   execute console command "/npc select %{_id}%"
   execute console command "/npc skin --url %{_npcSkin}%" 
-  execute console command "/npc lookclose --randomlook"
+  execute console command "/npc lookclose"
   execute console command "/npc targetable"
   execute console command "/npc vulnerable"
   set maximum health of {_lisa} to 1
-  set max health of {_lisa} to {NPC::LISA::HEALTH}
   set health of {_lisa} to {NPC::LISA::HEALTH}
   entity_nbt_set_stat({_lisa}, "DEFENCE", {NPC::LISA::DEFENCE})
   return {_lisa}
@@ -28,7 +28,7 @@ function lisa_listener_INGAME(lisa: entity):
   set {_gameUuid} to entity_nbt_get_tag({_lisa}, "GAME_UUID")
   set {_id} to citizen id of {_lisa}
   while game_store_get({_gameUuid}, "STATUS") is "RUNNING":
-    loop all entities in radius 15 of {_lisa}:
+    loop all entities in radius 6 of {_lisa}:
       if type of loop-entity is not player:
         if loop-entity is not {_lisa}:
           set {_mob} to loop-entity

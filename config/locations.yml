@@ -1,6 +1,6 @@
 CASTLE:
-  THRONE: "x: -106, y: 24, z: 45, yaw: 90, pitch: -3"
-  ARTIFACT: "x: -76, y: 24, z: 24"
+  THRONE: "x: -105, y: 24, z: 45, yaw: -128, pitch: -10"
+  DOOR: "x: -76, y: 24, z: 24"
   FOUNTAIN: "x: -36, y: 9, z: -13"
   GATE_A: "x: 69, y: 4, z: -97"
   GATE_B: "x: 50, y: 9, z: 51"
