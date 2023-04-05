@@ -199,12 +199,12 @@ function config_load(world: world):
   set {PLAYER::LISTENER::*} to "STAT" and "list"
 
   # LOAD CHUNKS
-  loop {LOCATION::CATEGORY::*}:
-    set {_category} to loop-value
-    loop {LOCATION::%{_category}%::*}:
-      set {_loc} to loop-value-2
-      set {_chunk} to chunk of {LOCATION::%{_category}%::%{_loc}%}
-      load {_chunk} with ticket
+  # loop {LOCATION::CATEGORY::*}:
+  #   set {_category} to loop-value
+  #   loop {LOCATION::%{_category}%::*}:
+  #     set {_loc} to loop-value-2
+  #     set {_chunk} to chunk of {LOCATION::%{_category}%::%{_loc}%}
+  #     load {_chunk} with ticket
 
   # Initialize players. TODO : to be triggered when game starts
   loop all players:
