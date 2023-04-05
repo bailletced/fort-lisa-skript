@@ -99,10 +99,10 @@ GIFT:
       TITLE: "Volonté de la montagne"
   INTELLECT:
     TITLE: "Intelligence"
-    RANGE_1:
+    RANGE:
       TITLE: "Intelligence conceptuelle"
       LORE: "Octroie {_RANGE} de portée supplémentaire sur le don de volonté associé"
-    RADIUS_1:
+    RADIUS:
       TITLE: "Impact amélioré"
       LORE: "Octroie {_RADIUS} de zone d'effet supplémentaire sur le don de volonté associé"
 ATTRIBUTE:

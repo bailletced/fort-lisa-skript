@@ -9,6 +9,11 @@ STAFF:
       RADIUS: 1.5
   LIMB_OF_WISDOM:
     ITEM: carrot on a stick
+    CUSTOM_ITEM: basic_staff
+    WILL:
+      BURNING_HEART:
+        ITEM: carrot on a stick
+        CUSTOM_ITEM: volonte_staff
     GIFTS:
       WILL_MAX: 1
       INTELLECT_MAX: 1

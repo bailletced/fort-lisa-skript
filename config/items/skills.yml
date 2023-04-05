@@ -1,13 +1,4 @@
 STAFF:
-  DRAGON_BREATH:
-    STATS:
-      POWER: 10
-      POWER_MULTIPLIER: 0.5
-      COOLDOWN: 30
-      RANGE: 5
-      RADIUS: 1.5
-      PROJECTILE_SPEED: 10
-      PROJECTILE_AMOUNT: 1
   BURNING_HEART:
     ATTRIBUTES:
       - PROJECTILE
@@ -53,7 +44,6 @@ CROSSBOW:
 BOW:
   BURNING_HEART:
     ATTRIBUTES:
-      - PROJECTILE
       - RADIUS
       - EFFECT
     STATS:
@@ -68,6 +58,7 @@ BOW:
 HELMET:
   TEST:
     ITEM: dragon's breath
+    CUSTOM_ITEM: tete_brulee
     STATS:
       ATTACK: 20
       ATTACK_MULTIPLIER: 1

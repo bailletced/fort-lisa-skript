@@ -1,5 +1,5 @@
-function weapon_create(p: player, category: text, id: text) :: item:
-    set {_weapon} to item_create({_p}, "WEAPON", {_category}, {_id})  
+function weapon_create(p: player, category: text, id: text, idWill: text = "") :: item:
+    set {_weapon} to item_create({_p}, "WEAPON", {_category}, {_id}, {_idWill})  
     set {_weapon} to item_nbt_set_tag_native({_weapon}, "{Unbreakable:1,HideFlags:4}")
     item_store_stat_set({_weapon}, "CD_NORMAL", 0) #We do not use nbt here because to refresh nbt on item, we have to regenerate it
     item_store_stat_set({_weapon}, "CD_SPECIAL", 0) #We do not use nbt here because to refresh nbt on item, we have to regenerate it
@@ -20,13 +20,17 @@ function weapon_stat_reload(p: player, weapon: item) :: item:
 
 function weapon_will_stat(p: player, weapon: item, idWill: text) :: item:
     set {_category} to item_nbt_get_tag({_weapon}, "CATEGORY")
+    set {_id} to item_nbt_get_tag({_weapon}, "ID")
+    # The weapon is being consacred. We try to get the item associated to the weapon's skill
+    set {_consacredWeapon} to weapon_create({_p}, {_category}, {_id}, {_idWill})
     loop {SKILL::%{_category}%::%{_idWill}%::STAT::*}:
         set {_stat} to loop-value
         set {_value} to {SKILL::%{_category}%::%{_idWill}%::%loop-value%}
-        set {_weapon} to item_nbt_delete({_weapon}, {_stat})
+        set {_consacredWeapon} to item_nbt_delete({_consacredWeapon}, {_stat})
         if {_value} is set:
-            set {_weapon} to item_nbt_set_stat({_weapon}, loop-value, {_value}, true)
-    return {_weapon}
+            set {_consacredWeapon} to item_nbt_set_stat({_consacredWeapon}, loop-value, {_value}, true)
+    broadcast "WEAPON: %{_consacredWeapon}%"
+    return {_consacredWeapon}
 
 function weapon_leftClick(p: player, weapon: item):
     set {_category} to item_nbt_get_tag({_weapon}, "CATEGORY")

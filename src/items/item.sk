@@ -23,11 +23,18 @@ function item_gift_initialize(p: player, item: item) :: item:
     set {_item} to item_nbt_set_stat({_item}, "%loop-value%_MAX", {%{_type}%::%{_category}%::%{_id}%::%loop-value%_MAX})
   return {_item}
 
-function item_create(p: player, type: text, category: text, id: text) :: item:
+function item_create(p: player, type: text, category: text, id: text, idWill: text = "") :: item:
   set {_uuid} to item_generate_uuid({_type}, {_category}, {_id})
-  set {_item} to customitem {%{_type}%::%{_category}%::%{_id}%::CUSTOM_ITEM}
-  if {_item} is not set:
-    set {_item} to {%{_type}%::%{_category}%::%{_id}%::ITEM}
+  if {_idWill} is not "":
+    broadcast "PASSE %{_type}% %{_category}% %{_id}% %{_idWill}% %{WEAPON::STAFF::LIMB_OF_WISDOM::BURNING_HEART::CUSTOM_ITEM}%"
+    set {_item} to customitem {%{_type}%::%{_category}%::%{_id}%::%{_idWill}%::CUSTOM_ITEM}
+    if {_item} is not set:
+      set {_item} to {%{_type}%::%{_category}%::%{_id}%::%{_idWill}%::ITEM}
+  else:
+    set {_item} to customitem {%{_type}%::%{_category}%::%{_id}%::CUSTOM_ITEM}
+    if {_item} is not set:
+      set {_item} to {%{_type}%::%{_category}%::%{_id}%::ITEM}
+
   set {_item} to item_nbt_set_tag({_item}, "TYPE", {_type})
   set {_item} to item_nbt_set_tag({_item}, "CATEGORY", {_category})
   set {_item} to item_nbt_set_tag({_item}, "ID", {_id})

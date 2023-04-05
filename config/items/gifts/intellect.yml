@@ -1,12 +1,10 @@
-RANGE_1:
-  TIER: 1
+RANGE:
   ITEM: arrow
   ATTRIBUTES:
     - PROJECTILE
   STATS:
-    RANGE: 10
-RADIUS_1:
-  TIER: 1
+    RANGE: 5
+RADIUS:
   ITEM: sunflower
   ATTRIBUTES:
     - RADIUS
