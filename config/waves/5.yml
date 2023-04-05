@@ -1,0 +1,18 @@
+DURATION: 4000
+MOBS:
+  1:
+    ID: BOSS_GOULIATH
+    LEVEL: 1
+    AMOUNT: 1
+    AI: A
+    LOCATION:
+      - CASTLE.GATE_A
+    DELAY: 0
+  2:
+    ID: NORMAL_SPARTAN
+    LEVEL: 1
+    AMOUNT: 10
+    AI: A
+    LOCATION:
+      - CASTLE.GATE_A
+    DELAY: 0

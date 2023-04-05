@@ -7,4 +7,6 @@ on projectile hit:
     if {_type} is "WEAPON":
       weapon_hit_projectile({_p}, {_projectile}, victim)
       cancel event
+    if victim is set:
+      mob_ai_listener_RECEIVE_PLAYER_DAMAGE(victim, {_p})
     kill {_projectile}

@@ -1,14 +1,14 @@
 # TARGET_PLAYER_RADIUS_SOFT LISTENER
 function mob_ai_listener_TARGET_PLAYER_RADIUS_SOFT(mob: entity):
   while mob_store_listener_isEnabled({_mob}, "TARGET_PLAYER_RADIUS_SOFT") is true:
-    set {_player} to random element of players in radius 8 around {_mob}
+    set {_player} to random element of players in radius 20 around {_mob}
     if {_player} is set:
-      # broadcast "%uuid of {_mob}% TARGET_PLAYER_RADIUS_SOFT : found player"
-      mob_ai_targetPlayer({_mob}, {_player})
-      mob_store_listener_set({_mob}, "TARGET_ABANDON_TOO_FAR")
-      mob_store_listener_delete({_mob}, "TARGET_PLAYER_RADIUS_SOFT")
-    wait 10 ticks
-
+      if player_store_status_isset({_p}, "DEATH") is false:
+        # broadcast "%uuid of {_mob}% TARGET_PLAYER_RADIUS_SOFT : found player"
+        mob_ai_targetPlayer({_mob}, {_player})
+        mob_store_listener_set({_mob}, "TARGET_ABANDON_TOO_FAR")
+        mob_store_listener_delete({_mob}, "TARGET_PLAYER_RADIUS_SOFT")
+    wait 20 ticks
 
 # TARGET_ABANDON_TOO_FAR LISTENER
 function mob_ai_listener_TARGET_ABANDON_TOO_FAR(mob: entity):
@@ -19,7 +19,7 @@ function mob_ai_listener_TARGET_ABANDON_TOO_FAR(mob: entity):
       set {_playertarget} to mob_store_target_player_get({_mob})
       # broadcast "LISTENER TARGET_ABANDON_TOO_FAR"
       set {_dist} to distance between {_mob} and {_playertarget}
-      if {_dist} >= 20:
+      if {_dist} >= 35:
         add 1 to {_timeTooFar}
         # broadcast "I AM FAR - %{_timeTooFar}%"
       else:
@@ -32,6 +32,13 @@ function mob_ai_listener_TARGET_ABANDON_TOO_FAR(mob: entity):
         mob_store_target_player_delete({_mob})
         mob_store_target_delete({_mob})
     wait 2 second
+
+# Called through onDamage event
+function mob_ai_listener_RECEIVE_PLAYER_DAMAGE(mob: entity, attacker: player):
+  if mob_store_target_get({_mob}) is not "PLAYER":
+    mob_ai_targetPlayer({_mob}, {_attacker})
+    mob_store_listener_set({_mob}, "TARGET_ABANDON_TOO_FAR")
+    mob_store_listener_delete({_mob}, "TARGET_PLAYER_RADIUS_SOFT")
 
 # IS_ACTIVE IN_WATER
 function mob_ai_listener_IN_WATER(mob: entity):

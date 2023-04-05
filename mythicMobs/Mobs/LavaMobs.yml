@@ -1,0 +1,13 @@
+LAVA_WARRIOR:
+  Type: ZOMBIE
+  Skills:
+  - model{mid=lava_warrior;n=false} @self ~onSpawn
+  - skill{s=1sword_1} ~onAttack
+  - sound{s=block.amethyst_block.hit;p=0.5;v=1} @self ~onDamaged
+  Options:
+    NoDamageTicks: 10
+    AlwaysShowName: true
+    PreventSunburn: true
+    Collidable: true
+    Silent: true
+    PreventOtherDrops: true  

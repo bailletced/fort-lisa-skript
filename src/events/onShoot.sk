@@ -7,6 +7,7 @@ on shoot:
       if "CROSSBOW" and "BOW" contains {_category}:
         item_nbt_copyToEntity({_helditem}, projectile)
         entity_nbt_set_tag(projectile, "ATTACKER_TYPE", "PLAYER")
+        entity_nbt_set_tag(projectile, "ATTACKER", uuid of {_p})
         player_store_weapon_remove_arrow(shooter)
         if size of entity_nbt_get_list(projectile, "WILL") > 0:
           if {_category} is "CROSSBOW":

@@ -1,4 +1,7 @@
 on death:
+  if name of victim is "LISA":
+    set {_gameUuid} to entity_nbt_get_tag(victim, "GAME_UUID")
+    game_end({_gameUuid})
   set {_entity} to victim
   if {_entity} is a player:
     if player_store_game_get({_entity}, "STATUS") is "RUNNING":

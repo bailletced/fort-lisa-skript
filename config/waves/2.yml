@@ -12,9 +12,9 @@ MOBS:
       - CASTLE.GATE_D
     DELAY: 50
   2:
-    ID: ZOMBIE
+    ID: VOID_WARRIOR
     LEVEL: 1
-    AMOUNT: 15
+    AMOUNT: 5
     AI: A
     LOCATION:
       - CASTLE.GATE_A
@@ -23,9 +23,9 @@ MOBS:
       - CASTLE.GATE_D
     DELAY: 50
   3:
-    ID: SKELETON
+    ID: VOID_ARCHER
     LEVEL: 0
-    AMOUNT: 10
+    AMOUNT: 5
     AI: A
     LOCATION:
       - CASTLE.GATE_A

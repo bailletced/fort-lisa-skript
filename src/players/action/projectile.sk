@@ -4,7 +4,7 @@ function players_action_shootProjectile(p: player, origin: item, projectile: ent
   set {_projectile} to last shot projectile
 
   item_nbt_copyToEntity({_origin}, {_projectile})
-  entity_nbt_set_tag({_projectile}, "ATTACKER", name of {_p})
+  entity_nbt_set_tag({_projectile}, "ATTACKER", uuid of {_p})
   entity_nbt_set_tag({_projectile}, "ATTACKER_TYPE", "PLAYER")
   if {_gravity} is false:
     entity_nbt_set_tag_native({_projectile}, "{NoGravity:1b}")

@@ -1,0 +1,54 @@
+VOID_WARRIOR:
+  Type: ZOMBIE
+  Display: 'VOID_WARRIOR'
+  Skills:
+  - model{mid=void_warrior;n=false} @self ~onSpawn
+  - skill{s=1sword_1} ~onAttack
+  - sound{s=block.amethyst_block.hit;p=0.5;v=1} @self ~onDamaged
+  Options:
+    NoDamageTicks: 10
+    PreventSunburn: true
+    Collidable: true
+    Silent: true
+    
+VOID_WARRIOR-CAPTAIN:
+  Type: ZOMBIE
+  Skills:
+  - model{mid=void_warrior2;n=false} @self ~onSpawn
+  - randomskill{skills=2sword_1,2sword_2;sync=true} ~onAttack
+  - sound{s=block.amethyst_block.hit;p=0.5;v=1} @self ~onDamaged
+  Options:
+    NoDamageTicks: 10
+    PreventSunburn: true
+    Collidable: true
+    Silent: true
+    PreventOtherDrops: true
+    
+VOID_ARCHER:
+  Type: SKELETON
+  Skills:
+  - model{mid=void_archer;n=false} @self ~onSpawn
+  - randomskill{skills=1bow_1,1bow_2} ~onShoot
+  - randomskill{skills=BlindArrow,NauseaArrow} ~onAttack
+  - sound{s=block.amethyst_block.hit;p=0.5;v=1} @self ~onDamaged
+  Options:
+    NoDamageTicks: 10
+    PreventSunburn: true
+    Collidable: true
+    Silent: true
+    PreventOtherDrops: true
+ 
+VOID_WARRIOR-FLY:
+  Type: VEX
+  Skills:
+  - model{mid=void_flymage;n=false} @self ~onSpawn
+  - skill{s=1sword_1} ~onAttack
+  - skill{s=SwordThrow} @target ~onTimer:200
+  - sound{s=block.amethyst_block.hit;p=0.5;v=1} @self ~onDamaged
+  - effect:flames @self ~onTimer:100
+  Options:
+    NoDamageTicks: 10
+    PreventSunburn: true
+    Collidable: true
+    Silent: true
+    PreventOtherDrops: true

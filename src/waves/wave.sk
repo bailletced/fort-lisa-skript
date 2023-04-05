@@ -75,6 +75,7 @@ function wave_summon(group: text):
       set {_location::*} to {_location} split at "."
       set {_location} to {LOCATION::%{_location::1}%::%{_location::2}%}
     mob_summon({_id}, {_level}, {_ai}, {_location})
-    wait "%{_delay}% ticks" parsed as timespan
+    if {_delay} is set:
+      wait "%{_delay}% ticks" parsed as timespan
 
   unload yaml "YAML-MOB-%{_id}%"

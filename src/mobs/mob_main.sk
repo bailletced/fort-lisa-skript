@@ -41,36 +41,40 @@ function mob_initialize(mob: entity, level: number):
   mob_store_add({_mob})
   
 function mob_summon(id: text, level: number, ai: text, location: location) :: entity:
+  # NORMAL MOBS
   if {_id} is "ZOMBIE":
-    set {_mob} to zombie_summon({_location})
+    summon adult zombie at {_location}
   else if {_id} is "SKELETON":
-    set {_mob} to skeleton_summon({_location})
+    summon skeleton at {_location}
   else if {_id} is "CREEPER":
-    set {_mob} to creeper_summon({_location})
-  else if {_id} is "VOID_ARCHER":
-    void_archer_summon({_location})
+    summon creeper at {_location}
+  # MYTHIC MOBS
+  else:
+    set {_loc} to loc_to_mythicApi({_location})
+    execute console command "mythicApi SUMMON %{_id}% %{_loc}% %{_level}% %{_ai}%"
   
+  set {_mob} to last spawned entity
   if {_mob} is set:
-    entity_nbt_set_tag({_mob}, "TYPE", "MOB")
-    entity_nbt_set_tag({_mob}, "CATEGORY", mob_getCategory({_id}))
-    entity_nbt_set_tag({_mob}, "ID", {_id})
-    entity_nbt_set_tag_native({_mob}, "{PersistenceRequired:1b}")
-    
-    set {_secureLoad} to false
+    return mob_register({_mob}, {_id}, {_level}, {_ai})
 
-    # Security if the file associated to the mob has not been loaded
-    if yaml file "YAML-MOB-%{_id}%" does not exist:
-      set {_secureLoad} to true
-      mob_load_yaml({_mob})
+function mob_register(mob: entity, id: text, level: number, ai: text) :: entity:
+  entity_nbt_set_tag({_mob}, "TYPE", "MOB")
+  entity_nbt_set_tag({_mob}, "CATEGORY", mob_getCategory({_id}))
+  entity_nbt_set_tag({_mob}, "ID", {_id})
+  entity_nbt_set_tag_native({_mob}, "{PersistenceRequired:1b}")
+  
+  set {_secureLoad} to false
+  # Security if the file associated to the mob has not been loaded
+  if yaml file "YAML-MOB-%{_id}%" does not exist:
+    set {_secureLoad} to true
+    mob_load_yaml({_mob})
 
-    mob_initialize({_mob}, {_level})
-    mob_ai_init({_mob}, {_ai})
+  mob_initialize({_mob}, {_level})
+  mob_ai_init({_mob}, {_ai})
 
-    # Unload after security load
-    if {_secureLoad} is true:
-      mob_store_unload_yaml({_mob})
-
-    return {_mob}
+  # Unload after security load
+  if {_secureLoad} is true:
+    mob_store_unload_yaml({_mob})
 
 function mob_getCategory(id: text) :: text:
   loop {MOB::CATEGORY::*}:

@@ -45,9 +45,7 @@ command /zombie:
 
 command /lisa:
     trigger:
-        set {_location} to {LOCATION::CASTLE::THRONE}
-        # create a citizen named "toto" at player's location as a villager
-        create citizen named {NPC::LISA::NAME} at {_location}
+        lisa_summon(random uuid)
 
 command /tag:
     trigger:
@@ -114,22 +112,27 @@ command /chestplate:
         set compound list tag "AttributeModifiers" of {_n} to {_a::*}
         give {_i} to player
 
-command /mythicVOidArcher:
+command /mythicVoidArcher:
     trigger:
-        set {_loc} to location of player
-        set {_world} to world of player
-        make player execute command "mm m spawn VoidArcher world,12,-28,-2"
-
-
-function rgbb(r: number, g: number, b: number, locs: locations):
-    loop {_locs::*}:
-        draw 1 flame at loop-value with extra 0
-
-function rainbow(h: number, locs: locations):
-    set {_r} to 200
-    set {_g} to 140
-    set {_b} to 90
-    rgbb({_r}, {_g}, {_b}, {_locs::*})
+        mob_summon("VOID_ARCHER", 5, "A", location of player)
+command /mythicVoidWarrior:
+    trigger:
+        mob_summon("VOID_WARRIOR", 5, "A", location of player)
+command /mythicVoidWarriorCaptain:
+    trigger:
+        mob_summon("VOID_WARRIOR-CAPTAIN", 5, "A", location of player)
+command /mythicVoidWarriorFly:
+    trigger:
+        mob_summon("VOID_WARRIOR-FLY", 5, "A", location of player)
+command /mythicLavaWarrior:
+    trigger:
+        mob_summon("LAVA_WARRIOR", 5, "A", location of player)
+command /mythicSpartan:
+    trigger:
+        mob_summon("NORMAL_SPARTAN", 5, "A", location of player)
+command /mythicGouliath:
+    trigger:
+        mob_summon("BOSS_GOULIATH", 5, "A", location of player)
     
 command /testrings:
     trigger:

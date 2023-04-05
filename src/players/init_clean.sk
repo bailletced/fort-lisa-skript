@@ -1,13 +1,12 @@
 function player_init(p: player, gameUuid: text):
-  teleport {_p} to {LOCATION::CASTLE::THRONE}
+  set {_loc} to {LOCATION::CASTLE::THRONE}
+  set world of {_loc} to "FortLisa" parsed as world
+  teleport {_p} to {_loc}
   player_clean({_p})
   player_store_stat_set({_p}, "ATTACK", 0)
+  player_store_stat_set({_p}, "HEALTH_MAX", 20)
   player_store_stat_set({_p}, "POWER", 0)
   player_store_stat_set({_p}, "DEFENCE", 0)
-  player_store_stat_set({_p}, "MR", 0)
-  player_store_stat_set({_p}, "MANA_MAX", 100)
-  player_store_stat_set({_p}, "MANA", 100)
-  player_store_stat_set({_p}, "MANA_REGEN", 3)
   set max health of {_p} to 20
   set health of {_p} to 20
   set bed of {_p} to {LOCATION::CASTLE::THRONE}
@@ -15,6 +14,7 @@ function player_init(p: player, gameUuid: text):
   set gamemode of {_p} to adventure
   # Start game interactions
   gui_gameStart({gameUuid}, {_p})
+  player_store_listener_add({_p}, "STAT")
   player_store_game_set({_p}, "UUID", {_gameUuid})
   player_store_game_set({_p}, "STATUS", "PREPARING")
 

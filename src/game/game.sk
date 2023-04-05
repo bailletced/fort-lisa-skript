@@ -33,6 +33,7 @@ function game_end(gameUuid: text):
   loop all entities:
     set {_mob} to loop-value
     if entity_nbt_get_tag({_mob}, "TYPE") is "MOB":
+      entity_nbt_delete({_mob}, "TYPE")
       kill {_mob}
     if loop-value is a player:
       if player_store_setting_get(loop-value, "INGAME") is true:
