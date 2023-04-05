@@ -3,7 +3,18 @@ MOBS:
   1:
     ID: ZOMBIE
     LEVEL: 0
-    AMOUNT: 20
+    AMOUNT: 40
+    AI: A
+    LOCATION:
+      - CASTLE.GATE_A
+      - CASTLE.GATE_B
+      - CASTLE.GATE_C
+      - CASTLE.GATE_D
+    DELAY: 20
+  1:
+    ID: SKELETON
+    LEVEL: 0
+    AMOUNT: 40
     AI: A
     LOCATION:
       - CASTLE.GATE_A

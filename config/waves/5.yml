@@ -11,7 +11,7 @@ MOBS:
   2:
     ID: NORMAL_SPARTAN
     LEVEL: 1
-    AMOUNT: 10
+    AMOUNT: 30
     AI: A
     LOCATION:
       - CASTLE.GATE_A
