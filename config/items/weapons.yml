@@ -28,6 +28,9 @@ STAFF:
 CROSSBOW:
   ARMADILLO:
     ITEM: crossbow
+    WILL:
+      BURNING_HEART:
+        ITEM: crossbow
     GIFTS:
       WILL_MAX: 1
       INTELLECT_MAX: 1
@@ -39,7 +42,10 @@ CROSSBOW:
       PROJECTILE_AMOUNT: 1
 BOW:
   ARROWSPIKE:
-    ITEM: BOW
+    ITEM: bow
+    WILL:
+      BURNING_HEART:
+        ITEM: bow
     GIFTS:
       WILL_MAX: 1
       INTELLECT_MAX: 1

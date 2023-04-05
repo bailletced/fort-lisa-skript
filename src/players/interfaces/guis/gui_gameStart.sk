@@ -36,7 +36,7 @@ function gui_gameStart_choose(gameUuid: text, p: player, type: text):
 
 function gui_gameStart_chooseNext(gameUuid: text, p: player, currentType: text):
   set {_index} to 1
-  set {_types::*} to "EQUIPMENT", "WEAPON", "WILL" and "INTELLECT"
+  set {_types::*} to "EQUIPMENT", "WEAPON" and "WILL"
   loop {_types::*}:
     add 1 to {_index}
     if loop-value is {_currentType}:
