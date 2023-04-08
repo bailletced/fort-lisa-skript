@@ -127,15 +127,15 @@ function test_item_nbt(p: player):
 
 
   it "Test item create":
-    player_store_stat_set({_p}, "POWER", 10)
+    player_store_stat_set({_p}, "ATTACK", 10)
     set {_item} to item_create({_p}, "WEAPON", "STAFF", "TEST")
-    set {_power} to item_nbt_get_stat({_item}, "POWER")
-    set {_powerMultiplier} to item_nbt_get_stat({_item}, "POWER_MULTIPLIER")
-    set {_finalPower} to {_power} + {_power} * {_powerMultiplier}
+    set {_attack} to item_nbt_get_stat({_item}, "ATTACK")
+    set {_attackMultiplier} to item_nbt_get_stat({_item}, "ATTACK_MULTIPLIER")
+    set {_finalAttack} to {_attack} + {_attack} * {_attackMultiplier}
 
-    assert if {_power} is {WEAPON::STAFF::TEST::POWER} with message "power should be %{WEAPON::STAFF::TEST::POWER}%. Got %{_power}%"
-    assert if "%{_powerMultiplier}%" is "%{WEAPON::STAFF::TEST::POWER_MULTIPLIER}%" with message "powerMultiplier should be %{WEAPON::STAFF::TEST::POWER_MULTIPLIER}%. Got %{_powerMultiplier}%"
-    assert if the line 2 of lore of {_item} contains "%{_finalPower}%" with message "lore should contain a final power of %{_finalPower}%. Got %line 2 of lore of {_item}%"
+    assert if {_attack} is {WEAPON::STAFF::TEST::ATTACK} with message "attack should be %{WEAPON::STAFF::TEST::ATTACK}%. Got %{_attack}%"
+    assert if "%{_attackMultiplier}%" is "%{WEAPON::STAFF::TEST::ATTACK_MULTIPLIER}%" with message "attackMultiplier should be %{WEAPON::STAFF::TEST::ATTACK_MULTIPLIER}%. Got %{_attackMultiplier}%"
+    assert if the line 2 of lore of {_item} contains "%{_finalAttack}%" with message "lore should contain a final attack of %{_finalPower}%. Got %line 2 of lore of {_item}%"
 
     it "Test item nbt list":
       set {_item} to item_create({_p}, "WEAPON", "STAFF", "TEST")

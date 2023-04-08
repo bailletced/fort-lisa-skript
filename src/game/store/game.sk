@@ -10,6 +10,9 @@ function game_store_isset(uuid: text) :: boolean:
     return true
   return false
 
+function game_store_count() :: number:
+  return size of {game::*}
+
 function game_store_create() :: text:
   set {_uuid} to random uuid
   add {_uuid} to {game::*}

@@ -1,0 +1,3 @@
+on explosion:
+
+  broadcast "EXPLOSION %attacker% %victim% %damage%"

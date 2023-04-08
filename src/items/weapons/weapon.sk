@@ -14,22 +14,9 @@ function weapon_give(p: player, category: text, id: text) :: item:
 function weapon_stat_reload(p: player, weapon: item) :: item:
     set {_idWill} to first element of item_nbt_get_list({_weapon}, "WILL")
     if {_idWill} is set:
-        return weapon_will_stat({_p}, {_weapon}, {_idWill})
+        return item_stat_initialize({_p}, "WEAPON", {_weapon}, {_idWill})
     else:
         return item_stat_initialize({_p}, "WEAPON", {_weapon})
-
-function weapon_will_stat(p: player, weapon: item, idWill: text) :: item:
-    set {_category} to item_nbt_get_tag({_weapon}, "CATEGORY")
-    set {_id} to item_nbt_get_tag({_weapon}, "ID")
-    # The weapon is being consacred. We try to get the item associated to the weapon's skill
-    set {_consacredWeapon} to weapon_create({_p}, {_category}, {_id}, {_idWill})
-    loop {SKILL::%{_category}%::%{_idWill}%::STAT::*}:
-        set {_stat} to loop-value
-        set {_value} to {SKILL::%{_category}%::%{_idWill}%::%loop-value%}
-        set {_consacredWeapon} to item_nbt_delete({_consacredWeapon}, {_stat})
-        if {_value} is set:
-            set {_consacredWeapon} to item_nbt_set_stat({_consacredWeapon}, loop-value, {_value}, true)
-    return {_consacredWeapon}
 
 function weapon_leftClick(p: player, weapon: item):
     set {_category} to item_nbt_get_tag({_weapon}, "CATEGORY")

@@ -14,22 +14,22 @@ function test_item_weapon(p: player):
 
   it "test weapon reload all":
     clear inventory of {_p}
-    player_store_stat_set({_p}, "POWER", 10)
+    player_store_stat_set({_p}, "ATTACK", 10)
 
     set {_weaponReference} to item_create({_p}, "WEAPON", "STAFF", "TEST")
     set slot 0 of {_p} to stone
     weapon_give({_p}, "STAFF", "TEST")
     set {_initialCount} to player_store_weapon_count({_p})
-    set {_power} to item_nbt_get_stat({_weaponReference}, "POWER")
-    set {_powerMultiplier} to item_nbt_get_stat({_weaponReference}, "POWER_MULTIPLIER")
-    set {_finalPower} to {_power} + {_power} * {_powerMultiplier}
+    set {_attack} to item_nbt_get_stat({_weaponReference}, "ATTACK")
+    set {_attackMultiplier} to item_nbt_get_stat({_weaponReference}, "ATTACK_MULTIPLIER")
+    set {_finalPower} to {_attack} + {_attack} * {_attackMultiplier}
 
     assert if slot 0 of {_p} is stone with message "slot 0 of player should be stone. Got %slot 0 of {_p}%"
-    assert if the line 2 of lore of {_weaponReference} contains "%{_finalPower}%" with message "lore should contain a final power of %{_finalPower}%. Got %line 2 of lore of {_weaponReference}%"
+    assert if the line 2 of lore of {_weaponReference} contains "%{_finalPower}%" with message "lore should contain a final attack of %{_finalPower}%. Got %line 2 of lore of {_weaponReference}%"
     assert if slot 1 of {_p} is {_weaponReference} with message "slot 1 of player should be %{_weaponReference}%. Got %slot 1 of {_p}%"
 
-    player_store_stat_set({_p}, "POWER", 100)
+    player_store_stat_set({_p}, "ATTACK", 100)
     set {_finalCount} to player_store_weapon_count({_p})
-    set {_finalPower} to {_power} + 100 * {_powerMultiplier}
-    assert if the line 2 of lore of slot 1 of {_p} contains "%{_finalPower}%" with message "lore should contain a final power of %{_finalPower}%. Got %line 2 of lore of slot 1 of {_p}%"
+    set {_finalPower} to {_attack} + 100 * {_attackMultiplier}
+    assert if the line 2 of lore of slot 1 of {_p} contains "%{_finalPower}%" with message "lore should contain a final attack of %{_finalPower}%. Got %line 2 of lore of slot 1 of {_p}%"
     assert if {_initialCount} is {_finalCount} with message "total weapon count should be %{_initialCount}%. Got %{_finalCount}%"

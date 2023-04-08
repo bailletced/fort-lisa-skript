@@ -2,8 +2,8 @@ STAFF:
   TEST:
     ITEM: carrot on a stick
     STATS:
-      POWER: 10
-      POWER_MULTIPLIER: 0.2
+      ATTACK: 10
+      ATTACK_MULTIPLIER: 0.2
       COOLDOWN: 30
       RANGE: 5
       RADIUS: 1.5

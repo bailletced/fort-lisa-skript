@@ -112,6 +112,10 @@ command /chestplate:
         set compound list tag "AttributeModifiers" of {_n} to {_a::*}
         give {_i} to player
 
+command /creeper:
+    trigger:
+        mob_summon("CREEPER", 1, "A", location of player)
+
 command /mythicVoidArcher:
     trigger:
         mob_summon("VOID_ARCHER", 5, "A", location of player)

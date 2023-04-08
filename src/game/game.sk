@@ -1,13 +1,14 @@
 function game_start(world: world):
-  set {_gameUuid} to game_store_create()
-  game_store_set({_gameUuid}, "STATUS", "PREPARING")
-  game_store_set({_gameUuid}, "WORLD", {_world})
-  mob_store_delete_all()
-  set {_lisa} to lisa_summon({_gameUuid})
-  # TODO : determine which player should be part of the game
-  loop all players:
-    game_store_player_add({_gameUuid}, loop-player)
-    player_init(loop-player, {_gameUuid})
+  if game_store_count() is 0:
+    set {_gameUuid} to game_store_create()
+    game_store_set({_gameUuid}, "STATUS", "PREPARING")
+    game_store_set({_gameUuid}, "WORLD", {_world})
+    mob_store_delete_all()
+    set {_lisa} to lisa_summon({_gameUuid})
+    # TODO : determine which player should be part of the game
+    loop all players:
+      game_store_player_add({_gameUuid}, loop-player)
+      player_init(loop-player, {_gameUuid})
 
   #GAME PREPARATION
   set {_canStart} to false
