@@ -22,7 +22,6 @@ function game_store_start(uuid: text):
   game_store_set({_uuid}, "STATUS", "RUNNING")
 
 function game_store_delete(uuid: text) :: text:
-  delete {game::*}
   remove {_uuid} from {game::*}
   delete {game::%{_uuid}%::*}
 

@@ -5,7 +5,6 @@ STAT:
   ATTACK_MULTIPLIER: 1
   DEFENCE: 0
 EQUIPMENT:
-  1:
-    HELMET: leather helmet
+  HELMET: leather helmet
   2:
     HELMET: iron helmet

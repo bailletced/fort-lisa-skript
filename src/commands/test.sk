@@ -121,7 +121,7 @@ command /mythicVoidArcher:
         mob_summon("VOID_ARCHER", 5, "A", location of player)
 command /mythicVoidWarrior:
     trigger:
-        mob_summon("VOID_WARRIOR", 5, "A", location of player)
+        mob_summon("VOID_WARRIOR", 1, "A", location of player)
 command /mythicVoidWarriorCaptain:
     trigger:
         mob_summon("VOID_WARRIOR-CAPTAIN", 5, "A", location of player)

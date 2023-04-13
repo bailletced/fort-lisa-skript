@@ -36,6 +36,11 @@ function mob_set_tags(mob: entity):
 
 function mob_set_equipments(mob: entity, level: number):
   set {_id} to entity_nbt_get_tag({_mob}, "ID")
+  loop {EQUIPMENT::CATEGORY::*}:
+    set {_category} to loop-value
+    set {_equipment} to yaml value "EQUIPMENT.%{_category}%" from "YAML-MOB-%{_id}%" parsed as item
+    if {_equipment} is set:
+      equip {_mob} with {_equipment}
   loop node keys "EQUIPMENT.%{_level}%" of "YAML-MOB-%{_id}%":
     set {_key} to loop-value
     set {_equipment} to yaml value "EQUIPMENT.%{_level}%.%{_key}%" from "YAML-MOB-%{_id}%" parsed as item

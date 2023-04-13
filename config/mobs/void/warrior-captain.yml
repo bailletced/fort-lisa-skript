@@ -6,3 +6,5 @@ STAT:
   DEFENCE: 1
   DEFENCE_MULTIPLIER: 1
   SPEED: 2
+EQUIPMENT:
+  HELMET: leather helmet

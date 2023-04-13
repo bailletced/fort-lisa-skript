@@ -4,3 +4,5 @@ STAT:
   ATTACK: 3
   ATTACK_MULTIPLIER: 2
   DEFENCE: 0
+EQUIPMENT:
+  HELMET: leather helmet

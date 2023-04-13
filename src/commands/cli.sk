@@ -1,4 +1,4 @@
-command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
+command /admin [<text>] [<text>] [<text>] [<text>] [<text>] [<text>]:
   trigger:
     set {_success} to true
     set {_p} to event-player
@@ -74,6 +74,20 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
       if arg-2 is "start":
         wave_start(arg-3 parsed as number)
 
+    else if arg-1 is "mob":
+      if arg-2 is "summon":
+        if arg-3 is set:
+          if arg-4 is set:
+            if arg-6 is not set:
+              set {_level} to 1
+            else:
+              set {_level} to arg-6 parsed as number
+            mob_summon(arg-4, {_level}, arg-5, location of player)
+      else if arg-2 is "kill":
+        loop all entities:
+          if entity_nbt_get_tag(loop-value, "TYPE") is "MOB":
+            kill loop-value
+
     else if arg-1 is "test":
       if arg-2 is "all":
         test_main(player)
@@ -111,7 +125,7 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>]:
           test_entity_main(player)
 
 on tab complete of "/admin":
-  set tab completions for position 1 to "init", "hmr", "stat", "player", "weapon", "equipment", "skill", "settings", "game", "gift", "gui", "wave" and "test"
+  set tab completions for position 1 to "init", "hmr", "player", "weapon", "equipment", "skill", "settings", "game", "gift", "gui", "wave", "mob" and "test"
 
   if tab arg-1 is "hmr":
     set tab completions for position 2 to "reset"
@@ -169,6 +183,16 @@ on tab complete of "/admin":
 
   else if tab arg-1 is "wave":
     set tab completions for position 2 to "start"
+  
+  else if tab arg-1 is "mob":
+    set tab completions for position 2 to "summon" and "kill"
+    if tab arg-2 is set:
+      set tab completions for position 3 to {MOB::CATEGORY::*}
+      if tab arg-3 is set:
+        set {_category} to tab arg-3
+        set tab completions for position 4 to {MOB::%{_category}%::*}
+        if tab arg-4 is set:
+          set tab completions for position 5 to {MOB::IA::*}
   
   else if tab arg-1 is "test":
     set tab completions for position 2 to "items", "i18n", "player", "mob", "entity" and "all"

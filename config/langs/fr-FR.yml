@@ -9,7 +9,7 @@ MESSAGE:
       SKILL:
         IN_PROGRESS: "Ce sort est en cooldown"
 WAVE:
-  TITLE: "Vague"
+  TITLE: "Vague {_waveNumber}"
 STAT:
   ATTACK:
     NORMAL: "Attaque"

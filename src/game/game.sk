@@ -5,7 +5,7 @@ function game_start(world: world):
     game_store_set({_gameUuid}, "WORLD", {_world})
     mob_store_delete_all()
     set {_lisa} to lisa_summon({_gameUuid})
-    # TODO : determine which player should be part of the game
+    # TODO : determine which players should be part of the game
     loop all players:
       game_store_player_add({_gameUuid}, loop-player)
       player_init(loop-player, {_gameUuid})
@@ -26,9 +26,8 @@ function game_start(world: world):
   wave_init({_gameUuid})
 
 function game_end(gameUuid: text):
-  broadcast "GAME END"
+  delete {game::*}
   game_store_delete({_gameUuid})
-  game_store_wave_set_current(0)
   execute console command "/npc remove all"
   player_interface_tablist_footer_clean_all()
   loop all entities:
