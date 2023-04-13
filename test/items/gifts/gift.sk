@@ -20,6 +20,5 @@ function test_item_gift(p: player):
     
     set {_boostedWeapon} to gift_consecrate({_p}, {_burningHeartGift}, {_weapon})
     set {_giftWill::*} to item_nbt_get_list({_boostedWeapon}, "WILL")
-    broadcast "%custom model data of {_weapon}% %custom model data of {_boostedWeapon}%"
     assert if size of {_giftWill::*} is 1 with message "{_boostedWeapon} should have 1 will gift. Got %size of {_giftWill::*}%"
     assert if {_boostedWeapon} is not {_weapon} with message "item should change. Previous: %{_weapon}%. After: %{_boostedWeapon}%"

@@ -1,5 +1,4 @@
 function entity_effect_damage(source: entity, target: entity, attack: number, knockback: number = 0): 
-  # broadcast "%{_source}% %{_target}% %{_attack}%"
   if {_target} is a player:
     set {_defence} to player_store_stat_get({_target}, "DEFENCE")
   else:
