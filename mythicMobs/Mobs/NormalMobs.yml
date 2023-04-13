@@ -6,7 +6,6 @@ NORMAL_SPARTAN:
   Options:
     NoDamageTicks: 10
     AlwaysShowName: true
-    PreventSunburn: true
     Collidable: true
     Silent: true
     PreventOtherDrops: true

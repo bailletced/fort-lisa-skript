@@ -7,7 +7,6 @@ VOID_WARRIOR:
   - sound{s=block.amethyst_block.hit;p=0.5;v=1} @self ~onDamaged
   Options:
     NoDamageTicks: 10
-    PreventSunburn: true
     Collidable: true
     Silent: true
     
@@ -19,7 +18,6 @@ VOID_WARRIOR-CAPTAIN:
   - sound{s=block.amethyst_block.hit;p=0.5;v=1} @self ~onDamaged
   Options:
     NoDamageTicks: 10
-    PreventSunburn: true
     Collidable: true
     Silent: true
     PreventOtherDrops: true
@@ -33,7 +31,6 @@ VOID_ARCHER:
   - sound{s=block.amethyst_block.hit;p=0.5;v=1} @self ~onDamaged
   Options:
     NoDamageTicks: 10
-    PreventSunburn: true
     Collidable: true
     Silent: true
     PreventOtherDrops: true
@@ -48,7 +45,6 @@ VOID_WARRIOR-FLY:
   - effect:flames @self ~onTimer:100
   Options:
     NoDamageTicks: 10
-    PreventSunburn: true
     Collidable: true
     Silent: true
     PreventOtherDrops: true
