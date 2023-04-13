@@ -1,0 +1,3 @@
+on spawn:
+  if entity is an area effect cloud:
+    cancel event

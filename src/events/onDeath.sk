@@ -6,6 +6,7 @@ on death:
   if {_entity} is a player:
     if player_store_game_get({_entity}, "STATUS") is "RUNNING":
       player_store_status_set({_entity}, "DEATH", location of {_entity})
+      set game mode of {_entity} to spectator
   else:
     set {_type} to entity_nbt_get_tag({_entity}, "TYPE")
     if {_type} is "MOB":

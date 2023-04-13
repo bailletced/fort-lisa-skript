@@ -5,8 +5,10 @@ function gui_gameStart_choose(gameUuid: text, p: player, type: text):
   create a gui with virtual chest inventory with 1 row named {_name} and shape "123456789":
     set {_it} to 0
     set {_list::*} to {%{_type}%::CATEGORY::*}
-    if {_type} is "GIFT":
+    if {_type} is "WILL":
       set {_list::*} to {GIFT::WILL::ID::*}
+    else if {_type} is "INTELLECT":
+      set {_list::*} to {GIFT::INTELLECT::ID::*}
 
     loop {_list::*}:
       add 1 to {_it}
@@ -16,8 +18,10 @@ function gui_gameStart_choose(gameUuid: text, p: player, type: text):
         set {_item} to equipment_create({_p}, {_category}, {_id})
       else if {_type} is "WEAPON":
         set {_item} to weapon_create({_p}, {_category}, {_id})
-      else if {_type} is "GIFT":
+      else if {_type} is "WILL":
         set {_item} to gift_create({_p}, "WILL", loop-value)
+      else if {_type} is "INTELLECT":
+        set {_item} to gift_create({_p}, "INTELLECT", loop-value)
 
       make gui slot "%{_it}%" with {_item}:
         give {_item} to {_p}
@@ -32,7 +36,7 @@ function gui_gameStart_choose(gameUuid: text, p: player, type: text):
 
 function gui_gameStart_chooseNext(gameUuid: text, p: player, currentType: text):
   set {_index} to 1
-  set {_types::*} to "EQUIPMENT", "WEAPON" and "GIFT"
+  set {_types::*} to "EQUIPMENT", "WEAPON" and "WILL"
   loop {_types::*}:
     add 1 to {_index}
     if loop-value is {_currentType}:
@@ -42,6 +46,7 @@ function gui_gameStart_chooseNext(gameUuid: text, p: player, currentType: text):
   else:
     # Player has finished to choose stuff
     player_store_game_set({_p}, "STATUS", "RUNNING")
+    give 1 of gift_create({_p}, "WILL", "BURNING_HEART") to {_p}
 
 function gui_gameStart(gameUuid: text, p: player):
   player_store_gui_delete_all({_p})

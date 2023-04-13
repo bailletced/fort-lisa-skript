@@ -27,9 +27,20 @@ function mob_set_stats(mob: entity, level: number):
   set {_speed} to entity_nbt_get_stat({_mob}, "SPEED")
   apply potion of speed {_speed} without particles to {_mob} for 9999 seconds
 
+function mob_set_tags(mob: entity):
+  set {_id} to entity_nbt_get_tag({_mob}, "ID")
+  loop node keys "TAG" of "YAML-MOB-%{_id}%":
+    set {_key} to loop-value
+    set {_value} to yaml value "TAG.%{_key}%" from "YAML-MOB-%{_id}%"
+    entity_nbt_set_tag({_mob}, {_key}, {_value})
 
 function mob_set_equipments(mob: entity, level: number):
   set {_id} to entity_nbt_get_tag({_mob}, "ID")
+  loop {EQUIPMENT::CATEGORY::*}:
+    set {_category} to loop-value
+    set {_equipment} to yaml value "EQUIPMENT.%{_category}%" from "YAML-MOB-%{_id}%" parsed as item
+    if {_equipment} is set:
+      equip {_mob} with {_equipment}
   loop node keys "EQUIPMENT.%{_level}%" of "YAML-MOB-%{_id}%":
     set {_key} to loop-value
     set {_equipment} to yaml value "EQUIPMENT.%{_level}%.%{_key}%" from "YAML-MOB-%{_id}%" parsed as item
@@ -37,6 +48,7 @@ function mob_set_equipments(mob: entity, level: number):
 
 function mob_initialize(mob: entity, level: number):
   mob_set_stats({_mob}, {_level})
+  mob_set_tags({_mob})
   mob_set_equipments({_mob}, {_level})
   mob_store_add({_mob})
   
@@ -55,7 +67,8 @@ function mob_summon(id: text, level: number, ai: text, location: location) :: en
   
   set {_mob} to last spawned entity
   if {_mob} is set:
-    return mob_register({_mob}, {_id}, {_level}, {_ai})
+    mob_register({_mob}, {_id}, {_level}, {_ai})
+    return {_mob}
 
 function mob_register(mob: entity, id: text, level: number, ai: text) :: entity:
   entity_nbt_set_tag({_mob}, "TYPE", "MOB")

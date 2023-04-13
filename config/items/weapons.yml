@@ -2,13 +2,18 @@ STAFF:
   TEST:
     ITEM: carrot on a stick
     STATS:
-      POWER: 10
-      POWER_MULTIPLIER: 0.2
+      ATTACK: 10
+      ATTACK_MULTIPLIER: 0.2
       COOLDOWN: 30
       RANGE: 5
       RADIUS: 1.5
   LIMB_OF_WISDOM:
     ITEM: carrot on a stick
+    CUSTOM_ITEM: basic_staff
+    WILL:
+      BURNING_HEART:
+        ITEM: carrot on a stick
+        CUSTOM_ITEM: volonte_staff
     GIFTS:
       WILL_MAX: 1
       INTELLECT_MAX: 1
@@ -23,6 +28,9 @@ STAFF:
 CROSSBOW:
   ARMADILLO:
     ITEM: crossbow
+    WILL:
+      BURNING_HEART:
+        ITEM: crossbow
     GIFTS:
       WILL_MAX: 1
       INTELLECT_MAX: 1
@@ -32,9 +40,13 @@ CROSSBOW:
       ATTACK_MULTIPLIER: 0.5
       ATTACK_SPEED: 1
       PROJECTILE_AMOUNT: 1
+      KNOCKBACK: 3
 BOW:
   ARROWSPIKE:
-    ITEM: BOW
+    ITEM: bow
+    WILL:
+      BURNING_HEART:
+        ITEM: bow
     GIFTS:
       WILL_MAX: 1
       INTELLECT_MAX: 1
@@ -42,3 +54,4 @@ BOW:
     STATS:
       ATTACK: 8
       ATTACK_MULTIPLIER: 0.5
+      KNOCKBACK: 1

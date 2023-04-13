@@ -11,8 +11,19 @@ MOBS:
   2:
     ID: NORMAL_SPARTAN
     LEVEL: 1
-    AMOUNT: 10
+    AMOUNT: 30
     AI: A
     LOCATION:
       - CASTLE.GATE_A
     DELAY: 0
+  3:
+    ID: VOID_WARRIOR-FLY
+    LEVEL: 1
+    AMOUNT: 15
+    AI: A
+    LOCATION:
+      - CASTLE.GATE_A
+      - CASTLE.GATE_B
+      - CASTLE.GATE_C
+      - CASTLE.GATE_D
+    DELAY: 10

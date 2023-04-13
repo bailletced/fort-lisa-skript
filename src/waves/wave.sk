@@ -1,12 +1,12 @@
 function wave_init(gameUuid: text):
-  wave_start(1)
+  wave_start({_gameUuid}, 1)
   wave_listener({_gameUuid})
 
 function wave_listener(gameUuid: text):
   game_store_wave_set_current_timer(0)
   set {_waveNumber} to game_store_wave_get_current()
   set {_waveDuration} to game_store_wave_get_current_duration()
-  while game_store_get({_gameUuid}, "STATUS") is "RUNNING":
+  while game_store_isset({_gameUuid}) is true:
     set {_waveTimer} to game_store_wave_get_current_timer()
     wave_tablist({_waveNumber}, {_waveDuration}, {_waveTimer})
     game_store_wave_set_current_timer({_waveTimer} + 40)
@@ -21,36 +21,37 @@ function wave_listener(gameUuid: text):
     wait 2 seconds
 
 function wave_tablist(waveNumber: number, waveDuration: number, waveTimer: number):
-  set {_waveNumber} to game_store_wave_get_current()
-  set {_waveDuration} to game_store_wave_get_current_duration()
-  set {_waveTimer} to game_store_wave_get_current_timer()
   loop all players:
     set {_p} to loop-player
-    set {_waveTxt} to i18n({_p}, "WAVE.TITLE")
-    set tab list footer of {_p} to "%{_waveTxt}% %{_waveNumber}% - %min(100, ceil(({_waveTimer}/{_waveDuration})*100))%%%"
+    set {_waveTxt} to i18n({_p}, "WAVE.TITLE", "", {_waveNumber})
+    set tab list footer of {_p} to "%{_waveTxt}% - %min(100, ceil(({_waveTimer}/{_waveDuration})*100))%%%"
 
 function wave_next(gameUuid: text):
-  set {_waveNumber} to game_store_wave_get_current()
-  set {_nextWave} to game_store_wave_set_next() #Go next wave
-  if {_nextWave} is {_waveNumber}:
-    if mob_count() is 0:
-      broadcast "END OF GAME : No next wave AND NO MOBS"
-      game_end({_gameUuid})
-  else:
-    wave_start({_nextWave})
+  if game_store_isset({_gameUuid}) is true:
+    set {_waveNumber} to game_store_wave_get_current()
+    set {_nextWave} to game_store_wave_set_next() #Go next wave
+    if {_nextWave} is {_waveNumber}:
+      if mob_count() is 0:
+        broadcast "END OF GAME : No next wave AND NO MOBS"
+        game_end({_gameUuid})
+    else:
+      wave_start({_gameUuid}, {_nextWave})
 
-function wave_start(waveNumber: number):
+function wave_start(gameUuid: text, waveNumber: number):
+  loop game_store_players({_gameUuid}):
+    set {_title} to i18n(loop-value, "WAVE.TITLE", "", {_waveNumber})
+    player_interface_title(loop-value, {_title}, "", 3 seconds)
+
   game_store_wave_set_current({_waveNumber})
   game_store_wave_set_current_timer(0)
   load yaml "plugins/Skript/scripts/fort-lisa/config/waves/%{_waveNumber}%.yml" as "YAML-WAVE"
   delete {_loadedIds::*}
   loop node keys "MOBS" of "YAML-WAVE":
     set {_group} to loop-key
-    wave_summon({_group})
-
+    wave_summon({_gameUuid}, {_group})
   unload YAML "YAML-WAVE"
 
-function wave_summon(group: text):
+function wave_summon(gameUuid: text, group: text):
   set {_id} to yaml value "MOBS.%{_group}%.ID" from "YAML-WAVE"
   set {_level} to yaml value "MOBS.%{_group}%.LEVEL" from "YAML-WAVE"
   set {_amount} to yaml value "MOBS.%{_group}%.AMOUNT" from "YAML-WAVE"
@@ -70,12 +71,13 @@ function wave_summon(group: text):
   load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/%{_idPath}%.yml" as "YAML-MOB-%{_id}%"
 
   loop {_amount} times:
-    if {_isRandomLoc} is true:
-      set {_location} to random element of {_possibleLocs::*}
-      set {_location::*} to {_location} split at "."
-      set {_location} to {LOCATION::%{_location::1}%::%{_location::2}%}
-    mob_summon({_id}, {_level}, {_ai}, {_location})
-    if {_delay} is set:
-      wait "%{_delay}% ticks" parsed as timespan
+    if game_store_isset({_gameUuid}) is true:
+      if {_isRandomLoc} is true:
+        set {_location} to random element of {_possibleLocs::*}
+        set {_location::*} to {_location} split at "."
+        set {_location} to {LOCATION::%{_location::1}%::%{_location::2}%}
+      mob_summon({_id}, {_level}, {_ai}, {_location})
+      if {_delay} is set:
+        wait "%{_delay}% ticks" parsed as timespan
 
   unload yaml "YAML-MOB-%{_id}%"

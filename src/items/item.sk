@@ -1,10 +1,18 @@
 #Affect stats to item
-function item_stat_initialize(p: player, type: text, item: item) :: item:
+function item_stat_initialize(p: player, type: text, item: item, idWill: text = "") :: item:
   set {_category} to item_nbt_get_tag({_item}, "CATEGORY")
-  set {_id} to item_nbt_get_tag({_item}, "ID")
-  loop {%{_type}%::%{_category}%::%{_id}%::STAT::*}:
+  if {_idWill} is not "":
+    # We have to get the stats of the consacred item
+    set {_referenceStats::*} to {SKILL::%{_category}%::%{_idWill}%::STAT::*}
+    set {_referencePath} to "SKILL::%{_category}%::%{_idWill}%"
+  else:
+    set {_id} to item_nbt_get_tag({_item}, "ID")
+    set {_referenceStats::*} to {%{_type}%::%{_category}%::%{_id}%::STAT::*}
+    set {_referencePath} to "%{_type}%::%{_category}%::%{_id}%"
+
+  loop {_referenceStats::*}:
     set {_stat} to loop-value
-    set {_value} to {%{_type}%::%{_category}%::%{_id}%::%loop-value%}
+    set {_value} to {%{_referencePath}%::%{_stat}%}
     set {_item} to item_nbt_set_stat({_item}, {_stat}, {_value}, true)
   return {_item}
 
@@ -23,17 +31,23 @@ function item_gift_initialize(p: player, item: item) :: item:
     set {_item} to item_nbt_set_stat({_item}, "%loop-value%_MAX", {%{_type}%::%{_category}%::%{_id}%::%loop-value%_MAX})
   return {_item}
 
-function item_create(p: player, type: text, category: text, id: text) :: item:
+function item_create(p: player, type: text, category: text, id: text, idWill: text = "") :: item:
   set {_uuid} to item_generate_uuid({_type}, {_category}, {_id})
-  set {_item} to customitem {%{_type}%::%{_category}%::%{_id}%::CUSTOM_ITEM}
-  if {_item} is not set:
-    set {_item} to {%{_type}%::%{_category}%::%{_id}%::ITEM}
+  if {_idWill} is not "":
+    set {_item} to customitem {%{_type}%::%{_category}%::%{_id}%::%{_idWill}%::CUSTOM_ITEM}
+    if {_item} is not set:
+      set {_item} to {%{_type}%::%{_category}%::%{_id}%::%{_idWill}%::ITEM}
+  else:
+    set {_item} to customitem {%{_type}%::%{_category}%::%{_id}%::CUSTOM_ITEM}
+    if {_item} is not set:
+      set {_item} to {%{_type}%::%{_category}%::%{_id}%::ITEM}
+
   set {_item} to item_nbt_set_tag({_item}, "TYPE", {_type})
   set {_item} to item_nbt_set_tag({_item}, "CATEGORY", {_category})
   set {_item} to item_nbt_set_tag({_item}, "ID", {_id})
   set {_item} to item_nbt_set_tag({_item}, "UUID", {_uuid})
   set {_item} to item_nbt_set_stat({_item}, "TIER", {%{_type}%::%{_category}%::%{_id}%::TIER})
-  set {_item} to item_stat_initialize({_p}, {_type}, {_item})
+  set {_item} to item_stat_initialize({_p}, {_type}, {_item}, {_idWill})
   set {_item} to item_attribute_initialize({_p}, {_item})
   set {_item} to item_gift_initialize({_p}, {_item})
   set {_item} to i18n_item({_p}, {_item})

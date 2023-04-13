@@ -3,7 +3,7 @@ MOBS:
   1:
     ID: ZOMBIE
     LEVEL: 1
-    AMOUNT: 15
+    AMOUNT: 30
     AI: A
     LOCATION:
       - CASTLE.GATE_A
@@ -14,7 +14,7 @@ MOBS:
   2:
     ID: VOID_WARRIOR
     LEVEL: 1
-    AMOUNT: 5
+    AMOUNT: 30
     AI: A
     LOCATION:
       - CASTLE.GATE_A
@@ -25,7 +25,7 @@ MOBS:
   3:
     ID: VOID_ARCHER
     LEVEL: 0
-    AMOUNT: 5
+    AMOUNT: 30
     AI: A
     LOCATION:
       - CASTLE.GATE_A

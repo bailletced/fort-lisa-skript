@@ -9,7 +9,7 @@ function staff_burning_heart_cast(p: player, staff: item):
     if distance between {_projectile} and {_loc} > {_range}:
       staff_burning_heart_hit({_p}, {_projectile}, {_projectile})
       stop loop
-    wait 5 ticks
+    wait 1 ticks
   kill {_projectile}
 
 function staff_burning_heart_hit(p: player, projectile: entity, victim: entity):

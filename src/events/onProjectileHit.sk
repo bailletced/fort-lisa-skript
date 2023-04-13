@@ -2,11 +2,14 @@ on projectile hit:
   set {_projectile} to event-projectile
   set {_attackerType} to entity_nbt_get_tag({_projectile}, "ATTACKER_TYPE")
   if {_attackerType} is "PLAYER":
-    set {_p} to entity_nbt_get_tag({_projectile}, "ATTACKER") parsed as player
-    set {_type} to entity_nbt_get_tag({_projectile}, "TYPE")
-    if {_type} is "WEAPON":
-      weapon_hit_projectile({_p}, {_projectile}, victim)
+    if victim is not a player:
+      set {_p} to entity_nbt_get_tag({_projectile}, "ATTACKER") parsed as player
+      set {_type} to entity_nbt_get_tag({_projectile}, "TYPE")
+      if {_type} is "WEAPON":
+        weapon_hit_projectile({_p}, {_projectile}, victim)
+        cancel event
+      if victim is set:
+        mob_ai_listener_RECEIVE_PLAYER_DAMAGE(victim, {_p})
+      kill {_projectile}
+    else:
       cancel event
-    if victim is set:
-      mob_ai_listener_RECEIVE_PLAYER_DAMAGE(victim, {_p})
-    kill {_projectile}

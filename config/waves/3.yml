@@ -1,9 +1,9 @@
 DURATION: 1200
 MOBS:
   1:
-    ID: ZOMBIE
+    ID: VOID_WARRIOR
     LEVEL: 2
-    AMOUNT: 10
+    AMOUNT: 20
     AI: A
     LOCATION:
       - CASTLE.GATE_A
@@ -12,9 +12,9 @@ MOBS:
       - CASTLE.GATE_D
     DELAY: 10
   2:
-    ID: SKELETON
+    ID: VOID_ARCHER
     LEVEL: 2
-    AMOUNT: 10
+    AMOUNT: 30
     AI: A
     LOCATION:
       - CASTLE.GATE_A
@@ -25,7 +25,7 @@ MOBS:
   3:
     ID: CREEPER
     LEVEL: 1
-    AMOUNT: 5
+    AMOUNT: 30
     AI: A
     LOCATION:
       - CASTLE.GATE_A

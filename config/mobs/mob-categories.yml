@@ -1,6 +1,6 @@
 BOSS:
   - "BOSS_GOULIATH"
-BASIC:
+NORMAL:
   - "ZOMBIE"
   - "SKELETON"
   - "CREEPER"

@@ -2,7 +2,6 @@ on respawn:
   set {_p} to event-player
   if player_store_status_get({_p}, "DEATH") is set:
     teleport {_p} to player_store_status_get({_p}, "DEATH")
-    set game mode of {_p} to spectator
     wait 20 seconds
     set game mode of {_p} to adventure
     teleport {_p} to bed of {_p}

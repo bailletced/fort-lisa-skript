@@ -1,5 +1,5 @@
 # get translation
-function i18n(p: player, path: text, color: text = "", variables: texts = "") :: text:
+function i18n(p: player, path: text, color: text = "", variables: objects = "") :: text:
   set {_lang} to player_store_setting_get({_p}, "lang")
   if {_lang} is not set:
     set {_lang} to {LANG_FALLBACK}
