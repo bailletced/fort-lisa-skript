@@ -1,4 +1,4 @@
-# Conventions
+# Code conventions
 
 Here are some rules we are following:
 
@@ -8,5 +8,11 @@ Here are some rules we are following:
 4. When writing a new store, please, unit test it.
 5. Try to deal with configurable variables as much as possible. It is much more easier to be edited.
 6. When dealing with listeners, or loops whose are called very regularly, be very cautious. It is memory and CPU intensive.
-7. Concepts shoudl follow the pattern `TYPE` `CATEGORY` `ID`. Eg: `SKILL` `HELMET` `DRAGON_BREATH` or `WEAPON` `STAFF` `LIMB_OF_WISDOM`.
-8. KISS (Keep It Simple, Stupid)
+7. Concepts should follow pattern `TYPE` / `CATEGORY` / `ID`. Here are some examples:\
+   `SKILL` / `HELMET` / `DRAGON_BREATH` \
+   `WEAPON` / `STAFF` /`LIMB_OF_WISDOM`\
+   `EQUIPMENT / HELMET / LAUREL_CROWN`\
+   `GIFT / WILL / BURNING_HEART`
+
+
+
