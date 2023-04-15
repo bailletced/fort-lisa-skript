@@ -1,4 +1,4 @@
-# Variables
+# Learn Skript
 
 We are here summarizing the main concepts and best practices when dealing with variables.
 

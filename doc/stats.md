@@ -1,4 +1,4 @@
-# STATS
+# Skills
 
 All core stats are declared in `config/stats.yml`, under `ALL` key. For each of them, an icon and a color is declared. This helps to describe the stats and to display it accordinglt in the lore of an item.
 
