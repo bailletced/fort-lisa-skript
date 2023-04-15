@@ -1,4 +1,4 @@
-# Where to start?
+# About the code...
 
 Working on a large Skript project can be tedious and misleading. While Skript offers the ability to code very fast, it also tends to quickly make our codebase become a dish of spaghetti.
 

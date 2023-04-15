@@ -1,4 +1,4 @@
-# Code conventions
+# Conventions
 
 Here are some rules we are following:
 

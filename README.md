@@ -1,12 +1,7 @@
-# Conventions
+# Contributing
 
-Here are some rules we are following:
+Working on a large Skript project can be tedious and misleading. While Skript offers the ability to code very fast, it also tends to quickly make our codebase become a dish of spaghetti.
 
-1. Avoid in any case to directly manipulate global variables, nor NBTs. Manipulate them through store and nbt helpers respectively.
-2. Global variables used accross the project are written in UPPER case.
-3. Plural is not used when dealing with global variables Eg: `STAT::ALL::*` which refers all stats.
-4. When writing a new store, please, unit test it.
-5. Try to deal with configurable variables as much as possible. It is much more easier to be edited.
-6. When dealing with listeners, or loops whose are called very regularly, be very cautious. It is memory and CPU intensive.
-7. Concepts shoudl follow the pattern `TYPE` `CATEGORY` `ID`. Eg: `SKILL` `HELMET` `DRAGON_BREATH` or `WEAPON` `STAFF` `LIMB_OF_WISDOM`.
-8. KISS (Keep It Simple, Stupid)
+To offer better coding experience, and to make this project viable over time, we have decided to setup some rules and conventions.
+
+In this section, you will have an overview about the structure of the project, how to install it on your local machine, and how to contribute to it.
