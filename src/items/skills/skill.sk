@@ -57,6 +57,11 @@ function skill_cost(p: player, skill: item) :: boolean:
   #   skill_mana({_p}, loop-value)
   skill_cooldown({_p}, {_skill})
 
+function skill_isUsed(p: player, skill: item) :: boolean:
+  if item_store_stat_get({_skill}, "CD") > 0:
+    return true
+  return false
+
 # Handle whether skill is not in CD
 function skill_cooldown(p: player, skill: item):
   set {_uuid} to item_nbt_get_tag({_skill}, "UUID")

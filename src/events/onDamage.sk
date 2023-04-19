@@ -22,10 +22,6 @@ on damage:
     if entity_nbt_get_tag(victim, "TYPE") is "MOB":
       # A mob is hit.
       mob_ai_listener_RECEIVE_PLAYER_DAMAGE(victim, attacker)
-      if {_typeItem} is "WEAPON":
-        weapon_leftClick({_p}, {_item})
-      else if {_typeItem} is "SKILL":
-        skill_cast_condition({_p}, {_item})
     else:
       if armor stand and item frame does not contain type of victim:
         cancel event

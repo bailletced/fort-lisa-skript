@@ -16,7 +16,7 @@ function lisa_init(lisa: entity) :: entity:
   execute console command "/npc lookclose"
   execute console command "/npc targetable"
   execute console command "/npc vulnerable"
-  set maximum health of {_lisa} to 1
+  set maximum health of {_lisa} to {NPC::LISA::HEALTH}
   set health of {_lisa} to {NPC::LISA::HEALTH}
   entity_nbt_set_stat({_lisa}, "DEFENCE", {NPC::LISA::DEFENCE})
   return {_lisa}

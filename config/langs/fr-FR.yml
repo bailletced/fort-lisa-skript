@@ -64,7 +64,7 @@ SKILL:
       LORE: "Le souffle du dragon repousse les ennemis avant d'infliger des dégâts en bout de course, infligeant {_ATTACK} dans un rayon de {_RADIUS}"
     BURNING_HEART:
       TITLE: "Tête brûlée"
-      LORE: "Vous Foncez vers l'ennemi le plus proche dans votre direction, lui infligeant {_ATTACK} et repoussant les ennemis proches. Les ennemis repoussés sont brûlés et subissent {_EFFECT_ATTACK} toutes les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION}. Portée maximale : {_RANGE}"
+      LORE: "Vous êtes propulsés dans le direction ciblée. Si vous touchez un ennemi, vous pouvez utiliser le sort jusqu'à {_USAGE_COUNT} fois. Vous infligez {_ATTACK} avec un recul de {_KNOCKBACK}. Les ennemis repoussés sont brûlés et subissent {_EFFECT_ATTACK} toutes les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION}. Portée maximale : {_RANGE}"
   CHESTPLATE:
     BURNING_HEART:
       TITLE: "Le cœur brûlant"

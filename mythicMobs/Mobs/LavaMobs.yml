@@ -6,7 +6,5 @@ LAVA_WARRIOR:
   - sound{s=block.amethyst_block.hit;p=0.5;v=1} @self ~onDamaged
   Options:
     NoDamageTicks: 10
-    AlwaysShowName: true
     Collidable: true
     Silent: true
-    PreventOtherDrops: true  
