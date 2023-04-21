@@ -1,6 +1,6 @@
 function weapon_create(p: player, category: text, id: text, idWill: text = "") :: item:
     set {_weapon} to item_create({_p}, "WEAPON", {_category}, {_id}, {_idWill})  
-    set {_weapon} to item_nbt_set_tag_native({_weapon}, "{Unbreakable:1,HideFlags:4}")
+    set {_weapon} to item_nbt_set_tag_native({_weapon}, "{Unbreakable:1,HideFlags:127}")
     item_store_stat_set({_weapon}, "CD_NORMAL", 0) #We do not use nbt here because to refresh nbt on item, we have to regenerate it
     item_store_stat_set({_weapon}, "CD_SPECIAL", 0) #We do not use nbt here because to refresh nbt on item, we have to regenerate it
     return {_weapon}
@@ -18,7 +18,18 @@ function weapon_stat_reload(p: player, weapon: item) :: item:
     else:
         return item_stat_initialize({_p}, "WEAPON", {_weapon})
 
-function weapon_leftClick(p: player, weapon: item):
+# When we hit an entity with a weapon (eg: SWORD)
+function weapon_hit(p: player, weapon: item, victim: entity):
+    set {_category} to item_nbt_get_tag({_weapon}, "CATEGORY")
+    if item_nbt_isset_list({_weapon}, "WILL") is true:
+        if {_category} is "SWORD":
+            sword_hit_skill({_p}, {_weapon}, {_victim})
+    else:
+        if {_category} is "SWORD":
+            sword_hit({_p}, {_weapon}, {_victim})
+
+# WHen weapon is being casted (eg: STAFF)
+function weapon_cast(p: player, weapon: item):
     set {_category} to item_nbt_get_tag({_weapon}, "CATEGORY")
     if item_store_stat_isset({_weapon}, "CD_NORMAL") is true:
         set {_cd} to item_store_stat_get({_weapon}, "CD_NORMAL")

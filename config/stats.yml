@@ -50,6 +50,10 @@ ALL:
   KNOCKBACK:
     ICON: ""
     COLOR: "§c"
+  BLOCKING:
+    ICON: ""
+    ICON_END: "%"
+    COLOR: "§c"
 
 MOB:
   - "HEALTH"

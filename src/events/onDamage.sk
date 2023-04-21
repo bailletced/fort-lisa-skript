@@ -19,6 +19,10 @@ on damage:
     set {_p} to attacker
     set {_item} to held item of {_p}
     set {_typeItem} to item_nbt_get_tag({_item}, "TYPE")
+    if {_typeItem} is "WEAPON":
+      weapon_hit({_p}, {_item}, victim)
+    cancel event
+
     if entity_nbt_get_tag(victim, "TYPE") is "MOB":
       # A mob is hit.
       mob_ai_listener_RECEIVE_PLAYER_DAMAGE(victim, attacker)

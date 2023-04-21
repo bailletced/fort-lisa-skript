@@ -27,15 +27,15 @@ function helmet_burning_heart_cast(p: player, skill: item):
           set {_target} to loop-entity
           stop loop
 
-  if {_targetFound} is true:
-    entity_nbt_add_stat({_p}, {_uuid}, 1)
-    set {_count} to entity_nbt_get_stat({_p}, {_uuid})
-    if {_count} >= {_usageCount}:
-      skill_cost({_p}, {_skill})
-      entity_nbt_delete({_p}, {_uuid})
-    else:
-      helmet_burning_heart_applyCostAfterDelay({_p}, {_skill})
+  # Increment usage count
+  entity_nbt_add_stat({_p}, {_uuid}, 1)
+  set {_count} to entity_nbt_get_stat({_p}, {_uuid})
+  if {_count} >= {_usageCount}:
+    skill_cost({_p}, {_skill})
+    entity_nbt_delete({_p}, {_uuid})
+  helmet_burning_heart_applyCostAfterDelay({_p}, {_skill})
 
+  if {_targetFound} is true:
     set {_victims::*} to {_target}
     set yaw of {_loc} to yaw of {_p}
     set pitch of {_loc} to pitch of {_p}

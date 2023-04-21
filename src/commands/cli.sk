@@ -41,8 +41,7 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>] [<text>]:
         set {_weapon} to gift_consecrate({_p}, {_gift}, {_weapon})
         give {_weapon} to {_p}
       else:
-        item_give(player, "EQUIPMENT", {_category}, {_id})
-      item_give(player, "WEAPON", {_category}, {_id})
+        item_give(player, "WEAPON", {_category}, {_id})
 
     else if arg-1 is "equipment":
       set {_category} to arg-2
@@ -206,7 +205,7 @@ on tab complete of "/admin":
   
   else if tab arg-1 is "mob":
     set tab completions for position 2 to "summon" and "kill"
-    if tab arg-2 is set:
+    if tab arg-2 is "summon":
       set tab completions for position 3 to {MOB::CATEGORY::*}
       if tab arg-3 is set:
         set {_category} to tab arg-3

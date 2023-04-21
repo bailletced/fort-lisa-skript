@@ -21,6 +21,7 @@ function game_start(world: world):
     wait 10 ticks
 
   #GAME FINAL INIT
+  wait 3 seconds
   game_store_set({_gameUuid}, "STATUS", "RUNNING")
   lisa_listeners({_lisa})
   wave_init({_gameUuid})
@@ -38,4 +39,5 @@ function game_end(gameUuid: text):
     if loop-value is a player:
       if player_store_setting_get(loop-value, "INGAME") is true:
         player_clean(loop-value)
+        player_interface_title(loop-value, i18n({_p}, "GAME.END"), "", 3 seconds)
         

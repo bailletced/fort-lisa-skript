@@ -55,3 +55,19 @@ BOW:
       ATTACK: 8
       ATTACK_MULTIPLIER: 0.5
       KNOCKBACK: 1
+SWORD:
+  DARD:
+    ITEM: iron sword
+    WILL:
+      BURNING_HEART:
+        ITEM: iron sword
+        CUSTOM_ITEM: volonte_sword
+    GIFTS:
+      WILL_MAX: 1
+      INTELLECT_MAX: 1
+      MEMORY_MAX: 0
+    STATS:
+      ATTACK: 8
+      ATTACK_MULTIPLIER: 0.5
+      KNOCKBACK: 2
+      BLOCKING: 70

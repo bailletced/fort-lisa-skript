@@ -47,6 +47,10 @@ WEAPON:
     ARROWSPIKE:
       TITLE: "Arc fougueux"
       LORE: "Projette une flèche qui inflige {_ATTACK}."
+  SWORD:
+    DARD:
+      TITLE: "Dard, épée tranchante"
+      LORE: "Bloque {_BLOCKING} des dégâts reçus de face. Inflige {_ATTACK} avec un recul de {_KNOCKBACK}"
 EQUIPMENT:
   HELMET:
     LAUREL_CROWN:
@@ -85,6 +89,10 @@ SKILL:
   BOW:
     BURNING_HEART:
       LORE: "La flèche inflige {_ATTACK} et brûle la cible, infligeant {_EFFECT_ATTACK} tous les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION}. Si la cible est déjà brûlée, les ennemis dans un rayon de {_RADIUS} le sont aussi. Si la cible est touchée de nouveau, elle consomme toutes ses brûlures et subit de nouveau tous les dégâts précédents et brûle les ennemis proches."
+  SWORD:
+    BURNING_HEART:
+      TITLE: "Epée de feu"
+      LORE: "Bloque {_BLOCKING} des dégâts reçus de face. Inflige {_ATTACK} avec un recul de {_KNOCKBACK}, et brûle les ennemis dans un rayon de {_RADIUS}, infligeant {_EFFECT_ATTACK} toutes les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION}"
 GIFT:
   MEMORY:
     TITLE: "Mémoire"
@@ -125,6 +133,8 @@ GUI:
       TITLE: "Choisissez une arme"
     GIFT:
       TITLE: "Choisissez un don"
+GAME:
+  END: "Fin de la partie"
 UTILITY:
   MAIN:
     CD:
