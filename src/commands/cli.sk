@@ -34,12 +34,26 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>] [<text>]:
     else if arg-1 is "weapon":
       set {_category} to arg-2
       set {_id} to arg-3
-      item_give(player, "WEAPON", {_category}, {_id})
+      set {_giftWillId} to arg-4
+      if {_giftWillId} is set:
+        set {_weapon} to weapon_create({_p}, {_category}, {_id})
+        set {_gift} to gift_create({_p}, "WILL", {_giftWillId})
+        set {_weapon} to gift_consecrate({_p}, {_gift}, {_weapon})
+        give {_weapon} to {_p}
+      else:
+        item_give(player, "WEAPON", {_category}, {_id})
 
     else if arg-1 is "equipment":
       set {_category} to arg-2
       set {_id} to arg-3
-      item_give(player, "EQUIPMENT", {_category}, {_id})
+      set {_giftWillId} to arg-4
+      if {_giftWillId} is set:
+        set {_equipment} to equipment_create({_p}, {_category}, {_id})
+        set {_gift} to gift_create({_p}, "WILL", {_giftWillId})
+        set {_equipment} to gift_consecrate({_p}, {_gift}, {_equipment})
+        give {_equipment} to {_p}
+      else:
+        item_give(player, "EQUIPMENT", {_category}, {_id})
 
     else if arg-1 is "skill":
       set {_category} to arg-2
@@ -72,7 +86,8 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>] [<text>]:
 
     else if arg-1 is "wave":
       if arg-2 is "start":
-        wave_start(arg-3 parsed as number)
+        stop
+        # wave_start(arg-3 parsed as number, "TOTO")
 
     else if arg-1 is "mob":
       if arg-2 is "summon":
@@ -147,6 +162,8 @@ on tab complete of "/admin":
       set {_weapons::*} to {WEAPON::%tab arg-2%::ID::*}
       remove "TEST" from {_weapons::*}
       set tab completions for position 3 to {_weapons::*}
+    if tab arg-3 is set:
+      set tab completions for position 4 to {GIFT::WILL::ID::*}
   
   else if tab arg-1 is "equipment":
     set tab completions for position 2 to {EQUIPMENT::CATEGORY::*}
@@ -154,6 +171,8 @@ on tab complete of "/admin":
       set {_equipments::*} to {EQUIPMENT::%tab arg-2%::ID::*}
       remove "TEST" from {_equipments::*}
       set tab completions for position 3 to {_equipments::*}
+      if tab arg-3 is set:
+        set tab completions for position 4 to {GIFT::WILL::ID::*}
   
   else if tab arg-1 is "skill":
     set tab completions for position 2 to {SKILL::CATEGORY::*}
@@ -186,7 +205,7 @@ on tab complete of "/admin":
   
   else if tab arg-1 is "mob":
     set tab completions for position 2 to "summon" and "kill"
-    if tab arg-2 is set:
+    if tab arg-2 is "summon":
       set tab completions for position 3 to {MOB::CATEGORY::*}
       if tab arg-3 is set:
         set {_category} to tab arg-3

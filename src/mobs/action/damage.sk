@@ -1,5 +1,13 @@
 function mob_action_damage(mob: entity, victim: entity):
   set {_attack} to entity_nbt_get_stat({_mob}, "ATTACK")
+
+# We compute reduce of damage if victim is holding an item with can block damage
+  if {_victim} is a player:
+    set {_item} to tool of {_victim}
+    if item_nbt_isset_stat({_item}, "DEFENCE_FACING") is true:
+      set {_blocking} to item_nbt_get_stat({_item}, "DEFENCE_FACING")
+      set {_attack} to effect_damage_block_facing({_mob}, {_victim}, 40, {_attack}, {_blocking})
+
   set {_damageCategory} to entity_nbt_get_tag({_mob}, "DAMAGE_CATEGORY")
   if {_damageCategory} is "EXPLOSION":
     set {_dist} to distance between {_mob} and {_victim}

@@ -12,6 +12,7 @@ function config_load(world: world):
     add loop-value to {STAT::ALL::*}
     set {_icon} to yaml value "ALL.%loop-value%.ICON" from "YAML-STATS"
     set {STAT::%loop-value%::ICON} to yaml value "ALL.%loop-value%.ICON" from "YAML-STATS"
+    set {STAT::%loop-value%::ICON_END} to yaml value "ALL.%loop-value%.ICON_END" from "YAML-STATS"
     set {STAT::%loop-value%::COLOR} to yaml value "ALL.%loop-value%.COLOR" from "YAML-STATS"
   unload yaml "YAML-STATS"
 

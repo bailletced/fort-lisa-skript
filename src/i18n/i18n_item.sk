@@ -99,6 +99,9 @@ function i18n_item_lore(p: player, it: item) :: text:
             
         set {_color} to {STAT::%{_pureStat}%::COLOR}
         set {_icon} to {STAT::%{_pureStat}%::ICON}
+        set {_endIcon} to {STAT::%{_pureStat}%::ICON_END}
+        if {_endIcon} is not set:
+            set {_endIcon} to ""
         set {_valueFinal} to {_value} + {_playerStat} * {_multiplier}
         set {_typeKey::*} to {_pureStat} split at "_"
         set {_typeKey} to the last element of {_typeKey::*}
@@ -106,7 +109,7 @@ function i18n_item_lore(p: player, it: item) :: text:
         set {_typeKey} to {_splitted::1}
         if "DURATION", "FREQUENCY" and "COOLDOWN" contains {_typeKey}:
             set {_valueFinal} to "%{_value}/20%sec"
-        replace "{_%{_key}%}" in {_lore} with "%{_color}%%{_icon}%%{_valueFinal}%§f"
+        replace "{_%{_key}%}" in {_lore} with "%{_color}%%{_icon}%%{_valueFinal}%%{_endIcon}%§f"
     return {_lore}
 
 #transform a lore to list to make sure it will be visible once set to an item

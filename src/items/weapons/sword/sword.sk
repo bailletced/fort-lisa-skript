@@ -1,0 +1,9 @@
+function sword_hit(p: player, sword: item, victim: entity):
+  set {_id} to item_nbt_get_tag({_sword}, "ID")
+  if {_id} is "DARD":
+    dard_hit({_p}, {_sword}, {_victim})
+
+function sword_hit_skill(p: player, sword: item, victim: entity):
+  set {_idSkill} to first element of item_nbt_get_list({_sword}, "WILL")
+  if {_idSkill} is "BURNING_HEART":
+    sword_burning_heart_hit({_p}, {_sword}, {_victim})

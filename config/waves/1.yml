@@ -2,8 +2,8 @@ DURATION: 1200
 MOBS:
   1:
     ID: ZOMBIE
-    LEVEL: 0
-    AMOUNT: 40
+    LEVEL: 1
+    AMOUNT: 30
     AI: A
     LOCATION:
       - CASTLE.GATE_A
@@ -11,10 +11,10 @@ MOBS:
       - CASTLE.GATE_C
       - CASTLE.GATE_D
     DELAY: 20
-  1:
+  2:
     ID: SKELETON
-    LEVEL: 0
-    AMOUNT: 40
+    LEVEL: 1
+    AMOUNT: 30
     AI: A
     LOCATION:
       - CASTLE.GATE_A

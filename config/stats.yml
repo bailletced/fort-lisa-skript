@@ -44,6 +44,16 @@ ALL:
   CHARITY:
     ICON: ""
     COLOR: "§c"
+  USAGE_COUNT:
+    ICON: ""
+    COLOR: "§c"
+  KNOCKBACK:
+    ICON: ""
+    COLOR: "§c"
+  BLOCKING:
+    ICON: ""
+    ICON_END: "%"
+    COLOR: "§c"
 
 MOB:
   - "HEALTH"

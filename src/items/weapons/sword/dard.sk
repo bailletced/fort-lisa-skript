@@ -1,0 +1,5 @@
+function dard_hit(p: player, sword: item, victim: entity):
+  set {_attack} to player_stat_compute({_p}, {_sword}, "ATTACK")
+  set {_knockback} to player_stat_compute({_p}, {_sword}, "KNOCKBACK")
+  broadcast "fgoerkgokerog"
+  entity_effect_damage({_p}, {_victim}, {_attack}, {_knockback})

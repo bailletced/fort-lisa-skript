@@ -54,8 +54,9 @@ function item_create(p: player, type: text, category: text, id: text, idWill: te
   return {_item}
 
 function item_generate_uuid(type: text, category: text, id: text) :: text:
-  add 1 to {IDS::%{_type}%::%{_category}%::%{_id}%}
-  return "%{_type}%/%{_category}%/%{IDS::%{_type}%::%{_category}%::%{_id}%}%"
+  return random uuid
+  # add 1 to {IDS::%{_type}%::%{_category}%::%{_id}%}
+  # return "%{_type}%/%{_category}%/%{IDS::%{_type}%::%{_category}%::%{_id}%}%"
 
 function item_give(p: player, type: text, category: text, id: text):
   if {_type} is "WEAPON":
