@@ -6,6 +6,7 @@ function player_init(p: player, gameUuid: text):
   wait 1 tick
   player_store_stat_set({_p}, "ATTACK", 0)
   player_store_stat_set({_p}, "HEALTH_MAX", 20)
+  player_store_stat_set({_p}, "HEALTH", 20)
   player_store_stat_set({_p}, "DEFENCE", 0)
   player_store_stat_set({_p}, "CHARITY", 0)
   set max health of {_p} to 20

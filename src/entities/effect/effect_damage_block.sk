@@ -1,0 +1,19 @@
+function effect_damage_block_facing(attacker: entity, victim: entity, precision: number, damage: number, blockingPercentage: number) :: number:
+  set {_reduce} to false
+  
+  set {_vMob} to vector from yaw yaw of {_attacker} and pitch 0
+  set {_vVictim} to vector from yaw yaw of {_victim} and pitch 0
+  set {_angleYaw} to angle between {_vMob} and {_vVictim}
+  if {_angleYaw} <= {_precision}:
+    # the attacker's back is in front of the victim
+    set {_reduce} to true
+  else:
+    set {_vMob} to vector from yaw yaw of {_attacker} and pitch pitch of {_attacker}
+    set {_vVictim} to vector from yaw yaw of {_victim} and pitch pitch of {_victim}
+    set {_angle} to angle between {_vMob} and {_vVictim}
+    if abs({_angle} - 180) <= {_precision}:
+      # attacker and victim are facing each other
+      set {_reduce} to true
+  if {_reduce} is true:
+    return {_damage} * (1 - 0.01*{_blockingPercentage})
+  return {_damage}

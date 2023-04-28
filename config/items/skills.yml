@@ -68,7 +68,7 @@ SWORD:
       EFFECT_DURATION: 80
       EFFECT_FREQUENCY: 20
       KNOCKBACK: 2
-      BLOCKING: 80
+      DEFENCE_FACING: 80
 HELMET:
   TEST:
     ITEM: dragon's breath

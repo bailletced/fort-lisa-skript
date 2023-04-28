@@ -4,25 +4,9 @@ function mob_action_damage(mob: entity, victim: entity):
 # We compute reduce of damage if victim is holding an item with can block damage
   if {_victim} is a player:
     set {_item} to tool of {_victim}
-    if item_nbt_isset_stat({_item}, "BLOCKING") is true:
-      set {_reduce} to false
-      set {_blocking} to item_nbt_get_stat({_item}, "BLOCKING")
-      
-      set {_vMob} to vector from yaw yaw of {_mob} and pitch 0
-      set {_vVictim} to vector from yaw yaw of {_victim} and pitch 0
-      set {_angleYaw} to angle between {_vMob} and {_vVictim}
-      if {_angleYaw} <= 20:
-        # the mob's back is to the victim
-        set {_reduce} to true
-      else:
-        set {_vMob} to vector from yaw yaw of {_mob} and pitch pitch of {_mob}
-        set {_vVictim} to vector from yaw yaw of {_victim} and pitch pitch of {_victim}
-        set {_angle} to angle between {_vMob} and {_vVictim}
-        if abs({_angle} - 180) <= 25:
-          set {_reduce} to true
-      if {_reduce} is true:
-        set {_attack} to {_attack} * (1 - 0.01*{_blocking})
-
+    if item_nbt_isset_stat({_item}, "DEFENCE_FACING") is true:
+      set {_blocking} to item_nbt_get_stat({_item}, "DEFENCE_FACING")
+      set {_attack} to effect_damage_block_facing({_mob}, {_victim}, 40, {_attack}, {_blocking})
 
   set {_damageCategory} to entity_nbt_get_tag({_mob}, "DAMAGE_CATEGORY")
   if {_damageCategory} is "EXPLOSION":
