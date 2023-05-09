@@ -50,7 +50,7 @@ ALL:
   KNOCKBACK:
     ICON: ""
     COLOR: "§c"
-  BLOCKING:
+  DEFENCE_FACING:
     ICON: ""
     ICON_END: "%"
     COLOR: "§c"

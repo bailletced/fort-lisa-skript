@@ -92,7 +92,7 @@ SKILL:
   SWORD:
     BURNING_HEART:
       TITLE: "Epée de feu"
-      LORE: "Bloque {_BLOCKING} des dégâts reçus de face. Inflige {_ATTACK} avec un recul de {_KNOCKBACK}, et brûle les ennemis dans un rayon de {_RADIUS}, infligeant {_EFFECT_ATTACK} toutes les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION}"
+      LORE: "Bloque {_DEFENCE_FACING} des dégâts reçus de face. Inflige {_ATTACK} avec un recul de {_KNOCKBACK}, et brûle les ennemis dans un rayon de {_RADIUS}, infligeant {_EFFECT_ATTACK} toutes les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION}"
 GIFT:
   MEMORY:
     TITLE: "Mémoire"

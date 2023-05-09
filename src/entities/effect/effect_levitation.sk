@@ -1,0 +1,3 @@
+function entity_effect_levitation(e: entity, duration: number):
+  set {_durationTick} to "%{_duration}% ticks" parsed as timespan
+  apply potion of levitation 255 without particles to {_e} for {_durationTick}
