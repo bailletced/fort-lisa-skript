@@ -1,3 +1,4 @@
+# Status : PREPARING, RUNNING
 function player_store_game_set(p: player, key: text, value: object):
   set {players::%{_p}%::game::%{_key}%} to {_value}
 

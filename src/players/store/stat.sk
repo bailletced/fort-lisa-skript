@@ -63,6 +63,13 @@ function player_store_stat_isset(p : player, key: text) :: boolean:
     else:
         return false
 
+function player_store_stat_reset_all(p: player):
+    player_store_stat_set({_p}, "ATTACK", 0)
+    player_store_stat_set({_p}, "HEALTH_MAX", 20)
+    player_store_stat_set({_p}, "HEALTH", 20)
+    player_store_stat_set({_p}, "DEFENCE", 0)
+    player_store_stat_set({_p}, "CHARITY", 0)
+
 #Delete a stat for a player
 #Params: 
 #   p : player The player to give the skill

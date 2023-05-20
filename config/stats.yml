@@ -44,7 +44,7 @@ ALL:
   CHARITY:
     ICON: ""
     COLOR: "§c"
-  USAGE_COUNT:
+  USAGE_ADDITIONAL:
     ICON: ""
     COLOR: "§c"
   KNOCKBACK:
@@ -53,6 +53,9 @@ ALL:
   DEFENCE_FACING:
     ICON: ""
     ICON_END: "%"
+    COLOR: "§c"
+  PROPULSION:
+    ICON: ""
     COLOR: "§c"
 
 MOB:
