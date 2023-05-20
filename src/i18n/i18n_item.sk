@@ -66,7 +66,7 @@ function i18n_item_stat_lore(p: player, it: item) :: texts:
         loop item_nbt_get_list({_it}, "STAT"):
             set {_stat} to loop-value
             if item_nbt_isset_stat({_it}, {_stat}) is true:
-                set {_value} to color_stat(item_nbt_get_stat({_it}, {_stat}))
+                set {_value} to color_stat({_stat}, item_nbt_get_stat({_it}, {_stat}))
                 set {_i18nStat} to i18n({_p}, "STAT.%{_stat}%.NORMAL", "§f")
                 add "%{_i18nStat}% : %{_value}%" to {_res::*}
         return {_res::*}
@@ -142,7 +142,7 @@ function i18n_item_lore_to_list(lore: text) :: texts:
     set {_lore::*} to {_lore} split at newline
     loop {_lore::*}:
         add i18n_transform_description(loop-value) to {_res::*}
-    return {_res::*}
+    return "" and {_res::*}
 
 # internationalize an item
 function i18n_item(p: player, it: item) :: item:

@@ -16,7 +16,16 @@ ALL:
     COLOR: "§6"
   DEFENCE:
     ICON: "🛡"
+    ICON_END: "%"
     COLOR: "§6"
+  DEFENCE_REDUCTION:
+    ICON: ""
+    ICON_END: "%"
+    COLOR: "§c"
+  DEFENCE_REDUCTION_FACING:
+    ICON: ""
+    ICON_END: "%"
+    COLOR: "§c"
   RANGE:
     ICON: "➝"
     COLOR: "§f"
@@ -50,11 +59,10 @@ ALL:
   KNOCKBACK:
     ICON: ""
     COLOR: "§c"
-  DEFENCE_FACING:
-    ICON: ""
-    ICON_END: "%"
-    COLOR: "§c"
   PROPULSION:
+    ICON: ""
+    COLOR: "§c"
+  DURABILITY:
     ICON: ""
     COLOR: "§c"
 

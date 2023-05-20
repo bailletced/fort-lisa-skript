@@ -10,4 +10,4 @@ on right click:
         set {_category} to block_nbt_get_tag(block, "CATEGORY")
         set {_id} to block_nbt_get_tag(block, "ID")
         gui_open({_p}, {_category}, {_id})
-        cancel event     
+        cancel event

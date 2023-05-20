@@ -16,8 +16,16 @@ function parser_tier(tier: number) :: text:
   else:
     return ""
 
-function color_stat(stat: number) :: text:
-  if {_stat} > 0:
-    return "§2+%{_stat}%"
+function color_stat(stat: text, value: number) :: text:
+  set {_statTxt} to {_value}
+  if "COOLDOWN" contains {_stat}:
+    return "%{_value}/20% sec"
+  if "DEFENCE_REDUCTION" and "DEFENCE_REDUCTION_FACING" contains {_stat}:
+    set {_statTxt} to "%{_value}%%{STAT::%{_stat}%::ICON_END}%"
+  else if "DURABILITY" and "DURABILITY_MAX" contains {_stat}:
+    return "%{_value}%"
+  
+  if {_value} > 0:
+    return "§2+%{_statTxt}%"
   else:
-    return "§c-%{_stat}%"
+    return "§c-%{_statTxt}%"

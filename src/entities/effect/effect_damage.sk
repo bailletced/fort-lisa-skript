@@ -7,15 +7,28 @@ function entity_effect_damage(source: entity, target: entity, attack: number, kn
   if {_defence} is not set:
     set {_defence} to 0
 
-  set {_finalDmg} to max(0, {_attack} - {_defence})
+  set {_attack} to max(0, {_attack} - {_defence})
+
+  # Reduce damage if holding a defensive item
+  if {_target} is a player:
+    set {_item} to tool of {_target}
+    if item_nbt_isset_stat({_item}, "DEFENCE_REDUCTION_FACING") is true:
+      set {_blocking} to item_nbt_get_stat({_item}, "DEFENCE_REDUCTION_FACING")
+      set {_attack} to effect_damage_block_facing({_mob}, {_target}, 40, {_attack}, {_blocking})
+
+  # Reduce damage if holding a shield
+  set {_shield} to offhand item of {_target}
+  if item_nbt_get_tag({_shield}, "CATEGORY") is "SHIELD":
+    set {_attack} to shield_damage_receive({_target}, {_shield}, {_attack})
+
   set {_targetHealth} to health of {_target}
   set {_duration} to entity_store_effect_get({_target}, "IMMUNITY_TRYNDAMERE", "duration")
   if entity_store_effect_isset({_target}, "IMMUNITY_TRYNDAMERE") is true:
-    if {_targetHealth} - {_finalDmg} <= 0:
-      set {_finalDmg} to 0
+    if {_targetHealth} - {_attack} <= 0:
+      set {_attack} to 0
       set health of {_target} to 0.5
   
-  damage {_target} by {_finalDmg}
+  damage {_target} by {_attack}
 
   if {_knockback} is not 0:
     set {_v} to normalized vector from {_source} to {_target}

@@ -1,0 +1,21 @@
+function shield_damage_receive(target: entity, shield: item, attack: number) :: number:
+  set {_durabilityMax} to item_nbt_get_stat({_shield}, "DURABILITY_MAX")
+  set {_durability} to item_nbt_get_stat({_shield}, "DURABILITY")
+  set {_finalDurability} to {_durability} - {_attack}
+  
+  if {_finalDurability} <= 0:
+    set slot 40 of {_target} to air
+  else:
+    set {_coeff} to {SHIELD_DURABILITY} / {_durabilityMax}
+    set {_nativeDurability} to ceil({SHIELD_DURABILITY} - {_finalDurability}*{_coeff})
+    set {_shield} to item_nbt_set_tag_native({_shield}, "{Damage:%{_nativeDurability}%}")
+    set {_shield} to item_nbt_set_stat({_shield}, "DURABILITY", {_finalDurability})
+    set slot 40 of {_target} to i18n_item({_target}, {_shield})
+
+    if {_target} is blocking:
+      return 0
+    else:
+      set {_defenceRed} to item_nbt_get_stat({_shield}, "DEFENCE_REDUCTION")
+      return {_attack} * (1 - ({_defenceRed}/100))
+      
+  return {_attack}
