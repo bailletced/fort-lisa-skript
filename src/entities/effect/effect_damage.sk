@@ -9,17 +9,19 @@ function entity_effect_damage(source: entity, target: entity, attack: number, kn
 
   set {_attack} to max(0, {_attack} - {_defence})
 
+  set {_tool} to tool of {_target}
   # Reduce damage if holding a defensive item
   if {_target} is a player:
-    set {_item} to tool of {_target}
-    if item_nbt_isset_stat({_item}, "DEFENCE_REDUCTION_FACING") is true:
-      set {_blocking} to item_nbt_get_stat({_item}, "DEFENCE_REDUCTION_FACING")
+    if item_nbt_isset_stat({_tool}, "DEFENCE_REDUCTION_FACING") is true:
+      set {_blocking} to item_nbt_get_stat({_tool}, "DEFENCE_REDUCTION_FACING")
       set {_attack} to effect_damage_block_facing({_mob}, {_target}, 40, {_attack}, {_blocking})
 
   # Reduce damage if holding a shield
   set {_shield} to offhand item of {_target}
   if item_nbt_get_tag({_shield}, "CATEGORY") is "SHIELD":
-    set {_attack} to shield_damage_receive({_target}, {_shield}, {_attack})
+    set {_attack} to shield_damage_receive({_target}, {_shield}, {_attack}, 40)
+  else if item_nbt_get_tag({_tool}, "CATEGORY") is "SHIELD":
+    set {_attack} to shield_damage_receive({_target}, {_tool}, {_attack}, index of current hotbar slot of {_target})
 
   set {_targetHealth} to health of {_target}
   set {_duration} to entity_store_effect_get({_target}, "IMMUNITY_TRYNDAMERE", "duration")

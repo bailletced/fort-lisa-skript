@@ -71,4 +71,5 @@ function helmet_burning_heart_applyCostAfterDelay(p: player, skill: item):
     entity_nbt_delete({_p}, {_uuid})
 
 function helmet_burning_heart_endPropulsion(p: player):
+  wait 10 ticks
   entity_store_effect_delete({_p}, "IMMUNITY_ALL") #We remove immunity as propulsion finished
