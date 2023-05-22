@@ -9,6 +9,8 @@ function gui_gameStart_choose(gameUuid: text, p: player, type: text):
       set {_list::*} to {GIFT::WILL::ID::*}
     else if {_type} is "INTELLECT":
       set {_list::*} to {GIFT::INTELLECT::ID::*}
+    else if {_type} is "EQUIPMENT":
+      remove "SHIELD" from {_list::*}
 
     loop {_list::*}:
       add 1 to {_it}
