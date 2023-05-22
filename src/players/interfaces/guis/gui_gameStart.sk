@@ -25,6 +25,10 @@ function gui_gameStart_choose(gameUuid: text, p: player, type: text):
 
       make gui slot "%{_it}%" with {_item}:
         give {_item} to {_p}
+        if item_nbt_get_tag({_item}, "CATEGORY") is "SWORD":
+          set {_shield} to equipment_create({_p}, "SHIELD", "IRON_SHIELD")
+          give {_shield} to {_p}
+
         player_store_gui_delete({_p}, "GAMESTART_%{_type}%")
         close inventory of {_p}
         gui_gameStart_chooseNext({_gameUuid}, {_p}, {_type})

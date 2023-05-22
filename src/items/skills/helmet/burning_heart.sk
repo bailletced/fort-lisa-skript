@@ -4,68 +4,64 @@ function helmet_burning_heart_cast(p: player, skill: item):
   set {_effectAttack} to player_stat_compute({_p}, {_skill}, "EFFECT_ATTACK")
   set {_effectDuration} to player_stat_compute({_p}, {_skill}, "EFFECT_DURATION")
   set {_effectFrequency} to player_stat_compute({_p}, {_skill}, "EFFECT_FREQUENCY")
-  set {_range} to player_stat_compute({_p}, {_skill}, "RANGE")
-  set {_usageCount} to player_stat_compute({_p}, {_skill}, "USAGE_COUNT")
+  set {_propulsion} to player_stat_compute({_p}, {_skill}, "PROPULSION")
+  set {_usageAdditional} to player_stat_compute({_p}, {_skill}, "USAGE_ADDITIONAL")
   set {_loc} to location of {_p}
   set {_uuid} to item_nbt_get_tag({_skill}, "UUID")
 
-  entity_effect_immunity({_p}, "ALL", 20)
-
-  set {_targetFound} to false
-  # Target entites in cone
-  set {_block} to 1
-  set {_cone} to 0
-  loop 4 times:
-    add 1 to {_block}
-    add 2 to {_cone}
-    set {_getBlock} to block {_block} blocks infront of {_p}
-    loop all entities in radius {_cone} of {_getBlock}:
-      if entity_nbt_get_tag(loop-entity, "TYPE") is "MOB":
-        if distance between {_loc} and loop-entity <= {_range}:
-          set {_targetFound} to true
-          set {_loc} to location of loop-entity ~ normalized vector from loop-entity and {_p}
-          set {_target} to loop-entity
-          stop loop
-
-  # Increment usage count
   entity_nbt_add_stat({_p}, {_uuid}, 1)
   set {_count} to entity_nbt_get_stat({_p}, {_uuid})
-  if {_count} >= {_usageCount}:
+  if {_count} > {_usageAdditional}:
     skill_cost({_p}, {_skill})
     entity_nbt_delete({_p}, {_uuid})
-  helmet_burning_heart_applyCostAfterDelay({_p}, {_skill})
-
-  if {_targetFound} is true:
-    set {_victims::*} to {_target}
-    set yaw of {_loc} to yaw of {_p}
-    set pitch of {_loc} to pitch of {_p}
-    teleport {_p} to {_loc}
-
-    # We push entities behind the target
-    loop all entities in radius 1.5 of {_p}:
-      if entity_nbt_get_tag(loop-entity, "TYPE") is "MOB":
-        add loop-entity to {_victims::*}
-
-    drawDot count 5, particle "flame", RGB 0.2, 1, 0.2, center {_target}, rainbowMode true, visibleRange 32, pulseDelay 0, keepFor 20 ticks
-    entity_effect_damage({_p}, {_target}, {_attack}, {_knockback}-2)
-    loop {_victims::*}:
-      entity_effect_burn({_p}, loop-value, {_effectAttack}, {_effectDuration}, {_effectFrequency})
   else:
-    set {_dest} to location {_range} in front of {_p}
-    set {_loc} to location of {_p}
-    set {_v} to vector between {_loc} and {_dest}
-    set vector length of {_v} to 0.5
-    set {_dist} to distance between {_loc} and {_dest}
-    set {_finalLoc} to {_loc}
-    while vector length of {_v} < {_dist}:
-      add 0.5 to vector length of {_v}
-      set {_tmpLoc} to {_loc} ~ {_v}
-      if {BLOCK::NOCOLLISION::*} does not contain "%type of block at {_tmpLoc}%":
-        stop loop
-      else:
-        set {_finalLoc} to {_tmpLoc}
-    teleport {_p} to {_finalLoc}
-    skill_cost({_p}, {_skill})
+    helmet_burning_heart_applyCostAfterDelay({_p}, {_skill})
+
+  if block at {_p} is not air:
+    teleport {_p} 1 meter above {_p}
+
+  entity_effect_immunity({_p}, "ALL", 80)
+  entity_effect_immunity({_p}, "FALL", 200, "UNIQUE")
+
+  if pitch of {_p} is not between 20 and -20:
+    # player is not facing on the air
+    set {_propulsion} to {_propulsion} / 3
+
+  set {_origin} to location of {_p}
+  push {_p} forward with force {_propulsion}
+  wait 1 tick
+
+  # We push player, and stop if hit an entity
+  loop 20 times:
+    loop target_radius({_p}, 1.5):
+      set {_victim} to loop-entity
+      set {_yaw} to yaw of {_p}
+      set {_pitch} to pitch of {_p}
+      stop loop
+    if {_victim} is set:
+      set {_loc} to location of {_victim} ~ normalized vector from {_victim} and {_p}
+      set yaw of {_loc} to {_yaw}
+      set pitch of {_loc} to {_pitch}
+      teleport {_p} to {_loc}
+      helmet_burning_heart_endPropulsion({_p})
+      stop loop
+    wait 1 tick
+
+    # Check if propulsion ended
+    if distance between {_p} and {_origin} <= 0.3:
+      helmet_burning_heart_endPropulsion({_p})
+      stop loop
+    set {_origin} to location of {_p}
+
+    
+  # We damage hit entity and ones in radius and push them
+  if {_victim} is set:
+    drawDot count 15, particle "flame", RGB 1, 1, 1, center location of {_victim}, rainbowMode true, visibleRange 32, pulseDelay 0, keepFor 1 ticks
+    set {_victims::*} to target_radius({_victim}, 3)
+    drawDot count 5, particle "flame", RGB 0.2, 1, 0.2, center {_victim}, rainbowMode true, visibleRange 32, pulseDelay 0, keepFor 20 ticks
+    loop {_victims::*}:
+      entity_effect_damage({_p}, loop-value, {_attack}, {_knockback})
+      entity_effect_burn({_p}, loop-value, {_effectAttack}, {_effectDuration}, {_effectFrequency})
 
 function helmet_burning_heart_applyCostAfterDelay(p: player, skill: item):
   wait 5 seconds
@@ -73,3 +69,7 @@ function helmet_burning_heart_applyCostAfterDelay(p: player, skill: item):
     set {_uuid} to item_nbt_get_tag({_skill}, "UUID")
     skill_cost({_p}, {_skill})
     entity_nbt_delete({_p}, {_uuid})
+
+function helmet_burning_heart_endPropulsion(p: player):
+  wait 10 ticks
+  entity_store_effect_delete({_p}, "IMMUNITY_ALL") #We remove immunity as propulsion finished

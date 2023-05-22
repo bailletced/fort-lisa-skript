@@ -1,9 +1,6 @@
 function player_init(p: player, gameUuid: text):
-  set {_loc} to {LOCATION::CASTLE::THRONE}
-  set world of {_loc} to "FortLisa" parsed as world
-  teleport {_p} to {_loc}
+  player_teleport_origin({_p})
   player_clean({_p})
-  wait 1 tick
   player_store_stat_set({_p}, "ATTACK", 0)
   player_store_stat_set({_p}, "HEALTH_MAX", 20)
   player_store_stat_set({_p}, "HEALTH", 20)
@@ -22,5 +19,13 @@ function player_init(p: player, gameUuid: text):
 
 function player_clean(p: player):
   player_store_gui_delete_all({_p})
-  delete {players::%{_p}%::*}
   clear inventory of {_p}
+  wait 2 tick #Wait for stats from equipments to be reset
+  player_store_stat_reset_all({_p})
+  player_store_game_delete({_p}, "STATUS")
+  player_teleport_origin({_p})
+
+function player_teleport_origin(p: player):
+  set {_loc} to {LOCATION::CASTLE::THRONE}
+  set world of {_loc} to "FortLisa" parsed as world
+  teleport {_p} to {_loc}

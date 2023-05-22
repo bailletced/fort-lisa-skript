@@ -17,20 +17,20 @@ STAT:
     NORMAL: "Charité"
   DEFENCE:
     NORMAL: "Défense"
-  MR:
-    NORMAL: "Res.Magique"
+  DEFENCE_REDUCTION:
+    NORMAL: "Défense.Réd"
   HEALTH:
     NORMAL: "PV"
   HEALTH_MAX:
     NORMAL: "PV.Max"
   HEALTH_REGEN:
     NORMAL: "PV.Regen"
-  MANA:
-    NORMAL: "Mana"
-  MANA_MAX:
-    NORMAL: "Mana.Max"
-  MANA_REGEN:
-    NORMAL: "Mana.Regen"
+  DURABILITY:
+    NORMAL: "Durabilité"
+  DURABILITY_MAX:
+    NORMAL: "Durabilité.Max"
+  COOLDOWN:
+    NORMAL: "Récupération"
 WEAPON:
   STAFF:
     TEST:
@@ -61,6 +61,10 @@ EQUIPMENT:
   LEGGING:
     LEATHER_JOGGING:
       TITLE: "Le jogging de cuir {_TIER}"
+  SHIELD:
+    IRON_SHIELD:
+      TITLE: "Bouclier d'acier"
+      LORE: "Bloque les dégâts reçus de {_DEFENCE_REDUCTION} quand porté. Bloque la totalité des dégâts si levé."
 SKILL:
   HELMET:
     TEST:
@@ -68,7 +72,7 @@ SKILL:
       LORE: "Le souffle du dragon repousse les ennemis avant d'infliger des dégâts en bout de course, infligeant {_ATTACK} dans un rayon de {_RADIUS}"
     BURNING_HEART:
       TITLE: "Tête brûlée"
-      LORE: "Vous êtes propulsés dans le direction ciblée. Si vous touchez un ennemi, vous pouvez utiliser le sort jusqu'à {_USAGE_COUNT} fois. Vous infligez {_ATTACK} avec un recul de {_KNOCKBACK}. Les ennemis repoussés sont brûlés et subissent {_EFFECT_ATTACK} toutes les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION}. Portée maximale : {_RANGE}"
+      LORE: "Vous pouvez utiliser le sort jusqu'à {_USAGE_ADDITIONAL} fois supplémentaire(s) dans un délai de 5 secondes. Vous êtes propulsé dans le direction ciblée, infligeant {_ATTACK} avec un recul de {_KNOCKBACK} si vous percutez un ennemi. Les ennemis repoussés sont brûlés et subissent {_EFFECT_ATTACK} toutes les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION}. Force de propulsion : {_PROPULSION}"
   CHESTPLATE:
     BURNING_HEART:
       TITLE: "Le cœur brûlant"
@@ -92,7 +96,7 @@ SKILL:
   SWORD:
     BURNING_HEART:
       TITLE: "Epée de feu"
-      LORE: "Bloque {_BLOCKING} des dégâts reçus de face. Inflige {_ATTACK} avec un recul de {_KNOCKBACK}, et brûle les ennemis dans un rayon de {_RADIUS}, infligeant {_EFFECT_ATTACK} toutes les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION}"
+      LORE: "Bloque {_DEFENCE_REDUCTION_FACING} des dégâts reçus de face. Inflige {_ATTACK} avec un recul de {_KNOCKBACK}, et brûle les ennemis dans un rayon de {_RADIUS}, infligeant {_EFFECT_ATTACK} toutes les {_EFFECT_FREQUENCY} pendant {_EFFECT_DURATION}"
 GIFT:
   MEMORY:
     TITLE: "Mémoire"

@@ -13,10 +13,13 @@ function legging_burning_heart_cast(p: player, skill: item):
   if health of {_p} is 0.5:
     set health of {_p} to 1
 
+  set {_idx} to floor({_effectDuration}/20)
   while entity_store_effect_isset({_p}, "IMMUNITY_TRYNDAMERE") is true:
     if health of {_p} <= 0.5:
       set {_shouldHaveDied} to true
-    wait 10 ticks
+    player_interface_title({_p}, "%{_idx}%", "", 1 second)
+    remove 1 from {_idx}
+    wait 20 ticks
 
   if {_shouldHaveDied} is true:
     set {_healAmount} to {_charity} + ceil((max health of {_p})*0.2)

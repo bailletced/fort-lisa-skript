@@ -103,14 +103,23 @@ command /line-vortex-2:
             wait 1 tick
                 # drawDot count 1, particle "critmagic", RGB 0, 0, 0, center {_loc1}, rainbowMode true, visibleRange 32, pulseDelay 0, keepFor 100 ticks
 
-command /chestplate:
+command /shield:
     trigger:
-        set {_i} to 1 of iron chestplate
-        set {_n} to nbt compound of {_i}
-        set {_a::*} to compound list tag "AttributeModifiers" of {_n}
-        add nbt compound of "{AttributeName:""generic.max_health"",Amount:10,Operation:0,Slot:chest,UUID:[I;-1201124,10148,125632,-20296],Name:""generic.max_health""}" to {_a::*}
-        set compound list tag "AttributeModifiers" of {_n} to {_a::*}
-        give {_i} to player
+        # set {_item} to shield
+        # set {_it} to item_nbt_set_tag_native({_it}, "{Damage:336}")
+        set {_it} to 30
+        # set {_item} to slot 40 of inventory of player
+        # item_nbt_set_tag_native({_item}, "{Damage:0}")
+        set {_item} to slot 40 of inventory of player
+        loop 10 times:
+            if player is holding a shield:
+                broadcast "OHLDING"
+            set {_item} to item_nbt_set_tag_native({_item}, "{Damage:%{_it}%}")
+            set slot 40 of inventory of player to {_item}
+            add 30 to {_it}
+            wait 20 ticks
+
+        # set slot 40 of inventory of player to {_it}
 
 command /creeper:
     trigger:

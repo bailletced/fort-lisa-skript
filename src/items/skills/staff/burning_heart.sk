@@ -52,7 +52,7 @@ function staff_burning_heart_special(p: player, staff: item):
     loop {_victims::*}:
       entity_effect_burn({_p}, loop-value-2, {_effectAttack}, {_effectDuration}, {_effectFrequency}, "UNIQUE")
       # Closest to the center the entity is, more damage it takes.
-      broadcast "%{_attack}*((1/({_dist}+1))/0.5)%"
+      # broadcast "%{_attack}*((1/({_dist}+1))/0.5)%"
       entity_effect_damage({_p}, loop-value-2, {_attack}*((1/({_dist}+1))/2))
 
     set {_loc} to location 0.8 meter in front of {_loc}

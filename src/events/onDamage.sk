@@ -14,6 +14,8 @@ on damage:
     else if damage cause is fall:
       if entity_store_effect_isset(victim, "IMMUNITY_FALL") is true:
         set damage to 0
+        if entity_store_effect_get(victim, "IMMUNITY_FALL", "BEHAVIOR") is "UNIQUE":
+          entity_store_effect_delete(victim, "IMMUNITY_FALL")
 
   if attacker is a player:
     set {_p} to attacker

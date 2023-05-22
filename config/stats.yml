@@ -16,7 +16,16 @@ ALL:
     COLOR: "§6"
   DEFENCE:
     ICON: "🛡"
+    ICON_END: "%"
     COLOR: "§6"
+  DEFENCE_REDUCTION:
+    ICON: ""
+    ICON_END: "%"
+    COLOR: "§c"
+  DEFENCE_REDUCTION_FACING:
+    ICON: ""
+    ICON_END: "%"
+    COLOR: "§c"
   RANGE:
     ICON: "➝"
     COLOR: "§f"
@@ -44,15 +53,17 @@ ALL:
   CHARITY:
     ICON: ""
     COLOR: "§c"
-  USAGE_COUNT:
+  USAGE_ADDITIONAL:
     ICON: ""
     COLOR: "§c"
   KNOCKBACK:
     ICON: ""
     COLOR: "§c"
-  BLOCKING:
+  PROPULSION:
     ICON: ""
-    ICON_END: "%"
+    COLOR: "§c"
+  DURABILITY:
+    ICON: ""
     COLOR: "§c"
 
 MOB:

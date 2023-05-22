@@ -32,7 +32,6 @@ function wave_next(gameUuid: text):
     set {_nextWave} to game_store_wave_set_next() #Go next wave
     if {_nextWave} is {_waveNumber}:
       if mob_count() is 0:
-        broadcast "END OF GAME : No next wave AND NO MOBS"
         game_end({_gameUuid})
     else:
       wave_start({_gameUuid}, {_nextWave})
