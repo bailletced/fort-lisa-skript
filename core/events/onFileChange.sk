@@ -13,16 +13,16 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/game/store/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/blocks/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/helpers/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/blocks/store/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/commands/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/helpers/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/targets/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/commands/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/npc/":
@@ -31,10 +31,10 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/npc/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/effect/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/store/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/effect/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/store/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/ai/":
@@ -83,6 +83,9 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/chest
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/crossbow/":
+   reload script file fileManager_getRelativePath(event-path)
+
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/boot/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/skills/staff/":

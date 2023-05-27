@@ -1,0 +1,29 @@
+function boot_burning_heart_cast(p: player, skill: item):
+    broadcast "BOOT CAST"
+    set {_block} to block at {_p}
+    set {_toto} to 4.5
+
+    set {_loc} to location of {_p}
+
+    # loop all blocks in radius 20 around {_p}:
+    #     # broadcast "%y coordinate of loop-block% %y coordinate of {_p}%"
+    #     if y coordinate of loop-block is {_toto}:
+    #         if distance between loop-block and {_p} >= 17:
+    #             # broadcast "OK %loop-block%"
+    #             block_store_set(loop-block, 100, "fire" parsed as item)
+
+    delete {_circlePoints::*}
+    set {_numPoints} to 500
+    set {_pi} to 3.14159
+    set {_angleIncrement} to 360 / {_numPoints}
+    set {_radius} to 20
+
+    loop {_numPoints} times:
+        set {_angle} to loop-value * {_angleIncrement}
+        set {_y} to 4.5
+        set {_x} to x coordinate of {_p} + {_radius} * cos({_angle})
+        set {_z} to z coordinate of {_p} + {_radius} * sin({_angle})
+        set {_block} to block at location({_x}, {_y}, {_z})
+        block_store_set({_block}, 100, "fire" parsed as item)
+    
+    broadcast "%{_circlePoints::*}%"

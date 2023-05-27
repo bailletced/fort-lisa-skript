@@ -1,0 +1,4 @@
+function boot_cast(p: player, skill: item):
+    set {_id} to item_nbt_get_tag({_skill}, "ID")
+    if {_id} is "BURNING_HEART":
+        boot_burning_heart_cast({_p}, {_skill})

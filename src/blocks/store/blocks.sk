@@ -1,0 +1,46 @@
+function block_store_set(blocks: blocks, duration: number, blockToReplace: item):
+    loop {_blocks::*}:
+        if {blocks::*} does not contain loop-value:
+            set {_location} to location of loop-value
+            set {blocks::%{_location}%::duration} to {_duration}
+            set {blocks::%{_location}%::location} to {_location}
+            set {blocks::%{_location}%::originalBlock} to type of loop-value
+            set {blocks::%{_location}%::cancelTransformation} to false
+            add loop-value to {blocks::*}
+            wait 1 ticks
+            set block at location of loop-value to {_blockToReplace}
+            block_store_replaceForDuration({_location}, {_duration})
+        else:
+            set block at location of loop-value to {_blockToReplace}
+            set {blocks::%{_location}%::cancelTransformation} to true
+            block_store_replaceForDuration({_location}, {_duration})
+
+function block_store_replaceForDuration(location: location, duration: number):
+    set {_duration} to "%{_duration}% ticks" parsed as timespan
+    wait {_duration}
+    if {blocks::%{_location}%::cancelTransformation} is true:
+        set {blocks::%{_location}%::cancelTransformation} to false
+    else:
+        set block at location of {_location} to {blocks::%{_location}%::originalBlock}
+        block_store_delete({_location})
+
+function block_store_delete_first():
+    set {_indexes::*} to indexes of {blocks::*}
+    set {_index} to {_indexes::1}
+    delete {blocks::%{_indexes::1}%}
+
+function block_store_delete_last():
+    delete last element of {blocks::*}
+
+function block_store_delete(location: location):
+    remove block at {_location} from {blocks::*}
+    delete {blocks::%{_location}%::*}
+
+function block_store_getAll() :: blocks:
+    return {blocks::*}
+
+function block_store_deleteAll():
+    delete {blocks::*}
+
+function block_store_count() :: number:
+    return size of {blocks::*}

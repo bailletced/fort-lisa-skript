@@ -3,8 +3,11 @@ function player_store_stat_sideEffect(p: player, key: text, value: number):
         set max health of {_p} to {_value}
     else if {_key} is "HEALTH":
         set health of {_p} to {_value}
-    else if {_key} is "MANA_MAX":
-        set level of {_p} to {_value}
+    else if  {_key} is "SPEED":
+        if {_value} is 0:
+            remove speed from {_p}
+        else:
+            apply potion of speed of tier {_value} without particles to {_p} for 1 day
 
 function player_store_stat_set(p: player, key: text, value: number):
     set {players::%{_p}%::stat::%{_key}%} to {_value}
@@ -23,8 +26,6 @@ function player_store_stat_add(p: player, key: text, value: number):
     else:
         set {players::%{_p}%::stat::%{_key}%} to {_value}
     player_store_stat_sideEffect({_p}, {_key}, {players::%{_p}%::stat::%{_key}%})
-    if {_key} is not "MANA":
-        player_store_stat_render({_p})
 
 function player_store_stat_add_lazy(p: player, key: text, value: number):
     if player_store_stat_isset({_p}, {_key}) is true:
