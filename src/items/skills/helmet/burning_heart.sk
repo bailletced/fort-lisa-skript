@@ -28,39 +28,48 @@ function helmet_burning_heart_cast(p: player, skill: item):
     set {_propulsion} to {_propulsion} / 3
 
   set {_origin} to location of {_p}
-  push {_p} forward with force {_propulsion}
-  wait 1 tick
-
+  set {_hasPushed} to false
   # We push player, and stop if hit an entity
   loop 20 times:
-    loop target_radius({_p}, 1.5):
+    wait 1 tick
+    loop target_radius({_p}, 2):
       set {_victim} to loop-entity
       set {_yaw} to yaw of {_p}
       set {_pitch} to pitch of {_p}
       stop loop
     if {_victim} is set:
-      set {_loc} to location of {_victim} ~ normalized vector from {_victim} and {_p}
-      set yaw of {_loc} to {_yaw}
-      set pitch of {_loc} to {_pitch}
-      teleport {_p} to {_loc}
+      set {_dir} to normalized vector from location of {_p} to location of {_victim}
       helmet_burning_heart_endPropulsion({_p})
       stop loop
-    wait 1 tick
 
     # Check if propulsion ended
     if distance between {_p} and {_origin} <= 0.3:
-      helmet_burning_heart_endPropulsion({_p})
-      stop loop
-    set {_origin} to location of {_p}
+      if {_hasPushed} is true:
+        helmet_burning_heart_endPropulsion({_p})
+        stop loop
 
+    if {_hasPushed} is false:
+      set {_hasPushed} to true
+      push {_p} forward with force {_propulsion}
     
+    
+  
+  #Launched skill while mob was in radius of 2
+  if {_hasPushed} is false:
+    broadcast "PASSE"
+    set {_loc} to location of {_victim}
+    set pitch of {_loc} to pitch of {_p}
+    set yaw of {_loc} to yaw of {_p}
+    teleport {_p} to {_loc}
+
   # We damage hit entity and ones in radius and push them
   if {_victim} is set:
     drawDot count 15, particle "flame", RGB 1, 1, 1, center location of {_victim}, rainbowMode true, visibleRange 32, pulseDelay 0, keepFor 1 ticks
     set {_victims::*} to target_radius({_victim}, 3)
     drawDot count 5, particle "flame", RGB 0.2, 1, 0.2, center {_victim}, rainbowMode true, visibleRange 32, pulseDelay 0, keepFor 20 ticks
     loop {_victims::*}:
-      entity_effect_damage({_p}, loop-value, {_attack}, {_knockback})
+      entity_effect_damage({_p}, loop-value, {_attack})
+      entity_effect_knockback(loop-value, {_dir}, {_knockback})
       entity_effect_burn({_p}, loop-value, {_effectAttack}, {_effectDuration}, {_effectFrequency})
 
 function helmet_burning_heart_applyCostAfterDelay(p: player, skill: item):

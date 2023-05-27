@@ -1,0 +1,3 @@
+function entity_effect_knockback(target: entity, direction: vector, knockback: number):
+    set {_knockbackResist} to entity_nbt_get_stat({_target}, "KNOCKBACK_RESISTANCE")
+    push {_target} {_direction} with force max(0, {_knockback}-{_knockbackResist})
