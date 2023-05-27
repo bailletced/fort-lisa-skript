@@ -2,8 +2,11 @@ on respawn:
   set {_p} to event-player
   if player_store_status_get({_p}, "DEATH") is set:
     teleport {_p} to player_store_status_get({_p}, "DEATH")
-    wait 20 seconds
-    set game mode of {_p} to adventure
-    teleport {_p} to bed of {_p}
-    player_store_status_delete({_p}, "DEATH")
-    player_store_stat_render({_p})
+    loop 20 times:
+      if player_store_game_get({_p}, "STATUS") is "RUNNING":
+        set {_remaining} to 21 - loop-value
+        player_interface_title({_p}, "%{_remaining}%", "", 1 second)
+      else:
+        stop loop
+      wait 1 second
+    player_respawn({_p})

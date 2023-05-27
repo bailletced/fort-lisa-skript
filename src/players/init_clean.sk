@@ -19,6 +19,9 @@ function player_init(p: player, gameUuid: text):
 
 function player_clean(p: player):
   player_store_gui_delete_all({_p})
+  player_store_listener_delete_all({_p})
+  player_store_weapon_delete_all({_p})
+
   clear inventory of {_p}
   wait 2 tick #Wait for stats from equipments to be reset
   player_store_stat_reset_all({_p})
@@ -29,3 +32,10 @@ function player_teleport_origin(p: player):
   set {_loc} to {LOCATION::CASTLE::THRONE}
   set world of {_loc} to "FortLisa" parsed as world
   teleport {_p} to {_loc}
+
+function player_respawn(p: player):
+  set game mode of {_p} to adventure
+  teleport {_p} to bed of {_p}
+  player_store_status_delete({_p}, "DEATH")
+  player_store_stat_render({_p})
+  shield_repair_all({_p})

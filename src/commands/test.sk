@@ -105,19 +105,7 @@ command /line-vortex-2:
 
 command /shield:
     trigger:
-        # set {_item} to shield
-        # set {_it} to item_nbt_set_tag_native({_it}, "{Damage:336}")
-        set {_it} to 30
-        # set {_item} to slot 40 of inventory of player
-        # item_nbt_set_tag_native({_item}, "{Damage:0}")
-        set {_item} to slot 40 of inventory of player
-        loop 10 times:
-            if player is holding a shield:
-                broadcast "OHLDING"
-            set {_item} to item_nbt_set_tag_native({_item}, "{Damage:%{_it}%}")
-            set slot 40 of inventory of player to {_item}
-            add 30 to {_it}
-            wait 20 ticks
+        shield_repair_all(player)
 
         # set slot 40 of inventory of player to {_it}
 
