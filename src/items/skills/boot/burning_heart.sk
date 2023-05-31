@@ -24,7 +24,7 @@ function boot_burning_heart_circle(p: player, skill: item):
             set {_y} to y coordinate of {_initialLoc} + 0.5
             set {_x} to x coordinate of {_initialLoc} + {_radius} * cos({_angle})
             set {_z} to z coordinate of {_initialLoc} + {_radius} * sin({_angle})
-            set {_loc} to location({_x}, {_y}, {_z}, {WORLD})
+            set {_loc} to location({_x}, {_y}, {_z}, world of {_p})
             set {_block} to block at {_loc}
             set {_locUnder} to location({_x}, {_y}-1, {_z})
             set {_locAbove} to location({_x}, {_y}+1, {_z})

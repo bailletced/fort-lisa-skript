@@ -6,6 +6,7 @@ function player_init(p: player, gameUuid: text):
   player_store_stat_set({_p}, "HEALTH", 20)
   player_store_stat_set({_p}, "DEFENCE", 0)
   player_store_stat_set({_p}, "CHARITY", 0)
+  player_store_stat_set({_p}, "SPEED", 0)
   set max health of {_p} to 20
   set health of {_p} to 20
   set bed of {_p} to {LOCATION::CASTLE::THRONE}
