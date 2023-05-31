@@ -19,10 +19,13 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/blocks/store/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/helpers/":
    reload script file fileManager_getRelativePath(event-path)
 
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/commands/":
+   reload script file fileManager_getRelativePath(event-path)
+
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/commands/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/targets/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/npc/":
@@ -31,10 +34,10 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/npc/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/effect/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/effect/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/store/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/entities/store/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/mobs/ai/":

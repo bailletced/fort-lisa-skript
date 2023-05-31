@@ -4,7 +4,7 @@ function i18n_item_attr(p: player, item: item, attr: text) :: text:
     set {_category} to item_nbt_get_tag({_item}, "CATEGORY")
     set {_id} to item_nbt_get_tag({_item}, "ID")
     set {_will::*} to item_nbt_get_list({_item}, "WILL")
-    set {_varTrads::*} to item_nbt_get_list({_item}, "VAR_TRAD")
+    set {_varTrads::*} to item_nbt_get_list({_item}, "VAR_TRAD") #variables for traductions.
     if size of {_will::*} > 0:
         if {_type} is "WEAPON":
             if {_attr} is "LORE":
@@ -79,6 +79,7 @@ function i18n_item_lore(p: player, it: item) :: text:
     loop item_nbt_get_list({_it}, "STAT"):
         set {_multiplier} to 0
         set {_playerStat} to 0
+        set {_buffStatValue} to 0
         set {_key} to loop-value
         set {_pureStat} to loop-value
         set {_value} to item_nbt_get_stat({_it}, {_key})
@@ -96,13 +97,18 @@ function i18n_item_lore(p: player, it: item) :: text:
         if size of {_pureStat} split at "-" > 1:
             set {_spitted::*} to {_key} split at "-"
             set {_pureStat} to {_spitted::1}
+
+        # If player is under a BUFF
+        set {_buffStat} to "%{_pureStat}%_BUFF"
+        if player_store_stat_isset({_p}, {_buffStat}) is true:
+            set {_buffStatValue} to player_store_stat_get({_p}, {_buffStat})
             
         set {_color} to {STAT::%{_pureStat}%::COLOR}
         set {_icon} to {STAT::%{_pureStat}%::ICON}
         set {_endIcon} to {STAT::%{_pureStat}%::ICON_END}
         if {_endIcon} is not set:
             set {_endIcon} to ""
-        set {_valueFinal} to {_value} + {_playerStat} * {_multiplier}
+        set {_valueFinal} to {_value} + ({_playerStat} + {_buffStatValue}) * {_multiplier}
         set {_typeKey::*} to {_pureStat} split at "_"
         set {_typeKey} to the last element of {_typeKey::*}
         set {_splitted::*} to {_typeKey} split at "-"

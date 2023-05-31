@@ -56,7 +56,6 @@ function helmet_burning_heart_cast(p: player, skill: item):
   
   #Launched skill while mob was in radius of 2
   if {_hasPushed} is false:
-    broadcast "PASSE"
     set {_loc} to location of {_victim}
     set pitch of {_loc} to pitch of {_p}
     set yaw of {_loc} to yaw of {_p}

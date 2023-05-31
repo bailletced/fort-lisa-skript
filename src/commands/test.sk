@@ -168,7 +168,16 @@ command /cylinder:
         wait 5 seconds
         stopEffect "test"
         
-command /loopzombie:
+command /setfire:
     trigger:
-        loop 50 times:
-            summon zombie
+        # block_store_deleteAll()
+        # broadcast {blocks::*}
+        # set {_block} to block at location 1 meter under player
+        set {_block} to block at player
+
+        if {_block} is slab or stair:
+            broadcast "%{_block}%"
+        set block at {_block} to diamond block
+        # set {_block} to clock 1 meter above {_block}
+        block_store_set({_block}, 100, "fire" parsed as item)
+

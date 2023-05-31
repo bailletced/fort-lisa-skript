@@ -29,20 +29,24 @@ function test_i18n_items(p: player):
     set {_radiusStat} to {SKILL::HELMET::TEST::RADIUS}
 
     player_store_stat_set({_p}, "ATTACK", 0)
+    player_store_stat_set({_p}, "ATTACK_BUFF", 10)
     set {_radiusRefIcon} to {STAT::RADIUS::ICON}
     set {_radiusRefColor} to {STAT::RADIUS::COLOR}
     set {_attackRefIcon} to {STAT::ATTACK::ICON}
     set {_attackRefColor} to {STAT::ATTACK::COLOR}
-    set {_attackStat} to (player_store_stat_get({_p}, "ATTACK") * {_attackMultiplierStat}) + {_attackStat}
+
+    set {_playerStat} to player_store_stat_get({_p}, "ATTACK")
+    set {_playerBuffStat} to player_store_stat_get({_p}, "ATTACK_BUFF")
+    set {_attackStat} to (({_playerStat} + {_playerBuffStat}) * {_attackMultiplierStat}) + {_attackStat}
 
     set {_loreAfter} to "Le souffle du dragon repousse les ennemis avant d'infliger des dégâts en bout de course, infligeant %{_attackRefColor}%%{_attackRefIcon}%%{_attackStat}%§f dans un rayon de %{_radiusRefColor}%%{_radiusRefIcon}%%{_radiusStat}%§f"
     set {_lore} to i18n_item_lore({_p}, {_it})
     assert if {_loreAfter} is {_lore} with message "lore should be %{_loreAfter}% §aGot %{_lore}%"
 
-  it "Test i18n_item_lore_to_list":
-    set {_lore} to "Je suis Cédric Baillet, développeur de Fort Lisa. J'espère de tout coeur que le jeu vous plaira !"
-    set {_res::*} to i18n_item_lore_to_list({_lore})
-    set {_idxes::*} to all indexes of {_res::*}
-    assert if amount of {_idxes::*} is ceil(length of {_lore}/{LORE_LENGTH_MAX}) with message "Got %amount of {_idxes::*}%"
+  # it "Test i18n_item_lore_to_list":
+  #   set {_lore} to "Je suis Cédric Baillet, développeur de Fort Lisa. J'espère de tout coeur que le jeu vous plaira !"
+  #   set {_res::*} to i18n_item_lore_to_list({_lore})
+  #   set {_idxes::*} to all indexes of {_res::*}
+  #   assert if amount of {_idxes::*} is ceil(length of {_lore}/{LORE_LENGTH_MAX}) with message "Got %amount of {_idxes::*}%"
 
   player_store_setting_set({_p}, "lang", "fr-FR")

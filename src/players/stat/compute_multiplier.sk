@@ -11,6 +11,7 @@ function getPureStat(stat: text) :: text:
 function player_stat_compute(p: player, source: object, stat: text) :: number:
   set {_playerStat} to 0
   set {_pureStat} to getPureStat({_stat})
+  set {_buffStat} to "%{_pureStat}%_BUFF"
   if {_source} is entity:
     set {_sourceStat} to entity_nbt_get_stat({_source}, {_stat})
   else:
@@ -18,6 +19,8 @@ function player_stat_compute(p: player, source: object, stat: text) :: number:
 
   if player_store_stat_isset({_p}, {_pureStat}) is true:
     set {_playerStat} to player_store_stat_get({_p}, {_pureStat})
+    set {_buffStatValue} to player_store_stat_get({_p}, {_buffStat})
+
     if {_source} is entity:
       set {_multiplier} to entity_nbt_get_stat({_source}, "%{_stat}%_MULTIPLIER")
     else:
@@ -25,4 +28,5 @@ function player_stat_compute(p: player, source: object, stat: text) :: number:
 
   if {_multiplier} is not set:
     set {_multiplier} to 1
-  return {_sourceStat} + {_playerStat} * {_multiplier}
+
+  return {_sourceStat} + ({_playerStat} + {_buffStatValue}) * {_multiplier}

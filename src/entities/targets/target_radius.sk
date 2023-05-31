@@ -1,7 +1,11 @@
+#TYPE = ALL, MOB, PLAYER
 function target_radius(location: location, radius: number, targetType: text = "MOB", limit: number = -1) :: entities:
   delete {_res::*}
   loop all entities in radius {_radius} of {_location}:
-    set {_type} to entity_nbt_get_tag(loop-entity, "TYPE")
-    if {_type} is {_targetType}:
+    if {_type} is "ALL":
       add loop-entity to {_res::*}
+    else: 
+      set {_type} to entity_nbt_get_tag(loop-entity, "TYPE")
+      if {_type} is {_targetType}:
+        add loop-entity to {_res::*}
   return {_res::*}
