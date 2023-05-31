@@ -209,8 +209,11 @@ function config_load(world: world):
   #     load {_chunk} with ticket
 
   # Initialize players. TODO : to be triggered when game starts
+  delete {blocks::*}
+
   loop all players:
     set {_p} to loop-value
     player_store_weapon_delete_all({_p})
     player_store_skill_delete_all({_p})
     player_store_listener_add({_p}, "STAT")
+    player_clean({_p}, false)

@@ -46,14 +46,14 @@ function boot_burning_heart_circle(p: player, skill: item):
                 entity_effect_burn({_p}, loop-entity, {_effectAttack}, 20, {_effectFrequency}, "UNIQUE")
             else if loop-entity is a player:
                 player_store_stat_add(loop-entity, "ATTACK", {_effectAttackBoost})
-                boot_burning_heart_endboost(loop-entity)
+                boot_burning_heart_endboost(loop-entity, {_effectAttackBoost})
         add 10 to {_it}
         wait 10 ticks
         
 
-function boot_burning_heart_endboost(p: player):
+function boot_burning_heart_endboost(p: player, value: number):
     wait 10 ticks
-    player_store_stat_add({_p}, "ATTACK", -1 * {_effectAttackBoost})
+    player_store_stat_add({_p}, "ATTACK", -1 * {_value})
 
 
 function boot_burning_heart_circle_down(loc: location) :: block:

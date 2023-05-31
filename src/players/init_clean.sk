@@ -17,7 +17,7 @@ function player_init(p: player, gameUuid: text):
   player_store_game_set({_p}, "UUID", {_gameUuid})
   player_store_game_set({_p}, "STATUS", "PREPARING")
 
-function player_clean(p: player):
+function player_clean(p: player, tp: boolean = true):
   player_store_gui_delete_all({_p})
   player_store_listener_delete_all({_p})
   player_store_weapon_delete_all({_p})
@@ -26,7 +26,9 @@ function player_clean(p: player):
   wait 2 tick #Wait for stats from equipments to be reset
   player_store_stat_reset_all({_p})
   player_store_game_delete({_p}, "STATUS")
-  player_teleport_origin({_p})
+
+  if {_tp} is true:
+    player_teleport_origin({_p})
 
 function player_teleport_origin(p: player):
   set {_loc} to {LOCATION::CASTLE::THRONE}
