@@ -9,10 +9,10 @@ function block_store_set(blocks: blocks, duration: number, blockToReplace: item)
             set {blocks::%{_location}%::cancelTransformation} to false
             add loop-value to {blocks::*}
             wait 1 ticks
-            set block at location of loop-value to {_blockToReplace}
+            set block at {_location} to {_blockToReplace}
             block_store_replaceForDuration({_location}, {_duration})
         else:
-            set block at location of loop-value to {_blockToReplace}
+            set block at {_location} to {_blockToReplace}
             set {blocks::%{_location}%::cancelTransformation} to true
             block_store_replaceForDuration({_location}, {_duration})
 
