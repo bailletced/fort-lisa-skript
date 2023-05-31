@@ -1,7 +1,8 @@
 function block_store_set(blocks: blocks, duration: number, blockToReplace: item):
     loop {_blocks::*}:
+        set {_location} to location of loop-value
+        set world of {_location} to {WORLD}
         if {blocks::*} does not contain loop-value:
-            set {_location} to location of loop-value
             set {blocks::%{_location}%::duration} to {_duration}
             set {blocks::%{_location}%::location} to {_location}
             set {blocks::%{_location}%::originalBlock} to type of loop-value

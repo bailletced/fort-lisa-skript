@@ -199,6 +199,7 @@ function config_load(world: world):
   set {NaN} to -999
   set {SHIELD_DURABILITY} to 336 #Natural max shield durability
   set {PLAYER::LISTENER::*} to "STAT" and "list"
+  set {WORLD} to "FortLisa" parsed as world
 
   # LOAD CHUNKS
   # loop {LOCATION::CATEGORY::*}:
@@ -209,7 +210,6 @@ function config_load(world: world):
   #     load {_chunk} with ticket
 
   # Initialize players. TODO : to be triggered when game starts
-  delete {blocks::*}
 
   loop all players:
     set {_p} to loop-value
