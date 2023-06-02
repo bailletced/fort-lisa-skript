@@ -25,7 +25,7 @@ MOBS:
   3:
     ID: CREEPER
     LEVEL: 4
-    AMOUNT: 20
+    AMOUNT: 10
     AI: A
     LOCATION:
       - CASTLE.GATE_A

@@ -1,0 +1,15 @@
+TAVERN: 
+  MAIN:
+    PATH: g_sounds:musics_fl.music_tavern
+    DURATION: 3200
+WAVE:
+  MAIN: 
+    PATH: g_sounds:musics_fl.music_waves
+    DURATION: 3200
+  BOSS: 
+    PATH: g_sounds:musics_fl.music_boss
+    DURATION: 3200
+ANIMAL:
+  GORGE_BLEUE: 
+    PATH: g_sounds:animal_song.gorge_bleue
+    DURATION: 80

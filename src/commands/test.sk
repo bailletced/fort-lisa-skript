@@ -168,16 +168,20 @@ command /cylinder:
         wait 5 seconds
         stopEffect "test"
         
-command /setfire:
+command /creeperr:
     trigger:
-        # block_store_deleteAll()
-        # broadcast {blocks::*}
-        # set {_block} to block at location 1 meter under player
-        set {_block} to block at player
+        set {_p} to event-player
+        broadcast "fokzeofgzkegokzeogk"
+        mob_summon("ZOMBIE", 4, "A", location of {_p})
+        set {_creeper} to last spawned entity
+        broadcast health of {_creeper}
+        # set max health of {_zombie} to 900
+        # set health of {_zombie} to 900
+        apply potion of slowness of tier 100 to {_creeper} for 999 days
+        # entity_nbt_set_tag({_zombie}, "TYPE", "MOB")
+        # entity_nbt_set_stat({_zombie}, "ATTACK", 10)
 
-        if {_block} is slab or stair:
-            broadcast "%{_block}%"
-        set block at {_block} to diamond block
-        # set {_block} to clock 1 meter above {_block}
-        block_store_set({_block}, 100, "fire" parsed as item)
+command /sound:
+    trigger:
+        player_interface_sound_play(event-player, "TAVERN", "MAIN", 0.5, 40)
 

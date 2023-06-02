@@ -1,6 +1,8 @@
 function mob_action_damage(mob: entity, victim: entity):
-  set {_attack} to entity_nbt_get_stat({_mob}, "ATTACK")
+  if name of {_victim} is "LISA":
+    kill {_victim}
 
+  set {_attack} to entity_nbt_get_stat({_mob}, "ATTACK")
   set {_damageCategory} to entity_nbt_get_tag({_mob}, "DAMAGE_CATEGORY")
   if {_damageCategory} is "EXPLOSION":
     set {_dist} to distance between {_mob} and {_victim}

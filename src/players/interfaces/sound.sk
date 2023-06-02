@@ -1,0 +1,12 @@
+function player_interface_sound_play(players: players, category: text, id: text, volume: number = 0.5, duration: number = 0, loop: boolean = false):
+    play sound {MUSIC::%{_category}%::%{_id}%} with volume {_volume} to {_players::*}
+    if {_duration} > 0:
+        wait "%{_duration}% tick" parsed as timespan
+        player_interface_sound_stop({_players::*}, {_category}, {_id})
+
+function player_interface_sound_stop(players: players, category: text, id: text):
+    stop sound {MUSIC::%{_category}%::%{_id}%} for {_players::*}
+
+function player_interface_sound_stop_all(players: players):
+    loop {_players::*}:
+        execute console command "/stopsound %loop-value%"
