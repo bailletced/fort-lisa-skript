@@ -1,0 +1,28 @@
+Thunder_Ball_0:
+  Id: SNOWBALL
+  Model: 6300
+  
+Thunder_Ball_1:
+  Id: BLAZE_ROD
+  Model: 6301
+Thunder_Ball_2:
+  Id: BLAZE_ROD
+  Model: 6302
+Thunder_Ball_3:
+  Id: BLAZE_ROD
+  Model: 6303
+Thunder_Ball_4:
+  Id: BLAZE_ROD
+  Model: 6304 
+
+
+  
+Thunder_Staff:
+  Id: STICK
+  Display: '<bold>&fBatôn de la &eFoudre</bold>'
+  Model: 3005
+  Lore:
+  - '&7Le puissant bâton'
+  - '&7de la Foudre.'
+  Skills:
+  - skill{s=Thunder_Ball_Shoot;cd=1} ~onUse
