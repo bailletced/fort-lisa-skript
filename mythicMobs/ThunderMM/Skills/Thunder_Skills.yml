@@ -1,0 +1,19 @@
+Thunder_Ball_Shoot_Ring:
+  Cooldown: 1
+  Conditions:
+  - offgcd
+  Skills:
+  # - shoot{type=SNOWBALL;model=6300;onhitskill=Thunder_Ball_Explode}
+  - projectile{bulletType=TRACKING;bulletMaterial=SNOWBALL;bulletModel=6300;StartYOffset=4;sE=true;sB=true} @Ring{radius=8;yOffset=0}
+                
+Thunder_Ball_Explode:
+  Skills:
+  - effect:lightning @RingAroundOrigin{radius=3;yOffset=-1}
+  
+  
+Thunder_Ball_Shoot:
+  Cooldown: 1
+  Conditions:
+  - offgcd
+  Skills:
+  - projectile{bulletType=TRACKING;bulletMaterial=SNOWBALL;bulletModel=6300;StartYOffset=1;sE=true;sB=true;velocity=5;HitPlayers=false;HitNonPlayers=true;onHit=Thunder_Ball_Explode;onHitBlockSkill=Thunder_Ball_Explode} @TargetBlock
