@@ -27,6 +27,16 @@ command /mythicApi [<text>] [<text>] [<text>] [<text>] [<text>]:
           if entity_nbt_isset_tag(loop-entity, "TYPE") is false:
             mob_register({_mob}, {_mobId}, {_level}, {_ai})
             stop
+    
+    else if arg-1 is "REGISTER":
+      broadcast "REGISTER"
+      #ACTION;MOBID;MOBUUID;LEVEL;AI
+      set {_mobId} to arg-2
+      set {_mob} to arg-3 parsed as entity
+      set {_level} to arg-4 parsed as number
+      set {_ai} to arg-5
+      mob_register({_mob}, {_mobId}, {_level}, {_ai})
+
     else if arg-1 is "DAMAGE":
       #ACTION;SOURCE_UUID;TARGET_UUID;ATTACK_MULTIPLIER
       set {_source} to arg-2 parsed as entity

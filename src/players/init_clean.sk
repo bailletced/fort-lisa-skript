@@ -22,11 +22,10 @@ function player_clean(p: player, tp: boolean = true):
   player_store_gui_delete_all({_p})
   player_store_listener_delete_all({_p})
   player_store_weapon_delete_all({_p})
-
   clear inventory of {_p}
   wait 2 tick #Wait for stats from equipments to be reset
   player_store_stat_reset_all({_p})
-  player_store_game_delete({_p}, "STATUS")
+  player_store_game_delete_all({_p})
 
   if {_tp} is true:
     player_teleport_origin({_p})
@@ -41,4 +40,5 @@ function player_respawn(p: player):
   teleport {_p} to bed of {_p}
   player_store_status_delete({_p}, "DEATH")
   player_store_stat_render({_p})
+  wait 1 tick
   shield_repair_all({_p})

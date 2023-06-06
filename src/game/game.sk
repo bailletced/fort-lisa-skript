@@ -12,7 +12,7 @@ function game_start(world: world):
       player_store_music_set(loop-player, "TAVERN", "MAIN", 0.5)
 
   #GAME PREPARATION
-  set {_timer} to 5
+  set {_timer} to 30
   while {_timer} > 0:
     loop game_store_players({_gameUuid}):
       player_interface_title(loop-player, "%{_timer}%", "", 1 second)

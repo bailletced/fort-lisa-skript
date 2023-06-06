@@ -37,6 +37,7 @@ command /zombie:
         set {_p} to event-player
         mob_summon("ZOMBIE", 1, "A", location of {_p})
         set {_zombie} to last spawned entity
+        broadcast nbt compound of {_zombie}
         set max health of {_zombie} to 900
         set health of {_zombie} to 900
         apply potion of slowness of tier 100 to {_zombie} for 999 days
@@ -181,7 +182,7 @@ command /creeperr:
         # entity_nbt_set_tag({_zombie}, "TYPE", "MOB")
         # entity_nbt_set_stat({_zombie}, "ATTACK", 10)
 
-command /sound:
+command /wave:
     trigger:
-        player_interface_sound_play(event-player, "TAVERN", "MAIN", 0.5, 40)
+        wave_start("fiozejkgiop", 0)
 

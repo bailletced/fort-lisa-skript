@@ -1,19 +1,20 @@
 function block_store_set(blocks: blocks, duration: number, blockToReplace: item):
     loop {_blocks::*}:
-        set {_location} to location of loop-value
-        if {blocks::*} does not contain loop-value:
-            set {blocks::%{_location}%::duration} to {_duration}
-            set {blocks::%{_location}%::location} to {_location}
-            set {blocks::%{_location}%::originalBlock} to type of loop-value
-            set {blocks::%{_location}%::cancelTransformation} to false
-            add loop-value to {blocks::*}
-            wait 1 ticks
-            set block at {_location} to {_blockToReplace}
-            block_store_replaceForDuration({_location}, {_duration})
-        else:
-            set block at {_location} to {_blockToReplace}
-            set {blocks::%{_location}%::cancelTransformation} to true
-            block_store_replaceForDuration({_location}, {_duration})
+        if block_nbt_isset_tag(loop-value, "TYPE") is false: #We don't replace non-decorative blocs
+            set {_location} to location of loop-value
+            if {blocks::*} does not contain loop-value:
+                set {blocks::%{_location}%::duration} to {_duration}
+                set {blocks::%{_location}%::location} to {_location}
+                set {blocks::%{_location}%::originalBlock} to type of loop-value
+                set {blocks::%{_location}%::cancelTransformation} to false
+                add loop-value to {blocks::*}
+                wait 1 ticks
+                set block at {_location} to {_blockToReplace}
+                block_store_replaceForDuration({_location}, {_duration})
+            else:
+                set block at {_location} to {_blockToReplace}
+                set {blocks::%{_location}%::cancelTransformation} to true
+                block_store_replaceForDuration({_location}, {_duration})
 
 function block_store_replaceForDuration(location: location, duration: number):
     set {_duration} to "%{_duration}% ticks" parsed as timespan

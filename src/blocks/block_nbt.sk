@@ -2,6 +2,13 @@ function block_nbt_get_tag(block: block, key: text) :: text:
   set {_res} to string tag "custom;%{_key}%" of nbt compound of {_block}
   return {_res}
 
+function block_nbt_isset_tag(block: block, key: text) :: boolean:
+  set {_nbt} to full nbt compound of {_block}
+  set {_res} to string tag "custom;%{_key}%" of {_nbt}
+  if {_res} is not "":
+    return true
+  return false
+
 function block_nbt_set_tag(block: block, key: text, value: text):
   set {_nbt} to nbt compound of {_block}
   set tag "custom;%{_key}%" of {_nbt} to {_value}

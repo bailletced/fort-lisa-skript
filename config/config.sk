@@ -124,8 +124,8 @@ function config_load(world: world):
       set {_id} to loop-value-2
       add {_id} to {GUI::%{_category}%::ID::*}
       set {GUI::%{_category}%::%{_id}%::ITEM} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-GUIS" parsed as item
+      set {GUI::%{_category}%::%{_id}%::CUSTOM_ITEM} to yaml value "%{_category}%.%{_id}%.CUSTOM_ITEM" from "YAML-GUIS"
   unload yaml "YAML-GUIS"
-
 
   #NPCS
   load yaml "plugins/Skript/scripts/fort-lisa/config/npcs.yml" as "YAML-NPC"

@@ -12,3 +12,6 @@ function player_store_game_isset(p: player, key: text) :: boolean:
 
 function player_store_game_delete(p: player, key: text):
   delete {players::%{_p}%::game::%{_key}%}
+
+function player_store_game_delete_all(p: player):
+  delete {players::%{_p}%::game::*}

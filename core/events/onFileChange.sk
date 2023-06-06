@@ -112,7 +112,7 @@ on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/":
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/crossbow/":
    reload script file fileManager_getRelativePath(event-path)
 
-on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/bow/":
+on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/sword/":
    reload script file fileManager_getRelativePath(event-path)
 
 on directory changes at "plugins/Skript/scripts/fort-lisa/src/items/weapons/bow/":
