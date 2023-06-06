@@ -1,4 +1,4 @@
 on block place:
     set {_p} to event-player
-    if player_store_game_isset({_p}, "UUID") is true:
+    if game mode of {_p} is adventure:
         cancel event
