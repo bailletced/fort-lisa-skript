@@ -29,7 +29,7 @@ function lisa_listener_INGAME(lisa: entity):
   set {_gameUuid} to entity_nbt_get_tag({_lisa}, "GAME_UUID")
   set {_id} to citizen id of {_lisa}
   while game_store_get({_gameUuid}, "STATUS") is "RUNNING":
-    loop all entities in radius 15 of {_lisa}:
+    loop all entities in radius 30 of {_lisa}:
       if type of loop-entity is not player:
         if loop-entity is not {_lisa}:
           set {_mob} to loop-entity
@@ -39,4 +39,3 @@ function lisa_listener_INGAME(lisa: entity):
           set target of loop-entity to {_lisa}
     move citizen {_id} to {LOCATION::CASTLE::THRONE}
     wait 2 seconds
-  game_end({_gameUuid})    

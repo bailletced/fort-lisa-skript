@@ -9,19 +9,19 @@ function game_start(world: world):
     loop all players:
       game_store_player_add({_gameUuid}, loop-player)
       player_init(loop-player, {_gameUuid})
-    
-    # Play some music before game starts
-    player_interface_sound_play(game_store_players({_gameUuid}), "TAVERN", "MAIN", 0.5, 600)
+      player_store_music_set(loop-player, "TAVERN", "MAIN", 0.5)
 
   #GAME PREPARATION
-  set {_timer} to 30
+  set {_timer} to 5
   while {_timer} > 0:
     loop game_store_players({_gameUuid}):
       player_interface_title(loop-player, "%{_timer}%", "", 1 second)
     remove 1 from {_timer}
     wait 1 second
 
-  player_interface_sound_play(game_store_players({_gameUuid}), "WAVE", "MAIN", 0.5, 600)
+  #PLAY MAIN MUSIC
+  loop game_store_players({_gameUuid}):
+    player_store_music_set(loop-player, "WAVE", "MAIN", 0.5, true)
   
   # set {_canStart} to false
   # while {_canStart} is false:
@@ -53,4 +53,11 @@ function game_end(gameUuid: text):
         player_clean(loop-value)
         player_interface_title(loop-value, i18n(loop-value, "GAME.END"), "", 3 seconds)
         player_interface_sound_stop_all(loop-value)
+        player_store_music_delete(loop-value)
+
+function game_inprogress(gameUuid: text):
+  while game_store_isset({_gameUuid}) is true:
+    player_interface_sound_play(game_store_players({_gameUuid}), "WAVE", "MAIN", 0.5, 4000)
+
+
         

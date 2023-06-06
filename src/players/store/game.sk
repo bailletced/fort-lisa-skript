@@ -5,5 +5,10 @@ function player_store_game_set(p: player, key: text, value: object):
 function player_store_game_get(p: player, key: text) :: object:
   return {players::%{_p}%::game::%{_key}%}
 
+function player_store_game_isset(p: player, key: text) :: boolean:
+  if {players::%{_p}%::game::%{_key}%} is set:
+    return true
+  return false
+
 function player_store_game_delete(p: player, key: text):
   delete {players::%{_p}%::game::%{_key}%}

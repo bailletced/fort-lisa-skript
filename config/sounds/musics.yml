@@ -5,7 +5,7 @@ TAVERN:
 WAVE:
   MAIN: 
     PATH: g_sounds:musics_fl.music_waves
-    DURATION: 3200
+    DURATION: 4000
   BOSS: 
     PATH: g_sounds:musics_fl.music_boss
     DURATION: 3200

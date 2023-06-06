@@ -1,0 +1,5 @@
+on block place:
+    set {_p} to event-player
+    broadcast {_p}
+    if player_store_game_isset({_p}, "UUID") is true:
+        cancel event
