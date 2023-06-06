@@ -31,3 +31,13 @@ function shield_respawn(p: player, shield: item):
     set {_shield} to item_nbt_set_stat({_shield}, "DURABILITY", {_durabilityMax})
     set {_shield} to item_nbt_set_tag_native({_shield}, "{Damage:0}")
     give i18n_item({_p}, {_shield}) to {_p}
+
+function shield_repair_all(p: player):
+  loop 40 times:
+    set {_slot} to loop-value - 1
+    set {_item} to slot {_slot} of {_p}
+    if item_nbt_get_tag({_item}, "CATEGORY") is "SHIELD":
+      set {_durabilityMax} to item_nbt_get_stat({_item}, "DURABILITY_MAX")
+      set {_item} to item_nbt_set_stat({_item}, "DURABILITY", {_durabilityMax})
+      set {_item} to item_nbt_set_tag_native({_item}, "{Damage:0}")
+      set slot {_slot} of {_p} to {_item}

@@ -1,0 +1,4 @@
+on block place:
+    set {_p} to event-player
+    if game mode of {_p} is adventure:
+        cancel event

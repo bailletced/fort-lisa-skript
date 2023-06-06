@@ -1,0 +1,83 @@
+function boot_burning_heart_cast(p: player, skill: item):
+    boot_burning_heart_circle({_p}, {_skill})
+
+function boot_burning_heart_circle(p: player, skill: item):
+    set {_radiusCircle} to player_stat_compute({_p}, {_skill}, "RADIUS")
+    set {_circleDuration} to player_stat_compute({_p}, {_skill}, "EFFECT_DURATION")
+    set {_effectAttack} to player_stat_compute({_p}, {_skill}, "EFFECT_ATTACK")
+    set {_effectFrequency} to player_stat_compute({_p}, {_skill}, "EFFECT_FREQUENCY")
+    set {_effectAttackBoost} to player_stat_compute({_p}, {_skill}, "EFFECT_ATTACK-BOOST")
+
+    set {_initialLoc} to location of {_p}
+    loop {_radiusCircle} times:
+        set {_loop} to loop-value + 1
+        set {_duration} to {_circleDuration}
+        if {_loop} <= {_radiusCircle} - 1:
+            set {_duration} to 10
+        delete {_blocks::*}
+        set {_radius} to {_loop}
+        set {_numPoints} to {_radius}*20
+        set {_angleIncrement} to 360 / {_numPoints}
+
+        loop {_numPoints} times:
+            set {_angle} to loop-value-2 * {_angleIncrement}
+            set {_y} to y coordinate of {_initialLoc} + 0.5
+            set {_x} to x coordinate of {_initialLoc} + {_radius} * cos({_angle})
+            set {_z} to z coordinate of {_initialLoc} + {_radius} * sin({_angle})
+            set {_loc} to location({_x}, {_y}, {_z}, world of {_p})
+            set {_block} to block at {_loc}
+            set {_locUnder} to location({_x}, {_y}-1, {_z})
+            set {_locAbove} to location({_x}, {_y}+1, {_z})
+            if block at {_locUnder} is air:
+                set {_block} to boot_burning_heart_circle_down({_loc})
+            else if block at {_locAbove} is not air:
+                set {_block} to boot_burning_heart_circle_up({_locAbove})
+            if {_blocks::*} does not contain {_block}:
+                add {_block} to {_blocks::*}
+                block_store_set({_block}, {_duration}, "fire" parsed as item)
+        wait 2 ticks
+
+    
+    set {_it} to 0
+    while {_it} < {_circleDuration}:
+        loop all entities in radius {_radiusCircle} of {_initialLoc}:
+            set {_type} to entity_nbt_get_tag(loop-entity, "TYPE")
+            if {_type} is "MOB":
+                entity_effect_burn({_p}, loop-entity, {_effectAttack}, 20, {_effectFrequency}, "UNIQUE")
+            else if loop-entity is a player:
+                player_store_stat_add(loop-entity, "ATTACK", {_effectAttackBoost})
+                boot_burning_heart_endboost(loop-entity, {_effectAttackBoost})
+        add 10 to {_it}
+        wait 10 ticks
+        
+
+function boot_burning_heart_endboost(p: player, value: number):
+    wait 10 ticks
+    player_store_stat_add({_p}, "ATTACK", -1 * {_value})
+
+
+function boot_burning_heart_circle_down(loc: location) :: block:
+    set {_tmpLocUnder} to location 1 meter under {_loc}
+    set {_it} to 5
+    while block at {_tmpLocUnder} is air:
+        set y coordinate of {_tmpLocUnder} to y coordinate of {_tmpLocUnder} - 1
+        remove 1 from {_it}
+        if {_it} <= 0:
+            stop loop
+    set {_block} to block at {_tmpLocUnder}
+    if {_block} is stair or slab:
+        return {_block}
+    return block at location 1 meter above {_tmpLocUnder}
+
+function boot_burning_heart_circle_up(loc: location) :: block:
+    set {_tmpLocAbove} to location 1 meter above {_loc}
+    set {_it} to 10
+    while block at {_tmpLocAbove} is not air:
+        set y coordinate of {_tmpLocAbove} to y coordinate of {_tmpLocAbove} + 1
+        remove 1 from {_it}
+        if {_it} <= 0:
+            stop loop
+    set {_block} to block at location 1 meter under {_tmpLocAbove}
+    if {_block} is stair or slab:
+        return {_block}
+    return block at {_tmpLocAbove}

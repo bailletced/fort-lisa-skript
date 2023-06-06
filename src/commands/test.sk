@@ -37,6 +37,7 @@ command /zombie:
         set {_p} to event-player
         mob_summon("ZOMBIE", 1, "A", location of {_p})
         set {_zombie} to last spawned entity
+        broadcast nbt compound of {_zombie}
         set max health of {_zombie} to 900
         set health of {_zombie} to 900
         apply potion of slowness of tier 100 to {_zombie} for 999 days
@@ -105,19 +106,7 @@ command /line-vortex-2:
 
 command /shield:
     trigger:
-        # set {_item} to shield
-        # set {_it} to item_nbt_set_tag_native({_it}, "{Damage:336}")
-        set {_it} to 30
-        # set {_item} to slot 40 of inventory of player
-        # item_nbt_set_tag_native({_item}, "{Damage:0}")
-        set {_item} to slot 40 of inventory of player
-        loop 10 times:
-            if player is holding a shield:
-                broadcast "OHLDING"
-            set {_item} to item_nbt_set_tag_native({_item}, "{Damage:%{_it}%}")
-            set slot 40 of inventory of player to {_item}
-            add 30 to {_it}
-            wait 20 ticks
+        shield_repair_all(player)
 
         # set slot 40 of inventory of player to {_it}
 
@@ -180,7 +169,20 @@ command /cylinder:
         wait 5 seconds
         stopEffect "test"
         
-command /loopzombie:
+command /creeperr:
     trigger:
-        loop 50 times:
-            summon zombie
+        set {_p} to event-player
+        broadcast "fokzeofgzkegokzeogk"
+        mob_summon("ZOMBIE", 4, "A", location of {_p})
+        set {_creeper} to last spawned entity
+        broadcast health of {_creeper}
+        # set max health of {_zombie} to 900
+        # set health of {_zombie} to 900
+        apply potion of slowness of tier 100 to {_creeper} for 999 days
+        # entity_nbt_set_tag({_zombie}, "TYPE", "MOB")
+        # entity_nbt_set_stat({_zombie}, "ATTACK", 10)
+
+command /wave:
+    trigger:
+        wave_start("fiozejkgiop", 0)
+

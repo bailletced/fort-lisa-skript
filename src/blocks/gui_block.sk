@@ -1,5 +1,7 @@
 function gui_summon(category: text, id: text, location: location):
-  set {_item} to {GUI::%{_category}%::%{_id}%::ITEM}
+  set {_item} to customitem {GUI::%{_category}%::%{_id}%::CUSTOM_ITEM}
+  if {_item} is not set:
+    set {_item} to {GUI::%{_category}%::%{_id}%::ITEM}
   set block at {_location} to {_item}
   set {_block} to block at {_location}
   block_nbt_set_tag({_block}, "TYPE", "GUI")

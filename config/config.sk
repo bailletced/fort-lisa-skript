@@ -124,8 +124,8 @@ function config_load(world: world):
       set {_id} to loop-value-2
       add {_id} to {GUI::%{_category}%::ID::*}
       set {GUI::%{_category}%::%{_id}%::ITEM} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-GUIS" parsed as item
+      set {GUI::%{_category}%::%{_id}%::CUSTOM_ITEM} to yaml value "%{_category}%.%{_id}%.CUSTOM_ITEM" from "YAML-GUIS"
   unload yaml "YAML-GUIS"
-
 
   #NPCS
   load yaml "plugins/Skript/scripts/fort-lisa/config/npcs.yml" as "YAML-NPC"
@@ -191,6 +191,17 @@ function config_load(world: world):
   load yaml "plugins/Skript/scripts/fort-lisa/config/langs/fr-FR.yml" as "YAML-LANG-fr-FR"
   load yaml "plugins/Skript/scripts/fort-lisa/config/langs/en-EN.yml" as "YAML-LANG-en-EN"
 
+  #Musics
+  load yaml "plugins/Skript/scripts/fort-lisa/config/sounds/musics.yml" as "YAML-MUSIC"
+  delete {MUSIC::*}
+  loop yaml node keys "" from "YAML-MUSIC":
+    set {_category} to loop-value
+    loop yaml node keys {_category} from "YAML-MUSIC":
+      set {_id} to loop-value-2
+      set {MUSIC::%{_category}%::%{_id}%::PATH} to yaml value "%{_category}%.%{_id}%.PATH" from "YAML-MUSIC"
+      set {MUSIC::%{_category}%::%{_id}%::DURATION} to yaml value "%{_category}%.%{_id}%.DURATION" from "YAML-MUSIC"
+  unload yaml "YAML-MUSIC"
+
   #GLOBAL VAR
   set {LORE_LENGTH_MAX} to 40
   set {LANG_FALLBACK} to "fr-FR"
@@ -200,17 +211,11 @@ function config_load(world: world):
   set {SHIELD_DURABILITY} to 336 #Natural max shield durability
   set {PLAYER::LISTENER::*} to "STAT" and "list"
 
-  # LOAD CHUNKS
-  # loop {LOCATION::CATEGORY::*}:
-  #   set {_category} to loop-value
-  #   loop {LOCATION::%{_category}%::*}:
-  #     set {_loc} to loop-value-2
-  #     set {_chunk} to chunk of {LOCATION::%{_category}%::%{_loc}%}
-  #     load {_chunk} with ticket
-
   # Initialize players. TODO : to be triggered when game starts
+
   loop all players:
     set {_p} to loop-value
     player_store_weapon_delete_all({_p})
     player_store_skill_delete_all({_p})
     player_store_listener_add({_p}, "STAT")
+    player_clean({_p}, false)

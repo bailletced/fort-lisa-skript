@@ -1,0 +1,71 @@
+BOSS_GOULIATH:
+  Type: ZOMBIE
+  Skills:
+  - model{mid=gouliath;n=false} @self ~onSpawn
+  # - vfx{m=gouliath;p=spear;en=true} @self ~onSpawn 
+  #  - sound{s=block.bubble_column.whirlpool_inside;p=0.5;v=1} @self ~onDamaged
+  - randomskill{skills=Spear2;sync=true} ~onAttack
+  - skill{s=Pull} ~onDamaged 0.1
+  # - skill{s=CrushingLeap} ~onChangeTarget
+  # - skill{s=SpearThrow} @target ~onTimer:100
+  - skill{s=Lunge} ~onTimer:400
+  - skill{s=SummonSpartan} ~onTimer:200
+  - skill{s=SummonSpartan} ~onSpawn
+  - swapmodel{m=gouliath;nid=gingly} @self ~onDamaged =10%
+  - sound{s=minecraft:entity.ravager.death} @EIW ~onDeath
+  Options:
+    NoDamageTicks: 10
+    AlwaysShowName: true
+    Collidable: true
+    PreventSunburn: true
+    Silent: true
+    PreventOtherDrops: true
+
+BOSS_AURELIA:
+  Type: ZOMBIE
+  Display: '&5Aurelia'
+  Health: 200
+  Damage: 0
+  Armor: 0
+  Faction: Void
+  DamageModifiers:
+  - FIRE -3
+  Skills:
+  - model{mid=void_aurelia;n=false} @self ~onSpawn
+  - sound{s=block.bubble_column.whirlpool_inside;p=0.5;v=1} @self ~onDamaged
+  - skill{s=Tentacle_attack} ~onAttack
+  - skill{s=Spin} ~onTimer:250
+  - skill{s=Cascade} ~onTimer:400
+  AIGoalsSelectors:
+  - clear
+  - meleeattack
+  - randomstroll
+  - lookatplayers
+  AiTargetSelectors:
+  - clear
+  - hurtbytarget
+  - players
+  - golems
+  BossBar:
+    Enabled: true
+    Title: '&5Aurelia aurita'
+    Range: 5
+    Color: PURPLE
+    Style: SOLID
+    CreateFog: false
+  KillMessages:
+  - "&7<target.name> &5s'est fait anéantir"
+  - '&5Aurelia &7> &7<target.name>'
+  Modules:
+    ThreatTable: true
+    ImmunityTable: true
+  Options:
+    NoDamageTicks: 10
+    AlwaysShowName: true
+    PreventSunburn: true
+    Collidable: false
+    Silent: true
+    MovementSpeed: 0.25
+    MaxCombatDistance: 10
+    PreventOtherDrops: true
+    KnockbackResistance: 0

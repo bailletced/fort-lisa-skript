@@ -22,7 +22,8 @@ on damage:
     set {_item} to held item of {_p}
     set {_typeItem} to item_nbt_get_tag({_item}, "TYPE")
     if {_typeItem} is "WEAPON":
-      weapon_hit({_p}, {_item}, victim)
+      if victim is not a player:
+        weapon_hit({_p}, {_item}, victim)
     cancel event
 
     if entity_nbt_get_tag(victim, "TYPE") is "MOB":

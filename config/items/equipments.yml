@@ -38,12 +38,22 @@ LEGGING:
       MEMORY_MAX: 1
     STATS:
       ATTACK: 2
+BOOT:
+  LEATHER_BOOTS:
+    TIER: 1
+    ITEM: leather boots
+    GIFTS:
+      WILL_MAX: 1
+      INTELLECT_MAX: 1
+      MEMORY_MAX: 1
+    STATS:
+      SPEED: 1
 SHIELD:
   IRON_SHIELD:
     TIER: 1
     ITEM: shield
     STATS:
-      DURABILITY_MAX: 150
-      DURABILITY: 10
+      DURABILITY_MAX: 100
+      DURABILITY: 100
       DEFENCE_REDUCTION: 70
-      COOLDOWN: 20
+      COOLDOWN: 350

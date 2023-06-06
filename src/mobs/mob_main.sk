@@ -75,6 +75,7 @@ function mob_register(mob: entity, id: text, level: number, ai: text) :: entity:
   entity_nbt_set_tag({_mob}, "CATEGORY", mob_getCategory({_id}))
   entity_nbt_set_tag({_mob}, "ID", {_id})
   entity_nbt_set_tag_native({_mob}, "{PersistenceRequired:1b}")
+  entity_nbt_set_tag_native({_mob}, "{Paper.ShouldBurnInDay:0b}")
   
   set {_secureLoad} to false
   # Security if the file associated to the mob has not been loaded

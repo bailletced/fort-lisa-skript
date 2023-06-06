@@ -1,0 +1,13 @@
+function test_players_store_music(p: player):
+    send "§5Testing player store music" to the console 
+    it "test music store":
+        player_store_music_delete({_p})
+        player_store_music_set({_p}, "WAVE", "MAIN", 0.5)
+
+        set {_currentMusic} to player_store_music_get({_p})
+        assert if {_currentMusic} is {MUSIC::WAVE::MAIN::PATH} with message "current played music should be %{MUSIC::WAVE::MAIN::PATH}%. Got %{_currentMusic}%"
+        player_store_music_delete({_p})
+        delete {_currentMusic}
+        set {_currentMusic} to player_store_music_get({_p})
+        assert if {_currentMusic} is not set with message "current music should not be set. Got %{_currentMusic}%"
+    player_store_music_delete({_p})

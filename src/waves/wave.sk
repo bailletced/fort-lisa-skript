@@ -44,7 +44,6 @@ function wave_start(gameUuid: text, waveNumber: number):
   game_store_wave_set_current({_waveNumber})
   game_store_wave_set_current_timer(0)
   load yaml "plugins/Skript/scripts/fort-lisa/config/waves/%{_waveNumber}%.yml" as "YAML-WAVE"
-  delete {_loadedIds::*}
   loop node keys "MOBS" of "YAML-WAVE":
     set {_group} to loop-key
     wave_summon({_gameUuid}, {_group})

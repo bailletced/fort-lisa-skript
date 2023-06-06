@@ -1,0 +1,32 @@
+#TODO : implement transition between songs
+
+function player_store_music_get(p: player) :: text:
+    if {players::music::%{_p}%} is set:
+        return {players::music::%{_p}%}
+
+function player_store_music_set(p: player, category: text, id: text, volume: number = 0.5, loop: boolean = false):
+    set {_music} to {MUSIC::%{_category}%::%{_id}%::PATH}
+    set {_duration} to {MUSIC::%{_category}%::%{_id}%::DURATION}
+    player_store_music_delete({_p})
+
+    set {players::music::%{_p}%} to {_music}
+    set {players::music::%{_p}%::loop} to {_loop}
+    set {players::music::%{_p}%::volume} to {_volume}
+    set {players::music::%{_p}%::duration} to {_duration}
+    player_storeMusic_play({_p}, {_loop})
+
+function player_storeMusic_play(p: player, loop: boolean, transition: boolean = false):
+    set {_music} to {players::music::%{_p}%}
+    set {_volume} to {players::music::%{_p}%::volume}
+    set {_duration} to {players::music::%{_p}%::duration}
+    play sound {_music} with volume {_volume} to {_p}
+    wait "%{_duration}% ticks" parsed as timespan
+    if {_loop} is true:
+        while player_store_music_get({_p}) is {_music}:
+            play sound {_music} with volume {_volume} to {_p}
+            wait "%{_duration}% ticks" parsed as timespan
+
+function player_store_music_delete(p: player):
+    set {_currentSound} to {players::music::%{_p}%}
+    stop sound {_currentSound} for {_p}
+    delete {players::music::%{_p}%}

@@ -9,19 +9,31 @@ function game_start(world: world):
     loop all players:
       game_store_player_add({_gameUuid}, loop-player)
       player_init(loop-player, {_gameUuid})
+      player_store_music_set(loop-player, "TAVERN", "MAIN", 0.5)
 
   #GAME PREPARATION
-  set {_canStart} to false
-  while {_canStart} is false:
+  set {_timer} to 30
+  while {_timer} > 0:
     loop game_store_players({_gameUuid}):
-      set {_canStart} to true
-      if player_store_game_get(loop-player, "STATUS") is "PREPARING":
-        set {_canStart} to false
-        stop loop
-    wait 10 ticks
+      player_interface_title(loop-player, "%{_timer}%", "", 1 second)
+    remove 1 from {_timer}
+    wait 1 second
+
+  #PLAY MAIN MUSIC
+  loop game_store_players({_gameUuid}):
+    player_store_music_set(loop-player, "WAVE", "MAIN", 0.5, true)
+  
+  # set {_canStart} to false
+  # while {_canStart} is false:
+  #   set {_canStart} to true
+  #   loop game_store_players({_gameUuid}):
+  #     if player_store_game_get(loop-player, "STATUS") is "PREPARING":
+  #       set {_canStart} to false
+  #       stop loop
+  #   wait 10 ticks
+  # broadcast "TIPOPPED"
 
   #GAME FINAL INIT
-  wait 3 seconds
   game_store_set({_gameUuid}, "STATUS", "RUNNING")
   lisa_listeners({_lisa})
   wave_init({_gameUuid})
@@ -40,4 +52,12 @@ function game_end(gameUuid: text):
       if player_store_game_get(loop-value, "STATUS") is "RUNNING":
         player_clean(loop-value)
         player_interface_title(loop-value, i18n(loop-value, "GAME.END"), "", 3 seconds)
+        player_interface_sound_stop_all(loop-value)
+        player_store_music_delete(loop-value)
+
+function game_inprogress(gameUuid: text):
+  while game_store_isset({_gameUuid}) is true:
+    player_interface_sound_play(game_store_players({_gameUuid}), "WAVE", "MAIN", 0.5, 4000)
+
+
         

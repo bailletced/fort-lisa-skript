@@ -1,5 +1,4 @@
 function staff_burning_heart_cast(p: player, staff: item):
-  set {_range} to player_stat_compute({_p}, {_staff}, "POWER")
   players_action_shootProjectile({_p}, {_staff}, snowball, 1, false)
   set {_projectile} to last shot projectile
   ignite {_projectile}
@@ -37,23 +36,18 @@ function staff_burning_heart_special(p: player, staff: item):
   set {_it} to 0
   set {_uuid} to item_nbt_get_tag({_staff}, "UUID")
   set {_height} to 12
+
   loop 25 times:
     drawCylinder particle "flame", speed 0, center {_loc}, id "%{_uuid}%-%{_it}%", randomRotation false, isSolid false, radius {_radius}-0.5, density ({_radius}-1)*320, height {_height}, sideRatio 0, visibleRange 30
-    delete {_victims::*}
     loop target_radius({_loc}, max({_height}/2, ({_radius}+0.5)/2)):
       set {_loc1} to location(x coordinate of {_loc}, 0, z coordinate of {_loc})
       set {_loc2} to location(x coordinate of loop-entity, 0, z coordinate of loop-entity)
       set {_dist} to distance between {_loc1} and {_loc2}
       if {_dist} <= ({_radius}+0.5):
-        if {_victims::*} does not contain loop-entity:
-          add loop-entity to {_victims::*}
+        entity_effect_burn({_p}, loop-value-2, {_effectAttack}, {_effectDuration}, {_effectFrequency}, "UNIQUE")
+        set {_damageFromEpicentre} to {_attack} + (({_attack}) * (1 / ({_dist} + 1)))
+        entity_effect_damage({_p}, loop-value-2, {_damageFromEpicentre})
     wait 10 ticks
-
-    loop {_victims::*}:
-      entity_effect_burn({_p}, loop-value-2, {_effectAttack}, {_effectDuration}, {_effectFrequency}, "UNIQUE")
-      # Closest to the center the entity is, more damage it takes.
-      # broadcast "%{_attack}*((1/({_dist}+1))/0.5)%"
-      entity_effect_damage({_p}, loop-value-2, {_attack}*((1/({_dist}+1))/2))
 
     set {_loc} to location 0.8 meter in front of {_loc}
     stopEffect "%{_uuid}%-%{_it}%"
