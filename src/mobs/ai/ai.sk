@@ -3,7 +3,14 @@ function mob_ai_init(mob: entity, ai: text):
     set {_nearestEntrance} to location_castle_nearest_entrance({_mob})
     mob_store_location_set({_mob}, ({_nearestEntrance}, {LOCATION::CASTLE::FOUNTAIN}, {LOCATION::CASTLE::DOOR} and {LOCATION::CASTLE::THRONE}))
     mob_store_listener_set({_mob}, ("TARGET_PLAYER_RADIUS_SOFT"))
-    mob_ai_main_thread({_mob})
+  else if {_ai} is "goToLisa1":
+    mob_store_location_set({_mob}, ({LOCATION::CASTLE::THRONE}))
+    mob_store_listener_set({_mob}, ("TARGET_PLAYER_RADIUS_SOFT"))
+  else:
+    error("AI %{_ai}% is not known")
+  
+  # Register mob AI...
+  mob_ai_main_thread({_mob})
 
 function mob_ai_main_thread(mob: entity):
   while {_mob} is alive:

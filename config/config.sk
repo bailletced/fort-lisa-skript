@@ -88,7 +88,7 @@ function config_load(world: world):
   #MOBS
   load yaml "plugins/Skript/scripts/fort-lisa/config/mobs/mob-categories.yml" as "YAML-MOB-CATEGORIES"
   delete {MOB::*}
-  set {MOB::IA::*} to "A"
+  set {MOB::IA::*} to "A" and "goToLisa1"
   loop node keys "" from "YAML-MOB-CATEGORIES":
     set {_category} to loop-value
     add {_category} to {MOB::CATEGORY::*}

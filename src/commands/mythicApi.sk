@@ -29,7 +29,6 @@ command /mythicApi [<text>] [<text>] [<text>] [<text>] [<text>]:
             stop
     
     else if arg-1 is "REGISTER":
-      broadcast "REGISTER"
       #ACTION;MOBID;MOBUUID;LEVEL;AI
       set {_mobId} to arg-2
       set {_mob} to arg-3 parsed as entity

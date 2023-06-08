@@ -71,24 +71,33 @@ function mob_summon(id: text, level: number, ai: text, location: location) :: en
     return {_mob}
 
 function mob_register(mob: entity, id: text, level: number, ai: text) :: entity:
-  entity_nbt_set_tag({_mob}, "TYPE", "MOB")
-  entity_nbt_set_tag({_mob}, "CATEGORY", mob_getCategory({_id}))
-  entity_nbt_set_tag({_mob}, "ID", {_id})
-  entity_nbt_set_tag_native({_mob}, "{PersistenceRequired:1b}")
-  entity_nbt_set_tag_native({_mob}, "{Paper.ShouldBurnInDay:0b}")
-  
-  set {_secureLoad} to false
-  # Security if the file associated to the mob has not been loaded
-  if yaml file "YAML-MOB-%{_id}%" does not exist:
-    set {_secureLoad} to true
-    mob_load_yaml({_mob})
+  if mob_store_isset({_mob}) is false:
+    entity_nbt_set_tag({_mob}, "TYPE", "MOB")
+    entity_nbt_set_tag({_mob}, "CATEGORY", mob_getCategory({_id}))
+    entity_nbt_set_tag({_mob}, "ID", {_id})
+    entity_nbt_set_tag_native({_mob}, "{PersistenceRequired:1b}")
+    entity_nbt_set_tag_native({_mob}, "{Paper.ShouldBurnInDay:0b}")
 
-  mob_initialize({_mob}, {_level})
-  mob_ai_init({_mob}, {_ai})
+    set {_secureLoad} to false
+    # Security if the file associated to the mob has not been loaded
+    if yaml file "YAML-MOB-%{_id}%" does not exist:
+      set {_secureLoad} to true
+      mob_load_yaml({_mob})
 
-  # Unload after security load
-  if {_secureLoad} is true:
-    mob_store_unload_yaml({_mob})
+    mob_initialize({_mob}, {_level})
+    mob_ai_init({_mob}, mob_randomAi({_ai}))
+
+    # Unload after security load
+    if {_secureLoad} is true:
+      mob_store_unload_yaml({_mob})
+
+# Choose an AI randomly between some possibilities
+function mob_randomAi(ai: text) :: text:
+  if {_ai} contains ",":
+    set {_ai::*} to {_ai} split at ","
+    return random element out of {_ai::*}
+  else:
+    return {_ai}
 
 function mob_getCategory(id: text) :: text:
   loop {MOB::CATEGORY::*}:

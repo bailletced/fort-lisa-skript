@@ -70,8 +70,6 @@ Spawn_Underground:
   Skills:
     - effect:particlesphere{particle=white_ash;amount=50;radius=0;y=0.5} @self
     
-    
-    
 Summon_Deads:
   Skills:
-  - summon{type=NECROMANCER_SKELETON_DEAD_BABY;amount=5;onSurface=true;radius=6} @self
+  - summon{type=NECROMANCER_SKELETON_CREATURE_DEAD-BABY;amount=5;onSurface=true;radius=6} @self

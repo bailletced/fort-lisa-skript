@@ -1,4 +1,4 @@
-NECROMANCER_SKELETON:
+NECROMANCER_SKELETON_NECROMANCER:
   Type: SKELETON
   Display: '&2Nécromancien'
   Skills:
@@ -87,19 +87,16 @@ Magic_Crossed_Reversed:
   
   
 #==========================SKELETON_Dead_Baby========================
-NECROMANCER_SKELETON_DEAD_BABY:
+NECROMANCER_SKELETON_CREATURE_DEAD-BABY:
   Type: ZOMBIE
   Display: '&8Squelette invoqué'
   Skills:
   - model{mid=dead_baby_skeleton;n=name} @self ~onSpawn
   - state{mid=dead_baby_skeleton;s=attack;li=3;lo=3} @self ~onAttack
   - skill{s=Spawn_Underground} @self ~onSpawn
+  - command{c="mythicApi REGISTER NECROMANCER_SKELETON_CREATURE_DEAD-BABY <caster.uuid> 1 A,GoToLisa1"} @self ~onSpawn
   Options:
     NoDamageTicks: 10
-    AlwaysShowName: true
-    PreventSunburn: true
-    ShowHealth: true
     Collidable: true
     Silent: true
     PreventOtherDrops: true
-    MovementSpeed: 0.3

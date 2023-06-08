@@ -6,6 +6,11 @@ function mob_store_add(mob: entity):
   set {_uuid} to uuid of {_mob}
   add {_uuid} to {mobs::*}
 
+function mob_store_isset(mob: entity) :: boolean:
+  if {mobs::*} contains uuid of {_mob}:
+    return true
+  return false
+
 function mob_count() :: number:
   return size of {mobs::*}
 
