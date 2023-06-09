@@ -1,10 +1,32 @@
-function mob_store_listener_set(mob: entity, listeners: texts):
+# Set listeners with some optional values
+function mob_store_listener_set(mob: entity, listeners: texts, keys: texts = "", values: objects = ""):
   if {_mob} is set:
     set {_uuid} to uuid of {_mob}
     loop {_listeners::*}:
-      if mob_store_listener_isset({_mob}, loop-value) is false:
-        add loop-value to {mobs::%{_uuid}%::listener::*}
-        mob_store_listener_disable({_mob}, loop-value)
+      set {_listener} to loop-value
+      if mob_store_listener_isset({_mob}, {_listener}) is false:
+        add {_listener} to {mobs::%{_uuid}%::listener::*}
+        mob_store_listener_disable({_mob}, {_listener})
+        if {_keys::*} is not "":
+          # Some keys/vals have been passed. We store it
+          loop {_keys::*}:
+            set {_key} to loop-value-2
+            set {_val} to {_values::%loop-index-2%}
+            mob_store_listener_set_value({_mob}, {_listener}, {_key}, {_val})
+
+# Set value for a listener
+function mob_store_listener_set_value(mob: entity, listener: text, key: text, value: object):
+  if {_mob} is set:
+    if mob_store_listener_isset({_mob}, {_listener}) is true:
+      set {_uuid} to uuid of {_mob}
+      set {mobs::%{_uuid}%::listener::%{_listener}%::%{_key}%} to {_value}
+
+# Get value stored for a listener
+function mob_store_listener_get_value(mob: entity, listener: text, key: text) :: object:
+  if {_mob} is set:
+    if mob_store_listener_isset({_mob}, {_listener}) is true:
+      set {_uuid} to uuid of {_mob}
+      return {mobs::%{_uuid}%::listener::%{_listener}%::%{_key}%}
 
 function mob_store_listener_isset(mob: entity, listener: text) :: boolean:
   if {_mob} is set:

@@ -1,12 +1,13 @@
 function mob_ai_targetLocation(mob: entity):
   mob_store_target_set({_mob}, "LOCATION")
   delete target of {_mob}
+  set {_size} to entity_nbt_get_stat({_mob}, "SIZE")
   while mob_store_target_get({_mob}) is "LOCATION":
     set {_locationTarget} to mob_store_location_get({_mob})
     # broadcast "TARGET: %{_mob}% %{_locationTarget}%"
     set path targets of {_mob} to {_locationTarget}
     set {_dist} to distance between {_mob} and {_locationTarget}
-    if {_dist} <= 1.5:
+    if {_dist} <= 3 + {_size}:
       # Location has been reached
       mob_store_location_delete({_mob}, {_locationTarget})
     if mob_store_location_count({_mob}) is 0:

@@ -1,6 +1,0 @@
-SkriptDamage:
-  Skills:
-    - command{c="mythicApi DAMAGE <mob.uuid> <target.uuid> 1"}
-SkriptSummon:
-  Skills:
-    - command{c="mythicApi SUMMON VOID_ARCHER <caster.l.w>,<caster.l.x>,<caster.l.y>,<caster.l.z> 1 A"}

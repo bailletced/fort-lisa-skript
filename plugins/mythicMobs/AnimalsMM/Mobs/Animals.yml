@@ -1,0 +1,67 @@
+Salamandre:
+  Type: PIG
+  Display: '&eSalamandre tachetée'
+  Health: 100
+  Damage: 0
+  Armor: 0
+  Faction: Nature
+  Skills:
+  - model{mid=salamandra_salamandra;n=false} @self ~onSpawn
+  - command{c="give <target.name> gold_ingot 20"} @trigger ~onInteract
+  Modules:
+    ThreatTable: true
+    ImmunityTable: true
+  Options:
+    Invincible: true
+    AlwaysShowName: true
+    Collidable: false
+    Silent: true
+    MovementSpeed: 0
+    PreventOtherDrops: true
+    Interactable: true
+    
+GorgeBleue:
+  Type: PIG
+  Display: '&3Gorge Bleue à Miroir'
+  Health: 100
+  Damage: 0
+  Armor: 0
+  Faction: Nature
+  Skills:
+  - model{mid=luscinia_svecica;n=false} @self ~onSpawn
+  - skill{s=BioGorgeBleue} ~onInteract
+  - skill{s=BioGorgeBleue} ~onSpawn
+  Modules:
+    ThreatTable: true
+    ImmunityTable: true
+  Options:
+    Invincible: true
+    AlwaysShowName: true
+    Collidable: false
+    Silent: true
+    MovementSpeed: 0
+    PreventOtherDrops: true
+    Interactable: true
+    
+Loutre:
+  Type: PIG
+  Display: '&3Loutre Européenne'
+  Health: 100
+  Damage: 0
+  Armor: 0
+  Faction: Nature
+  Skills:
+  - model{mid=lutra_lutra;n=false} @self ~onSpawn
+  - skill{s=BioLoutre} ~onInteract
+  - skill{s=BioLoutre} ~onSpawn
+  Modules:
+    ThreatTable: true
+    ImmunityTable: true
+  Options:
+    Invincible: true
+    AlwaysShowName: true
+    Collidable: false
+    Silent: true
+    MovementSpeed: 0
+    PreventOtherDrops: true
+    Interactable: true

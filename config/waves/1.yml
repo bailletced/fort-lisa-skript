@@ -4,7 +4,7 @@ MOBS:
     ID: ZOMBIE
     LEVEL: 1
     AMOUNT: 30
-    AI: A
+    AI: goToLisa0
     LOCATION:
       - CASTLE.GATE_A
       - CASTLE.GATE_B
@@ -15,7 +15,7 @@ MOBS:
     ID: SKELETON
     LEVEL: 1
     AMOUNT: 30
-    AI: A
+    AI: goToLisa0
     LOCATION:
       - CASTLE.GATE_A
       - CASTLE.GATE_B

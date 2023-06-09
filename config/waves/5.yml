@@ -1,10 +1,12 @@
 DURATION: 4000
+TYPE: BOSS
+MUSIC: GOULIATH
 MOBS:
   1:
     ID: BOSS_GOULIATH
     LEVEL: 1
     AMOUNT: 1
-    AI: A
+    AI: goToLisa0
     LOCATION:
       - CASTLE.GATE_A
     DELAY: 0
@@ -12,7 +14,7 @@ MOBS:
     ID: NORMAL_SPARTAN
     LEVEL: 1
     AMOUNT: 30
-    AI: A
+    AI: goToLisa0
     LOCATION:
       - CASTLE.GATE_A
     DELAY: 0
@@ -20,7 +22,7 @@ MOBS:
     ID: VOID_WARRIOR-FLY
     LEVEL: 1
     AMOUNT: 15
-    AI: A
+    AI: goToLisa0
     LOCATION:
       - CASTLE.GATE_A
       - CASTLE.GATE_B

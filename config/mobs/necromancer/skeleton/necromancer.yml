@@ -8,3 +8,5 @@ STAT:
   SPEED: 1
 EQUIPMENT:
   HELMET: leather helmet
+TAG:
+  PROJECTILE: DISABLED

@@ -24,7 +24,7 @@ on damage:
     if {_typeItem} is "WEAPON":
       if victim is not a player:
         weapon_hit({_p}, {_item}, victim)
-    cancel event
+      cancel event
 
     if entity_nbt_get_tag(victim, "TYPE") is "MOB":
       # A mob is hit.

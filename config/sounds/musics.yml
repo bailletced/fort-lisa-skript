@@ -6,7 +6,8 @@ WAVE:
   MAIN: 
     PATH: g_sounds:musics_fl.music_waves
     DURATION: 4000
-  BOSS: 
+BOSS:
+  GOULIATH:
     PATH: g_sounds:musics_fl.music_boss
     DURATION: 3200
 ANIMAL:

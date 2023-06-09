@@ -1,14 +1,15 @@
 function mob_ai_init(mob: entity, ai: text):
-  if {_ai} is "A":
+  if {_ai} is "goToLisa0":
     set {_nearestEntrance} to location_castle_nearest_entrance({_mob})
     mob_store_location_set({_mob}, ({_nearestEntrance}, {LOCATION::CASTLE::FOUNTAIN}, {LOCATION::CASTLE::DOOR} and {LOCATION::CASTLE::THRONE}))
-    mob_store_listener_set({_mob}, ("TARGET_PLAYER_RADIUS_SOFT"))
+    mob_store_listener_set({_mob}, ("TARGET_PLAYER_RADIUS_SOFT"), "RADIUS", 30)
   else if {_ai} is "goToLisa1":
-    mob_store_location_set({_mob}, ({LOCATION::CASTLE::THRONE}))
-    mob_store_listener_set({_mob}, ("TARGET_PLAYER_RADIUS_SOFT"))
+    mob_store_location_set({_mob}, mob_smartLocations({_mob}))
+    mob_store_listener_set({_mob}, ("TARGET_PLAYER_RADIUS_SOFT"), "RADIUS", 5)
+  else if {_ai} is "goToLisa2":
+    mob_store_location_set({_mob}, mob_smartLocations({_mob}))
   else:
     error("AI %{_ai}% is not known")
-  
   # Register mob AI...
   mob_ai_main_thread({_mob})
 
@@ -36,6 +37,12 @@ function mob_ai_triggerListeners(mob: entity):
       broadcast "LISTENER %loop-value% not implemented"
 
 
+function mob_smartLocations(mob: entity) :: locations:
+  set {_d1} to distance between {_mob} and {LOCATION::CASTLE::THRONE}
+  set {_d2} to distance between {_mob} and {LOCATION::CASTLE::FOUNTAIN}
+  if {_d1} < {_d2}:
+    return {LOCATION::CASTLE::THRONE}
+  return {LOCATION::CASTLE::FOUNTAIN} and {LOCATION::CASTLE::THRONE}
 
 
 

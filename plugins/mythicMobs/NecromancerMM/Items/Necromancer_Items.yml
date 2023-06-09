@@ -1,0 +1,57 @@
+Necromancer_Staff:
+  Id: STICK
+  Display: '&7Bâton du &2Nécromancien'
+  Model: 3003
+  Lore:
+  - '&7Le puissant bâton'
+  - '&7du &2Nécromancien.'
+  
+
+Necromancer_Staff_Player:
+  Id: STICK
+  Display: '<bold>&7Bâton du &2Nécromancien</bold>'
+  Model: 3004
+  Lore:
+  - '&7Le puissant bâton'
+  - '&7du &2Nécromancien.'
+  Placeable: true
+  Skills:
+  - skill{s=Magic_Crossed_Skill;cd=1} ~onUse
+
+Magic_Crossed_1:
+  Id: BLAZE_ROD
+  Model: 6101
+Magic_Crossed_2:
+  Id: BLAZE_ROD
+  Model: 6102
+Magic_Crossed_3:
+  Id: BLAZE_ROD
+  Model: 6103
+Magic_Crossed_4:
+  Id: BLAZE_ROD
+  Model: 6104
+Magic_Crossed_5:
+  Id: BLAZE_ROD
+  Model: 6105
+Magic_Crossed_6:
+  Id: BLAZE_ROD
+  Model: 6106
+  
+Magic_Crossed_Reversed_1:
+  Id: BLAZE_ROD
+  Model: 6111
+Magic_Crossed_Reversed_2:
+  Id: BLAZE_ROD
+  Model: 6112
+Magic_Crossed_Reversed_3:
+  Id: BLAZE_ROD
+  Model: 6113
+Magic_Crossed_Reversed_4:
+  Id: BLAZE_ROD
+  Model: 6114
+Magic_Crossed_Reversed_5:
+  Id: BLAZE_ROD
+  Model: 6115
+Magic_Crossed_Reversed_6:
+  Id: BLAZE_ROD
+  Model: 6116

@@ -37,7 +37,6 @@ command /zombie:
         set {_p} to event-player
         mob_summon("ZOMBIE", 1, "A", location of {_p})
         set {_zombie} to last spawned entity
-        broadcast nbt compound of {_zombie}
         set max health of {_zombie} to 900
         set health of {_zombie} to 900
         apply potion of slowness of tier 100 to {_zombie} for 999 days

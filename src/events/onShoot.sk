@@ -18,3 +18,6 @@ on shoot:
               entity_nbt_set_stat(projectile, "FULLY_CHARGED", 1)
               item_store_stat_delete({_helditem}, "FULLY_CHARGED")
             bow_cast_skill({_p}, {_helditem}, projectile)
+  else:
+    if entity_nbt_get_tag(shooter, "PROJECTILE") is "DISABLED":
+      cancel event

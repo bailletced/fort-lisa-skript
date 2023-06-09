@@ -1,10 +1,12 @@
 DURATION: 1200
+TYPE: BOSS
+MUSIC: GOULIATH
 MOBS:
   1:
     ID: ZOMBIE
     LEVEL: 1
     AMOUNT: 30
-    AI: A
+    AI: goToLisa0
     LOCATION:
       - CASTLE.GATE_A
       - CASTLE.GATE_B
@@ -15,7 +17,7 @@ MOBS:
     ID: VOID_WARRIOR
     LEVEL: 1
     AMOUNT: 30
-    AI: A
+    AI: goToLisa0
     LOCATION:
       - CASTLE.GATE_A
       - CASTLE.GATE_B
@@ -26,7 +28,7 @@ MOBS:
     ID: VOID_ARCHER
     LEVEL: 0
     AMOUNT: 30
-    AI: A
+    AI: goToLisa0
     LOCATION:
       - CASTLE.GATE_A
       - CASTLE.GATE_B

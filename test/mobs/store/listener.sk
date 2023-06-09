@@ -50,3 +50,29 @@ function test_mob_store_listener(p: player):
 
     kill {_mob1}
     kill {_mob2}
+
+  it "test initialize listener with some keys/val":
+    summon zombie at {_location}
+    set {_mob1} to last spawned entity
+    summon zombie at {_location}
+    set {_mob2} to last spawned entity
+
+    mob_store_listener_set({_mob1}, ("TARGET_PLAYER_RADIUS_SOFT"), ("radius" and "timer"), (10 and 55))
+    mob_store_listener_set({_mob2}, ("TARGET_PLAYER_RADIUS_SOFT"), ("radius" and "timer"), (20 and 65))
+
+    set {_radiusMob1} to mob_store_listener_get_value({_mob1}, "TARGET_PLAYER_RADIUS_SOFT", "radius")
+    set {_timerMob1} to mob_store_listener_get_value({_mob1}, "TARGET_PLAYER_RADIUS_SOFT", "timer")
+    set {_radiusMob2} to mob_store_listener_get_value({_mob2}, "TARGET_PLAYER_RADIUS_SOFT", "radius")
+    set {_timerMob2} to mob_store_listener_get_value({_mob2}, "TARGET_PLAYER_RADIUS_SOFT", "timer")
+
+    mob_store_listener_set_value({_mob1}, "FAKE_LISTENER", "radius", 100)
+    set {_fakeRadiusMob1} to mob_store_listener_get_value({_mob1}, "FAKE_LISTENER", "radius")
+
+    assert if {_radiusMob1} is 10 with message "radius for mob1 should be 10. Got %{_radiusMob1}%"
+    assert if {_timerMob1} is 55 with message "timer for mob1 should be 55. Got %{_radiusMob1}%"
+    assert if {_radiusMob2} is 20 with message "radius for mob2 should be 20. Got %{_radiusMob2}%"
+    assert if {_timerMob2} is 65 with message "timer for mob2 should be 65. Got %{_timerMob2}%"
+    assert if {_fakeRadiusMob1} is not set with message "a key to a non-set listener should not be set. Got %{_fakeRadiusMob1}%"
+
+    kill {_mob1}
+    kill {_mob2}
