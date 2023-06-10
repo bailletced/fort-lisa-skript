@@ -34,9 +34,12 @@ function item_gift_initialize(p: player, item: item) :: item:
 function item_create(p: player, type: text, category: text, id: text, idWill: text = "") :: item:
   set {_uuid} to item_generate_uuid({_type}, {_category}, {_id})
   if {_idWill} is not "":
-    set {_item} to customitem {%{_type}%::%{_category}%::%{_id}%::%{_idWill}%::CUSTOM_ITEM}
+    set {_item} to customitem {SKILL::%{_category}%::%{_idWill}%::CUSTOM_ITEM}
     if {_item} is not set:
-      set {_item} to {%{_type}%::%{_category}%::%{_id}%::%{_idWill}%::ITEM}
+      set {_modelData} to {SKILL::%{_category}%::%{_idWill}%::CUSTOM_MODEL_DATA}
+      set {_item} to {SKILL::%{_category}%::%{_idWill}%::ITEM}
+      if {_modelData} is set:
+        set {_item} to item_nbt_set_tag_native({_item}, "{CustomModelData: %{_modelData}%}")
   else:
     set {_item} to customitem {%{_type}%::%{_category}%::%{_id}%::CUSTOM_ITEM}
     if {_item} is not set:

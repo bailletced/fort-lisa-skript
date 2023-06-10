@@ -1,5 +1,6 @@
 STAFF:
   BURNING_HEART:
+    CUSTOM_ITEM: volonte_staff
     ATTRIBUTES:
       - PROJECTILE
       - EFFECT
@@ -30,6 +31,7 @@ STAFF:
 
 CROSSBOW:
   BURNING_HEART:
+    ITEM: crossbow
     ATTRIBUTES:
       - RADIUS
       - EFFECT
@@ -44,6 +46,8 @@ CROSSBOW:
       KNOCKBACK: 3
 BOW:
   BURNING_HEART:
+    ITEM: bow
+    CUSTOM_MODEL_DATA: 10101
     ATTRIBUTES:
       - RADIUS
       - EFFECT
@@ -59,6 +63,7 @@ BOW:
       KNOCKBACK: 1
 SWORD:
   BURNING_HEART:
+    CUSTOM_ITEM: volonte_sword
     STATS:
       ATTACK: 8
       ATTACK_MULTIPLIER: 0.6

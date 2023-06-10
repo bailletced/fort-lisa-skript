@@ -10,3 +10,34 @@ Fire_Slash_2:
 Fire_Slash_3:
   Id: BLAZE_ROD
   Model: 6203
+  
+Fire_Burning_1:
+  Id: BLAZE_ROD
+  Model: 6211
+Fire_Burning_2:
+  Id: BLAZE_ROD
+  Model: 6212
+Fire_Burning_3:
+  Id: BLAZE_ROD
+  Model: 6213
+Fire_Burning_4:
+  Id: BLAZE_ROD
+  Model: 6214
+  
+Fire_Burning_5:
+  Id: BLAZE_ROD
+  Model: 6215
+Fire_Burning_6:
+  Id: BLAZE_ROD
+  Model: 6216
+Fire_Burning_7:
+  Id: BLAZE_ROD
+  Model: 6217
+Fire_Burning_8:
+  Id: BLAZE_ROD
+  Model: 6218
+  
+Fire_Burning_0:
+  Id: STICK
+  Display: '&4Animation de Brûlure'
+  Model: 5000

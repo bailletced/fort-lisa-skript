@@ -57,6 +57,9 @@ EQUIPMENT:
   HELMET:
     LAUREL_CROWN:
       TITLE: "La couronne de laurier {_TIER}"
+  BOOT:
+    LAUREL_CROWN:
+      TITLE: "Les coques d'acier {_TIER}"
   CHESTPLATE:
     CHAINMAIL:
       TITLE: "Le plastron de cuir {_TIER}"
@@ -144,7 +147,8 @@ GUI:
     GIFT:
       TITLE: "Choisissez un don"
 GAME:
-  END: "Fin de la partie"
+  WIN: "Victoire !"
+  LOSE: "Défaite"
 UTILITY:
   MAIN:
     CD:

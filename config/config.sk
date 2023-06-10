@@ -32,6 +32,7 @@ function config_load(world: world):
       add {_id} to {SKILL::%{_category}%::*}
       set {SKILL::%{_category}%::%{_id}%::ITEM} to yaml value "%{_category}%.%{_id}%.ITEM" from "YAML-SKILLS" parsed as item
       set {SKILL::%{_category}%::%{_id}%::CUSTOM_ITEM} to yaml value "%{_category}%.%{_id}%.CUSTOM_ITEM" from "YAML-SKILLS"
+      set {SKILL::%{_category}%::%{_id}%::CUSTOM_MODEL_DATA} to yaml value "%{_category}%.%{_id}%.CUSTOM_MODEL_DATA" from "YAML-SKILLS"
       set {SKILL::%{_category}%::%{_id}%::TRIGGER} to yaml value "%{_category}%.%{_id}%.TRIGGER" from "YAML-SKILLS"
       set {SKILL::%{_category}%::%{_id}%::ATTRIBUTE::*} to yaml list "%{_category}%.%{_id}%.ATTRIBUTES" from "YAML-SKILLS"
       loop yaml node keys "%{_category}%.%{_id}%.STATS" of "YAML-SKILLS":

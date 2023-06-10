@@ -10,8 +10,10 @@ on death:
   else:
     set {_type} to entity_nbt_get_tag({_entity}, "TYPE")
     if {_type} is "MOB":
-      mob_store_clear_all({_entity})
       mob_store_delete({_entity})
+      set {_category} to entity_nbt_get_tag({_entity}, "CATEGORY")
+      if {_category} is "BOSS":
+        game_bossDie({_entity})
     else:
       set {_victimName} to name of victim
       if {_victimName} is {NPC::LISA::NAME}:

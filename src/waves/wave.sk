@@ -55,7 +55,7 @@ function wave_summon(gameUuid: text, group: text):
   set {_amount} to yaml value "MOBS.%{_group}%.AMOUNT" from "YAML-WAVE"
   set {_delay} to yaml value "MOBS.%{_group}%.DELAY" from "YAML-WAVE"
   set {_ai} to yaml value "MOBS.%{_group}%.AI" from "YAML-WAVE"
-  set {_typeWave} to yaml value "TYPE" from "YAML-WAVE"
+  set {_music} to yaml value "MUSIC" from "YAML-WAVE"
 
   # We are in the BOSS wave!
   if {_typeWave} is "BOSS":

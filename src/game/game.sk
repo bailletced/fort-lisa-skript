@@ -3,6 +3,7 @@ function game_start(world: world):
     set {_gameUuid} to game_store_create()
     game_store_set({_gameUuid}, "STATUS", "PREPARING")
     game_store_set({_gameUuid}, "WORLD", {_world})
+    world_store_set({_world}, "GAMEUUID", {_gameUuid})
     mob_store_delete_all()
     set {_lisa} to lisa_summon({_gameUuid})
     # TODO : determine which players should be part of the game
@@ -38,8 +39,10 @@ function game_start(world: world):
   lisa_listeners({_lisa})
   wave_init({_gameUuid})
 
-function game_end(gameUuid: text):
+function game_end(gameUuid: text, victory: boolean = false):
   delete {game::*}
+  set {_world} to world_store_get({_world}, "GAMEUUID")
+  world_store_delete({_world})
   game_store_delete({_gameUuid})
   execute console command "/npc remove all"
   player_interface_tablist_footer_clean_all()
@@ -51,9 +54,13 @@ function game_end(gameUuid: text):
     if loop-value is a player:
       if player_store_game_get(loop-value, "STATUS") is "RUNNING":
         player_clean(loop-value)
-        player_interface_title(loop-value, i18n(loop-value, "GAME.END"), "", 3 seconds)
         player_interface_sound_stop_all(loop-value)
         player_store_music_delete(loop-value)
+        if {_victory} is true:
+          player_interface_title(loop-value, i18n(loop-value, "GAME.WIN"), "", 3 seconds)
+        else:
+          player_interface_title(loop-value, i18n(loop-value, "GAME.LOSE"), "", 3 seconds)
+
 
 function game_inprogress(gameUuid: text):
   while game_store_isset({_gameUuid}) is true:
@@ -64,4 +71,10 @@ function game_bossAppear(gameUuid: text, music: text):
   #PLAY MAIN MUSIC
   loop game_store_players({_gameUuid}):
     player_store_music_set(loop-player, "BOSS", {_music}, 0.5, true)
-        
+
+# When a BOSS die
+function game_bossDie(boss: entity):
+  set {_world} to world of {_boss}
+  set {_gameUuid} to world_store_get({_world}, "GAMEUUID")
+  if {_gameUuid} is set:
+    game_end({_gameUuid}, true)

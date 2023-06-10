@@ -1,11 +1,9 @@
 # ADD : simply add value
 # MULTIPLY : edit stat by applying a {_value} factor. Ex : 2 means entity's stat * 2
 function entity_effect_stat(e: entity, stat: text, value: number, duration: number, type: text = "ADD"):
-    broadcast "ADD STAT %{_e}%"
     player_store_stat_add({_e}, {_stat}, {_value})
     # wait "%{_duration}% tick" parsed as timespan
     wait 60 ticks
-    broadcast "END OF ADD"
     player_store_stat_add({_e}, {_stat}, -1*{_value})
 
     # if {_stat} does not contain "_BUFF":

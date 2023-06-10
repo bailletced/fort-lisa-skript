@@ -1,0 +1,8 @@
+function world_store_set(world: world, key: text, value: object):
+    set {world::%{_world}%::%{_key}%} to {_value}
+
+function world_store_get(world: world, key: text) :: object:
+    return {world::%{_world}%::%{_key}%}
+
+function world_store_delete(world: world):
+    delete {world::%{_world}%::*}

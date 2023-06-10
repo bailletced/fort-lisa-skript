@@ -1,8 +1,7 @@
 NECROMANCER_SKELETON_NECROMANCER:
   Type: SKELETON
-  Display: '&2Nécromancien'
   Skills:
-  - model{mid=necromancer;n=name} @self ~onSpawn
+  - model{mid=necromancer;} @self ~onSpawn
   - randomskill{s=SkriptDamage;sync=true} ~onAttack
   - setmodeltag{bone=tag_hp;tag=<caster.hp>} @self ~onSpawn
   - setmodeltagvisible{b=tag_hp;v=true} @self ~onDamaged =90%
