@@ -4,8 +4,10 @@ function chestplate_burning_heart_cast(p: player, skill: item):
   set {_effectAttack} to player_stat_compute({_p}, {_skill}, "EFFECT_ATTACK")
   set {_effectDuration} to player_stat_compute({_p}, {_skill}, "EFFECT_DURATION")
   set {_effectFrequency} to player_stat_compute({_p}, {_skill}, "EFFECT_FREQUENCY")
+  set {_effectDefenceBoost} to player_stat_compute({_p}, {_skill}, "EFFECT_DEFENCE-BOOST")
 
   loop ceil({_effectDuration}/20) times:
+    entity_effect_stat({_p}, "DEFENCE", {_effectDefenceBoost}, 20)
     draw {_radius}*70 flame at {_p} with offset vector({_radius}*0.0, {_radius}*0.0, {_radius}*0.0) with extra {_radius}*0.1
     loop all entities in radius {_radius} of {_p}:
       if entity_nbt_get_tag(loop-entity, "TYPE") is "MOB":

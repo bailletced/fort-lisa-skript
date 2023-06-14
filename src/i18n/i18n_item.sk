@@ -86,6 +86,8 @@ function i18n_item_lore(p: player, it: item) :: text:
         if size of {_key} split at "-" > 1:
             set {_spitted::*} to {_key} split at "-"
             set {_pureStat} to {_spitted::1}
+            if {_pureStat} contains "EFFECT":
+                replace "EFFECT_" with "" in {_pureStat}
         else:
             set {_pureStat} to {_key}
         if item_nbt_isset_stat({_it}, "%{_pureStat}%_MULTIPLIER") is true:

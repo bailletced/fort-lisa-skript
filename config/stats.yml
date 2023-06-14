@@ -16,7 +16,6 @@ ALL:
     COLOR: "§6"
   DEFENCE:
     ICON: "🛡"
-    ICON_END: "%"
     COLOR: "§6"
   DEFENCE_REDUCTION:
     ICON: ""
