@@ -37,6 +37,5 @@ A zombie level 3 is summoned. It wears by default a leather helmet. Configuratio
 
 {% hint style="warning" %}
 1. <mark style="color:red;">Equipments are purely decorative!</mark>
-2. <mark style="color:red;">Mobs should wear an helmet to be protected from the sun</mark>
 {% endhint %}
 

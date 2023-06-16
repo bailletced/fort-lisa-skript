@@ -17,5 +17,7 @@
   * [Weapons](items/weapons.md)
 * [Mobs](doc/mobs/README.md)
   * [Configuration](doc/mobs/configuration.md)
-  * [AI patterns](doc/mobs/mobs-ai.md)
+  * [AI patterns](mobs/mobs-ai/README.md)
+    * [GoToLisa\<n>](mobs/mobs-ai/gotolisa-less-than-n-greater-than.md)
 * [Waves](waves.md)
+* [Stats](stats.md)
