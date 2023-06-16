@@ -13,3 +13,4 @@ on projectile hit:
       kill {_projectile}
     else:
       cancel event
+  # cancel event

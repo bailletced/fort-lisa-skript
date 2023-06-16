@@ -1,0 +1,8 @@
+VerticalStripedSymbols:
+  file: VerticalStripedSymbols.js
+
+MythicMobsLevel:
+  file: MythicMobsLevel.js
+
+HealthChange:
+  file: HealthChange.js

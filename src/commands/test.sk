@@ -206,3 +206,11 @@ function burnMat(p: player):
         teleport {_mob} to location 2 meter above {_p}
         wait 1 tick
     kill {_mob}
+
+command /dmg:
+    trigger:
+        loop all entities in radius 5 of player:
+            if loop-entity is not a player:
+                broadcast health of loop-entity
+                damage loop-entity by 5
+                broadcast health of loop-entity
