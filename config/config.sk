@@ -196,11 +196,9 @@ function config_load(world: world):
   load yaml "plugins/Skript/scripts/fort-lisa/config/sounds/musics.yml" as "YAML-MUSIC"
   delete {MUSIC::*}
   loop yaml node keys "" from "YAML-MUSIC":
-    set {_category} to loop-value
-    loop yaml node keys {_category} from "YAML-MUSIC":
-      set {_id} to loop-value-2
-      set {MUSIC::%{_category}%::%{_id}%::PATH} to yaml value "%{_category}%.%{_id}%.PATH" from "YAML-MUSIC"
-      set {MUSIC::%{_category}%::%{_id}%::DURATION} to yaml value "%{_category}%.%{_id}%.DURATION" from "YAML-MUSIC"
+    set {_id} to loop-value
+    set {MUSIC::%{_id}%::PATH} to yaml value "%{_id}%.PATH" from "YAML-MUSIC"
+    set {MUSIC::%{_id}%::DURATION} to yaml value "%{_id}%.DURATION" from "YAML-MUSIC"
   unload yaml "YAML-MUSIC"
 
   #GLOBAL VAR

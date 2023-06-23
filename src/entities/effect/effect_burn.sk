@@ -1,3 +1,4 @@
+# OPTION: EXTEND, ADD, UNIQUE
 function entity_effect_burn(source: entity, target: entity, attack: number, duration: number, frequency: number, option: text = "ADD"):
   set {_amount} to floor({_duration} / {_frequency})
   if entity_store_effect_isset({_target}, "BURN") is false:
@@ -20,13 +21,13 @@ function entity_effect_burn_consume(source: entity, target: entity, frequency: n
     set {_amount} to floor({_durationBurn} / {_frequency})
     set {_attack} to {_totalDamage}/{_amount}
     set {_target} on fire for "%{_frequency}% ticks" parsed as timespan
-    entity_effect_damage({_source}, {_target}, {_attack})
+    entity_effect_damage({_source}, {_target}, {_attack}, 0, true)
     wait "%{_frequency}% ticks" parsed as timespan
     entity_store_effect_add({_target}, "BURN", "duration", -1*{_frequency})
     entity_store_effect_add({_target}, "BURN", "damage", -1*{_attack})
 
 function entity_effect_burn_consumeAll(source: entity, target: entity):
   set {_totalDmg} to entity_store_effect_get({_target}, "BURN", "damage")
-  entity_effect_damage({_source}, {_target}, {_totalDmg})
+  entity_effect_damage({_source}, {_target}, {_totalDmg}, 0, true)
   entity_store_effect_delete({_target}, "BURN")
   extinguish {_target}

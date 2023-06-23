@@ -7,4 +7,15 @@ function mob_action_damage(mob: entity, victim: entity):
   if {_damageCategory} is "EXPLOSION":
     set {_dist} to distance between {_mob} and {_victim}
     set {_attack} to {_attack} / max(1, {_dist})
+
   entity_effect_damage({_mob}, {_victim}, {_attack})
+
+  # We handle mob effects on attack
+  loop mob_store_trigger_effect_get_all({_mob}, "ON_ATTACK"):
+    set {_effect} to loop-value
+    set {_attack} to mob_store_trigger_effect_get({_mob}, "ON_ATTACK", {_effect}, "ATTACK_MULTIPLIER") * {_attack}
+    set {_duration} to mob_store_trigger_effect_get({_mob}, "ON_ATTACK", {_effect}, "DURATION")
+    if {_effect} is "BURN":
+      entity_effect_burn({_mob}, {_victim}, {_attack}, {_duration}, 20, "EXTEND")
+    else if {_effect} is "POISON":
+      entity_effect_poison({_mob}, {_victim}, {_attack}, {_duration}, 20, "EXTEND")

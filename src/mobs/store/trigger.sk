@@ -1,0 +1,49 @@
+function mob_store_trigger_get_all(mob: entity) :: texts:
+    set {_uuid} to uuid of {_mob}
+    return {mobs::%{_uuid}%::triggers::*}
+
+function mob_store_trigger_add(mob: entity, trigger: text):
+    if mob_store_trigger_isset({_mob}, {_trigger}) is false:
+        set {_uuid} to uuid of {_mob}
+        add {_trigger} to {mobs::%{_uuid}%::triggers::*}
+
+function mob_store_trigger_isset(mob: entity, trigger: text) :: boolean:
+    set {_uuid} to uuid of {_mob}
+    if {mobs::%{_uuid}%::triggers::*} contains {_trigger}:
+        return true
+    return false
+
+function mob_store_trigger_effect_get_all(mob: entity, trigger: text) :: texts:
+    set {_uuid} to uuid of {_mob}
+    return {mobs::%{_uuid}%::%{_trigger}%::effects::*}
+
+function mob_store_trigger_effect_add(mob: entity, trigger: text, effect: text):
+    if mob_store_trigger_effect_isset({_mob}, {_trigger}, {_effect}) is false:
+        set {_uuid} to uuid of {_mob}
+        add {_effect} to {mobs::%{_uuid}%::%{_trigger}%::effects::*}
+
+function mob_store_trigger_effect_isset(mob: entity, trigger: text, effect: text) :: boolean:
+    if mob_store_trigger_effect_get_all({_mob}, {_trigger}) contains {_effect}:
+        return true
+    return false
+
+function mob_store_trigger_effect_set(mob: entity, trigger: text, effect: text, key: text, value: object):
+    mob_store_trigger_add({_mob}, {_trigger})
+    mob_store_trigger_effect_add({_mob}, {_trigger}, {_effect}) 
+    set {_uuid} to uuid of {_mob}
+    set {mobs::%{_uuid}%::%{_trigger}%::%{_effect}%::%{_key}%} to {_value}
+  
+function mob_store_trigger_effect_get(mob: entity, trigger: text, effect: text, key: text) :: object:
+    if mob_store_trigger_effect_isset({_mob}, {_trigger}, {_effect}) is true:
+        set {_uuid} to uuid of {_mob}
+        return {mobs::%{_uuid}%::%{_trigger}%::%{_effect}%::%{_key}%}
+
+function mob_store_delete_trigger_effect(mob: entity, trigger: text, effect: text):
+    set {_uuid} to uuid of {_mob}
+    remove {_effect} from {mobs::%{_uuid}%::%{_trigger}%::effects::*}
+    delete {mobs::%{_uuid}%::%{_trigger}%::%{_effect}%::*}
+
+function mob_store_delete_trigger_effect_all(mob: entity, trigger: text):
+    set {_uuid} to uuid of {_mob}
+    loop mob_store_trigger_effect_get_all({_mob}, {_trigger}):
+        mob_store_delete_trigger_effect({_mob}, {_trigger}, loop-value)

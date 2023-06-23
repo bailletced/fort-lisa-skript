@@ -27,6 +27,17 @@ function mob_set_stats(mob: entity, level: number):
   set {_speed} to entity_nbt_get_stat({_mob}, "SPEED")
   apply potion of speed {_speed} without particles to {_mob} for 9999 seconds
 
+function mob_set_triggers(mob: entity):
+  set {_id} to entity_nbt_get_tag({_mob}, "ID")
+  loop node keys "TRIGGER" of "YAML-MOB-%{_id}%":
+    set {_trigger} to loop-value
+    loop node keys "TRIGGER.%{_trigger}%" of "YAML-MOB-%{_id}%":
+      set {_effect} to loop-value-2
+      loop node keys "TRIGGER.%{_trigger}%.%{_effect}%" of "YAML-MOB-%{_id}%":
+        set {_stat} to loop-value-3
+        set {_value} to yaml value "TRIGGER.%{_trigger}%.%{_effect}%.%{_stat}%" from "YAML-MOB-%{_id}%"
+        mob_store_trigger_effect_set({_mob}, {_trigger}, {_effect}, {_stat}, {_value})
+
 function mob_set_tags(mob: entity):
   set {_id} to entity_nbt_get_tag({_mob}, "ID")
   loop node keys "TAG" of "YAML-MOB-%{_id}%":
@@ -48,6 +59,7 @@ function mob_set_equipments(mob: entity, level: number):
 
 function mob_initialize(mob: entity, level: number):
   mob_set_stats({_mob}, {_level})
+  mob_set_triggers({_mob})
   mob_set_tags({_mob})
   mob_set_equipments({_mob}, {_level})
   mob_store_add({_mob})
@@ -60,6 +72,10 @@ function mob_summon(id: text, level: number, ai: text, location: location) :: en
     summon skeleton at {_location}
   else if {_id} is "CREEPER":
     summon creeper at {_location}
+  else if {_id} is "SPIDER":
+    summon spider at {_location}
+  else if {_id} is "POISON_SPIDER":
+    summon cave spider at {_location}
   # MYTHIC MOBS
   else:
     set {_loc} to loc_to_mythicApi({_location})

@@ -1,15 +1,27 @@
-TAVERN: 
-  MAIN:
-    PATH: g_sounds:musics_fl.music_tavern
-    DURATION: 3200
-WAVE:
-  MAIN: 
-    PATH: g_sounds:musics_fl.music_waves
-    DURATION: 4000
-BOSS:
-  GOULIATH:
-    PATH: g_sounds:musics_fl.music_boss
-    DURATION: 3200
+TAVERN_0: 
+  PATH: g_sounds:musics_fl.music_tavern
+  DURATION: 3200
+
+WAVE_0: 
+  PATH: g_sounds:musics_fl.music_wave_0
+  DURATION: 4000
+WAVE_1: 
+  PATH: g_sounds:musics_fl.music_wave_1
+  DURATION: 4000
+WAVE_2: 
+  PATH: g_sounds:musics_fl.music_wave_2
+  DURATION: 4000
+WAVE_3: 
+  PATH: g_sounds:musics_fl.music_wave_3
+  DURATION: 4000
+WAVE_4: 
+  PATH: g_sounds:musics_fl.music_wave_4
+  DURATION: 4000
+
+BOSS_GOULIATH:
+  PATH: g_sounds:musics_fl.music_boss
+  DURATION: 3200
+
 ANIMAL:
   GORGE_BLEUE: 
     PATH: g_sounds:animal_song.gorge_bleue

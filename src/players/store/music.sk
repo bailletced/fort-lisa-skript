@@ -1,32 +1,40 @@
-#TODO : implement transition between songs
+function player_store_music_count(p: player) :: number:
+    return size of {players::music::%{_p}%::musics::*}
 
-function player_store_music_get(p: player) :: text:
-    if {players::music::%{_p}%} is set:
-        return {players::music::%{_p}%}
+function player_store_music_get_value(p: player, key: text) :: object:
+    return {players::music::%{_p}%::%{_key}%}
 
-function player_store_music_set(p: player, category: text, id: text, volume: number = 0.5, loop: boolean = false):
-    set {_music} to {MUSIC::%{_category}%::%{_id}%::PATH}
-    set {_duration} to {MUSIC::%{_category}%::%{_id}%::DURATION}
-    player_store_music_delete({_p})
+function player_store_music_get_music_value(p: player, music: text, key: text) :: object:
+    return {players::music::%{_p}%::%{_music}%::%{_key}%}
 
-    set {players::music::%{_p}%} to {_music}
-    set {players::music::%{_p}%::loop} to {_loop}
-    set {players::music::%{_p}%::volume} to {_volume}
-    set {players::music::%{_p}%::duration} to {_duration}
-    player_storeMusic_play({_p}, {_loop})
+function player_store_music_set(p: player, musics: texts, playRandom: boolean = false, volume: number = 0.5):
+    player_store_music_delete_all({_p})
+    loop {_musics::*}:
+        set {_path} to {MUSIC::%loop-value%::PATH}
+        set {_duration} to {MUSIC::%loop-value%::DURATION}
+        set {players::music::%{_p}%::%loop-value%::path} to {_path}
+        set {players::music::%{_p}%::%loop-value%::volume} to {_volume}
+        set {players::music::%{_p}%::%loop-value%::duration} to {_duration}
+        set {players::music::%{_p}%::musics::*} to {_musics::*}
+    set {players::music::%{_p}%::index} to 1
+    set {players::music::%{_p}%::uuid} to random uuid
+    player_storeMusic_play({_p})
 
-function player_storeMusic_play(p: player, loop: boolean, transition: boolean = false):
-    set {_music} to {players::music::%{_p}%}
-    set {_volume} to {players::music::%{_p}%::volume}
-    set {_duration} to {players::music::%{_p}%::duration}
-    play sound {_music} with volume {_volume} to {_p}
-    wait "%{_duration}% ticks" parsed as timespan
-    if {_loop} is true:
-        while player_store_music_get({_p}) is {_music}:
-            play sound {_music} with volume {_volume} to {_p}
-            wait "%{_duration}% ticks" parsed as timespan
+function player_storeMusic_play(p: player):
+    set {_uuid} to player_store_music_get_value({_p}, "uuid")
+    set {_count} to player_store_music_count({_p})
+    while {_uuid} is player_store_music_get_value({_p}, "uuid"): #While we are sill with the same loop musics
+        set {_index} to player_store_music_get_value({_p}, "index")
+        set {_currentMusic} to {players::music::%{_p}%::musics::%{_index}%}
+        set {_volume} to {players::music::%{_p}%::%{_currentMusic}%::volume}
+        set {_duration} to {players::music::%{_p}%::%{_currentMusic}%::duration}
+        set {_path} to {players::music::%{_p}%::%{_currentMusic}%::path}
 
-function player_store_music_delete(p: player):
-    set {_currentSound} to {players::music::%{_p}%}
-    stop sound {_currentSound} for {_p}
-    delete {players::music::%{_p}%}
+        play sound {_path} with volume {_volume} to {_p}
+        wait "%{_duration}% ticks" parsed as timespan
+        stop sound {_path} for {_p}
+        set {players::music::%{_p}%::index} to max(1, mod({_index}, {_count}) + 1)
+
+function player_store_music_delete_all(p: player):
+    execute console command "stopsound %{_p}%"
+    delete {players::music::%{_p}%::*}

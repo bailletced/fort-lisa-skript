@@ -1,0 +1,23 @@
+# OPTION: EXTEND, UNIQUE
+function entity_effect_poison(source: entity, target: entity, attack: number, duration: number, frequency: number, option: text = "EXTEND"):
+    set {_amount} to floor({_duration} / {_frequency})
+    if entity_store_effect_isset({_target}, "POISON") is false:
+        entity_store_effect_init({_target}, "POISON", {_duration})
+        entity_store_effect_add({_target}, "POISON", "damage", {_attack}*{_amount})
+        entity_effect_poison_consume({_source}, {_target}, {_frequency})
+    else:
+        if {_option} is "EXTEND":
+            entity_store_effect_add({_target}, "POISON", "duration", {_duration})
+            entity_store_effect_add({_target}, "POISON", "damage", {_attack}*{_amount})
+  
+function entity_effect_poison_consume(source: entity, target: entity, frequency: number):
+    while entity_store_effect_isset({_target}, "POISON") is true:
+        set {_durationPoison} to entity_store_effect_get({_target}, "POISON", "duration")
+        set {_totalDamage} to entity_store_effect_get({_target}, "POISON", "damage")
+        set {_amount} to floor({_durationPoison} / {_frequency})
+        set {_attack} to {_totalDamage}/{_amount}
+        apply potion of poison 1 without particles to {_target} for "%{_frequency} + 10% ticks" parsed as timespan
+        entity_effect_damage({_source}, {_target}, {_attack}, 0, true)
+        wait "%{_frequency}% ticks" parsed as timespan
+        entity_store_effect_add({_target}, "POISON", "duration", -1*{_frequency})
+        entity_store_effect_add({_target}, "POISON", "damage", -1*{_attack})

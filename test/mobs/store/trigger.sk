@@ -1,0 +1,37 @@
+function test_mob_store_trigger(p: player):
+    send "§5Testing mob_store_trigger" to the console
+    it "TEST trigger set/get/delete":
+        summon zombie at location of {_p}
+        set {_mob} to last spawned entity
+        set {_refEvents::*} to "POISON","BURN"
+        mob_store_trigger_effect_set({_mob}, "ON_HIT", "POISON", "ATTACK", 1)
+        mob_store_trigger_effect_set({_mob}, "ON_HIT", "POISON", "DURATION", 60)
+        mob_store_trigger_effect_set({_mob}, "ON_HIT", "BURN", "ATTACK", 1)
+
+        set {_triggers::*} to mob_store_trigger_get_all({_mob})
+        set {_effects::*} to mob_store_trigger_effect_get_all({_mob}, "ON_HIT")
+
+        assert if {_triggers::*} is "ON_HIT" with message "stored triggers should be %"ON_HIT"%. Got %{_triggers::*}%"
+        assert if size of {_effects::*} is 2 with message "2 effect should have been created. Got %size of {_effects::*}%"
+
+        loop size of {_refEvents::*} times:
+            set {_refVal} to {_refEvents::%loop-value%}
+            set {_val} to {_effects::%loop-value%}
+            assert if {_refVal} is {_val} with message "index %loop-value% of effect should be %{_refEvents::%loop-value%}%. Got %{_effects::%loop-value%}%"
+
+        set {_attackPoison} to mob_store_trigger_effect_get({_mob}, "ON_HIT", "POISON", "ATTACK")
+        set {_durationPoison} to mob_store_trigger_effect_get({_mob}, "ON_HIT", "POISON", "DURATION")
+        set {_attackBurn} to mob_store_trigger_effect_get({_mob}, "ON_HIT", "BURN", "ATTACK")
+
+        assert if {_attackPoison} is 1 with message "ATTACK poison should be 1. Got %{_attackPoison}%"
+        assert if {_durationPoison} is 60 with message "DURATION poison should be 60. Got %{_durationPoison}%"
+        assert if {_attackBurn} is 1 with message "ATTACK burn should be 1. Got %{_attackBurn}%"
+
+        mob_store_delete_trigger_effect_all({_mob}, "ON_HIT")
+        set {_effects::*} to mob_store_trigger_effect_get_all({_mob}, "ON_HIT")
+        set {_attackPoison} to mob_store_trigger_effect_get({_mob}, "ON_HIT", "POISON", "ATTACK")
+
+        assert if size of {_effects::*} is 0 with message "0 effect should be stored. Got %size of {_effects::*}%"
+        assert if {_attackPoison} is not set with message "ATTACK poison should not be set. Got %{_attackPoison}%"
+
+        kill {_mob}

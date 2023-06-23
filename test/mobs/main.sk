@@ -5,3 +5,4 @@ function test_mob_main(p: player):
 function test_mob_store(p: player):
   test_mob_store_location({_p})
   test_mob_store_listener({_p})
+  test_mob_store_trigger({_p})

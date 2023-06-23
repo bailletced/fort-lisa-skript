@@ -1,13 +1,33 @@
 function test_players_store_music(p: player):
     send "§5Testing player store music" to the console 
     it "test music store":
-        player_store_music_delete({_p})
-        player_store_music_set({_p}, "WAVE", "MAIN", 0.5)
+        player_store_music_delete_all({_p})
+        player_store_music_set({_p}, ("WAVE_0" and "WAVE_1"))
 
-        set {_currentMusic} to player_store_music_get({_p})
-        assert if {_currentMusic} is {MUSIC::WAVE::MAIN::PATH} with message "current played music should be %{MUSIC::WAVE::MAIN::PATH}%. Got %{_currentMusic}%"
-        player_store_music_delete({_p})
-        delete {_currentMusic}
-        set {_currentMusic} to player_store_music_get({_p})
-        assert if {_currentMusic} is not set with message "current music should not be set. Got %{_currentMusic}%"
-    player_store_music_delete({_p})
+        set {_count} to player_store_music_count({_p})
+        assert if {_count} is 2 with message "2 musics should have been added to the loop. Got %{_count}%"
+
+
+        set {_pathRef0} to {MUSIC::WAVE_0::PATH}
+        set {_durationRef0} to {MUSIC::WAVE_0::DURATION}
+        set {_path0} to player_store_music_get_music_value({_p}, "WAVE_0", "path")
+        set {_duration0} to player_store_music_get_music_value({_p}, "WAVE_0", "duration")
+        assert if {_pathRef0} is {_path0} with message "%{_pathRef0}% should be %{_path0}%"
+        assert if {_durationRef0} is {_duration0} with message "%{_durationRef0}% should be %{_duration0}%"
+
+        set {_pathRef1} to {MUSIC::WAVE_1::PATH}
+        set {_durationRef1} to {MUSIC::WAVE_1::DURATION}
+        set {_path1} to player_store_music_get_music_value({_p}, "WAVE_1", "path")
+        set {_duration1} to player_store_music_get_music_value({_p}, "WAVE_1", "duration")
+        assert if {_pathRef1} is {_path1} with message "%{_pathRef1}% should be %{_path1}%"
+        assert if {_durationRef1} is {_duration1} with message "%{_durationRef1}% should be %{_duration1}%"
+        
+        player_store_music_set({_p}, "WAVE_2")
+        set {_count} to player_store_music_count({_p})
+        assert if {_count} is 1 with message "1 music should be in the store. Got %{_count}%"
+
+        player_store_music_delete_all({_p})
+        set {_count} to player_store_music_count({_p})
+        assert if {_count} is 0 with message "0 should be in the store. Got %{_count}%"
+
+    player_store_music_delete_all({_p})

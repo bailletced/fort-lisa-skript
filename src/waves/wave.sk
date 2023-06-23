@@ -55,11 +55,13 @@ function wave_summon(gameUuid: text, group: text):
   set {_amount} to yaml value "MOBS.%{_group}%.AMOUNT" from "YAML-WAVE"
   set {_delay} to yaml value "MOBS.%{_group}%.DELAY" from "YAML-WAVE"
   set {_ai} to yaml value "MOBS.%{_group}%.AI" from "YAML-WAVE"
-  set {_music} to yaml value "MUSIC" from "YAML-WAVE"
+  set {_musics::*} to yaml list "MUSICS" from "YAML-WAVE"
+  if size of {_musics::*} > 0:
+    loop game_store_players({_gameUuid}):
+      player_store_music_set(loop-value, {_musics::*})
 
   # We are in the BOSS wave!
   if {_typeWave} is "BOSS":
-    set {_music} to yaml value "MUSIC" from "YAML-WAVE"
     game_bossAppear({_gameUuid}, {_music})
 
   if yaml node "MOBS.%{_group}%.LOCATION" from "YAML-WAVE" has list:

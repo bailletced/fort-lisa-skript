@@ -207,10 +207,6 @@ function burnMat(p: player):
         wait 1 tick
     kill {_mob}
 
-command /dmg:
+command /sound:
     trigger:
-        loop all entities in radius 5 of player:
-            if loop-entity is not a player:
-                broadcast health of loop-entity
-                damage loop-entity by 5
-                broadcast health of loop-entity
+        player_store_music_set(player, ("WAVE_0" and "WAVE_1"))
