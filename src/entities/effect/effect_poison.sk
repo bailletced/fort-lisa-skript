@@ -17,7 +17,8 @@ function entity_effect_poison_consume(source: entity, target: entity, frequency:
         set {_amount} to floor({_durationPoison} / {_frequency})
         set {_attack} to {_totalDamage}/{_amount}
         apply potion of poison 1 without particles to {_target} for "%{_frequency} + 10% ticks" parsed as timespan
-        entity_effect_damage({_source}, {_target}, {_attack}, 0, true)
+        if health of {_victim} > {_attack}:
+            entity_effect_damage({_source}, {_target}, {_attack}, 0, true)
         wait "%{_frequency}% ticks" parsed as timespan
         entity_store_effect_add({_target}, "POISON", "duration", -1*{_frequency})
         entity_store_effect_add({_target}, "POISON", "damage", -1*{_attack})
