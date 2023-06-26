@@ -2,7 +2,7 @@ function mob_ai_init(mob: entity, ai: text):
   if {_ai} is "goToLisa0":
     set {_nearestEntrance} to location_castle_nearest_entrance({_mob})
     mob_store_location_set({_mob}, ({_nearestEntrance}, {LOCATION::CASTLE::FOUNTAIN}, {LOCATION::CASTLE::DOOR} and {LOCATION::CASTLE::THRONE}))
-    mob_store_listener_set({_mob}, ("TARGET_PLAYER_RADIUS_SOFT"), "RADIUS", 30)
+    mob_store_listener_set({_mob}, ("TARGET_PLAYER_RADIUS_SOFT"), "RADIUS", 20)
   else if {_ai} is "goToLisa1":
     mob_store_location_set({_mob}, mob_smartLocations({_mob}))
     mob_store_listener_set({_mob}, ("TARGET_PLAYER_RADIUS_SOFT"), "RADIUS", 5)

@@ -1,0 +1,13 @@
+function player_store_target_add(p: player, mob: entity):
+    if {players::%{_p}%::target::*} does not contain {_mob}:
+        add {_mob} to {players::%{_p}%::target::*}
+
+function player_store_target_count(p: player) :: number:
+    return size of {players::%{_p}%::target::*}
+
+function player_store_target_delete(p: player, mob: entity):
+    remove {_mob} from {players::%{_p}%::target::*}
+
+function player_store_target_delete_all(p: player):
+    loop {players::%{_p}%::target::*}:
+        player_store_target_delete({_p}, loop-value)

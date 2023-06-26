@@ -6,7 +6,7 @@ function mob_action_damage(mob: entity, victim: entity):
   set {_damageCategory} to entity_nbt_get_tag({_mob}, "DAMAGE_CATEGORY")
   if {_damageCategory} is "EXPLOSION":
     set {_dist} to distance between {_mob} and {_victim}
-    set {_attack} to {_attack} / max(1, {_dist})
+    set {_attack} to {_attack} / max(1, max(1, {_dist}))
 
   entity_effect_damage({_mob}, {_victim}, {_attack})
 

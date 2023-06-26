@@ -2,8 +2,8 @@ DURATION: 1200
 MOBS:
   1:
     ID: VOID_WARRIOR
-    LEVEL: 3
-    AMOUNT: 20
+    LEVEL: 1
+    AMOUNT: 10
     AI: goToLisa0
     LOCATION:
       - CASTLE.GATE_A
@@ -13,18 +13,7 @@ MOBS:
     DELAY: 10
   2:
     ID: VOID_ARCHER
-    LEVEL: 3
-    AMOUNT: 20
-    AI: goToLisa0
-    LOCATION:
-      - CASTLE.GATE_A
-      - CASTLE.GATE_B
-      - CASTLE.GATE_C
-      - CASTLE.GATE_D
-    DELAY: 10
-  3:
-    ID: CREEPER
-    LEVEL: 4
+    LEVEL: 1
     AMOUNT: 10
     AI: goToLisa0
     LOCATION:
@@ -33,14 +22,14 @@ MOBS:
       - CASTLE.GATE_C
       - CASTLE.GATE_D
     DELAY: 10
-  4:
+  3:
     ID: NECROMANCER_SKELETON_NECROMANCER
     LEVEL: 1
-    AMOUNT: 4
+    AMOUNT: 2
     AI: goToLisa0
     LOCATION:
       - CASTLE.GATE_A
       - CASTLE.GATE_B
       - CASTLE.GATE_C
       - CASTLE.GATE_D
-    DELAY: 20
+    DELAY: 10

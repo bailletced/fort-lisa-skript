@@ -18,6 +18,7 @@ function mob_ai_targetLocation(mob: entity):
 function mob_ai_targetPlayer(mob: entity, p: player):
   mob_store_target_set({_mob}, "PLAYER")
   mob_store_target_player_set({_mob}, {_p})
+  player_store_target_add({_p}, {_mob})
   while mob_store_target_get({_mob}) is "PLAYER":
     if player_store_status_isset({_p}, "DEATH") is true:
       mob_store_target_player_delete({_mob})

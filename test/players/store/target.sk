@@ -1,0 +1,18 @@
+function test_players_store_target(p: player):
+    send "§5Testing player store target" to the console
+    it "test player store target":
+        player_store_target_delete_all({_p})
+        summon zombie at {_p}
+        set {_mob} to last spawned entity
+        entity_nbt_set_tag({_mob}, "TYPE", "MOB")
+
+        set {_count} to player_store_target_count({_p})
+        assert if {_count} is 0 with message "0 mob should target player. Got %{_count}%"
+        
+        mob_ai_targetPlayer({_mob}, {_p})
+        set {_count} to player_store_target_count({_p})
+        assert if {_count} is 1 with message "1 mob should target player. Got %{_count}%"
+        kill {_mob}
+        
+        set {_count} to player_store_target_count({_p})
+        assert if {_count} is 0 with message "0 mob should target player after die. Got %{_count}%"

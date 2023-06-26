@@ -6,27 +6,27 @@ MOBS:
   1:
     ID: ZOMBIE
     LEVEL: 1
-    AMOUNT: 30
+    AMOUNT: 40
     AI: goToLisa0
     LOCATION:
       - CASTLE.GATE_A
       - CASTLE.GATE_B
       - CASTLE.GATE_C
       - CASTLE.GATE_D
-    DELAY: 50
+    DELAY: 10
   2:
-    ID: VOID_WARRIOR
-    LEVEL: 1
-    AMOUNT: 30
+    ID: SPIDER
+    LEVEL: 0
+    AMOUNT: 20
     AI: goToLisa0
     LOCATION:
       - CASTLE.GATE_A
       - CASTLE.GATE_B
       - CASTLE.GATE_C
       - CASTLE.GATE_D
-    DELAY: 50
+    DELAY: 10
   3:
-    ID: VOID_ARCHER
+    ID: SKELETON
     LEVEL: 0
     AMOUNT: 30
     AI: goToLisa0
@@ -35,4 +35,4 @@ MOBS:
       - CASTLE.GATE_B
       - CASTLE.GATE_C
       - CASTLE.GATE_D
-    DELAY: 50
+    DELAY: 10

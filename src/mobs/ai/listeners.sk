@@ -5,10 +5,11 @@ function mob_ai_listener_TARGET_PLAYER_RADIUS_SOFT(mob: entity):
     set {_player} to random element of players in radius {_radius} around {_mob}
     if {_player} is set:
       if player_store_status_isset({_p}, "DEATH") is false:
-        # broadcast "%uuid of {_mob}% TARGET_PLAYER_RADIUS_SOFT : found player"
-        mob_ai_targetPlayer({_mob}, {_player})
-        mob_store_listener_set({_mob}, "TARGET_ABANDON_TOO_FAR", "radius", {_radius})
-        mob_store_listener_delete({_mob}, "TARGET_PLAYER_RADIUS_SOFT")
+        set {_count} to player_store_target_count({_player})
+        if {_count} <= 8: #maximum number of mobs able to target the same player with radius listener
+          mob_ai_targetPlayer({_mob}, {_player})
+          mob_store_listener_set({_mob}, "TARGET_ABANDON_TOO_FAR", "radius", {_radius})
+          mob_store_listener_delete({_mob}, "TARGET_PLAYER_RADIUS_SOFT")
     wait 20 ticks
 
 # TARGET_ABANDON_TOO_FAR LISTENER

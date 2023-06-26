@@ -1,4 +1,4 @@
-DURATION: 1200
+DURATION: 900
 MUSIC:
   - WAVE_1
   - WAVE_3
@@ -8,7 +8,7 @@ MOBS:
   1:
     ID: ZOMBIE
     LEVEL: 1
-    AMOUNT: 30
+    AMOUNT: 15
     AI: goToLisa0
     LOCATION:
       - CASTLE.GATE_A
@@ -19,7 +19,7 @@ MOBS:
   2:
     ID: SKELETON
     LEVEL: 1
-    AMOUNT: 30
+    AMOUNT: 15
     AI: goToLisa0
     LOCATION:
       - CASTLE.GATE_A

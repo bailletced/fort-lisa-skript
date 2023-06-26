@@ -10,6 +10,7 @@ function test_player_store(p: player):
   test_players_store_inventory({_p})
   test_players_store_gui({_p})
   test_players_store_music({_p})
+  test_players_store_target({_p})
 
 function test_player_action(p: player):
   test_entity_effect_damage({_p})

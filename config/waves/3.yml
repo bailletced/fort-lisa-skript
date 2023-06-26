@@ -1,9 +1,9 @@
 DURATION: 1200
 MOBS:
   1:
-    ID: VOID_WARRIOR
-    LEVEL: 2
-    AMOUNT: 20
+    ID: PIGLIN-ZOMBIFIED
+    LEVEL: 1
+    AMOUNT: 30
     AI: goToLisa0
     LOCATION:
       - CASTLE.GATE_A
@@ -12,8 +12,8 @@ MOBS:
       - CASTLE.GATE_D
     DELAY: 10
   2:
-    ID: VOID_ARCHER
-    LEVEL: 2
+    ID: PIGLIN
+    LEVEL: 1
     AMOUNT: 30
     AI: goToLisa0
     LOCATION:
@@ -21,11 +21,22 @@ MOBS:
       - CASTLE.GATE_B
       - CASTLE.GATE_C
       - CASTLE.GATE_D
-    DELAY: 10
+    DELAY: 20
   3:
+    ID: PIGLIN-BRUTE
+    LEVEL: 1
+    AMOUNT: 25
+    AI: goToLisa0
+    LOCATION:
+      - CASTLE.GATE_A
+      - CASTLE.GATE_B
+      - CASTLE.GATE_C
+      - CASTLE.GATE_D
+    DELAY: 20
+  4:
     ID: CREEPER
     LEVEL: 1
-    AMOUNT: 30
+    AMOUNT: 20
     AI: goToLisa0
     LOCATION:
       - CASTLE.GATE_A

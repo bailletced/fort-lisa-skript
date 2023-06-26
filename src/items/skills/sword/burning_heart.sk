@@ -8,7 +8,6 @@ function sword_burning_heart_hit(p: player, sword: item, victim: entity):
   draw {_radius}*40 flame at {_victim} with offset vector(1, 1, 1) with extra 0.05
 
   entity_effect_damage({_p}, {_victim}, {_attack}, {_knockback})
-
   set {_location} to head of {_victim}
   loop target_radius({_location}, {_radius}):
-    entity_effect_burn({_p}, loop-entity, {_attack}, {_effectDuration}, {_effectFrequency})
+    entity_effect_burn({_p}, loop-entity, {_effectAttack}, {_effectDuration}, {_effectFrequency})

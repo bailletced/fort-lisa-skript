@@ -56,6 +56,7 @@ function wave_summon(gameUuid: text, group: text):
   set {_delay} to yaml value "MOBS.%{_group}%.DELAY" from "YAML-WAVE"
   set {_ai} to yaml value "MOBS.%{_group}%.AI" from "YAML-WAVE"
   set {_musics::*} to yaml list "MUSICS" from "YAML-WAVE"
+  broadcast {_musics::*}
   if size of {_musics::*} > 0:
     loop game_store_players({_gameUuid}):
       player_store_music_set(loop-value, {_musics::*})

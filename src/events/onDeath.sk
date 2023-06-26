@@ -4,12 +4,15 @@ on death:
     game_end({_gameUuid})
   set {_entity} to victim
   if {_entity} is a player:
+    player_store_target_delete_all({_p})
     if player_store_game_get({_entity}, "STATUS") is "RUNNING":
       player_store_status_set({_entity}, "DEATH", location of {_entity})
       set game mode of {_entity} to spectator
   else:
     set {_type} to entity_nbt_get_tag({_entity}, "TYPE")
     if {_type} is "MOB":
+      set {_p} to mob_store_target_player_get({_entity}) # We get target of mob
+      player_store_target_delete({_p}, {_entity}) #Mob no longer target player
       mob_store_delete({_entity})
       set {_category} to entity_nbt_get_tag({_entity}, "CATEGORY")
       if {_category} is "BOSS":
