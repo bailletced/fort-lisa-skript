@@ -45,7 +45,10 @@ command /zombie:
 
 command /lisa:
     trigger:
-        lisa_summon(random uuid)
+        set {_gameUuid} to game_store_create()
+        game_store_set({_gameUuid}, "STATUS", "RUNNING")
+        set {_lisa} to lisa_summon({_gameUuid})
+        lisa_listeners({_lisa})
 
 command /tag:
     trigger:

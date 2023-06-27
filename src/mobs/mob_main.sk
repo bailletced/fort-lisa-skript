@@ -80,11 +80,11 @@ function mob_summon(id: text, level: number, ai: text, location: location) :: en
   else if {_id} is "POISON_SPIDER":
     summon cave spider at {_location}
   else if {_id} is "PIGLIN":
-    summon zombified piglin at {_location}
+    summon adult zombified piglin at {_location}
   else if {_id} is "PIGLIN-ZOMBIFIED":
-    summon zombified piglin at {_location}
+    summon adult zombified piglin at {_location}
   else if {_id} is "PIGLIN-BRUTE":
-    summon zombified piglin at {_location}
+    summon adult zombified piglin at {_location}
   # MYTHIC MOBS
   else:
     set {_loc} to loc_to_mythicApi({_location})

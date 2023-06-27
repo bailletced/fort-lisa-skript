@@ -31,6 +31,7 @@ function game_end(gameUuid: text, victory: boolean = false):
   set {_world} to world_store_get({_world}, "GAMEUUID")
   world_store_delete({_world})
   game_store_delete({_gameUuid})
+  kill {LISA::%{_gameUuid}%}
   execute console command "/npc remove all"
   player_interface_tablist_footer_clean_all()
   loop all entities:

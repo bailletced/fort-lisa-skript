@@ -1,5 +1,5 @@
 on death:
-  if name of victim is "LISA":
+  if entity_nbt_get_tag(victim, "ID") is "LISA":
     set {_gameUuid} to entity_nbt_get_tag(victim, "GAME_UUID")
     game_end({_gameUuid})
   set {_entity} to victim

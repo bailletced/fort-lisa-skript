@@ -1,7 +1,4 @@
 DURATION: 1200
-MUSICS:
-  - WAVE_2
-  - WAVE_3
 MOBS:
   1:
     ID: ZOMBIE

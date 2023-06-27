@@ -2,6 +2,9 @@ on projectile hit:
   set {_projectile} to event-projectile
   set {_attackerType} to entity_nbt_get_tag({_projectile}, "ATTACKER_TYPE")
   if {_attackerType} is "PLAYER":
+    if entity_nbt_get_tag(victim, "ID") is "LISA":
+      cancel event
+      stop
     if victim is not a player:
       set {_p} to entity_nbt_get_tag({_projectile}, "ATTACKER") parsed as player
       set {_type} to entity_nbt_get_tag({_projectile}, "TYPE")

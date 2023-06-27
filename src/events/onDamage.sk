@@ -18,6 +18,10 @@ on damage:
           entity_store_effect_delete(victim, "IMMUNITY_FALL")
 
   if attacker is a player:
+    if entity_nbt_get_tag(victim, "ID") is "LISA":
+      cancel event
+      stop
+
     set {_p} to attacker
     set {_item} to held item of {_p}
     set {_typeItem} to item_nbt_get_tag({_item}, "TYPE")

@@ -2,20 +2,25 @@ function lisa_summon(gameUuid: text) :: entity:
   set {_world} to game_store_get({_gameUuid}, "WORLD")
   set {_location} to {LOCATION::CASTLE::THRONE}
   set world of {_location} to {_world}
-  create citizen named {NPC::LISA::NAME} at {_location}
-  set {_id} to last created citizen
-  set {_lisa} to citizen {_id}
+  summon villager at {_location}
+  set {_lisa} to last spawned entity
+  set {LISA::%{_gameUuid}%} to {_lisa}
   entity_nbt_set_tag({_lisa}, "GAME_UUID", {_gameUuid})
+  # create citizen named {NPC::LISA::NAME} at {_location}
+  # set {_id} to last created citizen
+  # set {_lisa} to citizen {_id}
   return lisa_init({_lisa})
 
 function lisa_init(lisa: entity) :: entity:
-  set {_id} to citizen id of {_lisa}
-  set {_npcSkin} to {NPC::LISA::SKIN}
-  execute console command "/npc select %{_id}%"
-  execute console command "/npc skin --url %{_npcSkin}%" 
-  execute console command "/npc lookclose"
-  execute console command "/npc targetable"
-  execute console command "/npc vulnerable"
+  # set {_id} to citizen id of {_lisa}
+  # broadcast {_id}
+  # set {_npcSkin} to {NPC::LISA::SKIN}
+  # execute console command "/npc select %{_id}%"
+  # execute console command "/npc skin --url %{_npcSkin}%" 
+  # execute console command "/npc lookclose"
+  # execute console command "/npc targetable"
+  # execute console command "/npc vulnerable"
+  apply potion of slowness of tier 100 without particles to {_lisa} for 999 days
   set maximum health of {_lisa} to {NPC::LISA::HEALTH}
   set health of {_lisa} to {NPC::LISA::HEALTH}
   entity_nbt_set_tag({_lisa}, "ID", "LISA")
@@ -27,8 +32,11 @@ function lisa_listeners(lisa: entity):
 
 function lisa_listener_INGAME(lisa: entity):
   set {_gameUuid} to entity_nbt_get_tag({_lisa}, "GAME_UUID")
-  set {_id} to citizen id of {_lisa}
-  while game_store_get({_gameUuid}, "STATUS") is "RUNNING":
+  game_store_get({_gameUuid}, "STATUS")
+  # set {_id} to citizen id of {_lisa}
+  while {_lisa} is alive:
+    if game_store_get({_gameUuid}, "STATUS") is not "RUNNING":
+      stop loop
     loop all entities in radius 30 of {_lisa}:
       if type of loop-entity is not player:
         if loop-entity is not {_lisa}:
@@ -36,6 +44,7 @@ function lisa_listener_INGAME(lisa: entity):
           mob_store_target_set({_mob}, "LISA")
           mob_store_location_delete_all({_mob})
           mob_store_listener_delete_all({_mob})
-          set target of loop-entity to {_lisa}
-    move citizen {_id} to {LOCATION::CASTLE::THRONE}
+          set target of {_mob} to {_lisa}
+
+    # move citizen {_id} to {LOCATION::CASTLE::THRONE}
     wait 2 seconds
