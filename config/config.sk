@@ -211,10 +211,10 @@ function config_load(world: world):
   set {PLAYER::LISTENER::*} to "STAT" and "list"
 
   # Initialize players. TODO : to be triggered when game starts
-
+  game_store_delete_all()
   loop all players:
     set {_p} to loop-value
     player_store_weapon_delete_all({_p})
     player_store_skill_delete_all({_p})
     player_store_listener_add({_p}, "STAT")
-    player_clean({_p}, false)
+    player_clean({_p})

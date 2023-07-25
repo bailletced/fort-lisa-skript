@@ -184,32 +184,19 @@ command /creeperr:
         # entity_nbt_set_tag({_zombie}, "TYPE", "MOB")
         # entity_nbt_set_stat({_zombie}, "ATTACK", 10)
 
-command /burn:
+command /pathfind:
     trigger:
-        # summon zombie
-        burnMat(player)
-        # set {_mob::*} to all entities in radius 10 of player
-        # loop {_mob::*}:
-        #     if loop-value is not a player:
-        #         set {_mob} to loop-value
-        #         set {_item} to stone
-        #         set {_item} to item_nbt_set_tag_native({_item}, "{CustomModelData: 5000}")
-        #         equip {_mob} with {_item}
+        set {_locDest} to location(-91, 23, 28)
+        summon pig at {_locDest}
+        set {_pig} to last spawned entity
+        entity_nbt_set_tag_native({_pig}, "{NoAI:1b}")
 
-function burnMat(p: player):
-    make {_p} execute command "mm m spawn Fire_Burning"
-    # We find the spanwed MM for register
-    loop all entities in radius 2 of {_p}:
-        set {_mob} to loop-entity
-        if {_mob} is not a player:
-            broadcast {_mob}
-            stop loop
-    broadcast "MOB: %{_mob}%"
-    loop 100 times:
-        teleport {_mob} to location 2 meter above {_p}
-        wait 1 tick
-    kill {_mob}
+        path(player, {_pig})
 
-command /sound:
-    trigger:
-        player_store_music_set(player, ("WAVE_0" and "WAVE_1"))
+function path(p: player, pig: entity):
+    summon zombie at {_p}
+    set {_mob} to last spawned entity
+
+    set target of {_mob} to {_pig}
+    set path targets of {_mob} to {_pig}
+

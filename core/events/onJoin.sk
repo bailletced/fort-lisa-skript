@@ -1,5 +1,6 @@
 on join:
   set {_p} to event-player
+  set slot 8 of {_p} to item_utility_create({_p}, "GAME", "START")
   set {_lang} to player_store_setting_get({_p}, "lang")
   if {_lang} is not set:
     player_store_setting_set({_p}, "lang", {LANG_FALLBACK})

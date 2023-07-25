@@ -10,3 +10,15 @@ on inventory click:
         gui_move_to_gui({_p}, {_guiInventory}, {_slot})
       else:
         gui_move_to_inventory({_p}, {_guiInventory}, {_slot})
+  else:
+    set {_type} to item_nbt_get_tag(item, "TYPE")
+    if {_type} is "UTILITY":
+      set {_id} to item_nbt_get_tag(item, "ID")
+      if {_id} is "START":
+        clear inventory of player
+        remove event-item from inventory of player
+        if game_store_count() is 0:
+          game_start(world of player)
+        else:
+          set {_gameUuid} to player_store_game_get(player, "UUID")
+          game_end({_gameUuid})

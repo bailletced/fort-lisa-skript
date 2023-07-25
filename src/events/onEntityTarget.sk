@@ -1,0 +1,3 @@
+# on entity target:
+    # broadcast "I WANT TARGET..."
+    # cancel event

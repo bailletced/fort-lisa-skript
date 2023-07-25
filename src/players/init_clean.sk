@@ -1,6 +1,5 @@
 function player_init(p: player, gameUuid: text):
   player_teleport_origin({_p})
-  player_clean({_p})
   player_store_stat_set({_p}, "ATTACK", 0)
   player_store_stat_set({_p}, "HEALTH_MAX", 20)
   player_store_stat_set({_p}, "HEALTH", 20)
@@ -10,25 +9,22 @@ function player_init(p: player, gameUuid: text):
   set max health of {_p} to 20
   set health of {_p} to 20
   set bed of {_p} to {LOCATION::CASTLE::THRONE}
-  clear inventory of {_p}
   set gamemode of {_p} to adventure
   # Start game interactions
-  gui_gameStart({gameUuid}, {_p})
+  gui_gameStart({_gameUuid}, {_p})
   player_store_listener_add({_p}, "STAT")
   player_store_game_set({_p}, "UUID", {_gameUuid})
   player_store_game_set({_p}, "STATUS", "PREPARING")
 
-function player_clean(p: player, tp: boolean = true):
+function player_clean(p: player):
+  clear inventory of {_p}
+  wait 1 tick #Wait equipments te be removed
   player_store_gui_delete_all({_p})
   player_store_listener_delete_all({_p})
   player_store_weapon_delete_all({_p})
-  clear inventory of {_p}
-  wait 2 tick #Wait for stats from equipments to be reset
   player_store_stat_reset_all({_p})
   player_store_game_delete_all({_p})
 
-  if {_tp} is true:
-    player_teleport_origin({_p})
 
 function player_teleport_origin(p: player):
   set {_loc} to {LOCATION::CASTLE::THRONE}

@@ -77,11 +77,15 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>] [<text>]:
         else:
           player_store_setting_set({_p}, "INGAME", false)
 
+    else if arg-1 is "utility":
+      if arg-2 is "gameStart":
+        give 1 of item_utility_create({_p}, "GAME", "START") to {_p}
+
     else if arg-1 is "game":
       if arg-2 is "start":
         game_start(world of {_p})
       else:
-        set {_gameUuid} to entity_nbt_get_tag({_p}, "GAME_UUID")
+        set {_gameUuid} to player_store_game_get({_p}, "UUID")
         game_end({_gameUuid})
 
     else if arg-1 is "wave":
@@ -140,7 +144,7 @@ command /admin [<text>] [<text>] [<text>] [<text>] [<text>] [<text>]:
           test_entity_main(player)
 
 on tab complete of "/admin":
-  set tab completions for position 1 to "init", "hmr", "player", "weapon", "equipment", "skill", "settings", "game", "gift", "gui", "wave", "mob" and "test"
+  set tab completions for position 1 to "init", "hmr", "player", "weapon", "equipment", "skill", "settings", "game", "gift", "gui", "wave", "mob", "utility" and "test"
 
   if tab arg-1 is "hmr":
     set tab completions for position 2 to "reset"
@@ -196,6 +200,9 @@ on tab complete of "/admin":
     set tab completions for position 2 to "INGAME"
     if tab arg-2 is "INGAME":
       set tab completions for position 3 to "true" and "false"
+
+  else if tab arg-1 is "utility":
+    set tab completions for position 2 to "gameStart"
   
   else if tab arg-1 is "game":
     set tab completions for position 2 to "start" and "stop"

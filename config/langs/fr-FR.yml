@@ -150,6 +150,10 @@ GAME:
   WIN: "Victoire !"
   LOSE: "Défaite"
 UTILITY:
+  GAME:
+    START:
+      TITLE: "Gestionnaire de partie"
+      LORE: "Cliquer pour démarrer la partie"
   MAIN:
     CD:
       TITLE: "Cooldown"

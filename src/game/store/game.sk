@@ -25,6 +25,9 @@ function game_store_delete(uuid: text) :: text:
   remove {_uuid} from {game::*}
   delete {game::%{_uuid}%::*}
 
+function game_store_delete_all() :: text:
+  delete {game::*}
+
 function game_store_player_add(uuid: text, p: player):
   add {_p} to {game::%{_uuid}%::players::*}
 

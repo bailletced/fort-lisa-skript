@@ -52,7 +52,7 @@ BOW:
       - RADIUS
       - EFFECT
     STATS:
-      ATTACK: 5
+      ATTACK: 12
       ATTACK_MULTIPLIER: 0.6
       COOLDOWN: 25
       RADIUS: 2

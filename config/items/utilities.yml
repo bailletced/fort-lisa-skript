@@ -1,3 +1,6 @@
+GAME:
+  START:
+    ITEM: emerald
 MAIN:
   CD:
     ITEM: gunpowder

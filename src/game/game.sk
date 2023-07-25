@@ -9,9 +9,11 @@ function game_start(world: world):
     # TODO : determine which players should be part of the game
     loop all players:
       game_store_player_add({_gameUuid}, loop-player)
+      player_clean(loop-player)
+      wait 2 tick #We must wait for clean to be finished.
       player_init(loop-player, {_gameUuid})
       player_store_music_set(loop-player, "TAVERN_0")
-
+  
   #GAME PREPARATION
   set {_timer} to 30
   while {_timer} > 0:
@@ -42,12 +44,14 @@ function game_end(gameUuid: text, victory: boolean = false):
     if loop-value is a player:
       if player_store_game_get(loop-value, "STATUS") is "RUNNING":
         player_clean(loop-value)
+        wait 2 tick #We must wait for clean to be finished.
         player_interface_sound_stop_all(loop-value)
         player_store_music_delete_all(loop-value)
         if {_victory} is true:
           player_interface_title(loop-value, i18n(loop-value, "GAME.WIN"), "", 3 seconds)
         else:
           player_interface_title(loop-value, i18n(loop-value, "GAME.LOSE"), "", 3 seconds)
+      give 1 of item_utility_create(loop-value, "GAME", "START") to loop-value
 
 
 function game_inprogress(gameUuid: text):
